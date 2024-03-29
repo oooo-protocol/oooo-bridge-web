@@ -1,0 +1,52 @@
+<script setup lang="ts">
+import { ENV_VARIABLE, NETWORK } from '@/lib/constants'
+
+const activity = ENV_VARIABLE.VITE_NETWORK === NETWORK.LIVENET
+  ? {
+    url: 'https://galxe.com/oooo/campaign/GCcwNtTvQ5'
+  }
+  : {
+    url: 'https://galxe.com/oooo/campaign/GCddPt46m9"'
+  }
+</script>
+
+<template>
+  <div class="app-navbar mx-[24px] md:mx-[48px] xl:mx-auto xl:max-w-[832px]">
+    <a
+      class="app-navbar__banner cursor-pointer"
+      :data-network="ENV_VARIABLE.VITE_NETWORK"
+      :href="activity.url"
+      target="_blank"
+    />
+  </div>
+</template>
+
+<style lang="scss">
+.app-navbar {
+  &__banner {
+    display: block;
+    height: 0;
+    background: no-repeat center/contain;
+
+    &[data-network='testnet'] {
+      padding-bottom: 22.63%;
+      background-image: url('@/assets/images/testnet/banner.mobile.png');
+
+      @media (min-width: 768px) {
+        padding-bottom: 15.625%;
+        background-image: url('@/assets/images/testnet/banner.pc.png');
+      }
+    }
+
+    &[data-network='livenet'] {
+      padding-bottom: 22.63%;
+      background-image: url('@/assets/images/livenet/banner.mobile.png');
+
+      @media (min-width: 768px) {
+        padding-bottom: 15.625%;
+        background-image: url('@/assets/images/livenet/banner.pc.png');
+      }
+    }
+  }
+}
+</style>
