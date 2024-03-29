@@ -23,7 +23,7 @@ pnpm build:livenet
 pnpm build:analyze
 ```
 
-> ‼️ Tips: test environment not equal with testnet, it's follow .env file
+> ‼️ Tips: test environment not equal with testnet, it's follow `.env` file
 
 ## Folder Structure
 | Name          | Description                                           |
@@ -41,5 +41,6 @@ pnpm build:analyze
 | ᴸ shims       | Implement missing type definitions                    |
 
 ## Query config
-| Name | Description |
-| to | Specify the receive token |
+| Name | Description               |
+| ---- | ------------------------- |
+| to   | Specify the receive token |
