@@ -152,6 +152,10 @@ export const CHAIN_LIST = [
     name: 'ROOTSTOCK',
     value: CHAIN.ROOTSTOCK
   }, {
+    image: BITLAYER_IMAGE,
+    name: 'BITLAYER',
+    value: CHAIN.BITLAYER
+  }, {
     image: SATOSHIVM_IMAGE,
     name: 'SatoshiVM (comming soon)',
     value: CHAIN.SATOSHIVM,
