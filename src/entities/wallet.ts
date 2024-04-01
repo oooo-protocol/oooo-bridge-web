@@ -1,15 +1,15 @@
-import { type CHAIN } from '@/lib/constants'
+import { type CHAIN } from '@/entities/chain'
 
-export interface ChainConfig {
-  chainId: string
-  chainName: string
-  rpcUrls: string[]
-  nativeCurrency: {
-    name: string
-    symbol: string
-    decimals: number
-  }
-  blockExplorerUrls: string[]
+export enum WALLET {
+  METAMASK,
+  OKX,
+  UNISAT,
+  OKX_BITCOIN
+}
+
+export enum WALLET_TYPE {
+  BITCOIN = 'bitcoin',
+  ETHEREUM = 'ethereum'
 }
 
 export interface TransactionParameter {
@@ -18,11 +18,6 @@ export interface TransactionParameter {
   value: string
   gas: string
   chain: CHAIN
-}
-
-export enum WALLET_TYPE {
-  BITCOIN = 'bitcoin',
-  ETHEREUM = 'ethereum'
 }
 
 export interface WalletImpl {

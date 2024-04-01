@@ -1,4 +1,4 @@
-import { type CHAIN } from '@/lib/constants'
+import { type CHAIN } from '@/entities/chain'
 
 export interface Chain {
   chainId: string

@@ -9,7 +9,7 @@ import { useMutation, useQuery } from '@tanstack/vue-query'
 import { retrieveTransactionConfig, transfer, retrieveChainConfigs } from '@/request/api/bridge'
 import Decimal from 'decimal.js-light'
 import { useWallet } from '@/composables/hooks/use-wallet'
-import { CHAIN, ENV_VARIABLE, NETWORK, BRIDGE_TEXT_MAP } from '@/lib/constants'
+import { ENV_VARIABLE, BRIDGE_TEXT_MAP } from '@/lib/constants'
 import LoadingIcon from '@/components/LoadingIcon.vue'
 import { useToast } from '@/components/ui/toast/use-toast'
 import PageLoading from '@/components/PageLoading.vue'
@@ -23,6 +23,7 @@ import { Network, validate } from 'bitcoin-address-validation'
 import { useChainSelect } from './hooks/use-chain-select'
 import { WALLET_TYPE } from '@/entities/wallet'
 import { NoAlarmException } from '@/lib/exception'
+import { CHAIN, NETWORK } from '@/entities/chain'
 
 const { wallet, getWalletType, retrieveNativeBalance, sign, transaction, getPublicKey, onLogout } = useWallet()
 

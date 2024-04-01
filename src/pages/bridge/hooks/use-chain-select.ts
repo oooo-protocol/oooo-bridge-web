@@ -1,8 +1,9 @@
-import { CHAIN, ENV_VARIABLE } from '@/lib/constants'
+import { ENV_VARIABLE } from '@/lib/constants'
 import { type ChainConfig } from '@/entities/bridge'
 import { watchOnce } from '@vueuse/core'
 import { getArrayFirst } from '@preflower/utils'
 import { WALLET_TYPE } from '@/entities/wallet'
+import { CHAIN } from '@/entities/chain'
 
 export const useChainSelect = (configs: Ref<ChainConfig[] | undefined>) => {
   const route = useRoute()

@@ -88,7 +88,11 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src')
-      }
+      },
+      extensions: [
+        // add livenet/testnet extension to suitable for multi-env package
+        `.${variables.VITE_MODE}.ts`, '.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json'
+      ]
     },
     define: {
       DEFINE_APP_VERSION: JSON.stringify(version)

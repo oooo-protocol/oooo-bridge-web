@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ENV_VARIABLE, NETWORK } from '@/lib/constants'
+import { NETWORK } from '@/entities/chain'
+import { ENV_VARIABLE } from '@/lib/constants'
 
 const activity = ENV_VARIABLE.VITE_NETWORK === NETWORK.LIVENET
   ? {

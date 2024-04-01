@@ -8,10 +8,11 @@ import { TRANSACTION_STATUS, type Transaction } from '@/entities/bridge'
 import { useWallet } from '@/composables/hooks/use-wallet'
 import PageLoading from '@/components/PageLoading.vue'
 import { combineURLs, formatHashWithEllipsis } from '@/lib/utils'
-import { CHAIN_IMAGE_MAP, TRANSACTION_STATUS_MAP, CHAIN_BLOCK_EXPLORER_URL_MAP, type CHAIN } from '@/lib/constants'
+import { CHAIN_IMAGE_MAP, TRANSACTION_STATUS_MAP, CHAIN_BLOCK_EXPLORER_URL_MAP } from '@/lib/constants'
 import TRANSFER_FAILED_IMAGE from '@/assets/images/transfer-failed.png'
 import TRANSFER_SUCCED_IMAGE from '@/assets/images/transfer-success.png'
 import TRANSFER_PROCESSING_IMAGE from '@/assets/images/transfer-loading.gif'
+import { type CHAIN } from '@/entities/chain'
 
 enum TRANSACTION_DETAIL_STATUS {
   PENDING,

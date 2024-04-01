@@ -7,12 +7,12 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { CHAIN_LIST, WALLET_MAP } from '@/lib/constants'
-import type { CHAIN } from '@/lib/constants'
 import Icon from '@/components/Icon.vue'
 import { useWallet } from '@/composables/hooks/use-wallet'
 import { formatHashWithEllipsis } from '@/lib/utils'
 import WalletConnectModal from '@/components/wallet-connect/WalletConnectModal.vue'
 import { createFunctionCall } from '../wallet-connect/function-call'
+import { type CHAIN } from '@/entities/chain'
 
 const router = useRouter()
 const { wallet, onLogout } = useWallet()

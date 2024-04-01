@@ -1,5 +1,4 @@
-import { WALLET_TYPE, type TransactionParameter } from '@/entities/wallet'
-import { CHAIN, WALLET } from '@/lib/constants'
+import { WALLET_TYPE, type TransactionParameter, WALLET } from '@/entities/wallet'
 import metamaskWallet from './wallet/metamask'
 import okxEvmWallet from './wallet/okx-evm'
 import okxBitcoinWallet from './wallet/okx-bitcoin'
@@ -7,6 +6,7 @@ import unisatWallet from './wallet/unisat'
 import { storage } from '@preflower/utils'
 import { type EthereumWallet } from './wallet/ethereum'
 import { type BitcoinWallet } from './wallet/bitcoin'
+import { CHAIN } from '@/entities/chain'
 
 interface WalletStorage {
   address: string

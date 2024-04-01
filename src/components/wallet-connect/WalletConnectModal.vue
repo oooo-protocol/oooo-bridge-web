@@ -5,10 +5,12 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog'
-import { BTC_WALLETS, ETH_WALLETS, CHAIN, type WALLET } from '@/lib/constants'
+import { BTC_WALLETS, ETH_WALLETS } from '@/lib/constants'
 import Button from '@/components/ui/button/Button.vue'
 import { useWallet } from '@/composables/hooks/use-wallet'
 import { useToast } from '@/components/ui/toast/use-toast'
+import { CHAIN } from '@/entities/chain'
+import { type WALLET } from '@/entities/wallet'
 
 defineOptions({
   name: 'WalletConnectModal'

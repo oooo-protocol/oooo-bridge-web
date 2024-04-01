@@ -1,10 +1,11 @@
 import axios from '../axios'
 import { type Transaction, type TransactionConfig, type TransactionListItem, type ChainConfig, type Chain, TRANSACTION_STATUS } from '@/entities/bridge'
 import type { Pagination } from './type'
-import { CHAIN_CONFIG_MAP, CHAIN, ENV_VARIABLE } from '@/lib/constants'
+import { CHAIN_CONFIG_MAP, ENV_VARIABLE } from '@/lib/constants'
 import { combineURLs } from '@/lib/utils'
 import { ethers } from 'ethers'
 import axiosOrigin from 'axios'
+import { CHAIN } from '@/entities/chain'
 
 export const retrieveChainConfigs = async () => {
   return await axios<ChainConfig[]>({
