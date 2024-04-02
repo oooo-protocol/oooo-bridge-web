@@ -78,7 +78,7 @@ const onClickLogout = () => {
       >
         <DropdownMenuItem
           class="flex items-center gap-[8px]"
-          v-if="!item.disabled"
+          v-if="!item.disabled && item.hide"
           :key="item.value"
           @click="onConnect(item.value)"
         >
