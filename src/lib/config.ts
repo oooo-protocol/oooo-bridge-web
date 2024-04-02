@@ -5,6 +5,7 @@ import BTC_IMAGE from '@/assets/tokens/btc.png'
 import MERLIN_IMAGE from '@/assets/tokens/merlin.png'
 import ROOTSTOCK_IMAGE from '@/assets/tokens/rootstock.png'
 import BITLAYER_IMAGE from '@/assets/tokens/bitlayer.png'
+import BEVM_CANARY_IMAGE from '@/assets/tokens/bevm_canary.png'
 
 import UNISAT_IMAGE from '@/assets/wallets/unisat.png'
 
@@ -98,7 +99,7 @@ export const CHAIN_LIST: Array<{
     name: 'BEVM',
     value: CHAIN.BEVM
   }, {
-    image: BEVM_IMAGE,
+    image: BEVM_CANARY_IMAGE,
     name: 'BEVM Canary',
     value: CHAIN.BEVM_CANARY
   }, {
