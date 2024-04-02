@@ -76,8 +76,12 @@ export const CHAIN_LIST = [
   {
     image: BEVM_IMAGE,
     name: 'BEVM',
-    value: CHAIN.BEVM,
-    blockExplorerUrl: 'https://scan-canary-testnet.bevm.io'
+    value: CHAIN.BEVM
+  }, {
+    image: BEVM_IMAGE,
+    name: 'BEVM Canary',
+    value: CHAIN.BEVM_CANARY,
+    hide: true
   }, {
     image: B2_IMAGE,
     name: 'B²',
