@@ -83,7 +83,16 @@ export const CHAIN_CONFIG_MAP: Record<string, any> = {
   }
 }
 
-export const CHAIN_LIST = [
+export const CHAIN_LIST: Array<{
+  image: string
+  name: string
+  value: CHAIN
+  /**
+   * hidden in the wallet connect
+   */
+  hide?: boolean
+  disabled?: boolean
+}> = [
   {
     image: BEVM_IMAGE,
     name: 'BEVM',
