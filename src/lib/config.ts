@@ -13,8 +13,19 @@ import { WALLET } from '@/entities/wallet'
 
 export const CHAIN_CONFIG_MAP: Record<string, any> = {
   [CHAIN.BEVM]: {
+    chainId: '0x2cef',
+    chainName: 'BEVM Testnet',
+    rpcUrls: ['https://testnet.bevm.io'],
+    nativeCurrency: {
+      name: 'BTC',
+      symbol: 'BTC',
+      decimals: 18
+    },
+    blockExplorerUrls: ['https://scan-testnet.bevm.io']
+  },
+  [CHAIN.BEVM_CANARY]: {
     chainId: '0x5de',
-    chainName: 'BEVM Canary TestNet',
+    chainName: 'BEVM Canary Testnet',
     rpcUrls: ['https://canary-testnet.bevm.io'],
     nativeCurrency: {
       name: 'BTC',
@@ -80,8 +91,7 @@ export const CHAIN_LIST = [
   }, {
     image: BEVM_IMAGE,
     name: 'BEVM Canary',
-    value: CHAIN.BEVM_CANARY,
-    hide: true
+    value: CHAIN.BEVM_CANARY
   }, {
     image: B2_IMAGE,
     name: 'B²',
