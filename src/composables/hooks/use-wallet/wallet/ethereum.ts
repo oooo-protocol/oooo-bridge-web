@@ -123,7 +123,7 @@ export class EthereumWallet implements EthereumWalletImpl {
       method: 'eth_sendTransaction',
       params: [{
         gasPrice: parameter.gas,
-        gas: '21000',
+        gas: '0x5208',
         to: parameter.to,
         from: parameter.from,
         value: '0x' + ethers.parseUnits(parameter.value, config.nativeCurrency.decimals).toString(16),
