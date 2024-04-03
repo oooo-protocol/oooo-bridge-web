@@ -27,10 +27,7 @@ export class BitcoinWallet implements WalletImpl {
 
   async connect () {
     const provider = await this.getProvider()
-    const network = await provider.getNetwork()
-    if (network !== ENV_VARIABLE.VITE_NETWORK) {
-      await provider.switchNetwork(ENV_VARIABLE.VITE_NETWORK)
-    }
+    await this.checkNetwork()
     const accounts = await provider.requestAccounts()
     return accounts[0] as string
   }
@@ -39,7 +36,7 @@ export class BitcoinWallet implements WalletImpl {
 
   async sign (message: string) {
     const provider = await this.getProvider()
-    await provider.switchNetwork(ENV_VARIABLE.VITE_NETWORK)
+    await this.checkNetwork()
     const signature = await provider.signMessage(message)
     return signature
   }
@@ -49,9 +46,17 @@ export class BitcoinWallet implements WalletImpl {
     return provider.getPublicKey()
   }
 
+  async checkNetwork () {
+    const provider = await this.getProvider()
+    const network = await provider.getNetwork()
+    if (network !== ENV_VARIABLE.VITE_NETWORK) {
+      await provider.switchNetwork(ENV_VARIABLE.VITE_NETWORK)
+    }
+  }
+
   async transaction (parameter: TransactionParameter) {
     const provider = await this.getProvider()
-    await provider.switchNetwork(ENV_VARIABLE.VITE_NETWORK)
+    await this.checkNetwork()
     return provider.sendBitcoin(
       parameter.to,
       Number(new Decimal(parameter.value).mul(new Decimal(10).pow(8))),
