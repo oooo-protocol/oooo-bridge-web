@@ -186,6 +186,9 @@ const onSubmit = async (values: Record<string, any>) => {
     })
     const signature = await sign(signContent, parameter.fromAddress)
     const publicKey = await getPublicKey()
+    if (publicKey == null) {
+      throw new Error('Invalid signature, please try again.')
+    }
     const hash = await transaction({
       chain: parameter.fromChain,
       from: parameter.fromAddress,
