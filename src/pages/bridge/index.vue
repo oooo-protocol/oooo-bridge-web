@@ -363,7 +363,7 @@ const onSubmit = async (values: Record<string, any>) => {
           </span>
         </p>
         <Button
-          class="mt-[88px] md:mt-[32px] w-full md:w-[240px]"
+          class="mt-[32px] w-full md:w-[240px]"
           :disabled="loading || isInsufficient"
         >
           <LoadingIcon

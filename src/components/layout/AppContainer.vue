@@ -7,6 +7,8 @@
 
 <style lang="scss">
 #app {
+  display: flex;
+  flex-direction: column;
   position: relative;
   height: 100%;
   overflow-y: scroll;

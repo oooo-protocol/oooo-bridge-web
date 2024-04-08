@@ -4,7 +4,7 @@ import WalletSelect from './WalletSelect.vue'
 </script>
 
 <template>
-  <div class="app-header flex items-center justify-between xl:justify-end gap-[40px] px-[24px] md:px-[48px] xl:pr-[120px] h-[80px]">
+  <div class="app-header shrink-0 flex items-center justify-between xl:justify-end gap-[40px] px-[24px] md:px-[48px] xl:pr-[120px] h-[80px]">
     <AppNav />
     <WalletSelect />
   </div>
