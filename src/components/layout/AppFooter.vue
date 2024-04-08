@@ -34,7 +34,7 @@ const { data: price } = useQuery({
 </script>
 
 <template>
-  <div class="flex flex-col md:flex-row justify-between md:items-end mt-[auto] py-[40px] px-[24px] md:px-[48px] xl:pr-[120px] normal-case">
+  <div class="flex flex-col md:flex-row justify-between md:items-end mt-[auto] py-[40px] px-[24px] md:px-[48px] xl:px-[120px] normal-case">
     <div class="xl:w-[300px] hidden md:block">
       <a
         class="block w-max md:mb-[24px] xl:mb-[70px]"
