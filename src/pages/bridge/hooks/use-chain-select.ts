@@ -17,6 +17,7 @@ export const useChainSelect = (configs: Ref<ChainConfig[] | undefined>) => {
   const toConfig = computed(() => fromConfig.value?.toChains.find(config => config.chainName === select.to))
   const platformFee = computed(() => toConfig.value?.platformFee)
   const isNeedToAddress = computed(() => toConfig.value?.wAddress)
+  const toMaxSat = computed(() => toConfig.value?.toMaxSat)
 
   watch(() => [fromConfig.value, configs.value], ([config]) => {
     const isValid = configs.value && configs.value.length > 0
@@ -64,6 +65,7 @@ export const useChainSelect = (configs: Ref<ChainConfig[] | undefined>) => {
     select,
     fromChainConfig: fromConfig,
     platformFee,
+    toMaxSat,
     toChainList,
     isNeedToAddress,
     onSelectReset

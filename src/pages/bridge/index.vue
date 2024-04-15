@@ -9,7 +9,7 @@ import { useMutation, useQuery } from '@tanstack/vue-query'
 import { retrieveTransactionConfig, transfer, retrieveChainConfigs } from '@/request/api/bridge'
 import Decimal from 'decimal.js-light'
 import { useWallet } from '@/composables/hooks/use-wallet'
-import { ENV_VARIABLE, BRIDGE_TEXT_MAP } from '@/lib/constants'
+import { ENV_VARIABLE } from '@/lib/constants'
 import LoadingIcon from '@/components/LoadingIcon.vue'
 import { useToast } from '@/components/ui/toast/use-toast'
 import PageLoading from '@/components/PageLoading.vue'
@@ -24,6 +24,7 @@ import { useChainSelect } from './hooks/use-chain-select'
 import { WALLET_TYPE } from '@/entities/wallet'
 import { NoAlarmException } from '@/lib/exception'
 import { CHAIN, NETWORK } from '@/entities/chain'
+import { useTimeSpend } from './hooks/use-time-spend'
 
 const { wallet, getWalletType, retrieveNativeBalance, sign, transaction, getPublicKey, onLogout } = useWallet()
 
@@ -34,7 +35,7 @@ const { isPending: initializing, isError: isConfigInvalid, data: configs } = use
   queryKey: ['/v1/bridge/chain/list'],
   queryFn: retrieveChainConfigs
 })
-const { select, fromChainConfig, platformFee, toChainList, onSelectReset } = useChainSelect(configs)
+const { select, fromChainConfig, platformFee, toMaxSat, toChainList, onSelectReset } = useChainSelect(configs)
 const form = reactive<{
   token: string
   amount: string
@@ -44,13 +45,7 @@ const form = reactive<{
   amount: '',
   receiveAddress: undefined
 })
-const BRIDGE_TEXT = computed(() => {
-  const fromText = BRIDGE_TEXT_MAP[select.from]
-  if (fromText != null) return fromText
-  const toText = BRIDGE_TEXT_MAP[select.to]
-  if (toText != null) return toText
-  return BRIDGE_TEXT_MAP.default
-})
+const BRIDGE_TEXT = useTimeSpend(select, toMaxSat)
 watch(() => [wallet.value, configs.value], ([wallet]) => {
   if (!wallet) return
   const type = getWalletType()
@@ -414,8 +409,17 @@ const onSubmit = async (values: Record<string, any>) => {
         </p>
         <p class="oooo-bridge__description">
           {{ BRIDGE_TEXT.TIME_SPEND }} |
-          <span class="underline">
+          <span
+            class="underline"
+            v-if="BRIDGE_TEXT.SAVE_TIME"
+          >
             {{ BRIDGE_TEXT.SAVE_TIME }}
+          </span>
+          <span
+            class="text-[#FF5402]"
+            v-if="BRIDGE_TEXT.ERROR"
+          >
+            {{ BRIDGE_TEXT.ERROR }}
           </span>
         </p>
         <Button

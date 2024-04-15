@@ -95,21 +95,13 @@ export const CHAIN_LIST = [
   }
 ]
 
-export const BRIDGE_TEXT_MAP: Record<string, {
-  SAVE_AMOUNT: string
-  TIME_SPEND: string
-  SAVE_TIME: string
-}> = {
-  default: {
-    SAVE_AMOUNT: 'SAVE $3.65~$4.45',
-    TIME_SPEND: '30S～5min',
-    SAVE_TIME: 'SAVE 3 HOURS'
-  },
-  [CHAIN.BTC]: {
-    SAVE_AMOUNT: 'SAVE $1.85~$2.23',
-    TIME_SPEND: '10~60min',
-    SAVE_TIME: 'SAVE 2 HOURS'
-  }
+export const BRIDGE_TEXT_MAP = {
+  BITCOIN_SAVE_AMOUNT: 'SAVE $1.85~$2.23',
+  BITCOIN_TIME_SPEND: '10~60min',
+  BITCOIN_SAVE_TIME: 'SAVE 2 HOURS',
+  ETHEREUM_SAVE_AMOUNT: 'SAVE $3.65~$4.45',
+  ETHEREUM_TIME_SPEND: '30S～5min',
+  ETHEREUM_SAVE_TIME: 'SAVE 3 HOURS'
 }
 
 export const BTC_WALLETS = [

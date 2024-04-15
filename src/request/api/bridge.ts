@@ -137,3 +137,16 @@ export const retrieveTransactionStatus = async (
     return await retrieveEthereumTransactionStatus(chain, hash)
   }
 }
+
+export const retrieveBitcoinRecommendFees = async () => {
+  const { data } = await axiosOrigin.get<{
+    'fastestFee': number
+    'halfHourFee': number
+    'hourFee': number
+    'economyFee': number
+    'minimumFee': number
+  }>(combineURLs(ENV_VARIABLE.VITE_MEMPOOL_URL, '/v1/fees/recommended'), {
+    withCredentials: false
+  })
+  return data
+}

@@ -18,12 +18,11 @@ import AppNavbar from './AppNavbar.vue'
       />
     <!-- </KeepAlive> -->
     </RouterView>
-    <a
-      href="https://oooo.money"
+    <p
       class="text-[#a4a4a4] text-center text-[13px] md:text-[16px] normal-case"
     >
       Powered by oooo.money
-    </a>
+    </p>
     <AppFooter />
   </AppContainer>
 </template>

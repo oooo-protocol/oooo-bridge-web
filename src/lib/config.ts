@@ -130,21 +130,13 @@ export const CHAIN_LIST: Array<{
   }
 ]
 
-export const BRIDGE_TEXT_MAP: Record<string, {
-  SAVE_AMOUNT: string
-  TIME_SPEND: string
-  SAVE_TIME: string
-}> = {
-  default: {
-    SAVE_AMOUNT: 'SAVE $3.65~$4.45',
-    TIME_SPEND: '30S',
-    SAVE_TIME: 'SAVE 4 HOURS'
-  },
-  [CHAIN.BTC]: {
-    SAVE_AMOUNT: 'SAVE $1.85~$2.23',
-    TIME_SPEND: '5~30MIN',
-    SAVE_TIME: 'SAVE 2 HOURS'
-  }
+export const BRIDGE_TEXT_MAP = {
+  BITCOIN_SAVE_AMOUNT: 'SAVE $1.85~$2.23',
+  BITCOIN_TIME_SPEND: '5~30MIN',
+  BITCOIN_SAVE_TIME: 'SAVE 2 HOURS',
+  ETHEREUM_SAVE_AMOUNT: 'SAVE $3.65~$4.45',
+  ETHEREUM_TIME_SPEND: '30S',
+  ETHEREUM_SAVE_TIME: 'SAVE 4 HOURS'
 }
 
 export const BTC_WALLETS = [

@@ -9,24 +9,28 @@ export interface Chain {
 
 export interface ChainConfig extends Chain {
   /**
-   * 平台钱包地址, 暂未使用
+   * Platform walllet address, currently unused.
    */
   platformWalletAddr: string
   /**
-   * 平台费用
+   * Platform fee
    */
   platformFee: string
   /**
-   * 链支持最小金额
+   * transfer chain support minimal amount
    */
   minAmount: number
   /**
-   * 链支持最大金额
+   * transfer chain support maximal amount
    */
   maxAmount: number
   toChains: Array<ChainConfig & {
     /**
-     * 判断是否需要填写收款地址
+     * Platform transfer bitcoin can support max sat gas fee
+     */
+    toMaxSat?: number
+    /**
+     * @deprecated now we support user re-write receive address
      */
     wAddress: boolean
     /**
