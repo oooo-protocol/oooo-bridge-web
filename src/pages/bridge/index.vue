@@ -34,10 +34,15 @@ const { isPending: initializing, isError: isConfigInvalid, data: configs } = use
   queryKey: ['/v1/bridge/chain/list'],
   queryFn: retrieveChainConfigs
 })
-const { select, fromChainConfig, platformFee, toChainList, isNeedToAddress, onSelectReset } = useChainSelect(configs)
-const form = reactive({
+const { select, fromChainConfig, platformFee, toChainList, onSelectReset } = useChainSelect(configs)
+const form = reactive<{
+  token: string
+  amount: string
+  receiveAddress?: string
+}>({
   token: 'BTC',
-  amount: ''
+  amount: '',
+  receiveAddress: undefined
 })
 const BRIDGE_TEXT = computed(() => {
   const fromText = BRIDGE_TEXT_MAP[select.from]
@@ -87,6 +92,57 @@ watch(() => [select.from, wallet.value], async () => {
 }, {
   immediate: true
 })
+
+/** --------------------- Update receiveAddress field  -------------- */
+watch(wallet, (wallet, oldWallet) => {
+  /**
+   * when wallet change, we will update when trigger follow scenarios
+   * 1. wallet disconnect, direct set `undefined`
+   * 2. wallet connect Bitcoin / wallet connect Ethereum but select chain contain Bitcoin, set `undefined`
+   * 3. wallet change and (receiveAddress not value / receiveAddress value not old wallet address), set `walletAddress`
+   */
+  if (!wallet) {
+    form.receiveAddress = undefined
+    return
+  }
+  const walletType = getWalletType()
+  if (walletType === WALLET_TYPE.BITCOIN || [select.from, select.to].includes(CHAIN.BTC)) {
+    form.receiveAddress = undefined
+    return
+  }
+  const edited = oldWallet && form.receiveAddress != null && form.receiveAddress !== oldWallet.address
+  if (!edited) {
+    form.receiveAddress = wallet.address
+  }
+}, {
+  immediate: true
+})
+
+watch(() => select.from, (from, oldFrom) => {
+  /**
+   * when from change, we will update when trigger follow scenarios
+   * 1. `from` chain from bitcoin to ethereum, and `to` chain not to bitcoin, set `walletAddress`
+   * 2. `from` chain or `to` chain is bitcoin, clear `walletAddress`
+   */
+  if (oldFrom === CHAIN.BTC && select.to !== CHAIN.BTC) {
+    form.receiveAddress = wallet.value?.address
+  } else if (from === CHAIN.BTC || select.to === CHAIN.BTC) {
+    form.receiveAddress = undefined
+  }
+})
+watch(() => select.to, (to, oldTo) => {
+  /**
+   * when from change, we will update when trigger follow scenarios
+   * 1. `to` chain from bitcoin to ethereum, and `from` chain not to bitcoin, set `walletAddress`
+   * 2. `from` chain or `to` chain is bitcoin, clear `walletAddress`
+   */
+  if (oldTo === CHAIN.BTC && select.from !== CHAIN.BTC) {
+    form.receiveAddress = wallet.value?.address
+  } else if (to === CHAIN.BTC || select.from === CHAIN.BTC) {
+    form.receiveAddress = undefined
+  }
+})
+/** --------------------- End  -------------- */
 
 const loading = ref(false)
 const min = computed(() => fromChainConfig.value?.minAmount ?? 0.00001)
@@ -160,7 +216,7 @@ const onSubmit = async (values: Record<string, any>) => {
       fromChain: select.from,
       fromAddress: address,
       toChain: select.to,
-      toAddress: values.receiveAddress ?? address,
+      toAddress: values.receiveAddress,
       amount: values.amount
     }
     const config = await retrieveTransactionConfig({
@@ -327,7 +383,7 @@ const onSubmit = async (values: Record<string, any>) => {
           />
         </FormField>
         <FormField
-          v-if="isNeedToAddress"
+          v-model="form.receiveAddress"
           v-slot="{ componentField }"
           name="receiveAddress"
           :rules="rules.receiveAddress"
