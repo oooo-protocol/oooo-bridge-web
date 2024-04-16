@@ -1,7 +1,6 @@
 import { WALLET_TYPE, type TransactionParameter, type WalletOptions, type EthereumWalletImpl } from '@/entities/wallet'
 import { CHAIN_CONFIG_MAP, ENV_VARIABLE } from '../../../../lib/constants'
-import { ethers, formatEther } from 'ethers'
-import { string2Hex } from '@/lib/utils'
+import { ethers, formatEther, toBeHex, toUtf8Bytes, hexlify } from 'ethers'
 import { NoAlarmException } from '@/lib/exception'
 import { type CHAIN, type NetworkConfig } from '@/entities/chain'
 
@@ -99,7 +98,7 @@ export class EthereumWallet implements EthereumWalletImpl {
     const parameter = {
       method: 'personal_sign',
       params: [
-        '0x' + string2Hex(message),
+        hexlify(toUtf8Bytes(message)),
         from
       ]
     }
@@ -122,11 +121,11 @@ export class EthereumWallet implements EthereumWalletImpl {
     const param = {
       method: 'eth_sendTransaction',
       params: [{
-        gasPrice: `0x${Number(parameter.gas).toString(16)}`,
+        gasPrice: toBeHex(Number(parameter.gas)),
         gas: '0x5208',
         to: parameter.to,
         from: parameter.from,
-        value: '0x' + ethers.parseUnits(parameter.value, config.nativeCurrency.decimals).toString(16),
+        value: toBeHex(ethers.parseUnits(parameter.value, config.nativeCurrency.decimals)),
         data: '0x',
         chainId: config.chainId
       }]

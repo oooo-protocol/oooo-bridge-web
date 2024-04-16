@@ -48,14 +48,6 @@ export function formatHashWithEllipsis (hash: string, front = 6, tail = 4) {
   return `${hash.substring(0, front)}...${hash.substring(hash.length - tail)}`
 }
 
-export const string2Hex = (str: string) => {
-  let hex = ''
-  for (let i = 0; i < str.length; i++) {
-    hex += str.charCodeAt(i).toString(16).padStart(2, '0')
-  }
-  return hex
-}
-
 /**
  * Creates a new URL by combining the specified URLs
  *
