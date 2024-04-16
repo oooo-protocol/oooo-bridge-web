@@ -144,7 +144,11 @@ const min = computed(() => fromChainConfig.value?.minAmount ?? 0.00001)
 const max = computed(() => {
   const maxAmount = fromChainConfig.value?.maxAmount ?? 0.0001
   if (balance.value != null) {
-    return Math.min(Number(balance.value), maxAmount)
+    /**
+     * fix decimal >= 7, js will use exponential notation display, it will cause user max input error when balance toString
+     *  use `Decimal.greaterThan` instead of `Math.min` to avoid transform to exponential notation
+     */
+    return new Decimal(balance.value).greaterThan(maxAmount) ? maxAmount : balance.value
   }
   return maxAmount
 })
@@ -172,7 +176,7 @@ const rules: Record<string, RuleExpression<any>> = {
     if (Number.isNaN(amount) || amount < min.value) {
       return `The minimum amount is ${min.value}`
     }
-    if (amount > max.value) {
+    if (amount > Number(max.value)) {
       return `The maximum amount is ${max.value}`
     }
     return true
