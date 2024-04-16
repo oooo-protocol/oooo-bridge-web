@@ -122,7 +122,7 @@ export class EthereumWallet implements EthereumWalletImpl {
     const param = {
       method: 'eth_sendTransaction',
       params: [{
-        gasPrice: parameter.gas,
+        gasPrice: `0x${Number(parameter.gas).toString(16)}`,
         gas: '0x5208',
         to: parameter.to,
         from: parameter.from,
