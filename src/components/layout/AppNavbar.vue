@@ -12,7 +12,7 @@ const activity = ENV_VARIABLE.VITE_NETWORK === NETWORK.LIVENET
 </script>
 
 <template>
-  <div class="app-navbar mx-[24px] md:mx-[48px] xl:mx-auto xl:max-w-[832px]">
+  <div class="app-navbar mx-[24px] md:mx-[48px] xl:mx-auto xl:max-w-[832px] xl:w-full">
     <a
       class="app-navbar__banner cursor-pointer"
       :data-network="ENV_VARIABLE.VITE_NETWORK"
@@ -27,6 +27,7 @@ const activity = ENV_VARIABLE.VITE_NETWORK === NETWORK.LIVENET
   &__banner {
     display: block;
     height: 0;
+    width: 100%;
     background: no-repeat center/contain;
 
     &[data-network='testnet'] {
