@@ -215,7 +215,12 @@ const checkBalanceIsEnough = (chain: CHAIN, amount: string | number, gasPrice: s
   }
   const estimateCost = Number(amount) + estimateGas
   if (estimateCost > Number(balance.value)) {
-    form.amount = (Number(amount) - estimateGas).toString()
+    const remain = Number(amount) - estimateGas
+    if (remain > min.value) {
+      form.amount = remain.toString()
+    } else {
+      form.amount = min.value.toString()
+    }
     throw new NoAlarmException('Not enough balance for gas fees. Bridge amount was automatically decreased.')
   }
 }
