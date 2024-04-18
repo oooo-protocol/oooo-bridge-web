@@ -209,7 +209,7 @@ const checkBalanceIsEnough = (chain: CHAIN, amount: string | number, gasPrice: s
     /**
      * 400 is a normal bytes
      */
-    estimateGas = gasPrice * 400
+    estimateGas = gasPrice * 400 * 1e-8
   } else {
     estimateGas = (gasPrice * 21000) * 1e-18 * ratio
   }
