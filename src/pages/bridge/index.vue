@@ -198,6 +198,28 @@ const rules: Record<string, RuleExpression<any>> = {
   }
 }
 
+const checkBalanceIsEnough = (chain: CHAIN, amount: string | number, gasPrice: string | number) => {
+  if (balance.value == null) {
+    throw new NoAlarmException('Insufficient balance, not enough balance to pay for Gas')
+  }
+  let estimateGas: number
+  const ratio = 1.5
+  gasPrice = Number(gasPrice)
+  if (chain === CHAIN.BTC) {
+    /**
+     * 400 is a normal bytes
+     */
+    estimateGas = gasPrice * 400
+  } else {
+    estimateGas = (gasPrice * 21000) * 1e-18 * ratio
+  }
+  const estimateCost = Number(amount) + estimateGas
+  if (estimateCost > Number(balance.value)) {
+    form.amount = (Number(amount) - estimateGas).toString()
+    throw new NoAlarmException('Not enough balance for gas fees. Bridge amount was automatically decreased.')
+  }
+}
+
 const { mutateAsync: sendTransfer } = useMutation({
   mutationFn: transfer,
   retry: true
@@ -226,14 +248,9 @@ const onSubmit = async (values: Record<string, any>) => {
       toAddress: parameter.toAddress
     })
     /**
-     * 估算Transaction Fee以判断是否超出余额
+     * Estimate transaction fee to avoid balance exceeded
      */
-    if (parameter.fromChain === CHAIN.BTC) {
-      const estimateCost = parameter.amount + (Number(config.gasPrice) * 400)
-      if (estimateCost > balance.value!) {
-        throw new NoAlarmException('Insufficient balance, not enough balance to pay for Gas')
-      }
-    }
+    checkBalanceIsEnough(parameter.fromChain, parameter.amount, config.gasPrice)
 
     const signContent = JSON.stringify({
       ...parameter,
@@ -349,12 +366,16 @@ const onSubmit = async (values: Record<string, any>) => {
                   v-bind="componentField"
                   :decimal="8"
                 />
-                <span
+                <button
                   class="xl:text-[19px] pl-[8px] cursor-pointer text-[#ff5402]"
+                  :class="{
+                    'cursor-not-allowed': !wallet
+                  }"
+                  :disabled="!wallet"
                   @click.prevent="setFieldValue('amount', max)"
                 >
                   MAX
-                </span>
+                </button>
               </div>
             </template>
           </ChainSelect>
