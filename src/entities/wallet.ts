@@ -20,20 +20,17 @@ export interface TransactionParameter {
   chain: CHAIN
 }
 
+export type onAccountChangedEvent = (account?: string) => void
+
 export interface WalletImpl {
   type: WALLET_TYPE
-  getProvider: any
+  provider: any
   getAccounts: () => Promise<string[]>
   connect: () => Promise<string>
   disconnect: () => Promise<void>
   sign: (message: string, from: string) => Promise<string>
   transaction: (parameter: TransactionParameter) => Promise<string>
-  removeAllListeners: () => void
-}
-
-export interface WalletOptions {
-  getProvider: () => any
-  disconnect?: () => Promise<void>
+  onAccountChanged: (event: onAccountChangedEvent) => void
 }
 
 export interface EthereumWalletImpl extends WalletImpl {

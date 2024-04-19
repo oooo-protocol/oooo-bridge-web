@@ -37,8 +37,7 @@ class WalletWrapper {
 
       const accounts = await _instance.getAccounts()
       if (accounts.includes(_wallet.address)) {
-        const provider = await _instance.getProvider()
-        await provider.on('accountsChanged', this.handleAddressChanged)
+        await _instance.onAccountChanged(this.handleAddressChanged)
       } else {
         void this.onLogout()
       }
@@ -65,19 +64,17 @@ class WalletWrapper {
   onConnect = async (name: WALLET) => {
     const instance = this.getInstance(name)
     const address = await instance.connect()
-    const provider = await instance.getProvider()
-    await provider.on('accountsChanged', this.handleAddressChanged)
     this.updateWallet({
       address,
       name
     })
+    await instance.onAccountChanged(this.handleAddressChanged)
   }
 
-  handleAddressChanged = (accounts: string[]) => {
-    const account = accounts[0]
-    if (account && this.wallet.value) {
+  handleAddressChanged = (account?: string) => {
+    if (account != null && this.wallet.value) {
       this.updateWallet({
-        address: accounts[0],
+        address: account,
         name: this.wallet.value.name
       })
     } else {
@@ -89,7 +86,6 @@ class WalletWrapper {
     this.updateWallet(undefined)
     if (this.instance) {
       void this.instance.disconnect()
-      void this.instance.removeAllListeners()
       this.instance = undefined
     }
   }

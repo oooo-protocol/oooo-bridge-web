@@ -202,23 +202,24 @@ const rules: Record<string, RuleExpression<any>> = {
 }
 
 const checkBalanceIsEnough = (chain: CHAIN, amount: string | number, gasPrice: string | number) => {
-  if (balance.value == null) {
-    throw new NoAlarmException('Insufficient balance, not enough balance to pay for Gas')
-  }
+  if (balance.value == null) return
+  amount = Number(amount)
+  gasPrice = Number(gasPrice)
+
   let estimateGas: number
   const ratio = 1.5
-  gasPrice = Number(gasPrice)
+
   if (chain === CHAIN.BTC) {
     /**
      * 400 is a normal bytes
      */
-    estimateGas = gasPrice * 400 * 1e-8
+    estimateGas = gasPrice * 200 * 1e-8
   } else {
     estimateGas = (gasPrice * 21000) * 1e-18 * ratio
   }
-  const estimateCost = Number(amount) + estimateGas
+  const estimateCost = amount + estimateGas
   if (estimateCost > Number(balance.value)) {
-    const remain = Number(amount) - estimateGas
+    const remain = amount - estimateGas
     if (remain > min.value) {
       form.amount = remain.toString()
     } else {

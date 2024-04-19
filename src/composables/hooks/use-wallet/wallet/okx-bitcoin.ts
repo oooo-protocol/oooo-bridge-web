@@ -1,15 +1,17 @@
 import { NoAlarmException } from '@/lib/exception'
 import { BitcoinWallet } from './bitcoin'
 
-export default new BitcoinWallet({
-  getProvider () {
+class OKXBitcoinWallet extends BitcoinWallet {
+  get provider () {
     if (window.okxwallet.bitcoin == null) throw new NoAlarmException('Please install OKX Wallet')
     return window.okxwallet.bitcoin
-  },
+  }
+
   async disconnect () {
-    const provider = await this.getProvider()
     try {
-      await provider.disconnect()
+      await this.provider.disconnect()
     } catch (e) {}
   }
-})
+}
+
+export default new OKXBitcoinWallet()

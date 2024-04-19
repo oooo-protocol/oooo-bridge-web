@@ -1,4 +1,4 @@
-import { WALLET_TYPE, type TransactionParameter, type WalletOptions, type EthereumWalletImpl } from '@/entities/wallet'
+import { WALLET_TYPE, type TransactionParameter, type EthereumWalletImpl, type onAccountChangedEvent } from '@/entities/wallet'
 import { CHAIN_CONFIG_MAP, ENV_VARIABLE } from '../../../../lib/constants'
 import { ethers, formatEther, toBeHex, toUtf8Bytes, hexlify } from 'ethers'
 import { NoAlarmException } from '@/lib/exception'
@@ -7,45 +7,25 @@ import { type CHAIN, type NetworkConfig } from '@/entities/chain'
 export class EthereumWallet implements EthereumWalletImpl {
   readonly type = WALLET_TYPE.ETHEREUM
 
-  getProvider: any
-
-  constructor ({ getProvider, disconnect }: WalletOptions) {
-    this.getProvider =
-      getProvider ??
-      (() => {
-        if (window.ethereum == null) throw new NoAlarmException('Please install Wallet plugin')
-        return window.ethereum
-      })
-    if (disconnect) {
-      this.disconnect = disconnect
-    }
+  get provider () {
+    if (window.ethereum == null) throw new NoAlarmException('Please install Wallet plugin')
+    return window.ethereum
   }
 
   async getAccounts () {
-    const provider = await this.getProvider()
-    return provider.request({ method: 'eth_accounts' }) as string[]
+    return await this.provider.request({ method: 'eth_accounts' }) as string[]
   }
 
   async connect () {
-    const provider = await this.getProvider()
-    const accounts = await provider.request({ method: 'eth_requestAccounts' })
+    const accounts = await this.provider.request({ method: 'eth_requestAccounts' })
     return accounts[0] as string
   }
 
   async disconnect () {
-    const provider = await this.getProvider()
+    void this.provider.removeAllListeners()
     try {
-      /**
-       * only metamask support wallet_revokePermissions method
-       */
-      await provider.request({
-        method: 'wallet_revokePermissions',
-        params: [
-          {
-            eth_accounts: {}
-          }
-        ]
-      })
+      // @ts-expect-error some wallet can use `disconnect` to direct logout, such as OKX
+      await this.provider.disconnect?.()
     } catch (e) {}
   }
 
@@ -67,8 +47,7 @@ export class EthereumWallet implements EthereumWalletImpl {
     }
 
     try {
-      const provider = await this.getProvider()
-      await provider.request({
+      await this.provider.request({
         method: 'wallet_switchEthereumChain',
         params: [
           {
@@ -86,15 +65,13 @@ export class EthereumWallet implements EthereumWalletImpl {
   }
 
   async addToChain (config: NetworkConfig) {
-    const provider = await this.getProvider()
-    await provider.request({
+    await this.provider.request({
       method: 'wallet_addEthereumChain',
       params: [config]
     })
   }
 
   async sign (message: string, from: string) {
-    const provider = await this.getProvider()
     const parameter = {
       method: 'personal_sign',
       params: [
@@ -105,12 +82,11 @@ export class EthereumWallet implements EthereumWalletImpl {
     if (ENV_VARIABLE.VITE_MODE === 'dev') {
       console.log('personal_sign', parameter)
     }
-    const signature = await provider.request(parameter)
+    const signature = await this.provider.request(parameter)
     return signature
   }
 
   async transaction (parameter: TransactionParameter) {
-    const provider = await this.getProvider()
     const config = CHAIN_CONFIG_MAP[parameter.chain]
     if (config == null) {
       throw new Error('The network is not configured')
@@ -133,11 +109,12 @@ export class EthereumWallet implements EthereumWalletImpl {
     if (ENV_VARIABLE.VITE_MODE === 'dev') {
       console.log('eth_sendTransaction', param)
     }
-    return provider.request(param)
+    return await this.provider.request(param)
   }
 
-  async removeAllListeners () {
-    const provider = await this.getProvider()
-    void provider.removeAllListeners()
+  async onAccountChanged (event: onAccountChangedEvent) {
+    await this.provider.on('accountsChanged', (accounts: string[]) => {
+      event(accounts[0])
+    })
   }
 }

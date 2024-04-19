@@ -1,63 +1,53 @@
-import { WALLET_TYPE, type TransactionParameter, type WalletImpl, type WalletOptions } from '@/entities/wallet'
+import { WALLET_TYPE, type onAccountChangedEvent, type TransactionParameter, type WalletImpl } from '@/entities/wallet'
 import { ENV_VARIABLE } from '@/lib/constants'
 import { Decimal } from 'decimal.js-light'
 
 export class BitcoinWallet implements WalletImpl {
   readonly type = WALLET_TYPE.BITCOIN
 
-  getProvider: any
-
-  constructor ({ getProvider, disconnect }: WalletOptions) {
-    this.getProvider = getProvider
-    if (disconnect) {
-      this.disconnect = disconnect
-    }
+  get provider (): any {
+    throw new Error('Provider not config, please check it')
   }
 
   async getAccounts () {
-    const provider = await this.getProvider()
-    return provider.getAccounts() as string[]
+    return this.provider.getAccounts() as string[]
   }
 
   async getNativeBalance () {
-    const provider = await this.getProvider()
-    const balance = await provider.getBalance()
+    const balance = await this.provider.getBalance()
     return balance.confirmed * Math.pow(10, -8)
   }
 
   async connect () {
-    const provider = await this.getProvider()
     await this.checkNetwork()
-    const accounts = await provider.requestAccounts()
+    const accounts = await this.provider.requestAccounts()
     return accounts[0] as string
   }
 
-  async disconnect () {}
+  async disconnect () {
+    void this.provider.removeAllListeners()
+  }
 
   async sign (message: string) {
-    const provider = await this.getProvider()
     await this.checkNetwork()
-    const signature = await provider.signMessage(message)
+    const signature = await this.provider.signMessage(message)
     return signature
   }
 
   async getPublicKey () {
-    const provider = await this.getProvider()
-    return provider.getPublicKey()
+    return this.provider.getPublicKey()
   }
 
   async checkNetwork () {
-    const provider = await this.getProvider()
-    const network = await provider.getNetwork()
+    const network = await this.provider.getNetwork()
     if (network !== ENV_VARIABLE.VITE_NETWORK) {
-      await provider.switchNetwork(ENV_VARIABLE.VITE_NETWORK)
+      await this.provider.switchNetwork(ENV_VARIABLE.VITE_NETWORK)
     }
   }
 
   async transaction (parameter: TransactionParameter) {
-    const provider = await this.getProvider()
     await this.checkNetwork()
-    return provider.sendBitcoin(
+    return this.provider.sendBitcoin(
       parameter.to,
       Number(new Decimal(parameter.value).mul(new Decimal(10).pow(8))),
       {
@@ -66,8 +56,13 @@ export class BitcoinWallet implements WalletImpl {
     )
   }
 
-  async removeAllListeners () {
-    const provider = await this.getProvider()
-    void provider.removeAllListeners()
+  async onAccountChanged (event: onAccountChangedEvent) {
+    this.provider.on('accountChanged', (account?: {
+      address: string
+      publicKey: string
+      compressedPublicKey: string
+    }) => {
+      event(account?.address)
+    })
   }
 }
