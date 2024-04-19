@@ -14,7 +14,6 @@ import WalletConnectModal from '@/components/wallet-connect/WalletConnectModal.v
 import { createFunctionCall } from '../wallet-connect/function-call'
 import { type CHAIN } from '@/entities/chain'
 
-const route = useRoute()
 const router = useRouter()
 const { wallet, onLogout } = useWallet()
 
@@ -32,9 +31,7 @@ const onClickHistory = () => {
 
 const onClickLogout = () => {
   void onLogout()
-  if (route.name !== 'bridge') {
-    void router.replace({ name: 'bridge' })
-  }
+  void router.replace({ name: 'bridge' })
 }
 </script>
 

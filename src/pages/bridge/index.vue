@@ -25,14 +25,11 @@ import { WALLET_TYPE } from '@/entities/wallet'
 import { NoAlarmException } from '@/lib/exception'
 import { CHAIN, NETWORK } from '@/entities/chain'
 import { useTimeSpend } from './hooks/use-time-spend'
-import { useInvite } from './hooks/use-invite'
 
 const { wallet, getWalletType, retrieveNativeBalance, sign, transaction, getPublicKey, onLogout } = useWallet()
 
 const router = useRouter()
 const { toast } = useToast()
-
-useInvite()
 
 const { isPending: initializing, isError: isConfigInvalid, data: configs } = useQuery({
   queryKey: ['/v1/bridge/chain/list'],
