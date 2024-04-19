@@ -5,6 +5,7 @@ import BTC_IMAGE from '@/assets/tokens/btc.png'
 import MERLIN_IMAGE from '@/assets/tokens/merlin.png'
 import ROOTSTOCK_IMAGE from '@/assets/tokens/rootstock.png'
 import BEVM_CANARY_IMAGE from '@/assets/tokens/bevm_canary.png'
+import BITLAYER_IMAGE from '@/assets/tokens/bitlayer.png'
 
 import OKX_IMAGE from '@/assets/wallets/okx.png'
 import UNISAT_IMAGE from '@/assets/wallets/unisat.png'
@@ -46,6 +47,17 @@ export const CHAIN_CONFIG_MAP: Record<string, any> = {
     },
     blockExplorerUrls: ['https://scan-canary.bevm.io/']
   },
+  [CHAIN.B2]: {
+    chainId: '0xdf',
+    chainName: 'B² Mainnet',
+    rpcUrls: ['https://rpc.bsquared.network', 'https://b2-mainnet.alt.technology'],
+    nativeCurrency: {
+      name: 'BTC',
+      symbol: 'BTC',
+      decimals: 18
+    },
+    blockExplorerUrls: ['https://explorer.bsquared.network/']
+  },
   [CHAIN.ROOTSTOCK]: {
     chainId: '0x1e',
     chainName: 'RSK Mainnet',
@@ -56,6 +68,17 @@ export const CHAIN_CONFIG_MAP: Record<string, any> = {
       decimals: 18
     },
     blockExplorerUrls: ['https://explorer.rsk.co']
+  },
+  [CHAIN.BITLAYER]: {
+    chainId: '0x310c5',
+    chainName: 'Bitlayer Mainnet',
+    rpcUrls: ['https://rpc.bitlayer.org', 'https://rpc.bitlayer-rpc.com', 'https://rpc.ankr.com/bitlayer'],
+    nativeCurrency: {
+      name: 'BTC',
+      symbol: 'BTC',
+      decimals: 18
+    },
+    blockExplorerUrls: ['https://www.btrscan.com']
   },
   [CHAIN.BTC]: {
     blockExplorerUrls: ['https://mempool.space']
@@ -87,6 +110,10 @@ export const CHAIN_LIST = [
     image: ROOTSTOCK_IMAGE,
     name: 'ROOTSTOCK',
     value: CHAIN.ROOTSTOCK
+  }, {
+    image: BITLAYER_IMAGE,
+    name: 'BITLAYER',
+    value: CHAIN.BITLAYER
   }, {
     image: SATOSHIVM_IMAGE,
     name: 'SatoshiVM (comming soon)',
