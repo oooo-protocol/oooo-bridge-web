@@ -105,6 +105,7 @@ export const CHAIN_LIST = [
   }, {
     image: MERLIN_IMAGE,
     name: 'MERLIN',
+    description: 'Temporary network congestion. Please be patient.',
     value: CHAIN.MERLIN
   }, {
     image: ROOTSTOCK_IMAGE,

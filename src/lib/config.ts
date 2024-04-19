@@ -87,6 +87,7 @@ export const CHAIN_CONFIG_MAP: Record<string, any> = {
 export const CHAIN_LIST: Array<{
   image: string
   name: string
+  description?: string
   value: CHAIN
   /**
    * hidden in the wallet connect

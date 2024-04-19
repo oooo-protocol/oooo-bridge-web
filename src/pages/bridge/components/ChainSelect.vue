@@ -70,4 +70,14 @@ const open = ref(false)
       </SelectItem>
     </SelectContent>
   </Select>
+  <p
+    class="oooo-bridge__error mt-[16px] flex items-center gap-[8px] font-[300] leading-[1.14] tracking-[0.88px] text-sm text-[#FF961E]"
+    v-if="selected?.description"
+  >
+    <Icon
+      class="shrink-0 text-[16px]"
+      name="imp"
+    />
+    {{ selected.description }}
+  </p>
 </template>
