@@ -101,11 +101,11 @@ export const CHAIN_LIST = [
   }, {
     image: BTC_IMAGE,
     name: 'BITCOIN',
+    description: 'Temporary network congestion. Please be patient.',
     value: CHAIN.BTC
   }, {
     image: MERLIN_IMAGE,
     name: 'MERLIN',
-    description: 'Temporary network congestion. Please be patient.',
     value: CHAIN.MERLIN
   }, {
     image: ROOTSTOCK_IMAGE,
