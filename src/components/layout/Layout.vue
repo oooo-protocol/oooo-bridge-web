@@ -19,7 +19,7 @@ import AppNavbar from './AppNavbar.vue'
     <!-- </KeepAlive> -->
     </RouterView>
     <p
-      class="text-[#a4a4a4] text-center text-[13px] md:text-[16px] normal-case"
+      class="text-[#a4a4a4] text-center text-[13px] md:text-[16px]"
     >
       Powered by oooo.money
     </p>

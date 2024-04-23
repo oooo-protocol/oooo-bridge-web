@@ -4,10 +4,10 @@ import { ENV_VARIABLE } from '@/lib/constants'
 
 const activity = ENV_VARIABLE.VITE_NETWORK === NETWORK.LIVENET
   ? {
-    url: 'https://galxe.com/oooo/campaign/GCcwNtTvQ5'
+    url: 'https://oooo.money/goooo'
   }
   : {
-    url: 'https://galxe.com/oooo/campaign/GCddPt46m9"'
+    url: 'https://oooo.money/goooo'
   }
 </script>
 

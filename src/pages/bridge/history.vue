@@ -92,7 +92,7 @@ const formatDate = (date: string) => {
             <div class="flex items-center gap-[4px] ml-[28px] mt-[4px]">
               <Icon :name="TRANSACTION_STATUS_MAP[item.fromStatus].icon" />
               <p class="text-[14px] md:text-[16px] text-[#616161] leading-none">
-                Tx:
+                TX:
                 <a
                   :href="combineURLs(CHAIN_BLOCK_EXPLORER_URL_MAP[item.fromChainName], `/tx/${item.fromTxnHash}`)"
                   target="_blank"
@@ -120,7 +120,7 @@ const formatDate = (date: string) => {
               <Icon :name="TRANSACTION_STATUS_MAP[item.toStatus].icon" />
               <p class="text-[14px] md:text-[16px] text-[#616161] leading-none">
                 <template v-if="item.toTxnHash">
-                  Tx:
+                  TX:
                   <a
                     :href="combineURLs(CHAIN_BLOCK_EXPLORER_URL_MAP[item.toChainName], `/tx/${item.toTxnHash}`)"
                     target="_blank"
@@ -129,7 +129,7 @@ const formatDate = (date: string) => {
                   </a>
                 </template>
                 <template v-else>
-                  Waiting
+                  WAITING
                 </template>
               </p>
             </div>

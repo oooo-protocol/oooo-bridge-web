@@ -1,13 +1,9 @@
 import { ENV_VARIABLE } from '@/lib/constants'
 import { type ChainConfig } from '@/entities/bridge'
-import { watchOnce } from '@vueuse/core'
-import { getArrayFirst } from '@preflower/utils'
 import { WALLET_TYPE } from '@/entities/wallet'
 import { CHAIN } from '@/entities/chain'
 
 export const useChainSelect = (configs: Ref<ChainConfig[] | undefined>) => {
-  const route = useRoute()
-
   const select = reactive({
     from: ENV_VARIABLE.VITE_DEFAULT_SELECT_FROM as CHAIN,
     to: ENV_VARIABLE.VITE_DEFAULT_SELECT_TO as CHAIN
@@ -29,20 +25,6 @@ export const useChainSelect = (configs: Ref<ChainConfig[] | undefined>) => {
     const isValid = toChainList.value.length > 0
     if (config == null && isValid) {
       select.to = toChainList.value[0].chainName
-    }
-  })
-
-  watchOnce(configs, (list) => {
-    if (!list) return
-    const queryToChain = getArrayFirst(route.query.to) as CHAIN
-    if (queryToChain == null) return
-    for (const fromChain of list) {
-      const isIncludeToChain = fromChain.toChains.findIndex(chain => chain.chainName === queryToChain) > -1
-      if (isIncludeToChain) {
-        select.from = fromChain.chainName
-        select.to = queryToChain
-        return
-      }
     }
   })
 

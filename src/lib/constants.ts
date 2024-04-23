@@ -35,7 +35,7 @@ export const TOKEN_LIST = [
 
 export const ETH_WALLETS = [
   {
-    name: 'MetaMask',
+    name: 'METAMASK',
     value: WALLET.METAMASK,
     image: METAMASK_IMAGE
   }, {

@@ -43,4 +43,5 @@ pnpm build:analyze
 ## Query config
 | Name | Description               |
 | ---- | ------------------------- |
+| from | Specify the sender token  |
 | to   | Specify the receive token |

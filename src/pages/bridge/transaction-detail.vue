@@ -180,7 +180,7 @@ useQuery({
                 :name="TRANSACTION_STATUS_MAP[data.fromStatus].icon"
               />
               <p class="transaction-detail-tx__text">
-                Tx:
+                TX:
                 <a
                   :href="combineURLs(CHAIN_BLOCK_EXPLORER_URL_MAP[data.fromChainName], `/tx/${data.fromTxnHash}`)"
                   target="_blank"
@@ -193,7 +193,7 @@ useQuery({
               class="transaction-detail__error"
               v-if="data.fromStatus === TRANSACTION_STATUS.FAILED"
             >
-              Transaction failed
+              TRANSACTION FAILED
             </p>
           </div>
           <Icon
@@ -220,7 +220,7 @@ useQuery({
                   name="time"
                 />
                 <p class="transaction-detail-tx__text">
-                  Waiting
+                  WAITING
                 </p>
               </div>
               <template
@@ -232,7 +232,7 @@ useQuery({
                     :name="TRANSACTION_STATUS_MAP[data.toStatus].icon"
                   />
                   <p class="transaction-detail-tx__text">
-                    Tx:
+                    TX:
                     <a
                       :href="combineURLs(CHAIN_BLOCK_EXPLORER_URL_MAP[data.toChainName], `/tx/${data.toTxnHash}`)"
                       target="_blank"
@@ -245,7 +245,7 @@ useQuery({
                   v-if="data.toStatus === TRANSACTION_STATUS.FAILED"
                   class="transaction-detail__error"
                 >
-                  Transaction failed
+                  TRANSACTION FAILED
                 </p>
               </template>
             </div>

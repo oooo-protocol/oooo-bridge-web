@@ -8,6 +8,7 @@ import { SelectTrigger } from 'radix-vue'
 import { CHAIN_LIST } from '@/lib/constants'
 import Icon from '@/components/Icon.vue'
 import { type Chain } from '@/entities/bridge'
+import { cn } from '@/lib/utils'
 
 const props = defineProps<{
   list?: Chain[]
@@ -33,7 +34,9 @@ const open = ref(false)
     v-model:open="open"
   >
     <SelectTrigger as-child>
-      <div class="flex items-center p-[8px] border border-input bg-background rounded-[2px]">
+      <div
+        :class="cn('flex items-center p-[8px] border border-input bg-background rounded-[2px]', $attrs.class ?? '')"
+      >
         <div
           class="flex items-center shrink-0 gap-[8px] pr-[15px] cursor-pointer"
           v-if="selected"

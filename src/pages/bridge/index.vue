@@ -25,17 +25,23 @@ import { WALLET_TYPE } from '@/entities/wallet'
 import { NoAlarmException } from '@/lib/exception'
 import { CHAIN, NETWORK } from '@/entities/chain'
 import { useTimeSpend } from './hooks/use-time-spend'
+import { useInvite } from './hooks/use-invite'
+import { useChainQuery } from './hooks/use-chain-query'
 
 const { wallet, getWalletType, retrieveNativeBalance, sign, transaction, getPublicKey, onLogout } = useWallet()
 
 const router = useRouter()
 const { toast } = useToast()
 
+useInvite()
+
 const { isPending: initializing, isError: isConfigInvalid, data: configs } = useQuery({
   queryKey: ['/v1/bridge/chain/list'],
   queryFn: retrieveChainConfigs
 })
 const { select, fromChainConfig, platformFee, toMaxSat, toChainList, onSelectReset } = useChainSelect(configs)
+useChainQuery(configs, select)
+
 const form = reactive<{
   token: string
   amount: string
@@ -170,14 +176,14 @@ const onSwitch = () => {
 const rules: Record<string, RuleExpression<any>> = {
   amount: (val: string) => {
     if (isConfigInvalid.value) {
-      return 'No route available, please try again later.'
+      return 'NO ROUTE AVAILABLE, PLEASE TRY AGAIN LATER.'
     }
     const amount = Number(val)
     if (Number.isNaN(amount) || amount < min.value) {
-      return `The minimum amount is ${min.value}`
+      return `THE MINIMUM AMOUNT IS ${min.value}`
     }
     if (amount > Number(max.value)) {
-      return `The maximum amount is ${max.value}`
+      return `THE MAXIMUM AMOUNT IS ${max.value}`
     }
     return true
   },
@@ -186,12 +192,12 @@ const rules: Record<string, RuleExpression<any>> = {
     if (isBTCAddress) {
       const network = ENV_VARIABLE.VITE_NETWORK === NETWORK.LIVENET ? Network.mainnet : Network.testnet
       if (!validate(val, network)) {
-        return 'invalid wallet address'
+        return 'INVALID WALLET ADDRESS'
       }
     } else {
       // it's assumed to be a EVM address
       if (!/^(0x)[0-9A-Fa-f]{40}$/g.test(val)) {
-        return 'invalid wallet address'
+        return 'INVALID WALLET ADDRESS'
       }
     }
     return true
@@ -222,7 +228,7 @@ const checkBalanceIsEnough = (chain: CHAIN, amount: string | number, gasPrice: s
     } else {
       form.amount = min.value.toString()
     }
-    throw new NoAlarmException('Not enough balance for gas fees. Bridge amount was automatically decreased.')
+    throw new NoAlarmException('NOT ENOUGH BALANCE FOR GAS FEES. BRIDGE AMOUNT WAS AUTOMATICALLY DECREASED.')
   }
 }
 
@@ -265,7 +271,7 @@ const onSubmit = async (values: Record<string, any>) => {
     const signature = await sign(signContent, parameter.fromAddress)
     const publicKey = await getPublicKey()
     if (publicKey == null) {
-      throw new Error('Invalid signature, please try again.')
+      throw new Error('INVALID SIGNATURE, PLEASE TRY AGAIN.')
     }
     const hash = await transaction({
       chain: parameter.fromChain,
@@ -394,13 +400,22 @@ const onSubmit = async (values: Record<string, any>) => {
             <p>TO</p>
           </div>
           <ChainSelect
+            class="items-start"
             v-model="select.to"
             :list="toChainList"
           >
             <template #suffix>
-              <p class="ml-auto text-[19px] truncate">
-                {{ estimateAmount }}
-              </p>
+              <div class="flex flex-col items-end md:flex-row md:items-center gap-[12px] md:gap-[8px] w-full select-none overflow-hidden">
+                <p class="w-full text-[19px] text-right truncate">
+                  {{ estimateAmount }}
+                </p>
+                <p
+                  v-if="select.to === CHAIN.B2"
+                  class="shrink-0 p-[4px] rounded-md bg-[#4d4f4e]"
+                >
+                  +8 Goooo
+                </p>
+              </div>
             </template>
           </ChainSelect>
           <FormMessage
@@ -427,7 +442,7 @@ const onSubmit = async (values: Record<string, any>) => {
           />
         </FormField>
         <p class="oooo-bridge__title">
-          Service Fee
+          SERVICE FEE
         </p>
         <p class="oooo-bridge__description">
           {{ platformFee }} BTC |
@@ -461,7 +476,7 @@ const onSubmit = async (values: Record<string, any>) => {
             v-if="loading"
             class="w-4 h-4 mr-2"
           />
-          {{ isInsufficient ? 'INSUFFICIENT FUNDS' : 'transfer' }}
+          {{ isInsufficient ? 'INSUFFICIENT FUNDS' : 'TRANSFER' }}
         </Button>
       </Form>
     </BridgeContent>

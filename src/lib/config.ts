@@ -101,7 +101,7 @@ export const CHAIN_LIST: Array<{
     value: CHAIN.BEVM
   }, {
     image: BEVM_CANARY_IMAGE,
-    name: 'BEVM Canary',
+    name: 'BEVM CANARY',
     value: CHAIN.BEVM_CANARY
   }, {
     image: B2_IMAGE,

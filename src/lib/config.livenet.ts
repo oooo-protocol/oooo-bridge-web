@@ -101,7 +101,6 @@ export const CHAIN_LIST = [
   }, {
     image: BTC_IMAGE,
     name: 'BITCOIN',
-    description: 'Temporary network congestion. Please be patient.',
     value: CHAIN.BTC
   }, {
     image: MERLIN_IMAGE,
@@ -134,7 +133,7 @@ export const BRIDGE_TEXT_MAP = {
 
 export const BTC_WALLETS = [
   {
-    name: 'Unisat',
+    name: 'UNISAT',
     value: WALLET.UNISAT,
     image: UNISAT_IMAGE
   },
