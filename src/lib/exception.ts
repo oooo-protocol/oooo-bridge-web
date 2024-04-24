@@ -1,6 +1,6 @@
 /**
- * 所有该类型的异常都非程序异常, 而是用户操作报错, 不需要上报到 Sentry
- * 例如: 用户未安装该钱包
+ * Exception that no need to report to sentry
+ * For example: user not install wallet
  */
 export class NoAlarmException extends Error {
   constructor (message: string) {

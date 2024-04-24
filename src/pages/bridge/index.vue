@@ -79,7 +79,7 @@ const balance = ref<string | number>()
 watch(() => [select.from, wallet.value], async () => {
   try {
     /**
-     * 每次触发获取余额接口时先清空余额
+     * reset balance before get token balance
      */
     balance.value = undefined
     const result = await retrieveNativeBalance(select.from)

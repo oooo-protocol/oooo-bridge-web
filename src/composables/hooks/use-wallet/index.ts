@@ -123,13 +123,13 @@ export const useWallet = () => {
     const instance = wrapper.getInstance()
     if (instance.type === WALLET_TYPE.ETHEREUM) {
       /**
-       * 链与钱包类型不匹配, 则直接跳过
+       * skip if chain mismatch wallet type
        */
       if (chain === CHAIN.BTC) return
       return await instance.getNativeBalance(wrapper.wallet.value.address, chain)
     } else if (instance.type === WALLET_TYPE.BITCOIN) {
       /**
-       * 链与钱包类型不匹配, 则直接跳过
+       * skip if chain mismatch wallet type
        */
       if (chain !== CHAIN.BTC) return
       return await instance.getNativeBalance()

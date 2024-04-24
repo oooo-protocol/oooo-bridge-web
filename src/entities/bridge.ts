@@ -34,7 +34,7 @@ export interface ChainConfig extends Chain {
      */
     wAddress: boolean
     /**
-     * @deprecated 地址校验正则
+     * @deprecated address validate regexp
      */
     reg: string
   }>

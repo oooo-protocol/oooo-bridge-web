@@ -75,14 +75,14 @@ const { data, refetch } = useQuery({
     const transaction = query.state.data
     const status = getTransactionDetailStatus(transaction)
     /**
-     * 若服务端状态滞后于本地状态则不改变
+     * No change if server status later than local status
      */
     if (status > transactionDetailStatus.value) {
       transactionDetailStatus.value = status
     }
     /**
      * FROM_CONFIRMED_ON_CHAIN, TO_WAIT_DELIVERED, TO_CONFIRMED_ON_CHAIN
-     * 需要触发轮询, 直到服务端返回正确的状态
+     * Polling be trigger if server return above status
      */
     if (
       transactionDetailStatus.value === TRANSACTION_DETAIL_STATUS.FROM_CONFIRMED_ON_CHAIN ||
@@ -129,7 +129,7 @@ useQuery({
       query.state.data === TRANSACTION_STATUS.SUCCEED
     ) {
       /**
-       * 更新交易状态
+       * Update transaction status
        */
       if (toBeCheckedHash.value!.source === 'from') {
         transactionDetailStatus.value = TRANSACTION_DETAIL_STATUS.FROM_CONFIRMED_ON_CHAIN
