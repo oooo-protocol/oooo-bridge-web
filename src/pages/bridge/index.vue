@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import Icon from '@/components/Icon.vue'
+import Icon from 'oooo-components/ui/Icon.vue'
 import ChainSelect from './components/ChainSelect.vue'
 import TokenSelect from './components/TokenSelect.vue'
-import Button from '@/components/ui/button/Button.vue'
-import Input from '@/components/ui/input/Input.vue'
+import Button from 'oooo-components/ui/button/Button.vue'
+import Input from 'oooo-components/ui/input/Input.vue'
 import { BridgeContainer, BridgeHeader, BridgeContent } from './components/BridgeContainer'
 import { useMutation, useQuery } from '@tanstack/vue-query'
 import { retrieveTransactionConfig, transfer, retrieveChainConfigs } from '@/request/api/bridge'
@@ -11,11 +11,11 @@ import Decimal from 'decimal.js-light'
 import { useWallet } from '@/composables/hooks/use-wallet'
 import { ENV_VARIABLE } from '@/lib/constants'
 import LoadingIcon from '@/components/LoadingIcon.vue'
-import { useToast } from '@/components/ui/toast/use-toast'
+import { useToast } from 'oooo-components/ui/toast/use-toast'
 import PageLoading from '@/components/PageLoading.vue'
 import { createFunctionCall } from '@/components/wallet-connect/function-call'
 import WalletConnectModal from '@/components/wallet-connect/WalletConnectModal.vue'
-import { Form, FormField, FormMessage } from '@/components/ui/form'
+import { Form, FormField, FormMessage } from 'oooo-components/ui/form'
 import NumberInput from './components/NumberInput.vue'
 import { type RuleExpression } from 'vee-validate'
 import { ResponseError } from '@/request/axios'
@@ -411,7 +411,7 @@ const onSubmit = async (values: Record<string, any>) => {
                 </p>
                 <p
                   v-if="select.to === CHAIN.B2"
-                  class="shrink-0 p-[4px] rounded-md bg-[#4d4f4e]"
+                  class="shrink-0 px-[4px] rounded-md bg-[#4d4f4e]"
                 >
                   +8 Goooo
                 </p>

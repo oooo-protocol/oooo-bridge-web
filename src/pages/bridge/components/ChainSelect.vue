@@ -3,12 +3,12 @@ import {
   Select,
   SelectContent,
   SelectItem
-} from '@/components/ui/select'
+} from 'oooo-components/ui/select'
 import { SelectTrigger } from 'radix-vue'
 import { CHAIN_LIST } from '@/lib/constants'
-import Icon from '@/components/Icon.vue'
+import Icon from 'oooo-components/ui/Icon.vue'
 import { type Chain } from '@/entities/bridge'
-import { cn } from '@/lib/utils'
+import { cn } from 'oooo-components/lib/utils'
 
 const props = defineProps<{
   list?: Chain[]
@@ -32,6 +32,7 @@ const open = ref(false)
     class="w-full"
     v-model="model"
     v-model:open="open"
+    v-bind="$attrs"
   >
     <SelectTrigger as-child>
       <div

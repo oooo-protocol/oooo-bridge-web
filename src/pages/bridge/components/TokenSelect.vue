@@ -4,7 +4,7 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger
-} from '@/components/ui/select'
+} from 'oooo-components/ui/select'
 import { TOKEN_LIST } from '@/lib/constants'
 
 const model = defineModel<string>()

@@ -4,7 +4,7 @@ import { createFunctionCall } from '@/components/wallet-connect/function-call'
 import WalletConnectModal from '@/components/wallet-connect/WalletConnectModal.vue'
 import { CHAIN } from '@/entities/chain'
 import { WALLET_TYPE } from '@/entities/wallet'
-import { uuid } from '@/lib/utils'
+import { uuid } from 'oooo-components/lib/utils'
 import { createInvitationRelationship } from '@/request/api/user'
 
 export const useInvite = () => {

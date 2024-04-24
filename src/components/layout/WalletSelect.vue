@@ -4,12 +4,12 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
-import { Button } from '@/components/ui/button'
+} from 'oooo-components/ui/dropdown-menu'
+import { Button } from 'oooo-components/ui/button'
 import { CHAIN_LIST, WALLET_MAP } from '@/lib/constants'
-import Icon from '@/components/Icon.vue'
+import Icon from 'oooo-components/ui/Icon.vue'
 import { useWallet } from '@/composables/hooks/use-wallet'
-import { formatHashWithEllipsis } from '@/lib/utils'
+import { formatHashWithEllipsis } from 'oooo-components/lib/utils'
 import WalletConnectModal from '@/components/wallet-connect/WalletConnectModal.vue'
 import { createFunctionCall } from '../wallet-connect/function-call'
 import { type CHAIN } from '@/entities/chain'

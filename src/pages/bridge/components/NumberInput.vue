@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { formatNumber } from '@/lib/utils'
-import Input from '@/components/ui/input/Input.vue'
+import Input from 'oooo-components/ui/input/Input.vue'
 
 defineOptions({
   name: 'NumberInput'

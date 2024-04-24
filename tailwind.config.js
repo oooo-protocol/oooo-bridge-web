@@ -4,6 +4,7 @@ import animate from 'tailwindcss-animate'
 export const darkMode = ['class']
 export const safelist = ['dark']
 export const content = [
+  './submodules/**/*.{ts,tsx,vue}',
   './pages/**/*.{ts,tsx,vue}',
   './components/**/*.{ts,tsx,vue}',
   './app/**/*.{ts,tsx,vue}',
@@ -51,6 +52,10 @@ export const theme = {
       card: {
         DEFAULT: 'hsl(var(--card))',
         foreground: 'hsl(var(--card-foreground))'
+      },
+      modal: {
+        DEFAULT: 'hsl(var(--modal))',
+        foreground: 'hsl(var(--popover-foreground))'
       }
     },
     borderRadius: {

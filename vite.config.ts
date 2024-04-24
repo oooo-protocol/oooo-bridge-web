@@ -87,7 +87,8 @@ export default defineConfig(({ mode }) => {
     },
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, 'src')
+        '@': path.resolve(__dirname, 'src'),
+        'oooo-components': path.resolve(__dirname, 'submodules/oooo-components/src')
       },
       extensions: [
         // add livenet/testnet extension to suitable for multi-env package

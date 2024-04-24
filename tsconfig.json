@@ -23,6 +23,9 @@
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "oooo-components/*": [
+        "submodules/oooo-components/src/*"
       ]
     }
   },
