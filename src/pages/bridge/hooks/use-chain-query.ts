@@ -24,7 +24,6 @@ export const useChainQuery = (configs: Ref<ChainConfig[] | undefined>, select: {
         select.to = toChain ? toChain.chainName : fromChain.toChains[0].chainName
       } else if (queryToChain != null) {
         for (const fromChain of list) {
-          console.log()
           const isIncludeToChain = fromChain.toChains.findIndex(chain => chain.chainName === queryToChain) > -1
           if (isIncludeToChain) {
             select.from = fromChain.chainName
