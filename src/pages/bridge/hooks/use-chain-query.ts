@@ -1,7 +1,6 @@
 import { type ChainConfig } from '@/entities/bridge'
 import { type CHAIN } from '@/entities/chain'
 import { getArrayFirst } from '@preflower/utils'
-import { watchOnce } from '@vueuse/core'
 
 export const useChainQuery = (configs: Ref<ChainConfig[] | undefined>, select: {
   from: CHAIN
@@ -11,9 +10,9 @@ export const useChainQuery = (configs: Ref<ChainConfig[] | undefined>, select: {
   const route = useRoute()
   const router = useRouter()
 
-  watchOnce(configs, (list) => {
+  watch(configs, (list) => {
+    if (isQueryInited.value || !list) return
     try {
-      if (!list) return
       const queryFromChain = getArrayFirst(route.query.from) as CHAIN
       const queryToChain = getArrayFirst(route.query.to) as CHAIN
 
@@ -35,6 +34,8 @@ export const useChainQuery = (configs: Ref<ChainConfig[] | undefined>, select: {
     } finally {
       isQueryInited.value = true
     }
+  }, {
+    immediate: true
   })
 
   watch(select, ({ from, to }) => {

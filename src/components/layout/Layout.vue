@@ -85,11 +85,12 @@ const menus = [
   <AppNavbar />
   <!-- 不设置默认key，以文件名区分(Vue默认)，确保复用最外层容器 -->
   <RouterView v-slot="{ Component }">
-    <KeepAlive>
-      <component
-        :is="Component"
-      />
-    </KeepAlive>
+    <!-- Romove KeepAlive to ensure child page is latest data -->
+    <!-- <KeepAlive> -->
+    <component
+      :is="Component"
+    />
+    <!-- </KeepAlive> -->
   </RouterView>
   <p
     class="text-[#a4a4a4] text-center text-[13px] md:text-[16px]"
