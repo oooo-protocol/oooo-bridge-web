@@ -16,6 +16,7 @@
     "@preflower/utils": "^1.1.0",
     "@sentry/vue": "^7.107.0",
     "@tanstack/vue-query": "^5.28.7",
+    "@tanstack/vue-table": "^8.16.0",
     "@vueuse/core": "^10.9.0",
     "axios": "^1.6.8",
     "bitcoin-address-validation": "^2.2.3",

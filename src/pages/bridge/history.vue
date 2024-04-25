@@ -35,6 +35,7 @@ const onLoad = async () => {
   history.isLoading = false
   if (list != null) {
     history.list.push(...list)
+    history.pageNumber += 1
   }
   if (history.list.length === totalCount) {
     history.isFinished = true
