@@ -6,6 +6,9 @@ import Icon from 'oooo-components/ui/Icon.vue'
 import { buttonVariants } from 'oooo-components/ui/button'
 import WalletSelect from './WalletSelect.vue'
 import AppNavbar from './AppNavbar.vue'
+import AppNotification from './AppNotification.vue'
+import { NETWORK } from '@/entities/chain'
+import { ENV_VARIABLE } from '@/lib/constants'
 
 const menus = [
   {
@@ -58,6 +61,7 @@ const menus = [
   }
 ]
 
+const isSupportNotification = ref(ENV_VARIABLE.VITE_NETWORK === NETWORK.LIVENET)
 </script>
 
 <template>
@@ -83,6 +87,10 @@ const menus = [
     <WalletSelect />
   </AppHeader>
   <AppNavbar />
+  <AppNotification
+    v-if="isSupportNotification"
+    class="mt-[20px]"
+  />
   <!-- 不设置默认key，以文件名区分(Vue默认)，确保复用最外层容器 -->
   <RouterView v-slot="{ Component }">
     <!-- Romove KeepAlive to ensure child page is latest data -->
