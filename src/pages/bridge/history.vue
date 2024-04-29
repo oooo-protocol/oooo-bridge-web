@@ -10,6 +10,7 @@ import { formatHashWithEllipsis } from 'oooo-components/lib/utils'
 import type { TransactionListItem } from '@/entities/bridge'
 import { CHAIN_IMAGE_MAP, TRANSACTION_STATUS_MAP, CHAIN_BLOCK_EXPLORER_URL_MAP } from '@/lib/constants'
 import LoadingIcon from '@/components/LoadingIcon.vue'
+import NeedHelp from './components/NeedHelp.vue'
 
 const { width } = useWindowSize()
 const router = useRouter()
@@ -150,6 +151,9 @@ const formatDate = (date: string) => {
       >
         <LoadingIcon />
       </p>
+    </div>
+    <div class="flex justify-center py-[20px] px-[16px]">
+      <NeedHelp />
     </div>
   </BridgeContainer>
 </template>
