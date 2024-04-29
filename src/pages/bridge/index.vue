@@ -13,7 +13,7 @@ import { ENV_VARIABLE } from '@/lib/constants'
 import LoadingIcon from '@/components/LoadingIcon.vue'
 import { useToast } from 'oooo-components/ui/toast/use-toast'
 import PageLoading from '@/components/PageLoading.vue'
-import { createFunctionCall } from '@/components/wallet-connect/function-call'
+import { createFunctionCall } from '@/composables/function-call'
 import WalletConnectModal from '@/components/wallet-connect/WalletConnectModal.vue'
 import { Form, FormField, FormMessage } from 'oooo-components/ui/form'
 import NumberInput from './components/NumberInput.vue'
@@ -27,6 +27,7 @@ import { CHAIN, NETWORK } from '@/entities/chain'
 import { useTimeSpend } from './hooks/use-time-spend'
 import { useInvite } from './hooks/use-invite'
 import { useChainQuery } from './hooks/use-chain-query'
+import TransferProcessingModal from './components/TransferProcessingModal.vue'
 
 const { wallet, getWalletType, retrieveNativeBalance, sign, transaction, getPublicKey, onLogout } = useWallet()
 
@@ -237,6 +238,14 @@ const { mutateAsync: sendTransfer } = useMutation({
   retry: true
 })
 
+const transferProcessingDialog = reactive({
+  open: false,
+  fromChain: select.from,
+  fromAmount: '',
+  toChain: select.to,
+  toAmount: ''
+})
+
 const onSubmit = async (values: Record<string, any>) => {
   const address = wallet.value?.address
   if (address == null) {
@@ -273,6 +282,14 @@ const onSubmit = async (values: Record<string, any>) => {
     if (publicKey == null) {
       throw new Error('INVALID SIGNATURE, PLEASE TRY AGAIN.')
     }
+
+    // update transfer processing dialog information
+    transferProcessingDialog.open = true
+    transferProcessingDialog.fromChain = parameter.fromChain
+    transferProcessingDialog.fromAmount = parameter.amount
+    transferProcessingDialog.toChain = parameter.toChain
+    transferProcessingDialog.toAmount = estimateAmount.value.toString()
+
     const hash = await transaction({
       chain: parameter.fromChain,
       from: parameter.fromAddress,
@@ -306,6 +323,7 @@ const onSubmit = async (values: Record<string, any>) => {
     })
     throw e
   } finally {
+    transferProcessingDialog.open = false
     loading.value = false
   }
 }
@@ -480,6 +498,13 @@ const onSubmit = async (values: Record<string, any>) => {
         </Button>
       </Form>
     </BridgeContent>
+    <TransferProcessingModal
+      v-model:open="transferProcessingDialog.open"
+      :from-chain="transferProcessingDialog.fromChain"
+      :from-amount="transferProcessingDialog.fromAmount"
+      :to-chain="transferProcessingDialog.toChain"
+      :to-amount="transferProcessingDialog.toAmount"
+    />
   </BridgeContainer>
 </template>
 

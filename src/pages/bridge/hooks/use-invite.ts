@@ -1,6 +1,6 @@
 import { useWallet } from '@/composables/hooks/use-wallet'
 import { getArrayFirst } from '@preflower/utils'
-import { createFunctionCall } from '@/components/wallet-connect/function-call'
+import { createFunctionCall } from '@/composables/function-call'
 import WalletConnectModal from '@/components/wallet-connect/WalletConnectModal.vue'
 import { CHAIN } from '@/entities/chain'
 import { WALLET_TYPE } from '@/entities/wallet'
@@ -15,7 +15,6 @@ export const useInvite = () => {
 
   watch(wallet, async (wallet) => {
     if (wallet == null || inviteCode == null) return
-    console.log(wallet.address)
     const type = getWalletType()
     if (type === WALLET_TYPE.ETHEREUM) {
       const signContent =

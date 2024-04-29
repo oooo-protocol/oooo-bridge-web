@@ -11,7 +11,7 @@ import Icon from 'oooo-components/ui/Icon.vue'
 import { useWallet } from '@/composables/hooks/use-wallet'
 import { formatHashWithEllipsis } from 'oooo-components/lib/utils'
 import WalletConnectModal from '@/components/wallet-connect/WalletConnectModal.vue'
-import { createFunctionCall } from '../wallet-connect/function-call'
+import { createFunctionCall } from '@/composables/function-call'
 import { type CHAIN } from '@/entities/chain'
 
 const route = useRoute()
