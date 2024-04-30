@@ -21,7 +21,11 @@ export class BitcoinWallet implements WalletImpl {
   async connect () {
     await this.checkNetwork()
     const accounts = await this.provider.requestAccounts()
-    return accounts[0] as string
+    const account = accounts[0]
+    if (account == null) {
+      throw new Error('Unable to access wallet account')
+    }
+    return account as string
   }
 
   async disconnect () {

@@ -18,7 +18,11 @@ export class EthereumWallet implements EthereumWalletImpl {
 
   async connect () {
     const accounts = await this.provider.request({ method: 'eth_requestAccounts' })
-    return accounts[0] as string
+    const account = accounts[0]
+    if (account == null) {
+      throw new Error('Unable to access wallet account')
+    }
+    return account as string
   }
 
   async disconnect () {
@@ -58,6 +62,7 @@ export class EthereumWallet implements EthereumWalletImpl {
     } catch (e) {
       if ((e as any).code === 4902) {
         await this.addToChain(config)
+        await this.switchToChain(chain)
       } else {
         throw e
       }
