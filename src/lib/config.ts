@@ -8,7 +8,6 @@ import BITLAYER_IMAGE from '@/assets/tokens/bitlayer.png'
 import BEVM_CANARY_IMAGE from '@/assets/tokens/bevm_canary.png'
 
 import UNISAT_IMAGE from '@/assets/wallets/unisat.png'
-import ONEKEY_IMAGE from '@/assets/wallets/onekey.png'
 
 import { CHAIN } from '@/entities/chain'
 import { WALLET } from '@/entities/wallet'
@@ -146,9 +145,5 @@ export const BTC_WALLETS = [
     name: 'UNISAT',
     value: WALLET.UNISAT,
     image: UNISAT_IMAGE
-  }, {
-    name: 'ONEKEY',
-    value: WALLET.ONEKEY_BITCOIN,
-    image: ONEKEY_IMAGE
   }
 ]

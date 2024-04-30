@@ -1,5 +1,6 @@
 import { NoAlarmException } from '@/lib/exception'
 import { BitcoinWallet } from './bitcoin'
+import { type onAccountChangedEvent } from '@/entities/wallet'
 
 class BybitBitcoinWallet extends BitcoinWallet {
   get provider () {
@@ -13,6 +14,12 @@ class BybitBitcoinWallet extends BitcoinWallet {
     try {
       await this.provider.disconnect()
     } catch (e) {}
+  }
+
+  async onAccountChanged (event: onAccountChangedEvent) {
+    this.provider.on('accountsChanged', (accounts: string[]) => {
+      event(accounts[0])
+    })
   }
 }
 
