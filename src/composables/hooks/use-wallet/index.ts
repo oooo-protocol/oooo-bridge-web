@@ -7,6 +7,8 @@ import { storage } from '@preflower/utils'
 import { type EthereumWallet } from './wallet/ethereum'
 import { type BitcoinWallet } from './wallet/bitcoin'
 import { CHAIN } from '@/entities/chain'
+import onekeyWallet from './wallet/onekey-evm'
+import onekeyBitcoinWallet from './wallet/onekey-bitcoin'
 
 interface WalletStorage {
   address: string
@@ -17,7 +19,9 @@ const instances = {
   [WALLET.METAMASK]: metamaskWallet,
   [WALLET.OKX]: okxEvmWallet,
   [WALLET.OKX_BITCOIN]: okxBitcoinWallet,
-  [WALLET.UNISAT]: unisatWallet
+  [WALLET.UNISAT]: unisatWallet,
+  [WALLET.ONEKEY]: onekeyWallet,
+  [WALLET.ONEKEY_BITCOIN]: onekeyBitcoinWallet
 }
 
 class WalletWrapper {

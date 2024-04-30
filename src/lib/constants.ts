@@ -2,8 +2,11 @@ import { defineMap } from '@preflower/utils'
 import BTC_IMAGE from '@/assets/tokens/btc.png'
 import BRC_20_IMAGE from '@/assets/tokens/brc-20.png'
 import { TRANSACTION_STATUS } from '@/entities/bridge'
+
 import OKX_IMAGE from '@/assets/wallets/okx.png'
 import METAMASK_IMAGE from '@/assets/wallets/metamask.png'
+import ONEKEY_IMAGE from '@/assets/wallets/onekey.png'
+
 import { CHAIN_CONFIG_MAP, CHAIN_LIST, BTC_WALLETS } from './config'
 import { WALLET } from '@/entities/wallet'
 
@@ -42,6 +45,10 @@ export const ETH_WALLETS = [
     name: 'OKX WALLET',
     value: WALLET.OKX,
     image: OKX_IMAGE
+  }, {
+    name: 'ONEKEY',
+    value: WALLET.ONEKEY,
+    image: ONEKEY_IMAGE
   }
 ]
 

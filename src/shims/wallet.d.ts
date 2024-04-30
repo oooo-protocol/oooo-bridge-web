@@ -5,6 +5,7 @@ declare global {
     ethereum?: BrowserProvider & Eip1193Provider
     okxwallet?: any
     unisat?: any
+    $onekey?: any
     DEFINE_APP_VERSION: string
   }
 }

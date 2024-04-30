@@ -4,7 +4,9 @@ export enum WALLET {
   METAMASK,
   OKX,
   UNISAT,
-  OKX_BITCOIN
+  OKX_BITCOIN,
+  ONEKEY,
+  ONEKEY_BITCOIN
 }
 
 export enum WALLET_TYPE {
