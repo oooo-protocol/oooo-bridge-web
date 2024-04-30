@@ -143,7 +143,7 @@ export const BRIDGE_TEXT_MAP = {
 
 export const BTC_WALLETS = [
   {
-    name: 'Unisat',
+    name: 'UNISAT',
     value: WALLET.UNISAT,
     image: UNISAT_IMAGE
   }, {
