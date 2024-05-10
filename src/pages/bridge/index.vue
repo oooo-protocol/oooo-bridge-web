@@ -427,12 +427,13 @@ const onSubmit = async (values: Record<string, any>) => {
                 <p class="w-full text-[19px] text-right truncate">
                   {{ estimateAmount }}
                 </p>
-                <p
+                <!-- Activity is over -->
+                <!-- <p
                   v-if="select.to === CHAIN.B2 && ENV_VARIABLE.VITE_NETWORK === NETWORK.LIVENET"
                   class="shrink-0 px-[4px] rounded-md bg-[#4d4f4e]"
                 >
                   +8 Goooo
-                </p>
+                </p> -->
               </div>
             </template>
           </ChainSelect>

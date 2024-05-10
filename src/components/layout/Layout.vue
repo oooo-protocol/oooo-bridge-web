@@ -5,7 +5,7 @@ import AppFooter from 'oooo-components/layout/AppFooter.vue'
 import Icon from 'oooo-components/ui/Icon.vue'
 import { buttonVariants } from 'oooo-components/ui/button'
 import WalletSelect from './WalletSelect.vue'
-import AppNavbar from './AppNavbar.vue'
+// import AppNavbar from './AppNavbar.vue'
 import AppNotification from './AppNotification.vue'
 import { NETWORK } from '@/entities/chain'
 import { ENV_VARIABLE } from '@/lib/constants'
@@ -86,7 +86,7 @@ const isSupportNotification = ref(ENV_VARIABLE.VITE_NETWORK === NETWORK.LIVENET)
     </a>
     <WalletSelect />
   </AppHeader>
-  <AppNavbar />
+  <!-- <AppNavbar /> -->
   <AppNotification
     v-if="isSupportNotification"
     class="mt-[20px]"
