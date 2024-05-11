@@ -6,6 +6,7 @@ import MERLIN_IMAGE from '@/assets/tokens/merlin.png'
 import ROOTSTOCK_IMAGE from '@/assets/tokens/rootstock.png'
 import BITLAYER_IMAGE from '@/assets/tokens/bitlayer.png'
 import BEVM_CANARY_IMAGE from '@/assets/tokens/bevm_canary.png'
+import BINANCE_IMAGE from '@/assets/tokens/binance.png'
 
 import UNISAT_IMAGE from '@/assets/wallets/unisat.png'
 
@@ -124,6 +125,10 @@ export const CHAIN_LIST: Array<{
     name: 'BITLAYER',
     value: CHAIN.BITLAYER
   }, {
+    image: BINANCE_IMAGE,
+    name: 'BINANCE',
+    value: CHAIN.BINANCE_CEX
+  }, {
     image: SATOSHIVM_IMAGE,
     name: 'SatoshiVM (comming soon)',
     value: CHAIN.SATOSHIVM,
@@ -137,7 +142,12 @@ export const BRIDGE_TEXT_MAP = {
   BITCOIN_SAVE_TIME: 'SAVE 2 HOURS',
   ETHEREUM_SAVE_AMOUNT: 'SAVE $3.65~$4.45',
   ETHEREUM_TIME_SPEND: '30S',
-  ETHEREUM_SAVE_TIME: 'SAVE 4 HOURS'
+  ETHEREUM_SAVE_TIME: 'SAVE 4 HOURS',
+  CEX_SAVE_AMOUNT: 'SAVE $1.85~$2.23',
+  CEX_TIME_SPEND: '30～60MIN',
+  CEX_SAVE_TIME: 'SAVE 3 HOURS',
+  CEX_BUSY_TIME_SEPND: '3～5H',
+  CEX_BUSY_SAVE_TIME: 'SERVICE BUSY'
 }
 
 export const BTC_WALLETS = [

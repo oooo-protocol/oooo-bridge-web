@@ -2,13 +2,16 @@
 import {
   Select,
   SelectContent,
-  SelectItem
+  SelectGroup,
+  SelectItem,
+  SelectLabel
 } from 'oooo-components/ui/select'
 import { SelectTrigger } from 'radix-vue'
 import { CHAIN_LIST } from '@/lib/constants'
 import Icon from 'oooo-components/ui/Icon.vue'
 import { type Chain } from '@/entities/bridge'
 import { cn } from 'oooo-components/lib/utils'
+import { CHAIN } from '@/entities/chain'
 
 const props = defineProps<{
   list?: Chain[]
@@ -16,6 +19,36 @@ const props = defineProps<{
 const SUPPORT_CHAIN_LIST = computed(() => {
   const supportChainName = (props.list ?? []).map(item => item.chainName)
   return CHAIN_LIST.filter(chain => supportChainName.includes(chain.value))
+})
+const CHAIN_GROUP = computed(() => {
+  const _map = SUPPORT_CHAIN_LIST.value.reduce<{
+    chain: Array<typeof CHAIN_LIST[number]>
+    cex: Array<typeof CHAIN_LIST[number]>
+  }>((pre, cur) => {
+    if (cur.value === CHAIN.BINANCE_CEX) {
+      pre.cex.push(cur)
+    } else {
+      pre.chain.push(cur)
+    }
+    return pre
+  }, {
+    chain: [],
+    cex: []
+  })
+  const group = []
+  if (_map.chain.length > 0) {
+    group.push({
+      label: '_ CHAIN',
+      children: _map.chain
+    })
+  }
+  if (_map.cex.length > 0) {
+    group.push({
+      label: '_ CEX',
+      children: _map.cex
+    })
+  }
+  return group
 })
 const model = defineModel<string>()
 const selected = computed(() => {
@@ -59,19 +92,25 @@ const open = ref(false)
       </div>
     </SelectTrigger>
     <SelectContent class="py-[12px]">
-      <SelectItem
-        class="flex gap-[8px]"
-        :value="chain.value"
-        v-for="chain of SUPPORT_CHAIN_LIST"
-        :key="chain.value"
-        :disabled="chain.disabled"
+      <SelectGroup
+        v-for="group of CHAIN_GROUP"
+        :key="group.label"
       >
-        <img
-          class="w-[24px] h-[24px]"
-          :src="chain.image"
+        <SelectLabel>{{ group.label }}</SelectLabel>
+        <SelectItem
+          class="flex gap-[8px]"
+          :value="chain.value"
+          v-for="chain of group.children"
+          :key="chain.value"
+          :disabled="chain.disabled"
         >
-        <p>{{ chain.name }}</p>
-      </SelectItem>
+          <img
+            class="w-[24px] h-[24px]"
+            :src="chain.image"
+          >
+          <p>{{ chain.name }}</p>
+        </SelectItem>
+      </SelectGroup>
     </SelectContent>
   </Select>
   <p

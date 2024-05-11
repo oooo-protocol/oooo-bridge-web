@@ -1,5 +1,5 @@
 import axios from '../axios'
-import { type Transaction, type TransactionConfig, type TransactionListItem, type ChainConfig, type Chain, TRANSACTION_STATUS } from '@/entities/bridge'
+import { type Transaction, type TransactionConfig, type ChainConfig, type Chain, TRANSACTION_STATUS } from '@/entities/bridge'
 import type { Pagination } from './type'
 import { CHAIN_CONFIG_MAP, ENV_VARIABLE } from '@/lib/constants'
 import { combineURLs } from '@/lib/utils'
@@ -54,13 +54,13 @@ export const transfer = async (data: {
   toAddress?: string
   toAssetType?: string
   toAssetCode?: string
-  txnHash: string
+  txnHash?: string
   amount: string
   signature: string
   signContent: string
   publicKey: string
 }) => {
-  return await axios<boolean>({
+  return await axios<Transaction>({
     method: 'POST',
     url: '/v1/bridge/transfer/one',
     data
@@ -85,7 +85,7 @@ export const retrieveTransactionList = async (params: {
   page?: number
   size?: number
 }) => {
-  return await axios<Pagination<TransactionListItem>>({
+  return await axios<Pagination<Transaction>>({
     url: '/v1/bridge/transaction/list',
     params
   })

@@ -13,6 +13,22 @@ export const useTimeSpend = (select: {
   })
 
   const text = computed(() => {
+    if (select.from === CHAIN.BINANCE_CEX) {
+      const current = new Date().getUTCHours()
+      if (current >= 1 && current < 10) {
+        return {
+          SAVE_AMOUNT: BRIDGE_TEXT_MAP.CEX_SAVE_AMOUNT,
+          TIME_SPEND: BRIDGE_TEXT_MAP.CEX_TIME_SPEND,
+          SAVE_TIME: BRIDGE_TEXT_MAP.CEX_SAVE_TIME
+        }
+      } else {
+        return {
+          SAVE_AMOUNT: BRIDGE_TEXT_MAP.CEX_SAVE_AMOUNT,
+          TIME_SPEND: BRIDGE_TEXT_MAP.CEX_BUSY_TIME_SEPND,
+          SAVE_TIME: BRIDGE_TEXT_MAP.CEX_BUSY_SAVE_TIME
+        }
+      }
+    }
     if (select.from === CHAIN.BTC) {
       return {
         SAVE_AMOUNT: BRIDGE_TEXT_MAP.BITCOIN_SAVE_AMOUNT,

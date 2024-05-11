@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { BridgeContainer, BridgeHeader, BridgeContent } from './components/BridgeContainer'
 import Icon from 'oooo-components/ui/Icon.vue'
-import { useWindowSize } from '@vueuse/core'
 import { useQuery } from '@tanstack/vue-query'
 import { retrieveTransactionDetail, retrieveTransactionStatus } from '@/request/api/bridge'
 import { TRANSACTION_STATUS, type Transaction } from '@/entities/bridge'
@@ -38,7 +37,6 @@ const TRANSACTION_DETAIL_STATUS_IMAGE_MAP = {
 }
 
 const router = useRouter()
-const { width } = useWindowSize()
 const { wallet } = useWallet()
 const props = defineProps<{
   chain: CHAIN
@@ -198,8 +196,8 @@ useQuery({
             </p>
           </div>
           <Icon
-            class="shrink-0 self-center text-[24px]"
-            :name="width < 768 ? 'a-transferdownside' : 'a-transferleftside'"
+            class="shrink-0 mx-auto text-[24px] text-primary rotate-90 md:rotate-0"
+            name="next"
           />
           <div class="w-full">
             <div class="transaction-detail-token">

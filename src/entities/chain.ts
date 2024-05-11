@@ -11,7 +11,8 @@ export enum CHAIN {
   SATOSHIVM = 'satoshivm',
   MERLIN = 'merlin',
   ROOTSTOCK = 'rootstock',
-  BITLAYER = 'bitlayer'
+  BITLAYER = 'bitlayer',
+  BINANCE_CEX = 'binance'
 }
 
 export interface NetworkConfig {

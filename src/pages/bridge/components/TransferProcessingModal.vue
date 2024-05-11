@@ -2,6 +2,7 @@
 import {
   Dialog,
   DialogContent,
+  DialogHeader,
   DialogTitle
 } from 'oooo-components/ui/dialog'
 import { CHAIN_IMAGE_MAP } from '@/lib/constants'
@@ -26,9 +27,9 @@ defineProps<{
       @escape-key-down.prevent
     >
       <template #header>
-        <div class="px-[16px] py-[24px] md:px-[40px] md:py-[32px] border-b border-[#5a6960]">
+        <DialogHeader :closable="false">
           <DialogTitle>_ TRANSFER PROCESSING</DialogTitle>
-        </div>
+        </DialogHeader>
       </template>
       <div>
         <div class="flex flex-col md:flex-row items-center gap-[12px] md:gap-[44px]">

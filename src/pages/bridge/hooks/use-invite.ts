@@ -1,6 +1,6 @@
 import { useWallet } from '@/composables/hooks/use-wallet'
 import { getArrayFirst } from '@preflower/utils'
-import { createFunctionCall } from '@/composables/function-call'
+import { createFuncall } from 'vue-funcall'
 import WalletConnectModal from '@/components/wallet-connect/WalletConnectModal.vue'
 import { CHAIN } from '@/entities/chain'
 import { WALLET_TYPE } from '@/entities/wallet'
@@ -37,7 +37,8 @@ export const useInvite = () => {
 
   onMounted(() => {
     if (inviteCode == null || wallet.value != null) return
-    createFunctionCall(WalletConnectModal, {
+    createFuncall(WalletConnectModal, {
+      modelValue: true,
       chain: CHAIN.BEVM
     })
   })

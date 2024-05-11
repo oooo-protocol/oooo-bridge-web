@@ -78,8 +78,6 @@ export interface Transaction {
   toWalletAddr: string
   toSwapAmount: string
   toTxnHash?: string
-}
-
-export interface TransactionListItem extends Omit<Transaction, 'toTxnHashes'> {
-  toTxnHash: string
+  platformAddr?: string
+  platformName?: string
 }

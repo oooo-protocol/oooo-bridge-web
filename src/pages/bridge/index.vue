@@ -13,7 +13,7 @@ import { ENV_VARIABLE } from '@/lib/constants'
 import LoadingIcon from '@/components/LoadingIcon.vue'
 import { useToast } from 'oooo-components/ui/toast/use-toast'
 import PageLoading from '@/components/PageLoading.vue'
-import { createFunctionCall } from '@/composables/function-call'
+import { createFuncall } from 'vue-funcall'
 import WalletConnectModal from '@/components/wallet-connect/WalletConnectModal.vue'
 import { Form, FormField, FormMessage } from 'oooo-components/ui/form'
 import NumberInput from './components/NumberInput.vue'
@@ -28,8 +28,10 @@ import { useTimeSpend } from './hooks/use-time-spend'
 import { useInvite } from './hooks/use-invite'
 import { useChainQuery } from './hooks/use-chain-query'
 import TransferProcessingModal from './components/TransferProcessingModal.vue'
+import { useChainBalance } from './hooks/use-chain-balance'
+import { CexDetailModal } from './components/CexDetail'
 
-const { wallet, getWalletType, retrieveNativeBalance, sign, transaction, getPublicKey, onLogout } = useWallet()
+const { wallet, getWalletType, sign, transaction, getPublicKey, onLogout } = useWallet()
 
 const router = useRouter()
 const { toast } = useToast()
@@ -42,6 +44,7 @@ const { isPending: initializing, isError: isConfigInvalid, data: configs } = use
 })
 const { select, fromChainConfig, platformFee, toMaxSat, toChainList, onSelectReset } = useChainSelect(configs)
 useChainQuery(configs, select)
+const balance = useChainBalance(select)
 
 const form = reactive<{
   token: string
@@ -63,6 +66,7 @@ watch(() => [wallet.value, configs.value], ([wallet]) => {
 
 watch(() => [select.from], () => {
   if (!wallet.value) return
+  if (select.from === CHAIN.BINANCE_CEX) return
   const walletType = getWalletType()
   if (walletType === WALLET_TYPE.BITCOIN && select.from === CHAIN.BTC) return
   if (walletType === WALLET_TYPE.ETHEREUM && select.from !== CHAIN.BTC) return
@@ -71,29 +75,11 @@ watch(() => [select.from], () => {
 })
 
 const onConnect = () => {
-  createFunctionCall(WalletConnectModal, {
+  createFuncall(WalletConnectModal, {
+    modelValue: true,
     chain: select.from
   })
 }
-
-const balance = ref<string | number>()
-watch(() => [select.from, wallet.value], async () => {
-  try {
-    /**
-     * reset balance before get token balance
-     */
-    balance.value = undefined
-    const result = await retrieveNativeBalance(select.from)
-    balance.value = result
-  } catch (e) {
-    toast({
-      description: (e as Error).message
-    })
-    throw e
-  }
-}, {
-  immediate: true
-})
 
 /** --------------------- Update receiveAddress field  -------------- */
 watch(wallet, (wallet, oldWallet) => {
@@ -238,13 +224,104 @@ const { mutateAsync: sendTransfer } = useMutation({
   retry: true
 })
 
-const transferProcessingDialog = reactive({
-  open: false,
-  fromChain: select.from,
-  fromAmount: '',
-  toChain: select.to,
-  toAmount: ''
-})
+const createCexTransaction = async (parameter: {
+  fromChain: CHAIN
+  fromAddress: string
+  amount: string
+  toChain: CHAIN
+  toAddress: string
+}) => {
+  if (parameter.fromChain !== CHAIN.BINANCE_CEX) throw new Error(`${parameter.fromChain} not support cex transaction`)
+
+  const signContent = JSON.stringify({
+    ...parameter,
+    timestamp: +new Date()
+  })
+  const signature = await sign(signContent, parameter.fromAddress)
+  const publicKey = await getPublicKey()
+  if (publicKey == null) {
+    throw new Error('INVALID SIGNATURE, PLEASE TRY AGAIN.')
+  }
+
+  /**
+   * Not need infinite retries to ensure transfer submitted
+   */
+  const { fromTxnHash } = await transfer({
+    ...parameter,
+    signature,
+    signContent,
+    publicKey: publicKey!
+  })
+
+  createFuncall(CexDetailModal, {
+    modelValue: true,
+    fromChain: parameter.fromChain,
+    fromTxnHash,
+    fromWalletAddr: parameter.fromAddress
+  })
+}
+
+const createChainTransaction = async (parameter: {
+  fromChain: CHAIN
+  fromAddress: string
+  amount: string
+  toChain: CHAIN
+  toAddress: string
+}) => {
+  const config = await retrieveTransactionConfig({
+    fromChain: parameter.fromChain,
+    fromAddress: parameter.fromAddress,
+    fromAmount: parameter.amount,
+    toChain: parameter.toChain,
+    toAddress: parameter.toAddress
+  })
+  /**
+   * Estimate transaction fee to avoid balance exceeded
+   */
+  checkBalanceIsEnough(parameter.fromChain, parameter.amount, config.gasPrice)
+
+  const signContent = JSON.stringify({
+    ...parameter,
+    timestamp: +new Date()
+  })
+  const signature = await sign(signContent, parameter.fromAddress)
+  const publicKey = await getPublicKey()
+  if (publicKey == null) {
+    throw new Error('INVALID SIGNATURE, PLEASE TRY AGAIN.')
+  }
+  const { close } = createFuncall(TransferProcessingModal, {
+    modelValue: true,
+    fromChain: parameter.fromChain,
+    fromAmount: parameter.amount,
+    toChain: parameter.toChain,
+    toAmount: estimateAmount.value.toString()
+  })
+  try {
+    const hash = await transaction({
+      chain: parameter.fromChain,
+      from: parameter.fromAddress,
+      to: config.platformAddress,
+      gas: config.gasPrice,
+      value: parameter.amount
+    })
+    await sendTransfer({
+      ...parameter,
+      txnHash: hash,
+      signature,
+      signContent,
+      publicKey: publicKey!
+    })
+    await router.push({
+      name: 'transaction-detail',
+      params: {
+        chain: select.from,
+        hash
+      }
+    })
+  } finally {
+    await close()
+  }
+}
 
 const onSubmit = async (values: Record<string, any>) => {
   const address = wallet.value?.address
@@ -261,56 +338,11 @@ const onSubmit = async (values: Record<string, any>) => {
       toAddress: values.receiveAddress,
       amount: values.amount
     }
-    const config = await retrieveTransactionConfig({
-      fromChain: parameter.fromChain,
-      fromAddress: parameter.fromAddress,
-      fromAmount: parameter.amount,
-      toChain: parameter.toChain,
-      toAddress: parameter.toAddress
-    })
-    /**
-     * Estimate transaction fee to avoid balance exceeded
-     */
-    checkBalanceIsEnough(parameter.fromChain, parameter.amount, config.gasPrice)
-
-    const signContent = JSON.stringify({
-      ...parameter,
-      timestamp: +new Date()
-    })
-    const signature = await sign(signContent, parameter.fromAddress)
-    const publicKey = await getPublicKey()
-    if (publicKey == null) {
-      throw new Error('INVALID SIGNATURE, PLEASE TRY AGAIN.')
+    if (parameter.fromChain === CHAIN.BINANCE_CEX) {
+      await createCexTransaction(parameter)
+    } else {
+      await createChainTransaction(parameter)
     }
-
-    // update transfer processing dialog information
-    transferProcessingDialog.open = true
-    transferProcessingDialog.fromChain = parameter.fromChain
-    transferProcessingDialog.fromAmount = parameter.amount
-    transferProcessingDialog.toChain = parameter.toChain
-    transferProcessingDialog.toAmount = estimateAmount.value.toString()
-
-    const hash = await transaction({
-      chain: parameter.fromChain,
-      from: parameter.fromAddress,
-      to: config.platformAddress,
-      gas: config.gasPrice,
-      value: parameter.amount
-    })
-    await sendTransfer({
-      ...parameter,
-      txnHash: hash,
-      signature,
-      signContent,
-      publicKey: publicKey!
-    })
-    void router.push({
-      name: 'transaction-detail',
-      params: {
-        chain: select.from,
-        hash
-      }
-    })
   } catch (e) {
     let message = (e as Error).message
     if (e instanceof ResponseError) {
@@ -323,7 +355,6 @@ const onSubmit = async (values: Record<string, any>) => {
     })
     throw e
   } finally {
-    transferProcessingDialog.open = false
     loading.value = false
   }
 }
@@ -499,13 +530,6 @@ const onSubmit = async (values: Record<string, any>) => {
         </Button>
       </Form>
     </BridgeContent>
-    <TransferProcessingModal
-      v-model:open="transferProcessingDialog.open"
-      :from-chain="transferProcessingDialog.fromChain"
-      :from-amount="transferProcessingDialog.fromAmount"
-      :to-chain="transferProcessingDialog.toChain"
-      :to-amount="transferProcessingDialog.toAmount"
-    />
   </BridgeContainer>
 </template>
 

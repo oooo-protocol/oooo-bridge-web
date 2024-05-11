@@ -11,15 +11,16 @@ import Icon from 'oooo-components/ui/Icon.vue'
 import { useWallet } from '@/composables/hooks/use-wallet'
 import { formatHashWithEllipsis } from 'oooo-components/lib/utils'
 import WalletConnectModal from '@/components/wallet-connect/WalletConnectModal.vue'
-import { createFunctionCall } from '@/composables/function-call'
 import { type CHAIN } from '@/entities/chain'
+import { createFuncall } from 'vue-funcall'
 
 const route = useRoute()
 const router = useRouter()
 const { wallet, onLogout } = useWallet()
 
 const onConnect = async (chain: CHAIN) => {
-  createFunctionCall(WalletConnectModal, {
+  createFuncall(WalletConnectModal, {
+    modelValue: true,
     chain
   })
 }

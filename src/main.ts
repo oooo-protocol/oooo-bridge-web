@@ -7,6 +7,7 @@ import '@/assets/iconfont/iconfont.js'
 import '@/assets/index.css'
 import { VueQueryPlugin } from '@tanstack/vue-query'
 import { initSentry } from './composables/sentry'
+import { VueFuncallPlugin } from 'vue-funcall'
 
 const pinia = createPinia()
 pinia
@@ -20,4 +21,5 @@ app
   .use(router)
   .use(pinia)
   .use(VueQueryPlugin)
+  .use(VueFuncallPlugin)
   .mount('#app')

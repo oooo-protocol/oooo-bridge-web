@@ -15,13 +15,15 @@ import { type WALLET } from '@/entities/wallet'
 defineOptions({
   name: 'WalletConnectModal'
 })
+
+const open = defineModel<boolean>()
+
 const props = defineProps<{
   chain: CHAIN
 }>()
 const { onConnect } = useWallet()
 const { toast } = useToast()
 
-const open = ref(true)
 const wallets = computed(() => {
   return props.chain === CHAIN.BTC ? BTC_WALLETS : ETH_WALLETS
 })
