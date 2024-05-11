@@ -6,6 +6,7 @@ import MERLIN_IMAGE from '@/assets/tokens/merlin.png'
 import ROOTSTOCK_IMAGE from '@/assets/tokens/rootstock.png'
 import BEVM_CANARY_IMAGE from '@/assets/tokens/bevm_canary.png'
 import BITLAYER_IMAGE from '@/assets/tokens/bitlayer.png'
+import BINANCE_IMAGE from '@/assets/tokens/binance.png'
 
 import OKX_IMAGE from '@/assets/wallets/okx.png'
 import UNISAT_IMAGE from '@/assets/wallets/unisat.png'
@@ -115,6 +116,10 @@ export const CHAIN_LIST = [
     image: BITLAYER_IMAGE,
     name: 'BITLAYER',
     value: CHAIN.BITLAYER
+  }, {
+    image: BINANCE_IMAGE,
+    name: 'BINANCE',
+    value: CHAIN.BINANCE_CEX
   }, {
     image: SATOSHIVM_IMAGE,
     name: 'SatoshiVM (comming soon)',
