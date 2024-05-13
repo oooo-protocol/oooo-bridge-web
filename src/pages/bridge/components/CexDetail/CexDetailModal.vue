@@ -14,6 +14,7 @@ import TRANSFER_PROCESSING_DARK_IMAGE from '@/assets/images/transfer-loading.dar
 import { useQuery } from '@tanstack/vue-query'
 import { retrieveTransactionDetail } from '@/request/api/bridge'
 import PageLoading from '@/components/PageLoading.vue'
+import { usePreventUnload } from '../../hooks/use-before-unload'
 
 const open = defineModel<boolean>()
 
@@ -22,6 +23,8 @@ const props = defineProps<{
   fromTxnHash: string
   fromWalletAddr: string
 }>()
+
+usePreventUnload()
 
 const parameters = computed(() => ({
   fromChain: props.fromChain,
@@ -53,7 +56,6 @@ const TIME_SPEND_TEXT = computed(() => {
     return BRIDGE_TEXT_MAP.CEX_BUSY_TIME_SEPND
   }
 })
-
 </script>
 
 <template>

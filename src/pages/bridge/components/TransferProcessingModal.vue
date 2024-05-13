@@ -9,6 +9,7 @@ import { CHAIN_IMAGE_MAP } from '@/lib/constants'
 import Icon from 'oooo-components/ui/Icon.vue'
 import LoadingIcon from '@/components/LoadingIcon.vue'
 import { type CHAIN } from '@/entities/chain'
+import { usePreventUnload } from '../hooks/use-before-unload'
 
 const open = defineModel<boolean>()
 
@@ -18,6 +19,8 @@ defineProps<{
   toChain: CHAIN
   toAmount: string
 }>()
+
+usePreventUnload()
 </script>
 
 <template>
