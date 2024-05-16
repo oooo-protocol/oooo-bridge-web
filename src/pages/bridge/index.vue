@@ -361,10 +361,10 @@ const onSubmit = async (values: Record<string, any>) => {
   }
 }
 
-const isShowGooooPoints = computed(() => {
+const availableGooooPoints = computed(() => {
   if (ENV_VARIABLE.VITE_NETWORK !== NETWORK.LIVENET) return false
-  if (select.to === CHAIN.BITLAYER) return true
-  if (select.from === CHAIN.BINANCE_CEX && select.to === CHAIN.BEVM) return true
+  if (select.to === CHAIN.BITLAYER) return 8
+  if (select.from === CHAIN.BINANCE_CEX && select.to === CHAIN.BEVM) return 4
   return false
 })
 </script>
@@ -468,10 +468,10 @@ const isShowGooooPoints = computed(() => {
                   {{ estimateAmount }}
                 </p>
                 <p
-                  v-if="isShowGooooPoints"
+                  v-if="availableGooooPoints"
                   class="shrink-0 px-[4px] rounded-md bg-[#4d4f4e]"
                 >
-                  +8 Goooo
+                  +{{ availableGooooPoints }} Goooo
                 </p>
               </div>
             </template>
