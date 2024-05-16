@@ -156,6 +156,8 @@ const estimateAmount = computed(() => {
   return Number(to) < 0 ? 0 : to
 })
 
+const serviceFee = computed(() => Number(platformFee.value) === 0 ? 'FREE' : `${platformFee.value} BTC`)
+
 const onSwitch = () => {
   [select.from, select.to] = [select.to, select.from]
 }
@@ -494,7 +496,7 @@ const onSubmit = async (values: Record<string, any>) => {
           SERVICE FEE
         </p>
         <p class="oooo-bridge__description">
-          {{ platformFee }} BTC |
+          {{ serviceFee }} |
           <span class="underline">
             {{ BRIDGE_TEXT.SAVE_AMOUNT }}
           </span>

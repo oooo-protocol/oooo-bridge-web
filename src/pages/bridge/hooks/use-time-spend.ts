@@ -15,7 +15,7 @@ export const useTimeSpend = (select: {
   const text = computed(() => {
     if (select.from === CHAIN.BINANCE_CEX) {
       const current = new Date().getUTCHours()
-      if (current >= 1 && current < 10) {
+      if (current >= 0 && current < 17) {
         return {
           SAVE_AMOUNT: BRIDGE_TEXT_MAP.CEX_SAVE_AMOUNT,
           TIME_SPEND: BRIDGE_TEXT_MAP.CEX_TIME_SPEND,

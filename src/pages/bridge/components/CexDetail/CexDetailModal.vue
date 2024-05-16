@@ -11,6 +11,7 @@ import { type CHAIN } from '@/entities/chain'
 import ClipboardText from './ClipboardText.vue'
 import { Button } from 'oooo-components/ui/button'
 import TRANSFER_PROCESSING_DARK_IMAGE from '@/assets/images/transfer-loading.dark.gif'
+import BINANCE_SAMPLE_IMAGE from '@/assets/images/binance-sample.jpg'
 import { useQuery } from '@tanstack/vue-query'
 import { retrieveTransactionDetail } from '@/request/api/bridge'
 import PageLoading from '@/components/PageLoading.vue'
@@ -36,15 +37,20 @@ const { data } = useQuery({
   queryFn: async () => await retrieveTransactionDetail(parameters.value)
 })
 
-const isCompleted = ref(false)
+enum STATUS {
+  PENDING,
+  PAYING,
+  COMPLETED
+}
+
+const currentStatus = ref(STATUS.PENDING)
 
 const binanceInfo = computed(() => {
   if (!data.value) return []
   return [
     { text: 'SEND TO BINANCE ID', value: data.value.platformAddr!, description: data.value.platformName },
     { text: 'CURRENCY', value: data.value.fromAssetCode },
-    { text: 'AMOUNT', value: Number(data.value.fromSwapAmount) },
-    { text: 'NOTE', value: data.value.fromTxnHash }
+    { text: 'AMOUNT', value: Number(data.value.fromSwapAmount) }
   ]
 })
 
@@ -71,7 +77,7 @@ const TIME_SPEND_TEXT = computed(() => {
       </template>
       <template #content>
         <PageLoading v-if="!data" />
-        <template v-else-if="!isCompleted">
+        <template v-else-if="currentStatus === STATUS.PENDING">
           <div
             class="px-[16px] py-[24px] md:px-[40px] md:py-[32px] overflow-y-auto"
           >
@@ -125,6 +131,17 @@ const TIME_SPEND_TEXT = computed(() => {
                     :description="item.description"
                   />
                 </div>
+                <div
+                  class="flex flex-col md:flex-row md:items-center justify-between"
+                >
+                  <p class="text-[#ff961e] text-[14px] md:text-base -tracking-tighter">
+                    NOTE
+                  </p>
+                  <ClipboardText
+                    class="text-[#ff961e]"
+                    :text="data.fromTxnHash"
+                  />
+                </div>
               </div>
             </div>
             <div class="flex gap-[8px] text-[#ff961e]">
@@ -140,16 +157,43 @@ const TIME_SPEND_TEXT = computed(() => {
           <div class="px-[16px] pt-[10px] pb-[24px] md:px-[40px] flex flex-col md:flex-row gap-[10px]">
             <Button
               variant="secondary"
-              @click="isCompleted = true"
+              @click="currentStatus = STATUS.COMPLETED"
             >
               I HAVE TRANSFERRED
             </Button>
             <Button
+              @click="currentStatus = STATUS.PAYING"
+            >
+              GO TO BINANCE PAY
+            </Button>
+          </div>
+        </template>
+        <template v-else-if="currentStatus === STATUS.PAYING">
+          <div
+            class="px-[16px] py-[24px] md:px-[40px] md:py-[32px] overflow-y-auto"
+          >
+            <div class="relative w-full h-0 pb-[48%]">
+              <img
+                class="absolute w-full h-full"
+                :src="BINANCE_SAMPLE_IMAGE"
+              >
+            </div>
+            <p class="mt-[32px] md:text-[19px] font-semibold text-[#ff961e] -tracking-tighter leading-[1]">
+              NOTE MUST BE INCLUDED FOR YOUR TRANSFER.
+            </p>
+            <p class="mt-[8px] text-[14px] md:text-base text-[#a4a4a4] -tracking-tighter leading-[1]">
+              Please do not use this note for duplicate transfers.
+            </p>
+          </div>
+          <div class="px-[16px] pt-[10px] pb-[24px] md:px-[40px] flex flex-col md:flex-row gap-[10px]">
+            <Button
+              class="w-full md:w-[204px]"
+              @click="currentStatus = STATUS.PENDING"
               as="a"
               href="https://www.binance.com/en/my/wallet/account/payment/send"
               target="_blank"
             >
-              GO TO BINANCE PAY
+              I UNDERSTAND
             </Button>
           </div>
         </template>
@@ -169,7 +213,7 @@ const TIME_SPEND_TEXT = computed(() => {
             <Button
               class="h-auto text-wrap"
               variant="secondary"
-              @click="isCompleted = false"
+              @click="currentStatus = STATUS.PENDING"
             >
               I HAVEN'T TRANSFERRED
             </Button>
