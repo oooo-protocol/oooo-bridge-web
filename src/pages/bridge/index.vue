@@ -360,6 +360,13 @@ const onSubmit = async (values: Record<string, any>) => {
     loading.value = false
   }
 }
+
+const isShowGooooPoints = computed(() => {
+  if (ENV_VARIABLE.VITE_NETWORK !== NETWORK.LIVENET) return false
+  if (select.to === CHAIN.BITLAYER) return true
+  if (select.from === CHAIN.BINANCE_CEX && select.to === CHAIN.BEVM) return true
+  return false
+})
 </script>
 
 <template>
@@ -461,7 +468,7 @@ const onSubmit = async (values: Record<string, any>) => {
                   {{ estimateAmount }}
                 </p>
                 <p
-                  v-if="select.to === CHAIN.BITLAYER && ENV_VARIABLE.VITE_NETWORK === NETWORK.LIVENET"
+                  v-if="isShowGooooPoints"
                   class="shrink-0 px-[4px] rounded-md bg-[#4d4f4e]"
                 >
                   +8 Goooo

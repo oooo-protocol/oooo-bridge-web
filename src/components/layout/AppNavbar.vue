@@ -4,15 +4,21 @@ import { ENV_VARIABLE } from '@/lib/constants'
 
 const activity = ENV_VARIABLE.VITE_NETWORK === NETWORK.LIVENET
   ? {
-    url: 'https://oooo.money/goooo'
+    url: 'https://app.galxe.com/quest/oooo/GCgn9tzHvd',
+    show: true
   }
   : {
-    url: 'https://oooo.money/goooo'
+    url: 'https://oooo.money/goooo',
+    show: false
   }
+
 </script>
 
 <template>
-  <div class="app-navbar mx-[24px] md:mx-[48px] xl:mx-auto xl:max-w-[832px] xl:w-full">
+  <div
+    class="app-navbar mx-[24px] md:mx-[48px] xl:mx-auto xl:max-w-[832px] xl:w-full"
+    v-if="activity.show"
+  >
     <a
       class="app-navbar__banner cursor-pointer"
       :data-network="ENV_VARIABLE.VITE_NETWORK"
