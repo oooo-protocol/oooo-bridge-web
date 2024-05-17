@@ -2,7 +2,7 @@ import { type ChainConfig } from '@/entities/bridge'
 import { type CHAIN } from '@/entities/chain'
 import { getArrayFirst } from '@preflower/utils'
 
-export const useChainQuery = (configs: Ref<ChainConfig[] | undefined>, select: {
+export const useChainQuery = (configs: Ref<ChainConfig[]>, select: {
   from: CHAIN
   to: CHAIN
 }) => {
@@ -11,7 +11,7 @@ export const useChainQuery = (configs: Ref<ChainConfig[] | undefined>, select: {
   const router = useRouter()
 
   watch(configs, (list) => {
-    if (isQueryInited.value || !list) return
+    if (isQueryInited.value || list.length === 0) return
     try {
       const queryFromChain = getArrayFirst(route.query.from) as CHAIN
       const queryToChain = getArrayFirst(route.query.to) as CHAIN
