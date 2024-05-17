@@ -1,5 +1,5 @@
 import { type ChainConfig } from '@/entities/bridge'
-import { type CHAIN } from '@/entities/chain'
+import { CHAIN } from '@/entities/chain'
 import { getArrayFirst } from '@preflower/utils'
 
 export const useChainQuery = (configs: Ref<ChainConfig[]>, select: {
@@ -16,7 +16,8 @@ export const useChainQuery = (configs: Ref<ChainConfig[]>, select: {
       const queryFromChain = getArrayFirst(route.query.from) as CHAIN
       const queryToChain = getArrayFirst(route.query.to) as CHAIN
 
-      const fromChain = list.find((fromChain => fromChain.chainName === queryFromChain))
+      const fromChain = list.find((fromChain => fromChain.chainName === queryFromChain && queryFromChain !== CHAIN.BINANCE_CEX))
+      console.log(fromChain)
       if (fromChain != null) {
         select.from = fromChain.chainName
         const toChain = fromChain.toChains.find((toChain) => toChain.chainName === queryToChain)
