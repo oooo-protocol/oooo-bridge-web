@@ -74,4 +74,4 @@ export const TRANSACTION_STATUS_MAP = {
   }
 }
 
-export const EVM_ADDRESS_REGEXP = /^(0x)[0-9A-Fa-f]{40}$/g
+export const EVM_ADDRESS_REGEXP = /^(0x)[0-9A-Fa-f]{40}$/
