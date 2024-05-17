@@ -6,6 +6,7 @@ import { TRANSACTION_STATUS } from '@/entities/bridge'
 import OKX_IMAGE from '@/assets/wallets/okx.png'
 import METAMASK_IMAGE from '@/assets/wallets/metamask.png'
 import ONEKEY_IMAGE from '@/assets/wallets/onekey.png'
+import BYBIT_IMAGE from '@/assets/wallets/bybit.png'
 
 import { CHAIN_CONFIG_MAP, CHAIN_LIST, BTC_WALLETS } from './config'
 import { WALLET } from '@/entities/wallet'
@@ -49,6 +50,10 @@ export const ETH_WALLETS = [
     name: 'ONEKEY',
     value: WALLET.ONEKEY,
     image: ONEKEY_IMAGE
+  }, {
+    name: 'BYBIT',
+    value: WALLET.BYBIT,
+    image: BYBIT_IMAGE
   }
 ]
 
@@ -68,3 +73,5 @@ export const TRANSACTION_STATUS_MAP = {
     icon: 'great'
   }
 }
+
+export const EVM_ADDRESS_REGEXP = /^(0x)[0-9A-Fa-f]{40}$/g

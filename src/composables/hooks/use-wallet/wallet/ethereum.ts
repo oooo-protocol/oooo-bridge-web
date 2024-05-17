@@ -1,8 +1,8 @@
 import { WALLET_TYPE, type TransactionParameter, type EthereumWalletImpl, type onAccountChangedEvent } from '@/entities/wallet'
-import { CHAIN_CONFIG_MAP, ENV_VARIABLE } from '../../../../lib/constants'
 import { ethers, formatEther, toBeHex, toUtf8Bytes, hexlify } from 'ethers'
 import { NoAlarmException } from '@/lib/exception'
 import { type CHAIN, type NetworkConfig } from '@/entities/chain'
+import { CHAIN_CONFIG_MAP, ENV_VARIABLE, EVM_ADDRESS_REGEXP } from '@/lib/constants'
 
 export class EthereumWallet implements EthereumWalletImpl {
   readonly type = WALLET_TYPE.ETHEREUM
@@ -119,7 +119,12 @@ export class EthereumWallet implements EthereumWalletImpl {
 
   async onAccountChanged (event: onAccountChangedEvent) {
     await this.provider.on('accountsChanged', (accounts: string[]) => {
-      event(accounts[0])
+      const account = accounts[0]
+      if (EVM_ADDRESS_REGEXP.test(account)) {
+        event(account)
+      } else {
+        event(undefined)
+      }
     })
   }
 }

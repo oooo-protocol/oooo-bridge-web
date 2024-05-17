@@ -2,7 +2,7 @@ import { NoAlarmException } from '@/lib/exception'
 import { BitcoinWallet } from './bitcoin'
 import { type onAccountChangedEvent } from '@/entities/wallet'
 
-class BybitBitcoinWallet extends BitcoinWallet {
+class OnekeyBitcoinWallet extends BitcoinWallet {
   get provider () {
     if (window.$onekey?.btc == null) {
       throw new NoAlarmException('Please install OneKey Browser Extension at https://onekey.so/download!')
@@ -23,4 +23,4 @@ class BybitBitcoinWallet extends BitcoinWallet {
   }
 }
 
-export default new BybitBitcoinWallet()
+export default new OnekeyBitcoinWallet()

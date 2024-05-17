@@ -9,7 +9,7 @@ import { useMutation, useQuery } from '@tanstack/vue-query'
 import { retrieveTransactionConfig, transfer, retrieveChainConfigs } from '@/request/api/bridge'
 import Decimal from 'decimal.js-light'
 import { useWallet } from '@/composables/hooks/use-wallet'
-import { ENV_VARIABLE } from '@/lib/constants'
+import { ENV_VARIABLE, EVM_ADDRESS_REGEXP } from '@/lib/constants'
 import LoadingIcon from '@/components/LoadingIcon.vue'
 import { useToast } from 'oooo-components/ui/toast/use-toast'
 import PageLoading from '@/components/PageLoading.vue'
@@ -42,8 +42,8 @@ const { isPending: initializing, isError: isConfigInvalid, data: configs } = use
   queryKey: ['/v1/bridge/chain/list'],
   queryFn: retrieveChainConfigs
 })
-const { select, fromChainConfig, platformFee, toMaxSat, toChainList, onSelectReset } = useChainSelect(configs)
-useChainQuery(configs, select)
+const { select, fromChainList, fromChainConfig, platformFee, toMaxSat, toChainList, onSelectReset } = useChainSelect(configs)
+useChainQuery(fromChainList, select)
 const balance = useChainBalance(select)
 
 const form = reactive<{
@@ -56,7 +56,7 @@ const form = reactive<{
   receiveAddress: undefined
 })
 const BRIDGE_TEXT = useTimeSpend(select, toMaxSat)
-watch(() => [wallet.value, configs.value], ([wallet]) => {
+watch(() => [wallet.value, fromChainList.value], ([wallet]) => {
   if (!wallet) return
   const type = getWalletType()
   onSelectReset(type)
@@ -185,7 +185,7 @@ const rules: Record<string, RuleExpression<any>> = {
       }
     } else {
       // it's assumed to be a EVM address
-      if (!/^(0x)[0-9A-Fa-f]{40}$/g.test(val)) {
+      if (!EVM_ADDRESS_REGEXP.test(val)) {
         return 'INVALID WALLET ADDRESS'
       }
     }
@@ -422,7 +422,7 @@ const availableGooooPoints = computed(() => {
         >
           <ChainSelect
             v-model="select.from"
-            :list="configs"
+            :list="fromChainList"
           >
             <template #suffix>
               <div

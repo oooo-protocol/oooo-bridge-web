@@ -6,7 +6,8 @@ export enum WALLET {
   UNISAT,
   OKX_BITCOIN,
   ONEKEY,
-  ONEKEY_BITCOIN
+  ONEKEY_BITCOIN,
+  BYBIT
 }
 
 export enum WALLET_TYPE {

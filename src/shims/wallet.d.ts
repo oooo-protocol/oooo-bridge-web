@@ -6,6 +6,7 @@ declare global {
     okxwallet?: any
     unisat?: any
     $onekey?: any
+    bybitWallet?: any
     DEFINE_APP_VERSION: string
   }
 }
