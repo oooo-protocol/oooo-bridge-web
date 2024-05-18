@@ -126,9 +126,8 @@ export const CHAIN_LIST: Array<{
     value: CHAIN.BITLAYER
   }, {
     image: BINANCE_IMAGE,
-    name: 'BINANCE (Service Busy)',
-    value: CHAIN.BINANCE_CEX,
-    disabled: true
+    name: 'BINANCE',
+    value: CHAIN.BINANCE_CEX
   }, {
     image: SATOSHIVM_IMAGE,
     name: 'SatoshiVM (comming soon)',
