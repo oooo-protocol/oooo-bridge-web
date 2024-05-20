@@ -13,6 +13,8 @@ import { formatHashWithEllipsis } from 'oooo-components/lib/utils'
 import WalletConnectModal from '@/components/wallet-connect/WalletConnectModal.vue'
 import { type CHAIN } from '@/entities/chain'
 import { createFuncall } from 'vue-funcall'
+import BybitWalletAlert from './BybitWalletAlert.vue'
+import { WALLET } from '@/entities/wallet'
 
 const route = useRoute()
 const router = useRouter()
@@ -37,6 +39,14 @@ const onClickLogout = () => {
     void router.replace({ name: 'bridge' })
   }
 }
+
+watch(() => wallet.value?.name, (name) => {
+  if (name === WALLET.BYBIT) {
+    createFuncall(BybitWalletAlert, {
+      modelValue: true
+    })
+  }
+})
 </script>
 
 <template>
