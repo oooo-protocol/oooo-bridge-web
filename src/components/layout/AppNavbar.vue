@@ -5,7 +5,7 @@ import { ENV_VARIABLE } from '@/lib/constants'
 const activity = ENV_VARIABLE.VITE_NETWORK === NETWORK.LIVENET
   ? {
     url: 'https://app.galxe.com/quest/oooo/GCgn9tzHvd',
-    show: true
+    show: false
   }
   : {
     url: 'https://oooo.money/goooo',
