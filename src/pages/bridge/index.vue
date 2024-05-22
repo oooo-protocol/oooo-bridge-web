@@ -364,7 +364,6 @@ const onSubmit = async (values: Record<string, any>) => {
 const availableGooooPoints = computed(() => {
   if (ENV_VARIABLE.VITE_NETWORK !== NETWORK.LIVENET) return false
   if (select.to === CHAIN.BITLAYER) return 8
-  if (select.from === CHAIN.BINANCE_CEX && select.to === CHAIN.BEVM) return 4
   return false
 })
 </script>
