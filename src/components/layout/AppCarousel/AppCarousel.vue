@@ -8,17 +8,20 @@ import {
 } from 'oooo-components/ui/carousel'
 import Autoplay from 'embla-carousel-autoplay'
 import AppCarouselItem from './AppCarouselItem.vue'
-import GOOOO_MOBILE_IMAGE from '@/assets/images/testnet/banner.mobile.png'
-import GOOOO_PC_IMAGE from '@/assets/images/testnet/banner.pc.png'
+import BEVM_MOBILE_IMAGE from '@/assets/images/activity/bevm-mob.png'
+import BEVM_PC_IMAGE from '@/assets/images/activity/bevm-pc.png'
+import { NETWORK } from '@/entities/chain'
 
-const activies = [
-  {
-    name: 'Goooo Points',
-    imageMobile: GOOOO_MOBILE_IMAGE,
-    imagePC: GOOOO_PC_IMAGE,
-    url: 'https://app.galxe.com/quest/oooo/GCgn9tzHvd'
-  }
-]
+const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
+  ? [
+    {
+      name: 'BEVM Airdrop',
+      imageMobile: BEVM_MOBILE_IMAGE,
+      imagePC: BEVM_PC_IMAGE,
+      url: 'https://www.bybit.com/en/web3/airdrop/activity?activityId=109&activityTag=4'
+    }
+  ]
+  : []
 </script>
 
 <template>
@@ -42,7 +45,10 @@ const activies = [
         />
       </CarouselItem>
     </CarouselContent>
-    <div class="hidden md:block">
+    <div
+      class="hidden md:block"
+      v-if="activies.length > 1"
+    >
       <CarouselPrevious />
       <CarouselNext />
     </div>
