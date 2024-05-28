@@ -10,12 +10,6 @@ class OnekeyBitcoinWallet extends BitcoinWallet {
     return window.$onekey.btc
   }
 
-  async disconnect () {
-    try {
-      await this.provider.disconnect()
-    } catch (e) {}
-  }
-
   async onAccountChanged (event: onAccountChangedEvent) {
     this.provider.on('accountsChanged', (accounts: string[]) => {
       event(accounts[0])

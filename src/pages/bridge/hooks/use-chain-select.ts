@@ -24,7 +24,7 @@ export const useChainSelect = (configs: Ref<ChainConfig[] | undefined>) => {
     const list = fromConfig.value?.toChains ?? []
     const walletName = wallet.value?.name
     if (walletName === WALLET.BYBIT) {
-      return list.filter((chain) => [CHAIN.BEVM, CHAIN.MERLIN].includes(chain.chainName))
+      return list.filter((chain) => [CHAIN.BEVM, CHAIN.MERLIN, CHAIN.BTC].includes(chain.chainName))
     }
     return list
   })

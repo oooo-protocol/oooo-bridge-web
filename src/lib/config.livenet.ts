@@ -11,6 +11,7 @@ import BINANCE_IMAGE from '@/assets/tokens/binance.png'
 import OKX_IMAGE from '@/assets/wallets/okx.png'
 import UNISAT_IMAGE from '@/assets/wallets/unisat.png'
 import ONEKEY_IMAGE from '@/assets/wallets/onekey.png'
+import BYBIT_IMAGE from '@/assets/wallets/bybit.png'
 
 import { CHAIN } from '@/entities/chain'
 import { WALLET } from '@/entities/wallet'
@@ -156,5 +157,9 @@ export const BTC_WALLETS = [
     name: 'ONEKEY',
     value: WALLET.ONEKEY_BITCOIN,
     image: ONEKEY_IMAGE
+  }, {
+    name: 'BYBIT',
+    value: WALLET.BYBIT_BITCOIN,
+    image: BYBIT_IMAGE
   }
 ]

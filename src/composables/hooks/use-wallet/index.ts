@@ -10,6 +10,7 @@ import { CHAIN } from '@/entities/chain'
 import onekeyWallet from './wallet/onekey-evm'
 import onekeyBitcoinWallet from './wallet/onekey-bitcoin'
 import bybitWallet from './wallet/bybit-evm'
+import bybitBitcoinWallet from './wallet/bybit-bitcoin'
 
 interface WalletStorage {
   address: string
@@ -23,7 +24,8 @@ const instances = {
   [WALLET.UNISAT]: unisatWallet,
   [WALLET.ONEKEY]: onekeyWallet,
   [WALLET.ONEKEY_BITCOIN]: onekeyBitcoinWallet,
-  [WALLET.BYBIT]: bybitWallet
+  [WALLET.BYBIT]: bybitWallet,
+  [WALLET.BYBIT_BITCOIN]: bybitBitcoinWallet
 }
 
 class WalletWrapper {

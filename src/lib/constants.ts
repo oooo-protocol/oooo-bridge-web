@@ -50,8 +50,7 @@ export const ETH_WALLETS = [
     name: 'ONEKEY',
     value: WALLET.ONEKEY,
     image: ONEKEY_IMAGE
-  },
-  {
+  }, {
     name: 'BYBIT',
     value: WALLET.BYBIT,
     image: BYBIT_IMAGE

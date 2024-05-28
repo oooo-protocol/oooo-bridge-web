@@ -41,7 +41,7 @@ const onClickLogout = () => {
 }
 
 watch(() => wallet.value?.name, (name) => {
-  if (name === WALLET.BYBIT) {
+  if (name === WALLET.BYBIT || name === WALLET.BYBIT_BITCOIN) {
     createFuncall(BybitWalletAlert, {
       modelValue: true
     })
