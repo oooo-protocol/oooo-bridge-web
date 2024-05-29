@@ -8,8 +8,12 @@ import {
 } from 'oooo-components/ui/carousel'
 import Autoplay from 'embla-carousel-autoplay'
 import AppCarouselItem from './AppCarouselItem.vue'
+
 import BEVM_MOBILE_IMAGE from '@/assets/images/activity/bevm-mob.png'
 import BEVM_PC_IMAGE from '@/assets/images/activity/bevm-pc.png'
+import MERLIN_MOBILE_IMAGE from '@/assets/images/activity/merlin-mob.png'
+import MERLIN_PC_IMAGE from '@/assets/images/activity/merlin-pc.png'
+
 import { NETWORK } from '@/entities/chain'
 
 const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
@@ -19,6 +23,11 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
       imageMobile: BEVM_MOBILE_IMAGE,
       imagePC: BEVM_PC_IMAGE,
       url: 'https://www.bybit.com/en/web3/airdrop/activity?activityId=109&activityTag=4'
+    }, {
+      name: 'Goooo Airdrop',
+      imageMobile: MERLIN_MOBILE_IMAGE,
+      imagePC: MERLIN_PC_IMAGE,
+      url: 'http://app.galxe.com/quest/oooo/GCcMftdAkc'
     }
   ]
   : []
@@ -46,7 +55,7 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
       </CarouselItem>
     </CarouselContent>
     <div
-      class="hidden md:block"
+      class="hidden xl:block"
       v-if="activies.length > 1"
     >
       <CarouselPrevious />

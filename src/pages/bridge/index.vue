@@ -364,6 +364,7 @@ const onSubmit = async (values: Record<string, any>) => {
 const availableGooooPoints = computed(() => {
   if (ENV_VARIABLE.VITE_NETWORK !== NETWORK.LIVENET) return false
   if (select.to === CHAIN.BITLAYER) return 8
+  if (select.from === CHAIN.BINANCE_CEX && select.to === CHAIN.MERLIN) return 4
   return false
 })
 </script>
@@ -406,7 +407,7 @@ const availableGooooPoints = computed(() => {
         v-slot="{ setFieldValue }"
       >
         <div
-          class="oooo-bridge__title"
+          class="oooo-bridge__title flex justify-between"
         >
           <p>FROM</p>
           <p v-if="balance != null">
@@ -500,8 +501,14 @@ const availableGooooPoints = computed(() => {
         </FormField>
         <p class="oooo-bridge__title">
           SERVICE FEE
+          <span v-if="select.from === CHAIN.BINANCE_CEX && select.to === CHAIN.MERLIN">
+            FREE
+          </span>
         </p>
         <p class="oooo-bridge__description">
+          <span v-if="select.from === CHAIN.BINANCE_CEX && select.to === CHAIN.MERLIN">
+            GAS
+          </span>
           {{ serviceFee }} |
           <span class="underline">
             {{ BRIDGE_TEXT.SAVE_AMOUNT }}
@@ -543,7 +550,7 @@ const availableGooooPoints = computed(() => {
 <style lang="scss" scoped>
 .oooo-bridge {
   &__title {
-    @apply flex justify-between mb-[8px] text-[#a4a4a4] text-[14px] md:text-[16px];
+    @apply mb-[8px] text-[#a4a4a4] text-[14px] md:text-[16px];
     &:not(:first-child) {
       @apply mt-[16px];
     }
