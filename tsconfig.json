@@ -34,10 +34,7 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "*.d.ts",
-    "*.config.ts",
-    "tailwind.config.js",
-    "postcss.config.js"
+    "*.d.ts"
   ],
   "exclude": [
     "src/assets/**/*"

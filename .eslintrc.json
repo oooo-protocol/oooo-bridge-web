@@ -9,7 +9,8 @@
   "parserOptions": {
     "parser": "@typescript-eslint/parser",
     "project": [
-      "./tsconfig.json"
+      "./tsconfig.json",
+      "./tsconfig.node.json"
     ],
     "extraFileExtensions": [
       ".vue"
