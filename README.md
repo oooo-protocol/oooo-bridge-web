@@ -41,7 +41,8 @@ pnpm build:analyze
 | ᴸ shims       | Implement missing type definitions                    |
 
 ## Query config
-| Name | Description               |
-| ---- | ------------------------- |
-| from | Specify the sender token  |
-| to   | Specify the receive token |
+| Name  | Description               |
+| ----- | ------------------------- |
+| token | Specify the token id      |
+| from  | Specify the sender chain  |
+| to    | Specify the receive chain |

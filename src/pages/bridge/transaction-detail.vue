@@ -13,6 +13,7 @@ import TRANSFER_FAILED_IMAGE from '@/assets/images/transfer-failed.png'
 import TRANSFER_SUCCED_IMAGE from '@/assets/images/transfer-success.png'
 import TRANSFER_PROCESSING_IMAGE from '@/assets/images/transfer-loading.gif'
 import { type CHAIN } from '@/entities/chain'
+import { getArrayFirst } from '@preflower/utils'
 
 enum TRANSACTION_DETAIL_STATUS {
   PENDING,
@@ -36,12 +37,15 @@ const TRANSACTION_DETAIL_STATUS_IMAGE_MAP = {
   [TRANSACTION_DETAIL_STATUS.SUCCEED]: TRANSFER_SUCCED_IMAGE
 }
 
+const route = useRoute()
 const router = useRouter()
-const { wallet } = useWallet()
 const props = defineProps<{
   chain: CHAIN
   hash: string
 }>()
+
+const { address } = useWallet()
+
 const transactionDetailStatus = ref(TRANSACTION_DETAIL_STATUS.PENDING)
 const getTransactionDetailStatus = (data?: Transaction) => {
   if (data == null) return TRANSACTION_DETAIL_STATUS.PENDING
@@ -61,14 +65,15 @@ const getTransactionDetailStatus = (data?: Transaction) => {
   }
   return TRANSACTION_DETAIL_STATUS.SUCCEED
 }
-const address = computed(() => wallet.value?.address)
-const enabled = computed(() => address != null)
+const enabled = computed(() => address.value != null)
 const { data, refetch } = useQuery({
   queryKey: ['/v1/bridge/transaction/detail', props.hash],
   queryFn: async () => await retrieveTransactionDetail({
     fromChain: props.chain,
     fromTxnHash: props.hash,
-    fromWalletAddr: address.value!
+    fromWalletAddr: address.value!,
+    fromAssetType: getArrayFirst(route.query.fromAssetType) ?? undefined,
+    fromAssetCode: getArrayFirst(route.query.fromAssetCode) ?? undefined
   }),
   refetchInterval: (query) => {
     const transaction = query.state.data

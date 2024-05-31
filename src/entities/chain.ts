@@ -12,17 +12,8 @@ export enum CHAIN {
   MERLIN = 'merlin',
   ROOTSTOCK = 'rootstock',
   BITLAYER = 'bitlayer',
-  BINANCE_CEX = 'binance'
-}
-
-export interface NetworkConfig {
-  chainId: string
-  chainName: string
-  rpcUrls: string[]
-  nativeCurrency: {
-    name: string
-    symbol: string
-    decimals: number
-  }
-  blockExplorerUrls: string[]
+  BINANCE_CEX = 'binance',
+  BOB = 'bob',
+  ARIBTRUM = 'arbitrum',
+  BSC = 'bsc'
 }

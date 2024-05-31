@@ -7,25 +7,21 @@ import {
   SelectLabel
 } from 'oooo-components/ui/select'
 import { SelectTrigger } from 'radix-vue'
-import { CHAIN_LIST } from '@/lib/constants'
 import Icon from 'oooo-components/ui/Icon.vue'
-import { type Chain } from '@/entities/bridge'
+import { type ServerChain } from '@/entities/server'
 import { cn } from 'oooo-components/lib/utils'
 import { CHAIN } from '@/entities/chain'
+import { CHAIN_IMAGE_MAP } from '@/lib/constants'
 
 const props = defineProps<{
-  list?: Chain[]
+  list: ServerChain[]
 }>()
-const SUPPORT_CHAIN_LIST = computed(() => {
-  const supportChainName = (props.list ?? []).map(item => item.chainName)
-  return CHAIN_LIST.filter(chain => supportChainName.includes(chain.value))
-})
 const CHAIN_GROUP = computed(() => {
-  const _map = SUPPORT_CHAIN_LIST.value.reduce<{
-    chain: Array<typeof CHAIN_LIST[number]>
-    cex: Array<typeof CHAIN_LIST[number]>
+  const _map = props.list.reduce<{
+    chain: ServerChain[]
+    cex: ServerChain[]
   }>((pre, cur) => {
-    if (cur.value === CHAIN.BINANCE_CEX) {
+    if (cur.chainName === CHAIN.BINANCE_CEX) {
       pre.cex.push(cur)
     } else {
       pre.chain.push(cur)
@@ -53,7 +49,7 @@ const CHAIN_GROUP = computed(() => {
 const model = defineModel<string>()
 const selected = computed(() => {
   if (model.value != null) {
-    return SUPPORT_CHAIN_LIST.value.find(chain => chain.value === model.value)
+    return props.list.find(chain => chain.chainName === model.value)
   }
   return undefined
 })
@@ -77,11 +73,11 @@ const open = ref(false)
           @click="open = true"
         >
           <img
-            class="w-[24px] h-[24px]"
-            :src="selected.image"
+            class="w-[32px] h-[32px]"
+            :src="CHAIN_IMAGE_MAP[selected.chainName as CHAIN]"
           >
           <p class="xl:text-[19px]">
-            {{ selected.name }}
+            {{ selected.showName }}
           </p>
           <Icon
             name="a-arrowdown"
@@ -99,28 +95,17 @@ const open = ref(false)
         <SelectLabel>{{ group.label }}</SelectLabel>
         <SelectItem
           class="flex gap-[8px]"
-          :value="chain.value"
+          :value="chain.chainName"
           v-for="chain of group.children"
-          :key="chain.value"
-          :disabled="chain.disabled"
+          :key="chain.chainName"
         >
           <img
             class="w-[24px] h-[24px]"
-            :src="chain.image"
+            :src="CHAIN_IMAGE_MAP[chain.chainName as CHAIN]"
           >
-          <p>{{ chain.name }}</p>
+          <p>{{ chain.showName }}</p>
         </SelectItem>
       </SelectGroup>
     </SelectContent>
   </Select>
-  <p
-    class="oooo-bridge__error mt-[16px] flex items-center gap-[8px] font-[300] leading-[1.14] tracking-[0.88px] text-sm text-[#FF961E]"
-    v-if="selected?.description"
-  >
-    <Icon
-      class="shrink-0 text-[16px]"
-      name="imp"
-    />
-    {{ selected.description }}
-  </p>
 </template>

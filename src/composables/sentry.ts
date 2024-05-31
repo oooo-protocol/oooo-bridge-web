@@ -1,6 +1,5 @@
 import * as Sentry from '@sentry/vue'
 import { AxiosError } from 'axios'
-import { ENV_VARIABLE } from '@/lib/constants'
 import { NoAlarmException } from '@/lib/exception'
 import { ResponseError } from '@/request/axios'
 import { type Vue } from '@sentry/vue/types/types'
@@ -46,7 +45,7 @@ function isInjectedCode (event: Sentry.Event | undefined): boolean {
 }
 
 export const initSentry = (app: Vue) => {
-  if (ENV_VARIABLE.VITE_MODE !== 'dev') {
+  if (import.meta.env.VITE_MODE !== 'dev') {
     Sentry.init({
       app,
       environment: import.meta.env.VITE_MODE,
@@ -58,7 +57,7 @@ export const initSentry = (app: Vue) => {
       // of transactions for performance monitoring.
       // We recommend adjusting this value in production
       tracesSampleRate: 1.0,
-      tracePropagationTargets: ['localhost', ENV_VARIABLE.VITE_REQUEST_DOMAIN],
+      tracePropagationTargets: ['localhost', import.meta.env.VITE_REQUEST_DOMAIN],
       beforeSend (event, hint) {
         const error = hint.originalException
         if (

@@ -4,11 +4,10 @@ import AppNav from 'oooo-components/layout/AppNav.vue'
 import AppFooter from 'oooo-components/layout/AppFooter.vue'
 import Icon from 'oooo-components/ui/Icon.vue'
 import { buttonVariants } from 'oooo-components/ui/button'
-import WalletSelect from './WalletSelect.vue'
 import { AppCarousel } from './AppCarousel'
+import WalletConnectButton from './WalletConnectButton.vue'
 import AppNotification from './AppNotification.vue'
 import { NETWORK } from '@/entities/chain'
-import { ENV_VARIABLE } from '@/lib/constants'
 
 const menus = [
   {
@@ -61,7 +60,7 @@ const menus = [
   }
 ]
 
-const isSupportNotification = ref(ENV_VARIABLE.VITE_NETWORK === NETWORK.LIVENET)
+const isSupportNotification = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
 </script>
 
 <template>
@@ -84,7 +83,7 @@ const isSupportNotification = ref(ENV_VARIABLE.VITE_NETWORK === NETWORK.LIVENET)
       />
       Goooo
     </a>
-    <WalletSelect />
+    <WalletConnectButton />
   </AppHeader>
   <AppCarousel />
   <AppNotification

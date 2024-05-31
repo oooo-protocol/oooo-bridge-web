@@ -1,19 +1,34 @@
 import axios from '../axios'
-import { type Transaction, type TransactionConfig, type ChainConfig, type Chain, TRANSACTION_STATUS } from '@/entities/bridge'
+import { type Transaction, type TransactionConfig, type Chain, TRANSACTION_STATUS } from '@/entities/bridge'
 import type { Pagination } from './type'
-import { CHAIN_CONFIG_MAP, ENV_VARIABLE } from '@/lib/constants'
+import { CHAIN_RPC_MAP } from '@/lib/constants'
 import { combineURLs } from '@/lib/utils'
 import { ethers } from 'ethers'
 import axiosOrigin from 'axios'
 import { CHAIN } from '@/entities/chain'
+import { type ServerConfigs } from '@/entities/server'
 
-export const retrieveChainConfigs = async () => {
-  return await axios<ChainConfig[]>({
-    url: '/v1/bridge/chain/list'
+export const retrieveBridgeConfigs = async () => {
+  return await axios<ServerConfigs>({
+    url: '/v1/bridge/global/configuration'
+  })
+}
+
+export const retrieveEstimateData = async (data: {
+  pairId: number
+  fromAmount: string
+}) => {
+  return await axios<{
+    platformFee: string
+    toAmount: string
+  }>({
+    url: '/v1/bridge/transaction/fee/estimate',
+    params: data
   })
 }
 
 export const retrieveTransactionConfig = async (data: {
+  pairId: number
   fromChain: string
   fromAddress: string
   fromAmount: string
@@ -45,7 +60,8 @@ export const retrieveChainGasPrice = async (data: {
   })
 }
 
-export const transfer = async (data: {
+export const createTransaction = async (data: {
+  pairId: number
   fromChain: string
   fromAddress: string
   fromAssetType?: string
@@ -95,10 +111,11 @@ export const retrieveTransactionList = async (params: {
  * refer: https://docs.ethers.org/v6/api/providers/#TransactionResponse
  */
 export const retrieveEthereumTransactionStatus = async (chain: CHAIN, hash: string) => {
-  const config = CHAIN_CONFIG_MAP[chain]
-  const jsonRpcProvider = new ethers.JsonRpcProvider(config.rpcUrls[0])
+  const rpc = CHAIN_RPC_MAP[chain]
+  const jsonRpcProvider = new ethers.JsonRpcProvider(rpc)
   try {
     const response = await jsonRpcProvider.getTransaction(hash)
+    console.log(response)
     if (response == null) return TRANSACTION_STATUS.PENDING
     const receipt = await response.wait()
     if (receipt == null) return TRANSACTION_STATUS.PENDING
@@ -117,7 +134,7 @@ export const retrieveEthereumTransactionStatus = async (chain: CHAIN, hash: stri
 export const retrieveBitcoinTransactionStatus = async (hash: string) => {
   const { data: { status } } = await axiosOrigin.get<{
     status: { confirmed: boolean }
-  }>(combineURLs(ENV_VARIABLE.VITE_MEMPOOL_URL, `/tx/${hash}`), {
+  }>(combineURLs(import.meta.env.VITE_MEMPOOL_URL, `/tx/${hash}`), {
     withCredentials: false
   })
   if (status.confirmed) {
@@ -145,7 +162,7 @@ export const retrieveBitcoinRecommendFees = async () => {
     'hourFee': number
     'economyFee': number
     'minimumFee': number
-  }>(combineURLs(ENV_VARIABLE.VITE_MEMPOOL_URL, '/v1/fees/recommended'), {
+  }>(combineURLs(import.meta.env.VITE_MEMPOOL_URL, '/v1/fees/recommended'), {
     withCredentials: false
   })
   return data

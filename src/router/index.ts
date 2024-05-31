@@ -37,9 +37,9 @@ const router = createRouter({
 const WHITE_LIST = ['bridge']
 
 router.beforeEach((to, from, next) => {
-  const { wallet } = useWallet()
+  const { address } = useWallet()
 
-  if (wallet.value != null) {
+  if (address.value != null) {
     next()
     return
   } else if (WHITE_LIST.includes(to.name as string)) {

@@ -1,22 +1,19 @@
 import { useWallet } from '@/composables/hooks/use-wallet'
 import { getArrayFirst } from '@preflower/utils'
-import { createFuncall } from 'vue-funcall'
-import WalletConnectModal from '@/components/wallet-connect/WalletConnectModal.vue'
-import { CHAIN } from '@/entities/chain'
-import { WALLET_TYPE } from '@/entities/wallet'
 import { uuid } from 'oooo-components/lib/utils'
 import { createInvitationRelationship } from '@/request/api/user'
+import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
 
 export const useInvite = () => {
   const route = useRoute()
   const inviteCode = getArrayFirst(route.query.inviteCode)
 
-  const { wallet, getWalletType, sign } = useWallet()
+  const { address, getInstance, onConnect } = useWallet()
 
-  watch(wallet, async (wallet) => {
-    if (wallet == null || inviteCode == null) return
-    const type = getWalletType()
-    if (type === WALLET_TYPE.ETHEREUM) {
+  watch(address, async (address) => {
+    if (address == null || inviteCode == null) return
+    const instance = getInstance()
+    if (instance.type === WALLET_TYPE.ETHEREUM) {
       const signContent =
         'oooo Authentication \n' +
         'Welcome to oooo! \n' +
@@ -25,9 +22,9 @@ export const useInvite = () => {
         'Thank you for using oooo for a secure and decentralized experience. \n' +
         'oooo Team \n' +
         `Nonce: ${uuid()}`
-      const signature = await sign(signContent, wallet.address)
+      const signature = await instance.sign(signContent, address)
       void createInvitationRelationship({
-        walletAddress: wallet.address,
+        walletAddress: address,
         signature,
         signContent,
         inviteCode
@@ -36,10 +33,7 @@ export const useInvite = () => {
   })
 
   onMounted(() => {
-    if (inviteCode == null || wallet.value != null) return
-    createFuncall(WalletConnectModal, {
-      modelValue: true,
-      chain: CHAIN.BEVM
-    })
+    if (inviteCode == null || address.value != null) return
+    onConnect(WALLET_TYPE.ETHEREUM)
   })
 }

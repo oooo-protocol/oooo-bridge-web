@@ -3,5 +3,10 @@
 
 interface ImportMetaEnv {
   readonly VITE_REQUEST_DOMAIN: string
-  readonly VITE_NETWORK: string
+  readonly VITE_NETWORK: NETWORK
+  readonly VITE_TITLE: string
+  readonly VITE_DEFAULT_SELECT_FROM: string
+  readonly VITE_DEFAULT_SELECT_TO: string
+  readonly VITE_DEFAULT_SELECT_TOKEN: string
+  readonly VITE_MEMPOOL_URL: string
 }

@@ -7,7 +7,7 @@ export interface Chain {
   assetType: string
 }
 
-export interface ChainConfig extends Chain {
+export interface ServerChainConfig extends Chain {
   /**
    * Platform walllet address, currently unused.
    */
@@ -24,7 +24,7 @@ export interface ChainConfig extends Chain {
    * transfer chain support maximal amount
    */
   maxAmount: number
-  toChains: Array<ChainConfig & {
+  toChains: Array<ServerChainConfig & {
     /**
      * Platform transfer bitcoin can support max sat gas fee
      */

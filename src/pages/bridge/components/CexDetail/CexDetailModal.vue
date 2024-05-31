@@ -5,13 +5,13 @@ import {
   DialogHeader,
   DialogTitle
 } from 'oooo-components/ui/dialog'
-import { BRIDGE_TEXT_MAP, CHAIN_IMAGE_MAP } from '@/lib/constants'
+import { CHAIN_IMAGE_MAP } from '@/lib/constants'
 import Icon from 'oooo-components/ui/Icon.vue'
 import { type CHAIN } from '@/entities/chain'
 import ClipboardText from './ClipboardText.vue'
 import { Button } from 'oooo-components/ui/button'
 import TRANSFER_PROCESSING_DARK_IMAGE from '@/assets/images/transfer-loading.dark.gif'
-import BINANCE_SAMPLE_IMAGE from '@/assets/images/binance-sample.jpg'
+import BINANCE_SAMPLE_IMAGE from '@/assets/images/binance-sample.png'
 import { useQuery } from '@tanstack/vue-query'
 import { retrieveTransactionDetail } from '@/request/api/bridge'
 import PageLoading from '@/components/PageLoading.vue'
@@ -20,6 +20,7 @@ import { usePreventUnload } from '../../hooks/use-before-unload'
 const open = defineModel<boolean>()
 
 const props = defineProps<{
+  assetCode: string
   fromChain: CHAIN
   fromTxnHash: string
   fromWalletAddr: string
@@ -53,15 +54,6 @@ const binanceInfo = computed(() => {
     { text: 'AMOUNT', value: Number(data.value.fromSwapAmount) }
   ]
 })
-
-const TIME_SPEND_TEXT = computed(() => {
-  const current = new Date().getUTCHours()
-  if (current >= 1 && current < 10) {
-    return BRIDGE_TEXT_MAP.CEX_TIME_SPEND
-  } else {
-    return BRIDGE_TEXT_MAP.CEX_BUSY_TIME_SEPND
-  }
-})
 </script>
 
 <template>
@@ -89,7 +81,7 @@ const TIME_SPEND_TEXT = computed(() => {
                     class="w-[32px] h-[32px]"
                   >
                   <p class="text-[21px] md:text-[24px] leading-[1]">
-                    {{ Number(data.fromSwapAmount) }} BTC
+                    {{ Number(data.fromSwapAmount) }} {{ assetCode }}
                   </p>
                 </div>
                 <div class="mt-[8px] md:mt-[10px] flex items-center gap-[8px] text-[#616161]">
@@ -109,7 +101,7 @@ const TIME_SPEND_TEXT = computed(() => {
                   class="w-[32px] h-[32px]"
                 >
                 <p class="text-[21px] md:text-[24px] leading-[1]">
-                  {{ Number(data.toSwapAmount) }} BTC
+                  {{ Number(data.toSwapAmount) }} {{ assetCode }}
                 </p>
               </div>
             </div>
@@ -206,7 +198,7 @@ const TIME_SPEND_TEXT = computed(() => {
               :src="TRANSFER_PROCESSING_DARK_IMAGE"
             >
             <p class="-tracking-tighter">
-              WE WILL CONFIRM YOUR TRANSFER WITHIN {{ TIME_SPEND_TEXT }}
+              WE WILL CONFIRM YOUR TRANSFER WITHIN 10 MINUTES.
             </p>
           </div>
           <div class="px-[16px] pt-[10px] pb-[24px] md:px-[40px] flex flex-col md:flex-row gap-[10px]">

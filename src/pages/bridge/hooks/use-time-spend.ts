@@ -1,75 +1,57 @@
 import { CHAIN } from '@/entities/chain'
-import { BRIDGE_TEXT_MAP } from '@/lib/config'
 import { retrieveBitcoinRecommendFees } from '@/request/api/bridge'
 import { useQuery } from '@tanstack/vue-query'
+import { type PairConfig } from './use-config'
 
-export const useTimeSpend = (select: {
-  from: CHAIN
-  to: CHAIN
-}, toMaxSat: Ref<number | undefined>) => {
+export const useTimeSpend = (
+  to: Ref<string>,
+  currentPairConfig: ComputedRef<PairConfig | null>
+) => {
   const { data: fees } = useQuery({
     queryKey: ['/fees/recommended'],
     queryFn: retrieveBitcoinRecommendFees
   })
 
   const text = computed(() => {
-    if (select.from === CHAIN.BINANCE_CEX) {
-      if (select.to === CHAIN.MERLIN) {
-        return {
-          SAVE_AMOUNT: 'SAVE $19.2~$20.3',
-          TIME_SPEND: '30S～5MIN',
-          SAVE_TIME: BRIDGE_TEXT_MAP.CEX_SAVE_TIME
-        }
-      }
+    const config = currentPairConfig.value
+    if (config == null) return
+    if (to.value !== CHAIN.BTC) {
       return {
-        SAVE_AMOUNT: BRIDGE_TEXT_MAP.CEX_SAVE_AMOUNT,
-        TIME_SPEND: '30S～5MIN',
-        SAVE_TIME: BRIDGE_TEXT_MAP.CEX_SAVE_TIME
+        SAVE_AMOUNT: config.feeSaveTips,
+        TIME_SPEND: config.timeSpendTips,
+        SAVE_TIME: config.timeSaveTips
       }
     }
-    if (select.from === CHAIN.BTC) {
+    if (config.toMaxPrice == null || fees.value == null) {
       return {
-        SAVE_AMOUNT: BRIDGE_TEXT_MAP.BITCOIN_SAVE_AMOUNT,
-        TIME_SPEND: BRIDGE_TEXT_MAP.BITCOIN_TIME_SPEND,
-        SAVE_TIME: BRIDGE_TEXT_MAP.BITCOIN_SAVE_TIME
+        SAVE_AMOUNT: config.feeSaveTips,
+        TIME_SPEND: 'SEVERAL HOURS',
+        SAVE_TIME: config.timeSaveTips
       }
     }
-    if (select.to !== CHAIN.BTC) {
+    const toMaxPrice = Number(config.toMaxPrice)
+    if (fees.value.fastestFee <= toMaxPrice) {
       return {
-        SAVE_AMOUNT: BRIDGE_TEXT_MAP.ETHEREUM_SAVE_AMOUNT,
-        TIME_SPEND: BRIDGE_TEXT_MAP.ETHEREUM_TIME_SPEND,
-        SAVE_TIME: BRIDGE_TEXT_MAP.ETHEREUM_SAVE_TIME
-      }
-    }
-    if (toMaxSat.value == null || fees.value == null) {
-      return {
-        SAVE_AMOUNT: BRIDGE_TEXT_MAP.BITCOIN_SAVE_AMOUNT,
-        TIME_SPEND: 'Several hours',
-        SAVE_TIME: BRIDGE_TEXT_MAP.BITCOIN_SAVE_TIME
-      }
-    }
-    if (fees.value.fastestFee <= toMaxSat.value) {
-      return {
-        SAVE_AMOUNT: BRIDGE_TEXT_MAP.BITCOIN_SAVE_AMOUNT,
+        SAVE_AMOUNT: config.feeSaveTips,
         TIME_SPEND: '10~60 MIN',
-        SAVE_TIME: BRIDGE_TEXT_MAP.BITCOIN_SAVE_TIME
+        SAVE_TIME: config.timeSaveTips
       }
-    } else if (fees.value.halfHourFee < toMaxSat.value) {
+    } else if (fees.value.halfHourFee < toMaxPrice) {
       return {
-        SAVE_AMOUNT: BRIDGE_TEXT_MAP.BITCOIN_SAVE_AMOUNT,
+        SAVE_AMOUNT: config.feeSaveTips,
         TIME_SPEND: '30~60 MIN',
-        SAVE_TIME: BRIDGE_TEXT_MAP.BITCOIN_SAVE_TIME
+        SAVE_TIME: config.timeSaveTips
       }
-    } else if (fees.value.hourFee < toMaxSat.value) {
+    } else if (fees.value.hourFee < toMaxPrice) {
       return {
-        SAVE_AMOUNT: BRIDGE_TEXT_MAP.BITCOIN_SAVE_AMOUNT,
+        SAVE_AMOUNT: config.feeSaveTips,
         TIME_SPEND: '60~120MIN',
-        SAVE_TIME: BRIDGE_TEXT_MAP.BITCOIN_SAVE_TIME
+        SAVE_TIME: config.timeSaveTips
       }
     } else {
       return {
-        SAVE_AMOUNT: BRIDGE_TEXT_MAP.BITCOIN_SAVE_AMOUNT,
-        TIME_SPEND: 'Several hours',
+        SAVE_AMOUNT: config.feeSaveTips,
+        TIME_SPEND: 'SEVERAL HOURS',
         ERROR: 'Bitcoin network is currently congested'
       }
     }

@@ -14,9 +14,10 @@ import { usePreventUnload } from '../hooks/use-before-unload'
 const open = defineModel<boolean>()
 
 defineProps<{
-  fromChain: CHAIN
+  tokenName: string
+  fromChain: string
   fromAmount: string
-  toChain: CHAIN
+  toChain: string
   toAmount: string
 }>()
 
@@ -38,11 +39,11 @@ usePreventUnload()
         <div class="flex flex-col md:flex-row items-center gap-[12px] md:gap-[44px]">
           <div class="flex items-center gap-[8px] p-[8px] border border-[#5a6960] bg-[#212322] rounded-md w-full">
             <img
-              :src="CHAIN_IMAGE_MAP[fromChain]"
+              :src="CHAIN_IMAGE_MAP[fromChain as CHAIN]"
               class="w-[32px] h-[32px]"
             >
             <p class="text-[24px]">
-              {{ fromAmount }} BTC
+              {{ fromAmount }} {{ tokenName }}
             </p>
           </div>
           <Icon
@@ -51,11 +52,11 @@ usePreventUnload()
           />
           <div class="flex items-center gap-[8px] p-[8px] border border-[#5a6960] bg-[#212322] rounded-md w-full">
             <img
-              :src="CHAIN_IMAGE_MAP[toChain]"
+              :src="CHAIN_IMAGE_MAP[toChain as CHAIN]"
               class="w-[32px] h-[32px]"
             >
             <p class="text-[24px]">
-              {{ toAmount }} BTC
+              {{ toAmount }} {{ tokenName }}
             </p>
           </div>
         </div>

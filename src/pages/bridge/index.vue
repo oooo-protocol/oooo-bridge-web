@@ -6,32 +6,31 @@ import Button from 'oooo-components/ui/button/Button.vue'
 import Input from 'oooo-components/ui/input/Input.vue'
 import { BridgeContainer, BridgeHeader, BridgeContent } from './components/BridgeContainer'
 import { useMutation, useQuery } from '@tanstack/vue-query'
-import { retrieveTransactionConfig, transfer, retrieveChainConfigs } from '@/request/api/bridge'
+import { retrieveTransactionConfig, createTransaction, retrieveBridgeConfigs } from '@/request/api/bridge'
 import Decimal from 'decimal.js-light'
 import { useWallet } from '@/composables/hooks/use-wallet'
-import { ENV_VARIABLE, EVM_ADDRESS_REGEXP } from '@/lib/constants'
-import LoadingIcon from '@/components/LoadingIcon.vue'
+import { EVM_ADDRESS_REGEXP } from '@/lib/constants'
 import { useToast } from 'oooo-components/ui/toast/use-toast'
 import PageLoading from '@/components/PageLoading.vue'
 import { createFuncall } from 'vue-funcall'
-import WalletConnectModal from '@/components/wallet-connect/WalletConnectModal.vue'
 import { Form, FormField, FormMessage } from 'oooo-components/ui/form'
 import NumberInput from './components/NumberInput.vue'
 import { type RuleExpression } from 'vee-validate'
 import { ResponseError } from '@/request/axios'
 import { Network, validate } from 'bitcoin-address-validation'
-import { useChainSelect } from './hooks/use-chain-select'
-import { WALLET_TYPE } from '@/entities/wallet'
 import { NoAlarmException } from '@/lib/exception'
 import { CHAIN, NETWORK } from '@/entities/chain'
-import { useTimeSpend } from './hooks/use-time-spend'
 import { useInvite } from './hooks/use-invite'
-import { useChainQuery } from './hooks/use-chain-query'
 import TransferProcessingModal from './components/TransferProcessingModal.vue'
-import { useChainBalance } from './hooks/use-chain-balance'
+import { useBalance } from './hooks/use-balance'
 import { CexDetailModal } from './components/CexDetail'
+import { useConfig } from './hooks/use-config'
+import { useEstimateData } from './hooks/use-estimate-data'
+import { useTimeSpend } from './hooks/use-time-spend'
+import { SERVER_ASSET } from '@/entities/server'
+import TooltipPro from 'oooo-components/ui/TooltipPro.vue'
 
-const { wallet, getWalletType, sign, transaction, getPublicKey, onLogout } = useWallet()
+const { address, transfer, sign, getPublicKey, onConnect } = useWallet()
 
 const router = useRouter()
 const { toast } = useToast()
@@ -39,127 +38,86 @@ const { toast } = useToast()
 useInvite()
 
 const { isPending: initializing, isError: isConfigInvalid, data: configs } = useQuery({
-  queryKey: ['/v1/bridge/chain/list'],
-  queryFn: retrieveChainConfigs
+  queryKey: ['/v1/bridge/global/configuration'],
+  queryFn: retrieveBridgeConfigs
 })
-const { select, fromChainList, fromChainConfig, platformFee, toMaxSat, toChainList, onSelectReset } = useChainSelect(configs)
-useChainQuery(fromChainList, select)
-const balance = useChainBalance(select)
-
+const {
+  token,
+  from,
+  to,
+  tokenList,
+  fromChainList,
+  toChainList,
+  config
+} = useConfig(configs)
 const form = reactive<{
-  token: string
   amount: string
   receiveAddress?: string
 }>({
-  token: 'BTC',
   amount: '',
   receiveAddress: undefined
 })
-const BRIDGE_TEXT = useTimeSpend(select, toMaxSat)
-watch(() => [wallet.value, fromChainList.value], ([wallet]) => {
-  if (!wallet) return
-  const type = getWalletType()
-  onSelectReset(type)
-}, {
-  immediate: true
+const balance = useBalance(from, config)
+const title = import.meta.env.VITE_TITLE
+const isTestnetNetwork = import.meta.env.VITE_NETWORK === NETWORK.TESTNET
+const { estimating, toAmount, platformFee } = useEstimateData(computed(() => form.amount), config)
+const serviceFee = computed(() => {
+  if (platformFee.value == null) return
+  return Number(platformFee.value) === 0 ? 'FREE' : `${platformFee.value} ${token.value}`
 })
-
-watch(() => [select.from], () => {
-  if (!wallet.value) return
-  if (select.from === CHAIN.BINANCE_CEX) return
-  const walletType = getWalletType()
-  if (walletType === WALLET_TYPE.BITCOIN && select.from === CHAIN.BTC) return
-  if (walletType === WALLET_TYPE.ETHEREUM && select.from !== CHAIN.BTC) return
-  void onLogout()
-  onConnect()
-})
-
-const onConnect = () => {
-  createFuncall(WalletConnectModal, {
-    modelValue: true,
-    chain: select.from
-  })
+const SPEND_TEXT = useTimeSpend(to, config)
+/** --------------------- Update receiveAddress field  -------------- */
+const checkAddress = (address: string, chain: string) => {
+  const isBTCAddress = chain === CHAIN.BTC
+  if (isBTCAddress) {
+    const network = import.meta.env.VITE_NETWORK === NETWORK.LIVENET ? Network.mainnet : Network.testnet
+    return validate(address, network)
+  } else {
+    // it's assumed to be a EVM address
+    return EVM_ADDRESS_REGEXP.test(address)
+  }
 }
 
-/** --------------------- Update receiveAddress field  -------------- */
-watch(wallet, (wallet, oldWallet) => {
-  /**
-   * when wallet change, we will update when trigger follow scenarios
-   * 1. wallet disconnect, direct set `undefined`
-   * 2. wallet connect Bitcoin / wallet connect Ethereum but select chain contain Bitcoin, set `undefined`
-   * 3. wallet change and (receiveAddress not value / receiveAddress value not old wallet address), set `walletAddress`
-   */
-  if (!wallet) {
-    form.receiveAddress = undefined
-    return
+watch([to, address], ([to, address]) => {
+  if (form.receiveAddress != null) {
+    const isValid = checkAddress(form.receiveAddress, to)
+    if (isValid) return
   }
-  const walletType = getWalletType()
-  if (walletType === WALLET_TYPE.BITCOIN || [select.from, select.to].includes(CHAIN.BTC)) {
-    form.receiveAddress = undefined
-    return
+  if (address != null) {
+    const isValid = checkAddress(address, to)
+    if (isValid) {
+      form.receiveAddress = address
+      return
+    }
   }
-  const edited = oldWallet && form.receiveAddress != null && form.receiveAddress !== oldWallet.address
-  if (!edited) {
-    form.receiveAddress = wallet.address
-  }
+  form.receiveAddress = undefined
 }, {
   immediate: true
-})
-
-watch(() => select.from, (from, oldFrom) => {
-  /**
-   * when from change, we will update when trigger follow scenarios
-   * 1. `from` chain from bitcoin to ethereum, and `to` chain not to bitcoin, set `walletAddress`
-   * 2. `from` chain or `to` chain is bitcoin, clear `walletAddress`
-   */
-  if (oldFrom === CHAIN.BTC && select.to !== CHAIN.BTC) {
-    form.receiveAddress = wallet.value?.address
-  } else if (from === CHAIN.BTC || select.to === CHAIN.BTC) {
-    form.receiveAddress = undefined
-  }
-})
-watch(() => select.to, (to, oldTo) => {
-  /**
-   * when from change, we will update when trigger follow scenarios
-   * 1. `to` chain from bitcoin to ethereum, and `from` chain not to bitcoin, set `walletAddress`
-   * 2. `from` chain or `to` chain is bitcoin, clear `walletAddress`
-   */
-  if (oldTo === CHAIN.BTC && select.from !== CHAIN.BTC) {
-    form.receiveAddress = wallet.value?.address
-  } else if (to === CHAIN.BTC || select.from === CHAIN.BTC) {
-    form.receiveAddress = undefined
-  }
 })
 /** --------------------- End  -------------- */
 
 const loading = ref(false)
-const min = computed(() => fromChainConfig.value?.minAmount ?? 0.00001)
-const max = computed(() => {
-  const maxAmount = fromChainConfig.value?.maxAmount ?? 0.0001
+const min = computed(() => config.value?.minAmount ?? 0.00001)
+const max = computed(() => config.value?.maxAmount ?? 0.0001)
+const isInsufficient = computed(() => {
+  return Number(balance.value) < Number(form.amount)
+})
+
+const onSwitch = () => {
+  [from.value, to.value] = [to.value, from.value]
+}
+
+const onClickMax = () => {
+  const maxAmount = max.value
   if (balance.value != null) {
     /**
      * fix decimal >= 7, js will use exponential notation display, it will cause user max input error when balance toString
      *  use `Decimal.greaterThan` instead of `Math.min` to avoid transform to exponential notation
      */
-    return new Decimal(balance.value).greaterThan(maxAmount) ? maxAmount : balance.value
+    form.amount = new Decimal(balance.value).greaterThan(maxAmount) ? String(maxAmount) : balance.value
+  } else {
+    form.amount = String(maxAmount)
   }
-  return maxAmount
-})
-
-const isInsufficient = computed(() => {
-  return Number(balance.value) < Number(form.amount)
-})
-const estimateAmount = computed(() => {
-  const amount = Number(form.amount)
-  if (Number.isNaN(amount) || platformFee.value == null) return 0
-  const to = new Decimal(amount).minus(platformFee.value)
-  return Number(to) < 0 ? 0 : to
-})
-
-const serviceFee = computed(() => Number(platformFee.value) === 0 ? 'FREE' : `${platformFee.value} BTC`)
-
-const onSwitch = () => {
-  [select.from, select.to] = [select.to, select.from]
 }
 
 const rules: Record<string, RuleExpression<any>> = {
@@ -177,23 +135,15 @@ const rules: Record<string, RuleExpression<any>> = {
     return true
   },
   receiveAddress: (val: string) => {
-    const isBTCAddress = select.to === CHAIN.BTC
-    if (isBTCAddress) {
-      const network = ENV_VARIABLE.VITE_NETWORK === NETWORK.LIVENET ? Network.mainnet : Network.testnet
-      if (!validate(val, network)) {
-        return 'INVALID WALLET ADDRESS'
-      }
-    } else {
-      // it's assumed to be a EVM address
-      if (!EVM_ADDRESS_REGEXP.test(val)) {
-        return 'INVALID WALLET ADDRESS'
-      }
+    const isValid = checkAddress(val, to.value)
+    if (!isValid) {
+      return 'INVALID WALLET ADDRESS'
     }
     return true
   }
 }
 
-const checkBalanceIsEnough = (chain: CHAIN, amount: string | number, gasPrice: string | number) => {
+const checkBalanceIsEnough = (chain: string, amount: string | number, gasPrice: string | number) => {
   if (balance.value == null) return
   amount = Number(amount)
   gasPrice = Number(gasPrice)
@@ -222,24 +172,26 @@ const checkBalanceIsEnough = (chain: CHAIN, amount: string | number, gasPrice: s
 }
 
 const { mutateAsync: sendTransfer } = useMutation({
-  mutationFn: transfer,
+  mutationFn: createTransaction,
   retry: true
 })
 
 const createCexTransaction = async (parameter: {
-  fromChain: CHAIN
+  pairId: number
+  tokenName: string
+  fromChain: string
   fromAddress: string
   amount: string
-  toChain: CHAIN
+  toChain: string
   toAddress: string
 }) => {
-  if (parameter.fromChain !== CHAIN.BINANCE_CEX) throw new Error(`${parameter.fromChain} not support cex transaction`)
+  if (parameter.fromChain !== CHAIN.BINANCE_CEX) throw new Error(`${parameter.fromChain} NOT SUPPORT CEX TRANSACTION`)
 
   const signContent = JSON.stringify({
     ...parameter,
     timestamp: +new Date()
   })
-  const signature = await sign(signContent, parameter.fromAddress)
+  const signature = await sign(signContent)
   const publicKey = await getPublicKey()
   if (publicKey == null) {
     throw new Error('INVALID SIGNATURE, PLEASE TRY AGAIN.')
@@ -248,15 +200,18 @@ const createCexTransaction = async (parameter: {
   /**
    * Not need infinite retries to ensure transfer submitted
    */
-  const { fromTxnHash } = await transfer({
+  const { fromTxnHash } = await sendTransfer({
     ...parameter,
     signature,
     signContent,
-    publicKey: publicKey!
+    publicKey
   })
+
+  const { assetCode } = config.value!
 
   createFuncall(CexDetailModal, {
     modelValue: true,
+    assetCode,
     fromChain: parameter.fromChain,
     fromTxnHash,
     fromWalletAddr: parameter.fromAddress
@@ -264,13 +219,16 @@ const createCexTransaction = async (parameter: {
 }
 
 const createChainTransaction = async (parameter: {
-  fromChain: CHAIN
+  pairId: number
+  tokenName: string
+  fromChain: string
   fromAddress: string
   amount: string
-  toChain: CHAIN
+  toChain: string
   toAddress: string
 }) => {
-  const config = await retrieveTransactionConfig({
+  const { gasPrice, platformAddress } = await retrieveTransactionConfig({
+    pairId: parameter.pairId,
     fromChain: parameter.fromChain,
     fromAddress: parameter.fromAddress,
     fromAmount: parameter.amount,
@@ -280,44 +238,57 @@ const createChainTransaction = async (parameter: {
   /**
    * Estimate transaction fee to avoid balance exceeded
    */
-  checkBalanceIsEnough(parameter.fromChain, parameter.amount, config.gasPrice)
+  checkBalanceIsEnough(parameter.fromChain, parameter.amount, gasPrice)
 
   const signContent = JSON.stringify({
     ...parameter,
     timestamp: +new Date()
   })
-  const signature = await sign(signContent, parameter.fromAddress)
+  const signature = await sign(signContent)
   const publicKey = await getPublicKey()
   if (publicKey == null) {
     throw new Error('INVALID SIGNATURE, PLEASE TRY AGAIN.')
   }
   const { close } = createFuncall(TransferProcessingModal, {
     modelValue: true,
+    tokenName: parameter.tokenName,
     fromChain: parameter.fromChain,
     fromAmount: parameter.amount,
     toChain: parameter.toChain,
-    toAmount: estimateAmount.value.toString()
+    toAmount: toAmount.value.toString()
   })
   try {
-    const hash = await transaction({
-      chain: parameter.fromChain,
+    const { assetType, assetCode, contractAddress } = config.value!
+    const transferParameter = {
       from: parameter.fromAddress,
-      to: config.platformAddress,
-      gas: config.gasPrice,
+      to: platformAddress,
+      gas: gasPrice,
       value: parameter.amount
-    })
+    }
+    let hash: string
+    if (parameter.fromChain === CHAIN.BTC) {
+      hash = await transfer(transferParameter)
+    } else if (assetType === SERVER_ASSET.TOKEN) {
+      hash = await transfer(transferParameter, parameter.fromChain, contractAddress)
+    } else {
+      hash = await transfer(transferParameter, parameter.fromChain)
+    }
     await sendTransfer({
       ...parameter,
       txnHash: hash,
       signature,
       signContent,
-      publicKey: publicKey!
+      publicKey
     })
     await router.push({
       name: 'transaction-detail',
       params: {
-        chain: select.from,
+        chain: from.value,
         hash
+      },
+      query: {
+        fromAssetCode: assetCode,
+        fromAssetType: assetType
       }
     })
   } finally {
@@ -326,17 +297,18 @@ const createChainTransaction = async (parameter: {
 }
 
 const onSubmit = async (values: Record<string, any>) => {
-  const address = wallet.value?.address
-  if (address == null) {
+  if (address.value == null) {
     onConnect()
     return
   }
   try {
     loading.value = true
     const parameter = {
-      fromChain: select.from,
-      fromAddress: address,
-      toChain: select.to,
+      pairId: config.value!.pairId,
+      tokenName: token.value,
+      fromChain: from.value,
+      fromAddress: address.value,
+      toChain: to.value,
       toAddress: values.receiveAddress,
       amount: values.amount
     }
@@ -362,9 +334,9 @@ const onSubmit = async (values: Record<string, any>) => {
 }
 
 const availableGooooPoints = computed(() => {
-  if (ENV_VARIABLE.VITE_NETWORK !== NETWORK.LIVENET) return false
-  if (select.to === CHAIN.BITLAYER) return 8
-  if (select.from === CHAIN.BINANCE_CEX && select.to === CHAIN.MERLIN) return 4
+  if (import.meta.env.VITE_NETWORK !== NETWORK.LIVENET) return false
+  if (to.value === CHAIN.BITLAYER) return 8
+  if (from.value === CHAIN.BINANCE_CEX && to.value === CHAIN.MERLIN) return 4
   return false
 })
 </script>
@@ -373,12 +345,12 @@ const availableGooooPoints = computed(() => {
   <BridgeContainer class="oooo-bridge">
     <BridgeHeader
       class="flex flex-col md:flex-row-reverse md:items-center md:pt-[40px]"
-      :title="ENV_VARIABLE.VITE_TITLE"
+      :title="title"
     >
       <div class="flex flex-col md:flex-row gap-[8px] md:gap-[20px] mt-[40px] md:mt-0 md:mr-[20px]">
         <div
           class="relative min-w-[219px]"
-          v-if="ENV_VARIABLE.VITE_NETWORK === NETWORK.TESTNET"
+          v-if="isTestnetNetwork"
         >
           <p class="absolute -top-[24px] left-0 text-[13px] text-[#a4a4a4]">
             TEST TOKEN ON DISCORD FAUCET
@@ -397,14 +369,16 @@ const availableGooooPoints = computed(() => {
             BTC FAUCET
           </Button>
         </div>
-        <TokenSelect v-model="form.token" />
+        <TokenSelect
+          v-model="token"
+          :list="tokenList"
+        />
       </div>
     </BridgeHeader>
     <PageLoading v-if="initializing" />
     <BridgeContent v-else>
       <Form
         @submit="onSubmit"
-        v-slot="{ setFieldValue }"
       >
         <div
           class="oooo-bridge__title flex justify-between"
@@ -421,7 +395,7 @@ const availableGooooPoints = computed(() => {
           :rules="rules.amount"
         >
           <ChainSelect
-            v-model="select.from"
+            v-model="from"
             :list="fromChainList"
           >
             <template #suffix>
@@ -435,15 +409,15 @@ const availableGooooPoints = computed(() => {
                   class="p-0 bg-transparent border-none text-right"
                   :placeholder="`${min}~${max}`"
                   v-bind="componentField"
-                  :decimal="8"
+                  :decimal="config?.frontDecimal ?? 8"
                 />
                 <button
                   class="xl:text-[19px] pl-[8px] cursor-pointer text-[#ff5402]"
                   :class="{
-                    'cursor-not-allowed': !wallet
+                    'cursor-not-allowed': !address
                   }"
-                  :disabled="!wallet"
-                  @click.prevent="setFieldValue('amount', max)"
+                  :disabled="!address"
+                  @click.prevent="onClickMax"
                 >
                   MAX
                 </button>
@@ -460,13 +434,13 @@ const availableGooooPoints = computed(() => {
           </div>
           <ChainSelect
             class="items-start"
-            v-model="select.to"
+            v-model="to"
             :list="toChainList"
           >
             <template #suffix>
               <div class="flex flex-col items-end md:flex-row md:items-center gap-[12px] md:gap-[8px] w-full select-none overflow-hidden">
                 <p class="w-full text-[19px] text-right truncate">
-                  {{ estimateAmount }}
+                  {{ toAmount }}
                 </p>
                 <p
                   v-if="availableGooooPoints"
@@ -500,50 +474,65 @@ const availableGooooPoints = computed(() => {
             name="receiveAddress"
           />
         </FormField>
-        <p class="oooo-bridge__title">
-          SERVICE FEE
-          <span v-if="select.from === CHAIN.BINANCE_CEX && select.to === CHAIN.MERLIN">
-            FREE
-          </span>
-        </p>
-        <p class="oooo-bridge__description">
-          <span v-if="select.from === CHAIN.BINANCE_CEX && select.to === CHAIN.MERLIN">
-            GAS
-          </span>
-          {{ serviceFee }} |
-          <span class="underline">
-            {{ BRIDGE_TEXT.SAVE_AMOUNT }}
-          </span>
-        </p>
-        <p class="oooo-bridge__title">
-          TIME SPEND
-        </p>
-        <p class="oooo-bridge__description">
-          {{ BRIDGE_TEXT.TIME_SPEND }} |
-          <span
-            class="underline"
-            v-if="BRIDGE_TEXT.SAVE_TIME"
-          >
-            {{ BRIDGE_TEXT.SAVE_TIME }}
-          </span>
-          <span
-            class="text-[#FF5402]"
-            v-if="BRIDGE_TEXT.ERROR"
-          >
-            {{ BRIDGE_TEXT.ERROR }}
-          </span>
-        </p>
         <Button
           class="mt-[32px] w-full md:w-[240px]"
-          :disabled="loading || isInsufficient"
+          :disabled="isInsufficient || platformFee == null"
+          :loading="loading || estimating"
         >
-          <LoadingIcon
-            v-if="loading"
-            class="w-4 h-4 mr-2"
-          />
           {{ isInsufficient ? 'INSUFFICIENT FUNDS' : 'TRANSFER' }}
         </Button>
       </Form>
+      <template v-if="SPEND_TEXT">
+        <div class="mt-[16px] flex">
+          <Icon
+            class="mr-[8px] text-[18px] text-[#616161]"
+            name="fee"
+          />
+          <div class="flex flex-col md:flex-row gap-[8px] text-[14px] leading-[1.2]">
+            <p
+              class="text-[#616161]"
+              v-if="serviceFee"
+            >
+              SERVICE FEE {{ serviceFee }} |
+            </p>
+            <div class="flex gap-[8px]">
+              <p class="text-[#a4a4a4]">
+                {{ SPEND_TEXT.SAVE_AMOUNT }}
+              </p>
+              <TooltipPro message="Fees saved compared to the native bridge fees">
+                <Icon
+                  class="text-[18px] text-[#616161]"
+                  name="issue"
+                />
+              </TooltipPro>
+            </div>
+          </div>
+        </div>
+        <div class="mt-[8px] flex">
+          <Icon
+            class="mr-[8px] text-[18px] text-[#616161]"
+            name="time"
+          />
+          <div class="flex flex-col md:flex-row gap-[8px] text-[14px] leading-[1.2]">
+            <p
+              class="text-[#616161]"
+            >
+              TIME SPEND {{ SPEND_TEXT.TIME_SPEND }} |
+            </p>
+            <div class="flex gap-[8px]">
+              <p class="text-[#a4a4a4]">
+                {{ SPEND_TEXT.SAVE_TIME }}
+              </p>
+              <TooltipPro message="Compared to using the native bridge, the estimated time savings with our service.">
+                <Icon
+                  class="text-[18px] text-[#616161]"
+                  name="issue"
+                />
+              </TooltipPro>
+            </div>
+          </div>
+        </div>
+      </template>
     </BridgeContent>
   </BridgeContainer>
 </template>
@@ -558,7 +547,7 @@ const availableGooooPoints = computed(() => {
   }
 
   &__error {
-    @apply mt-[16px];
+    @apply mt-[8px];
   }
 
   &__description {

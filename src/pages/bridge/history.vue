@@ -4,7 +4,6 @@ import { retrieveTransactionList } from '@/request/api/bridge'
 import Icon from 'oooo-components/ui/Icon.vue'
 import dayjs from 'dayjs'
 import { BridgeContainer, BridgeHeader } from './components/BridgeContainer'
-import { useWallet } from '@/composables/hooks/use-wallet'
 import { combineURLs } from '@/lib/utils'
 import { formatHashWithEllipsis } from 'oooo-components/lib/utils'
 import type { Transaction } from '@/entities/bridge'
@@ -15,10 +14,12 @@ import { CexDetailModal } from './components/CexDetail'
 import { createFuncall } from 'vue-funcall'
 import { CHAIN } from '@/entities/chain'
 import { TRANSACTION_STATUS } from '@/entities/bridge'
+import { useWallet } from '@/composables/hooks/use-wallet'
 
 const router = useRouter()
-const { wallet } = useWallet()
 const el = ref<HTMLDivElement>()
+
+const { address } = useWallet()
 
 const history = reactive({
   pageNumber: 1,
@@ -29,10 +30,11 @@ const history = reactive({
 })
 
 const onLoad = async () => {
-  if (history.isFinished || !wallet.value) return
+  if (history.isFinished) return
+  if (address.value == null) return
   history.isLoading = true
   const { totalCount, list } = await retrieveTransactionList({
-    fromWalletAddr: wallet.value.address,
+    fromWalletAddr: address.value,
     page: history.pageNumber,
     size: history.pageSize
   })
@@ -61,6 +63,7 @@ const formatDate = (date: string) => {
 const openCexDetailModal = (item: Transaction) => {
   createFuncall(CexDetailModal, {
     modelValue: true,
+    assetCode: item.fromAssetCode,
     fromChain: item.fromChainName,
     fromTxnHash: item.fromTxnHash,
     fromWalletAddr: item.fromWalletAddr
@@ -77,7 +80,7 @@ const openCexDetailModal = (item: Transaction) => {
     />
     <div
       ref="el"
-      class="px-[16px] py-[24px] md:px-[40px] h-[480px] overflow-auto"
+      class="px-[16px] py-[24px] md:px-[40px] h-[620px] overflow-auto"
     >
       <div class="space-y-[24px] xl:space-y-[40px]">
         <div
