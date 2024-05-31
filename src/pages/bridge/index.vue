@@ -429,6 +429,7 @@ const availableGooooPoints = computed(() => {
                 class="ml-auto w-full flex justify-end items-center"
                 @click.stop
                 @pointerdown.stop
+                @pointerup.stop
               >
                 <NumberInput
                   class="p-0 bg-transparent border-none text-right"
