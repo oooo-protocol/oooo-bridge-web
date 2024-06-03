@@ -90,7 +90,7 @@ export const useWallet = () => {
     if (config == null) throw new Error(`Chain ${chainName} not config`)
     await instance.switchToChain(config)
     if (contractAddress != null) {
-      return await instance.tokenTransfer(parameter, config, contractAddress)
+      return await instance.tokenTransfer(parameter, contractAddress)
     } else {
       return await instance.transfer(parameter, config)
     }
