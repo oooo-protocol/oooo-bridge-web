@@ -235,10 +235,15 @@ const createChainTransaction = async (parameter: {
     toChain: parameter.toChain,
     toAddress: parameter.toAddress
   })
-  /**
-   * Estimate transaction fee to avoid balance exceeded
-   */
-  checkBalanceIsEnough(parameter.fromChain, parameter.amount, gasPrice)
+
+  const { assetType, assetCode, contractAddress } = config.value!
+
+  if (assetType === SERVER_ASSET.COIN) {
+    /**
+     * Estimate transaction fee to avoid balance exceeded
+     */
+    checkBalanceIsEnough(parameter.fromChain, parameter.amount, gasPrice)
+  }
 
   const signContent = JSON.stringify({
     ...parameter,
@@ -258,7 +263,6 @@ const createChainTransaction = async (parameter: {
     toAmount: toAmount.value.toString()
   })
   try {
-    const { assetType, assetCode, contractAddress } = config.value!
     const transferParameter = {
       from: parameter.fromAddress,
       to: platformAddress,
