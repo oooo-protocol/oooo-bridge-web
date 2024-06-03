@@ -187,7 +187,7 @@ export const BSC_TESTNET = {
 }
 
 export const BSC_LIVENET = {
-  chainId: '0x61',
+  chainId: '0x38',
   chainName: 'BSC Mainnet',
   rpcUrls: ['https://bsc-dataseed1.binance.org/', 'https://bsc-dataseed1.defibit.io/'],
   nativeCurrency: {
