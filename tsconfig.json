@@ -34,7 +34,8 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "*.d.ts"
+    "*.d.ts",
+    "submodules/**/*.d.ts"
   ],
   "exclude": [
     "src/assets/**/*"
