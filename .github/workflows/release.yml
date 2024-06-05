@@ -13,8 +13,24 @@ env:
 
 jobs:
   release:
-    uses: ./.github/workflows/env.yml
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
     steps:
+      - name: Checkout code repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - name: Setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+      - name: Install dependencies
+        run: pnpm install -r
       - name: Create .env.sentry-build-plugin file
         run: |
           touch .env.sentry-build-plugin
