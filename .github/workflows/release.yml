@@ -1,8 +1,10 @@
-name: Release - Prod livenet environment
+name: Release
 on:
   push:
     branches:
       - main
+    paths:
+      - 'package.json'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -11,30 +13,36 @@ env:
 
 jobs:
   release:
-    timeout-minutes: 15
-    runs-on: ubuntu-latest
+    use: ./.github/workflows/env.yml
     steps:
-      - name: Checkout code repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          submodules: recursive
-      - name: Setup node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          version: 9
-      - name: Install dependencies
-        run: pnpm install -r
       - name: Create .env.sentry-build-plugin file
         run: |
           touch .env.sentry-build-plugin
           echo SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }} >> .env.sentry-build-plugin
-      - name: Build test environment
+      - name: Build livenet
         run: pnpm build:livenet -- upload-sentry
+      - name: Create Tag
+        id: create_tag
+        uses: jaywcjlove/create-tag-action@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          package-path: ./package.json
+      - name: Generate changelog
+        id: changelog
+        uses: jaywcjlove/changelog-generator@main
+        with:
+          head-ref: ${{steps.create_tag.outputs.version}}
+          filter: (^[\s]+?[R|r]elease)|(^[R|r]elease)
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        if: steps.create_tag.outputs.successful
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: ${{ steps.create_tag.outputs.version }}
+          tag: ${{ steps.create_tag.outputs.version }}
+          body: |
+            ${{ steps.changelog.outputs.changelog }}
+            Comparing Changes: ${{ steps.changelog.outputs.compareurl }} 
       - name: Config aws credential
         uses: aws-actions/configure-aws-credentials@v4
         with:
