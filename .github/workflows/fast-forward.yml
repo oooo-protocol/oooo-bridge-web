@@ -19,8 +19,8 @@ jobs:
         uses: sequoia-pgp/fast-forward@v1
         with:
           merge: true
-          comment: false
-      - name: Display comment
-        env:
-          COMMENT: ${{ steps.fast-forward.outputs.comment }}
-        run: echo "The comment is... $COMMENT"
+          # To reduce the workflow's verbosity, use 'on-error'
+          # to only post a comment when an error occurs, or 'never' to
+          # never post a comment.  (In all cases the information is
+          # still available in the step's summary.)
+          comment: always
