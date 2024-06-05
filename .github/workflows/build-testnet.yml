@@ -11,7 +11,7 @@ env:
 
 jobs:
   build:
-    use: ./.github/workflows/env.yml
+    uses: ./.github/workflows/env.yml
     runs-on: ubuntu-latest
     steps:
       - name: Create .env.sentry-build-plugin file
