@@ -5,6 +5,7 @@ import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
 import { useToast } from 'oooo-components/ui/toast'
 import { type PairConfig } from './use-config'
 import { CHAIN_RPC_MAP } from '@/lib/constants'
+import { CHAIN } from '@/entities/chain'
 
 export const useBalance = (from: Ref<string>, config: ComputedRef<PairConfig | null>) => {
   const { address, getInstance } = useWallet()
@@ -17,7 +18,7 @@ export const useBalance = (from: Ref<string>, config: ComputedRef<PairConfig | n
     mutationFn: async () => {
       const _address = address.value
       const _config = config.value
-      if (_address == null || _config == null) return
+      if (_address == null || _config == null || from.value === CHAIN.BINANCE_CEX) return
       const instance = getInstance()
       if (instance.type === WALLET_TYPE.BITCOIN) {
         return await instance.getNativeBalance()
