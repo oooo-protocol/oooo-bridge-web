@@ -48,11 +48,11 @@ export const BEVM_CANARY_LIVENET = {
 
 export const B2_TESTNET = {
   chainId: '0x463',
-  chainName: 'B² Testnet',
+  chainName: 'B2 Testnet',
   rpcUrls: ['https://b2-testnet.alt.technology'],
   nativeCurrency: {
-    name: 'tBTC',
-    symbol: 'tBTC',
+    name: 'BTC',
+    symbol: 'BTC',
     decimals: 18
   },
   blockExplorerUrls: ['https://testnet-explorer.bsquared.network']
@@ -60,7 +60,7 @@ export const B2_TESTNET = {
 
 export const B2_LIVENET = {
   chainId: '0xdf',
-  chainName: 'B² Mainnet',
+  chainName: 'B2 Mainnet',
   rpcUrls: ['https://rpc.bsquared.network', 'https://b2-mainnet.alt.technology'],
   nativeCurrency: {
     name: 'BTC',
