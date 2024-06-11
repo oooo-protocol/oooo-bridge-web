@@ -51,7 +51,7 @@ jobs:
         uses: jaywcjlove/changelog-generator@main
         with:
           head-ref: ${{steps.create_tag.outputs.version}}
-          filter: (^[\s]+?[R|r]elease)|(^[R|r]elease)
+          filter: (^[\s]+?[R|r]elease)|(^[R|r]elease)|(Merge)
       - name: Create Release
         uses: ncipollo/release-action@v1
         if: steps.create_tag.outputs.successful
