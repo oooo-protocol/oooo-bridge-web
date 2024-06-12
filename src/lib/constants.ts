@@ -39,7 +39,8 @@ import {
   BSC_LIVENET,
   ZKLINK_TESTNET,
   ZKLINK_LIVENET,
-  ALIENX_TESTNET
+  ALIENX_TESTNET,
+  ALIENX_LIVENET
 } from 'oooo-components/lib/chain-config'
 import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
@@ -105,7 +106,8 @@ export const CHAIN_LIST = [
   }, {
     image: ALIENX_IMAGE,
     value: CHAIN.ALIENX,
-    [NETWORK.TESTNET]: ALIENX_TESTNET
+    [NETWORK.TESTNET]: ALIENX_TESTNET,
+    [NETWORK.LIVENET]: ALIENX_LIVENET
   }
 ]
 
