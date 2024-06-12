@@ -342,7 +342,7 @@ const availableGooooPoints = computed(() => {
   if (to.value === CHAIN.BITLAYER) return 8
   if (to.value === CHAIN.ROOTSTOCK) return 8
   if (to.value === CHAIN.B2) return 8
-  if (from.value === CHAIN.BINANCE_CEX && to.value === CHAIN.MERLIN) return 4
+  if (from.value === CHAIN.BINANCE_CEX && to.value === CHAIN.MERLIN) return 8
   return false
 })
 </script>
