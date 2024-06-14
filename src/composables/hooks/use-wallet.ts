@@ -1,6 +1,7 @@
 import { type CHAIN } from '@/entities/chain'
 import { CHAIN_CONFIG_MAP } from '@/lib/constants'
 import useWalletStore from '@/store/wallet'
+import { ethers } from 'ethers'
 import { WALLET_TYPE, useBTCWallet, useEVMWallet, WalletConnectModal, type NETWORK, type TransactionParameter, type ChainConfig } from 'oooo-components/oooo-wallet'
 import { createFuncall } from 'vue-funcall'
 
@@ -96,6 +97,29 @@ export const useWallet = () => {
     }
   }
 
+  async function calcEstimateGas (parameter: TransactionParameter, chainName?: string) {
+    const instance = getInstance()
+    if (instance.type === WALLET_TYPE.BITCOIN) {
+      const gasLimit = 200
+      return Number(parameter.gas) * gasLimit * 1e-8
+    } else {
+      const config = CHAIN_CONFIG_MAP[chainName as CHAIN] as ChainConfig
+      if (config == null) throw new Error(`Chain ${chainName} not config`)
+      const provider = new ethers.BrowserProvider(instance.provider)
+      try {
+        const gasLimit = await provider.estimateGas({
+          from: parameter.from,
+          to: parameter.to,
+          value: ethers.parseUnits(parameter.value, config.nativeCurrency.decimals)
+        })
+        const ratio = 1.5
+        return ethers.formatUnits(Number(parameter.gas) * Number(gasLimit) * ratio, config.nativeCurrency.decimals)
+      } finally {
+        provider.destroy()
+      }
+    }
+  }
+
   return {
     name,
     address,
@@ -103,6 +127,7 @@ export const useWallet = () => {
     transfer,
     getPublicKey,
     getInstance,
+    calcEstimateGas,
     onConnect,
     onLogout
   }
