@@ -41,7 +41,7 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
       name: 'Goooo Airdrop',
       imageMobile: MERLIN_MOBILE_IMAGE,
       imagePC: MERLIN_PC_IMAGE,
-      url: 'http://app.galxe.com/quest/oooo/GCcMftdAkc'
+      url: 'https://app.galxe.com/quest/oooo/GCXMctdbZ4'
     }
   ]
   : []
