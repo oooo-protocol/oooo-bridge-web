@@ -105,6 +105,7 @@ export const useWallet = () => {
     } else {
       const config = CHAIN_CONFIG_MAP[chainName as CHAIN] as ChainConfig
       if (config == null) throw new Error(`Chain ${chainName} not config`)
+      await instance.switchToChain(config)
       const provider = new ethers.BrowserProvider(instance.provider)
       try {
         const gasLimit = await provider.estimateGas({
