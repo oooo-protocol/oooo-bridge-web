@@ -30,7 +30,7 @@ import { useTimeSpend } from './hooks/use-time-spend'
 import { SERVER_ASSET } from '@/entities/server'
 import TooltipPro from 'oooo-components/ui/TooltipPro.vue'
 
-const { address, transfer, sign, getPublicKey, onConnect } = useWallet()
+const { address, transfer, sign, getPublicKey, onConnect, calcEstimateGas } = useWallet()
 
 const router = useRouter()
 const { toast } = useToast()
@@ -143,22 +143,11 @@ const rules: Record<string, RuleExpression<any>> = {
   }
 }
 
-const checkBalanceIsEnough = (chain: string, amount: string | number, gasPrice: string | number) => {
+const checkBalanceIsEnough = (amount: string | number, estimateGas: string | number) => {
   if (balance.value == null) return
   amount = Number(amount)
-  gasPrice = Number(gasPrice)
+  estimateGas = Number(estimateGas)
 
-  let estimateGas: number
-  const ratio = 1.5
-
-  if (chain === CHAIN.BTC) {
-    /**
-     * 400 is a normal bytes
-     */
-    estimateGas = gasPrice * 200 * 1e-8
-  } else {
-    estimateGas = (gasPrice * 21000) * 1e-18 * ratio
-  }
   const estimateCost = amount + estimateGas
   if (estimateCost > Number(balance.value)) {
     const remain = amount - estimateGas
@@ -238,11 +227,20 @@ const createChainTransaction = async (parameter: {
 
   const { assetType, assetCode, contractAddress } = config.value!
 
+  const transferParameter = {
+    from: parameter.fromAddress,
+    to: platformAddress,
+    gas: gasPrice,
+    value: parameter.amount
+  }
+
   if (assetType === SERVER_ASSET.COIN) {
+    const estimateGas = await calcEstimateGas(transferParameter, parameter.fromChain)
+    console.log(estimateGas)
     /**
      * Estimate transaction fee to avoid balance exceeded
      */
-    checkBalanceIsEnough(parameter.fromChain, parameter.amount, gasPrice)
+    checkBalanceIsEnough(parameter.amount, estimateGas)
   }
 
   const signContent = JSON.stringify({
@@ -263,12 +261,6 @@ const createChainTransaction = async (parameter: {
     toAmount: toAmount.value.toString()
   })
   try {
-    const transferParameter = {
-      from: parameter.fromAddress,
-      to: platformAddress,
-      gas: gasPrice,
-      value: parameter.amount
-    }
     let hash: string
     if (parameter.fromChain === CHAIN.BTC) {
       hash = await transfer(transferParameter)
