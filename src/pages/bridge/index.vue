@@ -18,7 +18,7 @@ import NumberInput from './components/NumberInput.vue'
 import { type RuleExpression } from 'vee-validate'
 import { ResponseError } from '@/request/axios'
 import { Network, validate } from 'bitcoin-address-validation'
-import { NoAlarmException } from '@/lib/exception'
+import { NoAlarmException } from 'oooo-components/lib/exception'
 import { CHAIN, NETWORK } from '@/entities/chain'
 import { useInvite } from './hooks/use-invite'
 import TransferProcessingModal from './components/TransferProcessingModal.vue'
@@ -341,7 +341,8 @@ const availableGooooPoints = computed(() => {
   if (import.meta.env.VITE_NETWORK !== NETWORK.LIVENET) return false
   if (to.value === CHAIN.BITLAYER) return 8
   if (to.value === CHAIN.ROOTSTOCK) return 8
-  if (from.value === CHAIN.BINANCE_CEX && to.value === CHAIN.MERLIN) return 4
+  if (to.value === CHAIN.B2) return 8
+  if (from.value === CHAIN.BINANCE_CEX && to.value === CHAIN.MERLIN) return 8
   return false
 })
 </script>
