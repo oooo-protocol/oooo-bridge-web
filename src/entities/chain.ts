@@ -15,5 +15,7 @@ export enum CHAIN {
   BINANCE_CEX = 'binance',
   BOB = 'bob',
   ARIBTRUM = 'arbitrum',
-  BSC = 'bsc'
+  BSC = 'bsc',
+  ZKLINK = 'zklink',
+  ALIENX = 'alienx'
 }

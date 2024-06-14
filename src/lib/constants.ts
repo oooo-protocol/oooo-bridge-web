@@ -12,9 +12,36 @@ import BINANCE_CEX_IMAGE from '@/assets/tokens/binance.png'
 import BOB_IMAGE from '@/assets/tokens/bob.png'
 import ARBITRUM_IMAGE from '@/assets/tokens/arbitrum.png'
 import BSC_IMAGE from '@/assets/tokens/bsc.png'
+import ZKLINK_IMAGE from '@/assets/tokens/zklink.png'
+import ALIENX_IMAGE from '@/assets/tokens/alienx.png'
 
 import { CHAIN, NETWORK } from '@/entities/chain'
-import { BEVM_TESTNET, BEVM_LIVENET, BEVM_CANARY_TESTNET, BEVM_CANARY_LIVENET, B2_TESTNET, B2_LIVENET, BTC_TESTNET, BTC_LIVENET, MERLIN_TESTNET, MERLIN_LIVENET, ROOTSTOCK_TESTNET, ROOTSTOCK_LIVENET, BITLAYER_TESTNET, BITLAYER_LIVENET, BOB_TESTNET, BOB_LIVENET, ARBITRUM_TESTNET, ARBITRUM_LIVENET, BSC_TESTNET, BSC_LIVENET } from 'oooo-components/lib/chain-config'
+import {
+  BEVM_TESTNET,
+  BEVM_LIVENET,
+  BEVM_CANARY_TESTNET,
+  BEVM_CANARY_LIVENET,
+  B2_TESTNET,
+  B2_LIVENET,
+  BTC_TESTNET,
+  BTC_LIVENET,
+  MERLIN_TESTNET,
+  MERLIN_LIVENET,
+  ROOTSTOCK_TESTNET,
+  ROOTSTOCK_LIVENET,
+  BITLAYER_TESTNET,
+  BITLAYER_LIVENET,
+  BOB_TESTNET,
+  BOB_LIVENET,
+  ARBITRUM_TESTNET,
+  ARBITRUM_LIVENET,
+  BSC_TESTNET,
+  BSC_LIVENET,
+  ZKLINK_TESTNET,
+  ZKLINK_LIVENET,
+  ALIENX_TESTNET,
+  ALIENX_LIVENET
+} from 'oooo-components/lib/chain-config'
 import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
 export const CHAIN_LIST = [
@@ -71,6 +98,16 @@ export const CHAIN_LIST = [
     value: CHAIN.BSC,
     [NETWORK.TESTNET]: BSC_TESTNET,
     [NETWORK.LIVENET]: BSC_LIVENET
+  }, {
+    image: ZKLINK_IMAGE,
+    value: CHAIN.ZKLINK,
+    [NETWORK.TESTNET]: ZKLINK_TESTNET,
+    [NETWORK.LIVENET]: ZKLINK_LIVENET
+  }, {
+    image: ALIENX_IMAGE,
+    value: CHAIN.ALIENX,
+    [NETWORK.TESTNET]: ALIENX_TESTNET,
+    [NETWORK.LIVENET]: ALIENX_LIVENET
   }
 ]
 
