@@ -236,7 +236,6 @@ const createChainTransaction = async (parameter: {
 
   if (assetType === SERVER_ASSET.COIN) {
     const estimateGas = await calcEstimateGas(transferParameter, parameter.fromChain)
-    console.log(estimateGas)
     /**
      * Estimate transaction fee to avoid balance exceeded
      */
@@ -331,7 +330,6 @@ const onSubmit = async (values: Record<string, any>) => {
 
 const availableGooooPoints = computed(() => {
   if (import.meta.env.VITE_NETWORK !== NETWORK.LIVENET) return false
-  if (to.value === CHAIN.BITLAYER) return 8
   if (to.value === CHAIN.ROOTSTOCK) return 8
   if (to.value === CHAIN.B2) return 8
   if (from.value === CHAIN.BINANCE_CEX && to.value === CHAIN.MERLIN) return 8
