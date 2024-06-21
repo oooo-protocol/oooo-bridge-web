@@ -17,6 +17,8 @@ import B2_HONEY_MOBILE_IMAGE from '@/assets/images/activity/b2-honey-mob.png'
 import B2_HONEY_PC_IMAGE from '@/assets/images/activity/b2-honey-pc.png'
 import ROOTSTOCK_MOBILE_IMAGE from '@/assets/images/activity/rootstock-mob.png'
 import ROOTSTOCK_PC_IMAGE from '@/assets/images/activity/rootstock-pc.png'
+import TOKENPOCKET_MOBILE_IMAGE from '@/assets/images/activity/tokenpocket-mob.png'
+import TOKENPOCKET_PC_IMAGE from '@/assets/images/activity/tokenpocket-pc.png'
 
 import { NETWORK } from '@/entities/chain'
 
@@ -42,6 +44,11 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
       imageMobile: MERLIN_MOBILE_IMAGE,
       imagePC: MERLIN_PC_IMAGE,
       url: 'https://app.galxe.com/quest/oooo/GCXMctdbZ4'
+    }, {
+      name: 'oooo x TokenPocket',
+      imageMobile: TOKENPOCKET_MOBILE_IMAGE,
+      imagePC: TOKENPOCKET_PC_IMAGE,
+      url: 'https://oooo.money/goooo'
     }
   ]
   : []
