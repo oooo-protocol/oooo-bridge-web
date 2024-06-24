@@ -99,6 +99,15 @@ const onCopyPaymentLink = () => {
   }
 }
 
+const onClickPaid = async () => {
+  const { data } = await refetch()
+  if (!data || data.fromStatus !== TRANSACTION_STATUS.SUCCEED) {
+    toast({
+      description: 'The payment result has not been found yet. If you have completed the payment, please wait for the order to be processed later.'
+    })
+  }
+}
+
 const onTimeEnd = () => {
   createFuncall(AlertPro, {
     modelValue: true,
@@ -220,7 +229,7 @@ const onTimeEnd = () => {
       <Button
         class="w-full md:w-[204px]"
         :loading="loading"
-        @click="refetch"
+        @click="onClickPaid"
       >
         I HAVE PAID
       </Button>
