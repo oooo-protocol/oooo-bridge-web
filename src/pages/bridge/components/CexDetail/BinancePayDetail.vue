@@ -212,7 +212,7 @@ const onTimeEnd = () => {
           <Button
             class="mt-[10px] w-full bg-[#fccc0a]"
             as="a"
-            :href="binancePayOrder.universalUrl"
+            :href="`https://pay.binance.com/checkout/confirm?prepayOrderId=${binancePayOrder.prepayId}`"
             target="_blank"
           >
             CONTINUE ON BROWSER
