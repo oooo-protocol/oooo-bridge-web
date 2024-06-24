@@ -84,6 +84,9 @@ export const CHAIN_LIST = [
     image: BINANCE_CEX_IMAGE,
     value: CHAIN.BINANCE_CEX
   }, {
+    image: BINANCE_CEX_IMAGE,
+    value: CHAIN.BINANCE_PAY
+  }, {
     image: BOB_IMAGE,
     value: CHAIN.BOB,
     [NETWORK.TESTNET]: BOB_TESTNET,
@@ -136,6 +139,15 @@ export const TRANSACTION_STATUS_MAP = {
     icon: 'time'
   },
   [TRANSACTION_STATUS.FAILED]: {
+    icon: 'eor'
+  },
+  [TRANSACTION_STATUS.REFUNDED]: {
+    icon: 'eor'
+  },
+  [TRANSACTION_STATUS.TIMEOUT]: {
+    icon: 'eor'
+  },
+  [TRANSACTION_STATUS.CLOSED]: {
     icon: 'eor'
   },
   [TRANSACTION_STATUS.SUCCEED]: {

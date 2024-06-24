@@ -49,19 +49,27 @@ const { address } = useWallet()
 const transactionDetailStatus = ref(TRANSACTION_DETAIL_STATUS.PENDING)
 const getTransactionDetailStatus = (data?: Transaction) => {
   if (data == null) return TRANSACTION_DETAIL_STATUS.PENDING
-  if (data.fromStatus === TRANSACTION_STATUS.PENDING) {
-    return TRANSACTION_DETAIL_STATUS.PENDING
-  } else if (data.fromStatus === TRANSACTION_STATUS.FAILED) {
-    return TRANSACTION_DETAIL_STATUS.FAILED
-  } else if (data.fromStatus === TRANSACTION_STATUS.PROCESSING) {
-    return TRANSACTION_DETAIL_STATUS.FROM_WAIT_CONFIRMED
+  switch (data.fromStatus) {
+    case TRANSACTION_STATUS.PENDING:
+      return TRANSACTION_DETAIL_STATUS.PENDING
+    case TRANSACTION_STATUS.FAILED:
+    case TRANSACTION_STATUS.CLOSED:
+    case TRANSACTION_STATUS.REFUNDED:
+    case TRANSACTION_STATUS.TIMEOUT:
+      return TRANSACTION_DETAIL_STATUS.FAILED
+    case TRANSACTION_STATUS.PROCESSING:
+      return TRANSACTION_DETAIL_STATUS.FROM_WAIT_CONFIRMED
   }
-  if (data.toStatus === TRANSACTION_STATUS.PENDING) {
-    return TRANSACTION_DETAIL_STATUS.TO_WAIT_DELIVERED
-  } else if (data.toStatus === TRANSACTION_STATUS.PROCESSING) {
-    return TRANSACTION_DETAIL_STATUS.TO_WAIT_CONFIRMED
-  } else if (data.toStatus === TRANSACTION_STATUS.FAILED) {
-    return TRANSACTION_DETAIL_STATUS.FAILED
+  switch (data.toStatus) {
+    case TRANSACTION_STATUS.PENDING:
+      return TRANSACTION_DETAIL_STATUS.TO_WAIT_DELIVERED
+    case TRANSACTION_STATUS.FAILED:
+    case TRANSACTION_STATUS.CLOSED:
+    case TRANSACTION_STATUS.REFUNDED:
+    case TRANSACTION_STATUS.TIMEOUT:
+      return TRANSACTION_DETAIL_STATUS.FAILED
+    case TRANSACTION_STATUS.PROCESSING:
+      return TRANSACTION_DETAIL_STATUS.TO_WAIT_CONFIRMED
   }
   return TRANSACTION_DETAIL_STATUS.SUCCEED
 }
@@ -119,6 +127,7 @@ const toBeCheckedHash = computed(() => {
       hash: data.value.toTxnHash!
     }
   }
+  return undefined
 })
 const enableCheckHash = computed(() => toBeCheckedHash.value != null)
 useQuery({

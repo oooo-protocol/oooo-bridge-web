@@ -21,7 +21,7 @@ const CHAIN_GROUP = computed(() => {
     chain: ServerChain[]
     cex: ServerChain[]
   }>((pre, cur) => {
-    if (cur.chainName === CHAIN.BINANCE_CEX) {
+    if ([CHAIN.BINANCE_PAY, CHAIN.BINANCE_CEX].includes(cur.chainName as CHAIN)) {
       pre.cex.push(cur)
     } else {
       pre.chain.push(cur)
