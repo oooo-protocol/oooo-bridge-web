@@ -32,7 +32,10 @@ usePreventUnload()
         </DialogHeader>
       </template>
       <template #content>
-        <BinancePayDetail v-bind="props" />
+        <BinancePayDetail
+          class="overflow-y-auto"
+          v-bind="props"
+        />
       </template>
     </DialogContent>
   </Dialog>
