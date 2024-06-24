@@ -24,6 +24,11 @@ const routes: RouteRecordRaw[] = [
       }
     ]
   }, {
+    path: '/binance-pay',
+    name: 'binance-pay',
+    component: async () => await import('@/pages/bridge/binance-pay.vue'),
+    props: true
+  }, {
     path: '/:pathMatch(.*)*',
     redirect: '/'
   }

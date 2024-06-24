@@ -15,6 +15,7 @@ import { createFuncall } from 'vue-funcall'
 import { CHAIN } from '@/entities/chain'
 import { TRANSACTION_STATUS } from '@/entities/bridge'
 import { useWallet } from '@/composables/hooks/use-wallet'
+import BinancePayDetailModal from './components/CexDetail/BinancePayDetailModal.vue'
 
 const router = useRouter()
 const el = ref<HTMLDivElement>()
@@ -60,8 +61,9 @@ const formatDate = (date: string) => {
   return dayjs(date).format('MM-DD HH:mm:ss')
 }
 
-const openCexDetailModal = (item: Transaction) => {
-  createFuncall(CexDetailModal, {
+const openDetailModal = (item: Transaction) => {
+  const Modal = item.fromChainName === CHAIN.BINANCE_PAY ? BinancePayDetailModal : CexDetailModal
+  createFuncall(Modal, {
     modelValue: true,
     assetCode: item.fromAssetCode,
     fromChain: item.fromChainName,
@@ -114,16 +116,19 @@ const openCexDetailModal = (item: Transaction) => {
               />
               <div
                 class="text-[14px] md:text-[16px] text-[#616161] leading-none"
-                v-if="item.fromChainName === CHAIN.BINANCE_CEX"
+                v-if="[CHAIN.BINANCE_CEX, CHAIN.BINANCE_PAY].includes(item.fromChainName)"
               >
                 <template v-if="item.fromStatus === TRANSACTION_STATUS.SUCCEED">
                   COMPLETED
+                </template>
+                <template v-else-if="item.fromStatus === TRANSACTION_STATUS.CLOSED || item.fromStatus === TRANSACTION_STATUS.TIMEOUT">
+                  CLOSED
                 </template>
                 <template v-else>
                   <p>CHECKING TRANSFER</p>
                   <p
                     class="underline cursor-pointer"
-                    @click="openCexDetailModal(item)"
+                    @click="openDetailModal(item)"
                   >
                     TRANSFER INSTRUCTIONS
                   </p>
@@ -159,6 +164,7 @@ const openCexDetailModal = (item: Transaction) => {
             </div>
             <div
               class="flex items-center gap-[4px] ml-[28px] mt-[4px]"
+              v-if="![TRANSACTION_STATUS.CLOSED, TRANSACTION_STATUS.TIMEOUT].includes(item.fromStatus)"
             >
               <Icon :name="TRANSACTION_STATUS_MAP[item.toStatus].icon" />
               <p class="text-[14px] md:text-[16px] text-[#616161] leading-none">

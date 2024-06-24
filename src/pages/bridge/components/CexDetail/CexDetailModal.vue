@@ -21,7 +21,7 @@ const open = defineModel<boolean>()
 
 const props = defineProps<{
   assetCode: string
-  fromChain: CHAIN
+  fromChain: string
   fromTxnHash: string
   fromWalletAddr: string
 }>()
@@ -77,7 +77,7 @@ const binanceInfo = computed(() => {
               <div class="w-full">
                 <div class="flex items-center gap-[8px] p-[8px] border border-[#5a6960] bg-[#212322] rounded-md">
                   <img
-                    :src="CHAIN_IMAGE_MAP[fromChain]"
+                    :src="CHAIN_IMAGE_MAP[fromChain as CHAIN]"
                     class="w-[32px] h-[32px]"
                   >
                   <p class="text-[21px] md:text-[24px] leading-[1]">

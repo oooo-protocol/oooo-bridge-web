@@ -59,7 +59,22 @@ export enum TRANSACTION_STATUS {
   PENDING = 0,
   PROCESSING = 1,
   FAILED = -1,
-  SUCCEED = 10
+  SUCCEED = 10,
+  CLOSED = 20,
+  REFUNDED = 21,
+  TIMEOUT = 22
+}
+
+export interface BinancePayOrder {
+  prepayId: string
+  expireTime: number
+  qrcodeLink: string
+  qrContent: string
+  checkoutUrl: string
+  deeplink: string
+  universalUrl: string
+  totalFee: string
+  currency: string
 }
 
 export interface Transaction {
@@ -80,4 +95,5 @@ export interface Transaction {
   toTxnHash?: string
   platformAddr?: string
   platformName?: string
+  binancePayOrder?: BinancePayOrder
 }
