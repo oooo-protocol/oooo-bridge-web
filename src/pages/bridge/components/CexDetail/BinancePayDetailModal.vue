@@ -37,6 +37,7 @@ usePreventUnload()
         <BinancePayDetail
           class="overflow-y-auto"
           v-bind="props"
+          @succeed="open = false"
         />
       </template>
     </DialogContent>
