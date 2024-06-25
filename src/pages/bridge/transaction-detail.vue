@@ -12,7 +12,7 @@ import { CHAIN_IMAGE_MAP, TRANSACTION_STATUS_MAP, CHAIN_BLOCK_EXPLORER_URL_MAP }
 import TRANSFER_FAILED_IMAGE from '@/assets/images/transfer-failed.png'
 import TRANSFER_SUCCED_IMAGE from '@/assets/images/transfer-success.png'
 import TRANSFER_PROCESSING_IMAGE from '@/assets/images/transfer-loading.gif'
-import { type CHAIN } from '@/entities/chain'
+import { CHAIN } from '@/entities/chain'
 import { getArrayFirst } from '@preflower/utils'
 
 enum TRANSACTION_DETAIL_STATUS {
@@ -192,7 +192,16 @@ useQuery({
                 class="transaction-detail-tx__icon"
                 :name="TRANSACTION_STATUS_MAP[data.fromStatus].icon"
               />
-              <p class="transaction-detail-tx__text">
+              <div
+                class="text-[14px] md:text-[16px] text-[#616161] leading-none"
+                v-if="[CHAIN.BINANCE_CEX, CHAIN.BINANCE_PAY].includes(data.fromChainName)"
+              >
+                COMPLETED
+              </div>
+              <p
+                class="transaction-detail-tx__text"
+                v-else
+              >
                 TX:
                 <a
                   :href="combineURLs(CHAIN_BLOCK_EXPLORER_URL_MAP[data.fromChainName], `/tx/${data.fromTxnHash}`)"
