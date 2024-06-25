@@ -15,11 +15,10 @@ import { retrieveTransactionDetail } from '@/request/api/bridge'
 import PageLoading from '@/components/PageLoading.vue'
 import { usePreventUnload } from '../../hooks/use-before-unload'
 import CountDown from './CountDown.vue'
-import copy from 'copy-text-to-clipboard'
 import { useToast } from 'oooo-components/ui/toast'
 import { createFuncall } from 'vue-funcall'
 import AlertPro from '@/components/AlertPro.vue'
-import { getDeviceType } from '@/lib/utils'
+import { useClipboard } from '@/composables/hooks/use-clipboard'
 
 const { toast } = useToast()
 
@@ -37,6 +36,7 @@ const emit = defineEmits<(e: 'succeed') => void>()
 usePreventUnload()
 
 const router = useRouter()
+const { copy } = useClipboard()
 
 const parameters = computed(() => ({
   fromAssetType: props.assetType,
@@ -89,22 +89,21 @@ const onSucceed = async () => {
   }
 }
 
-const container = ref<HTMLDivElement | null>(null)
-
 const onClickUnable = () => {
   currentStatus.value = STATUS.UNABLE
-  onCopyPaymentLink()
+  void onCopyPaymentLink()
 }
 
-const onCopyPaymentLink = () => {
-  const success = copy(`${location.origin}/binance-pay?fromChain=${props.fromChain}&fromTxnHash=${props.fromTxnHash}&fromWalletAddr=${props.fromWalletAddr}&assetType=${props.assetType}&assetCode=${props.assetCode}`, {
-    target: container.value!
+const container = ref<HTMLDivElement | null>(null)
+
+const onCopyPaymentLink = async () => {
+  await copy(
+    `${location.origin}/binance-pay?fromChain=${props.fromChain}&fromTxnHash=${props.fromTxnHash}&fromWalletAddr=${props.fromWalletAddr}&assetType=${props.assetType}&assetCode=${props.assetCode}`,
+    container.value!
+  )
+  toast({
+    description: '💌 Copied to clipboard!'
   })
-  if (success) {
-    toast({
-      description: '💌 Copied to clipboard!'
-    })
-  }
 }
 
 const onClickPaid = async () => {
@@ -125,13 +124,6 @@ const onTimeEnd = () => {
     }
   })
 }
-
-const isMobile = computed(() => {
-  const type = getDeviceType()
-  if (type === 'mobile') return true
-  if (type === 'tablet') return true
-  return false
-})
 </script>
 
 <template>
@@ -217,7 +209,6 @@ const isMobile = computed(() => {
             OR
           </p>
           <Button
-            v-if="isMobile"
             class="mb-[10px] w-full bg-[#fccc0a] hover:bg-[#BD9907] xl:hidden"
             as="a"
             :href="binancePayOrder.deeplink"
