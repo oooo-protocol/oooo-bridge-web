@@ -77,7 +77,7 @@ const onSucceed = async () => {
     await router.push({
       name: 'transaction-detail',
       params: {
-        chain: props.fromTxnHash,
+        chain: props.fromChain,
         hash: props.fromTxnHash
       },
       query: {
