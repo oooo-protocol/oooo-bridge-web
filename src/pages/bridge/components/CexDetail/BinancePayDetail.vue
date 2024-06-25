@@ -36,8 +36,8 @@ usePreventUnload()
 const router = useRouter()
 
 const parameters = computed(() => ({
-  assetType: props.assetType,
-  assetCode: props.assetCode,
+  fromAssetType: props.assetType,
+  fromAssetCode: props.assetCode,
   fromChain: props.fromChain,
   fromTxnHash: props.fromTxnHash,
   fromWalletAddr: props.fromWalletAddr
