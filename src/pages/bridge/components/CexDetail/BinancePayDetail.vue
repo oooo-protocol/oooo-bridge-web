@@ -19,6 +19,7 @@ import copy from 'copy-text-to-clipboard'
 import { useToast } from 'oooo-components/ui/toast'
 import { createFuncall } from 'vue-funcall'
 import AlertPro from '@/components/AlertPro.vue'
+import { getDeviceType } from '@/lib/utils'
 
 const { toast } = useToast()
 
@@ -121,6 +122,13 @@ const onTimeEnd = () => {
     }
   })
 }
+
+const isMobile = computed(() => {
+  const type = getDeviceType()
+  if (type === 'mobile') return true
+  if (type === 'tablet') return true
+  return false
+})
 </script>
 
 <template>
@@ -206,7 +214,8 @@ const onTimeEnd = () => {
             OR
           </p>
           <Button
-            class="w-full bg-[#fccc0a] hover:bg-[#BD9907]"
+            v-if="isMobile"
+            class="mb-[10px] w-full bg-[#fccc0a] hover:bg-[#BD9907] xl:hidden"
             as="a"
             :href="binancePayOrder.deeplink"
             target="_blank"
@@ -214,7 +223,7 @@ const onTimeEnd = () => {
             CONTINUE ON BINANCE APP
           </Button>
           <Button
-            class="mt-[10px] w-full bg-[#fccc0a] hover:bg-[#BD9907]"
+            class="w-full bg-[#fccc0a] hover:bg-[#BD9907]"
             as="a"
             :href="`https://pay.binance.com/checkout/confirm?prepayOrderId=${binancePayOrder.prepayId}`"
             target="_blank"

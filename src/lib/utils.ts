@@ -1,3 +1,15 @@
+import UAParser from 'ua-parser-js'
+
+/**
+ * Get the current device type
+ * @returns {string} console, mobile, tablet, smarttv, wearable, embedded
+ */
+export const getDeviceType = () => {
+  const parser = new UAParser()
+  const { type } = parser.getDevice()
+  return type
+}
+
 function trimExtraChar (value: string, char: string, regExp: RegExp) {
   const index = value.indexOf(char)
 
