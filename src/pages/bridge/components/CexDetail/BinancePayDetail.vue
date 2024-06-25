@@ -31,7 +31,7 @@ const props = defineProps<{
   fromWalletAddr: string
 }>()
 
-const emit = defineEmits<(e: 'succeed') => void>()
+const emit = defineEmits<(e: 'close') => void>()
 
 usePreventUnload()
 
@@ -85,7 +85,7 @@ const onSucceed = async () => {
         fromAssetType: props.assetType
       }
     })
-    emit('succeed')
+    emit('close')
   }
 }
 
@@ -121,6 +121,7 @@ const onTimeEnd = () => {
     description: 'The order has expired, please place a new order.',
     onConfirm: () => {
       void router.replace('bridge')
+      emit('close')
     }
   })
 }
