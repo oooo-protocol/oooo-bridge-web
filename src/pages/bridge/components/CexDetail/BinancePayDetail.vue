@@ -137,10 +137,10 @@ const onTimeEnd = () => {
               {{ Number(data.fromSwapAmount) }} {{ data.fromAssetCode }}
             </p>
           </div>
-          <div class="mt-[8px] md:mt-[10px] flex items-center gap-[8px] text-[#616161]">
+          <div class="mt-[6px] flex items-center gap-[8px] text-[#616161]">
             <Icon name="time" />
             <p class="text-[14px] -tracking-tighter">
-              TRACKING TRANSFER
+              CHECKING TRANSFER
             </p>
           </div>
         </div>
@@ -158,7 +158,7 @@ const onTimeEnd = () => {
           </p>
         </div>
       </div>
-      <div class="mt-[16px] mb-[24px] md:my-[32px] px-[16px] pt-[14px] border border-[#5a6960] bg-[#212322]">
+      <div class="mt-[16px] mb-[24px] px-[16px] pt-[14px] border border-[#5a6960] bg-[#212322] rounded-md">
         <div class="flex flex-col md:flex-row items-center justify-between">
           <img
             src="@/assets/images/binance-pay.png"
@@ -202,7 +202,7 @@ const onTimeEnd = () => {
             OR
           </p>
           <Button
-            class="w-full bg-[#fccc0a]"
+            class="w-full bg-[#fccc0a] hover:bg-[#BD9907]"
             as="a"
             :href="binancePayOrder.deeplink"
             target="_blank"
@@ -210,9 +210,9 @@ const onTimeEnd = () => {
             CONTINUE ON BINANCE APP
           </Button>
           <Button
-            class="mt-[10px] w-full bg-[#fccc0a]"
+            class="mt-[10px] w-full bg-[#fccc0a] hover:bg-[#BD9907]"
             as="a"
-            :href="binancePayOrder.universalUrl"
+            :href="`https://pay.binance.com/checkout/confirm?prepayOrderId=${binancePayOrder.prepayId}`"
             target="_blank"
           >
             CONTINUE ON BROWSER
