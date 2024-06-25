@@ -24,6 +24,8 @@ const { toast } = useToast()
 
 const props = defineProps<{
   isSharing?: boolean
+  assetType: string
+  assetCode: string
   fromChain: CHAIN
   fromTxnHash: string
   fromWalletAddr: string
@@ -74,8 +76,8 @@ const onSucceed = async () => {
         hash: props.fromTxnHash
       },
       query: {
-        fromAssetCode: data.value?.fromAssetCode,
-        fromAssetType: data.value?.fromAssetType
+        fromAssetCode: props.assetCode,
+        fromAssetType: props.assetType
       }
     })
   }
@@ -89,7 +91,7 @@ const onClickUnable = () => {
 }
 
 const onCopyPaymentLink = () => {
-  const success = copy(`${location.origin}/binance-pay?fromChain=${props.fromChain}&fromTxnHash=${props.fromTxnHash}&fromWalletAddr=${props.fromWalletAddr}`, {
+  const success = copy(`${location.origin}/binance-pay?fromChain=${props.fromChain}&fromTxnHash=${props.fromTxnHash}&fromWalletAddr=${props.fromWalletAddr}&assetType=${props.assetType}&assetCode=${props.assetCode}`, {
     target: container.value!
   })
   if (success) {

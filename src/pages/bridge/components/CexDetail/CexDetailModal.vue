@@ -20,6 +20,7 @@ import { usePreventUnload } from '../../hooks/use-before-unload'
 const open = defineModel<boolean>()
 
 const props = defineProps<{
+  assetType: string
   assetCode: string
   fromChain: string
   fromTxnHash: string
@@ -29,6 +30,8 @@ const props = defineProps<{
 usePreventUnload()
 
 const parameters = computed(() => ({
+  assetType: props.assetType,
+  assetCode: props.assetCode,
   fromChain: props.fromChain,
   fromTxnHash: props.fromTxnHash,
   fromWalletAddr: props.fromWalletAddr

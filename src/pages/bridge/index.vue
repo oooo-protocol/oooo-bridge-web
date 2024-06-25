@@ -196,12 +196,13 @@ const createCexTransaction = async (parameter: {
     publicKey
   })
 
-  const { assetCode } = config.value!
+  const { assetType, assetCode } = config.value!
 
   const Modal = parameter.fromChain === CHAIN.BINANCE_CEX ? CexDetailModal : BinancePayDetailModal
 
   createFuncall(Modal, {
     modelValue: true,
+    assetType,
     assetCode,
     fromChain: parameter.fromChain,
     fromTxnHash,

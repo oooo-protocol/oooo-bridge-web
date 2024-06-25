@@ -12,6 +12,8 @@ import BinancePayDetail from './BinancePayDetail.vue'
 const open = defineModel<boolean>()
 
 const props = defineProps<{
+  assetType: string
+  assetCode: string
   fromChain: CHAIN
   fromTxnHash: string
   fromWalletAddr: string
