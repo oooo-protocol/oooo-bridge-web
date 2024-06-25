@@ -65,6 +65,7 @@ const openDetailModal = (item: Transaction) => {
   const Modal = item.fromChainName === CHAIN.BINANCE_PAY ? BinancePayDetailModal : CexDetailModal
   createFuncall(Modal, {
     modelValue: true,
+    assetType: item.fromAssetType,
     assetCode: item.fromAssetCode,
     fromChain: item.fromChainName,
     fromTxnHash: item.fromTxnHash,
