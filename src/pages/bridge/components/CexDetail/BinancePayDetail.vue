@@ -32,6 +32,8 @@ const props = defineProps<{
   fromWalletAddr: string
 }>()
 
+const emit = defineEmits<(e: 'succeed') => void>()
+
 usePreventUnload()
 
 const router = useRouter()
@@ -83,6 +85,7 @@ const onSucceed = async () => {
         fromAssetType: props.assetType
       }
     })
+    emit('succeed')
   }
 }
 
