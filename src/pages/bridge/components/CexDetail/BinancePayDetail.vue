@@ -210,6 +210,16 @@ const onTimeEnd = () => {
             OR
           </p>
           <Button
+            v-if="isSharing"
+            class="mb-[10px] w-full bg-[#fccc0a] hover:bg-[#BD9907] xl:hidden"
+            as="a"
+            :href="binancePayOrder.deeplink"
+            target="_blank"
+          >
+            CONTINUE ON BINANCE APP
+          </Button>
+          <Button
+            v-else
             class="mb-[10px] w-full bg-[#fccc0a] hover:bg-[#BD9907] xl:hidden"
             @click="onClickUnable"
           >
