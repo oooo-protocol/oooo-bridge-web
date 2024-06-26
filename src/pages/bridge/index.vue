@@ -23,7 +23,7 @@ import { CHAIN, NETWORK } from '@/entities/chain'
 import { useInvite } from './hooks/use-invite'
 import TransferProcessingModal from './components/TransferProcessingModal.vue'
 import { useBalance } from './hooks/use-balance'
-import { CexDetailModal } from './components/CexDetail'
+import { CexDetailModal, BinancePayDetailModal } from './components/CexDetail'
 import { useConfig } from './hooks/use-config'
 import { useEstimateData } from './hooks/use-estimate-data'
 import { useTimeSpend } from './hooks/use-time-spend'
@@ -174,7 +174,7 @@ const createCexTransaction = async (parameter: {
   toChain: string
   toAddress: string
 }) => {
-  if (parameter.fromChain !== CHAIN.BINANCE_CEX) throw new Error(`${parameter.fromChain} NOT SUPPORT CEX TRANSACTION`)
+  if (![CHAIN.BINANCE_CEX, CHAIN.BINANCE_PAY].includes(parameter.fromChain as CHAIN)) throw new Error(`${parameter.fromChain} NOT SUPPORT CEX TRANSACTION`)
 
   const signContent = JSON.stringify({
     ...parameter,
@@ -196,10 +196,13 @@ const createCexTransaction = async (parameter: {
     publicKey
   })
 
-  const { assetCode } = config.value!
+  const { assetType, assetCode } = config.value!
 
-  createFuncall(CexDetailModal, {
+  const Modal = parameter.fromChain === CHAIN.BINANCE_CEX ? CexDetailModal : BinancePayDetailModal
+
+  createFuncall(Modal, {
     modelValue: true,
+    assetType,
     assetCode,
     fromChain: parameter.fromChain,
     fromTxnHash,
@@ -307,7 +310,7 @@ const onSubmit = async (values: Record<string, any>) => {
       toAddress: values.receiveAddress,
       amount: values.amount
     }
-    if (parameter.fromChain === CHAIN.BINANCE_CEX) {
+    if ([CHAIN.BINANCE_CEX, CHAIN.BINANCE_PAY].includes(parameter.fromChain as CHAIN)) {
       await createCexTransaction(parameter)
     } else {
       await createChainTransaction(parameter)

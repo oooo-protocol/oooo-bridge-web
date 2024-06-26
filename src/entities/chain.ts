@@ -13,6 +13,7 @@ export enum CHAIN {
   ROOTSTOCK = 'rootstock',
   BITLAYER = 'bitlayer',
   BINANCE_CEX = 'binance',
+  BINANCE_PAY = 'binance_pay',
   BOB = 'bob',
   ARIBTRUM = 'arbitrum',
   BSC = 'bsc',
