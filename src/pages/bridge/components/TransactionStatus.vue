@@ -16,13 +16,13 @@ defineEmits<(e: 'checking') => void>()
 </script>
 
 <template>
-  <div class="flex gap-[4px]">
+  <div class="flex gap-[4px] text-[#616161]">
     <Icon
       class="shrink-0"
       :name="TRANSACTION_STATUS_MAP[status].icon"
     />
     <div
-      class="text-[14px] md:text-[16px] -tracking-tighter text-[#616161] leading-none"
+      class="text-[14px] md:text-[16px] -tracking-tighter leading-none"
     >
       <template v-if="[CHAIN.BINANCE_CEX, CHAIN.BINANCE_PAY].includes(chainName)">
         <template v-if="status === TRANSACTION_STATUS.SUCCEED">
