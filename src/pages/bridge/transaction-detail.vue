@@ -6,14 +6,13 @@ import { retrieveTransactionDetail, retrieveTransactionStatus } from '@/request/
 import { TRANSACTION_STATUS, type Transaction } from '@/entities/bridge'
 import { useWallet } from '@/composables/hooks/use-wallet'
 import PageLoading from '@/components/PageLoading.vue'
-import { combineURLs } from '@/lib/utils'
-import { formatHashWithEllipsis } from 'oooo-components/lib/utils'
-import { CHAIN_IMAGE_MAP, TRANSACTION_STATUS_MAP, CHAIN_BLOCK_EXPLORER_URL_MAP } from '@/lib/constants'
+import { CHAIN_IMAGE_MAP } from '@/lib/constants'
 import TRANSFER_FAILED_IMAGE from '@/assets/images/transfer-failed.png'
 import TRANSFER_SUCCED_IMAGE from '@/assets/images/transfer-success.png'
 import TRANSFER_PROCESSING_IMAGE from '@/assets/images/transfer-loading.gif'
-import { CHAIN } from '@/entities/chain'
+import { type CHAIN } from '@/entities/chain'
 import { getArrayFirst } from '@preflower/utils'
+import TransactionStatus from './components/TransactionStatus.vue'
 
 enum TRANSACTION_DETAIL_STATUS {
   PENDING,
@@ -187,39 +186,15 @@ useQuery({
                 {{ data.fromSwapAmount }} {{ data.fromAssetCode }}
               </p>
             </div>
-            <div class="transaction-detail-tx">
-              <Icon
-                class="transaction-detail-tx__icon"
-                :name="TRANSACTION_STATUS_MAP[data.fromStatus].icon"
-              />
-              <div
-                class="text-[14px] md:text-[16px] text-[#616161] leading-none"
-                v-if="[CHAIN.BINANCE_CEX, CHAIN.BINANCE_PAY].includes(data.fromChainName)"
-              >
-                COMPLETED
-              </div>
-              <p
-                class="transaction-detail-tx__text"
-                v-else
-              >
-                TX:
-                <a
-                  :href="combineURLs(CHAIN_BLOCK_EXPLORER_URL_MAP[data.fromChainName], `/tx/${data.fromTxnHash}`)"
-                  target="_blank"
-                >
-                  {{ formatHashWithEllipsis(data.fromTxnHash) }}
-                </a>
-              </p>
-            </div>
-            <p
-              class="transaction-detail__error"
-              v-if="data.fromStatus === TRANSACTION_STATUS.FAILED"
-            >
-              TRANSACTION FAILED
-            </p>
+            <TransactionStatus
+              class="mt-[8px] md:mt-[16px]"
+              :status="data.fromStatus"
+              :chain-name="data.fromChainName"
+              :txn-hash="data.fromTxnHash"
+            />
           </div>
           <Icon
-            class="shrink-0 mx-auto text-[24px] text-primary rotate-90 md:rotate-0"
+            class="shrink-0 mx-auto mt-[13px] text-[24px] text-primary rotate-90 md:rotate-0"
             name="next"
           />
           <div class="w-full">
@@ -232,45 +207,13 @@ useQuery({
                 {{ data.toSwapAmount }} {{ data.toAssetCode }}
               </p>
             </div>
-            <div class="transaction-detail-txs">
-              <div
-                class="transaction-detail-tx"
-                v-if="!data.toTxnHash"
-              >
-                <Icon
-                  class="transaction-detail-tx__icon"
-                  name="time"
-                />
-                <p class="transaction-detail-tx__text">
-                  WAITING
-                </p>
-              </div>
-              <template
-                v-else
-              >
-                <div class="transaction-detail-tx">
-                  <Icon
-                    class="transaction-detail-tx__icon"
-                    :name="TRANSACTION_STATUS_MAP[data.toStatus].icon"
-                  />
-                  <p class="transaction-detail-tx__text">
-                    TX:
-                    <a
-                      :href="combineURLs(CHAIN_BLOCK_EXPLORER_URL_MAP[data.toChainName], `/tx/${data.toTxnHash}`)"
-                      target="_blank"
-                    >
-                      {{ formatHashWithEllipsis(data.toTxnHash) }}
-                    </a>
-                  </p>
-                </div>
-                <p
-                  v-if="data.toStatus === TRANSACTION_STATUS.FAILED"
-                  class="transaction-detail__error"
-                >
-                  TRANSACTION FAILED
-                </p>
-              </template>
-            </div>
+            <TransactionStatus
+              class="mt-[8px] md:mt-[16px]"
+              v-if="![TRANSACTION_STATUS.CLOSED, TRANSACTION_STATUS.TIMEOUT].includes(data.fromStatus)"
+              :status="data.toStatus"
+              :chain-name="data.toChainName"
+              :txn-hash="data.toTxnHash"
+            />
           </div>
         </div>
       </template>
@@ -290,26 +233,6 @@ useQuery({
     &__text {
       @apply text-[21px] md:text-[24px] leading-[1.14] tracking-[0.88px];
     }
-  }
-
-  &-txs {
-    @apply space-y-[4px]
-  }
-
-  &-tx {
-    @apply flex items-center gap-[4px] mt-[8px] md:mt-[16px];
-
-    &__icon {
-      @apply text-[16px];
-    }
-
-    &__text {
-      @apply text-[14px] md:text-[16px] leading-[1.14] md:leading-[1] tracking-[0.88px] text-[#616161];
-    }
-  }
-
-  &__error {
-    @apply ml-[20px] mt-[2px] text-[14px] font-[300] leading-[1.14] tracking-[0.88px] text-[#ff5402];
   }
 }
 </style>

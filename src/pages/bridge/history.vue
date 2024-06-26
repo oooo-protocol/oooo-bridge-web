@@ -4,10 +4,8 @@ import { retrieveTransactionList } from '@/request/api/bridge'
 import Icon from 'oooo-components/ui/Icon.vue'
 import dayjs from 'dayjs'
 import { BridgeContainer, BridgeHeader } from './components/BridgeContainer'
-import { combineURLs } from '@/lib/utils'
-import { formatHashWithEllipsis } from 'oooo-components/lib/utils'
 import type { Transaction } from '@/entities/bridge'
-import { CHAIN_IMAGE_MAP, TRANSACTION_STATUS_MAP, CHAIN_BLOCK_EXPLORER_URL_MAP } from '@/lib/constants'
+import { CHAIN_IMAGE_MAP } from '@/lib/constants'
 import LoadingIcon from '@/components/LoadingIcon.vue'
 import NeedHelp from './components/NeedHelp.vue'
 import { CexDetailModal } from './components/CexDetail'
@@ -16,6 +14,7 @@ import { CHAIN } from '@/entities/chain'
 import { TRANSACTION_STATUS } from '@/entities/bridge'
 import { useWallet } from '@/composables/hooks/use-wallet'
 import BinancePayDetailModal from './components/CexDetail/BinancePayDetailModal.vue'
+import TransactionStatus from './components/TransactionStatus.vue'
 
 const router = useRouter()
 const el = ref<HTMLDivElement>()
@@ -110,44 +109,13 @@ const openDetailModal = (item: Transaction) => {
                 {{ item.fromSwapAmount }} {{ item.fromAssetCode }}
               </p>
             </div>
-            <div class="flex gap-[4px] ml-[28px] mt-[4px]">
-              <Icon
-                class="shrink-0"
-                :name="TRANSACTION_STATUS_MAP[item.fromStatus].icon"
-              />
-              <div
-                class="text-[14px] md:text-[16px] text-[#616161] leading-none"
-                v-if="[CHAIN.BINANCE_CEX, CHAIN.BINANCE_PAY].includes(item.fromChainName)"
-              >
-                <template v-if="item.fromStatus === TRANSACTION_STATUS.SUCCEED">
-                  COMPLETED
-                </template>
-                <template v-else-if="item.fromStatus === TRANSACTION_STATUS.CLOSED || item.fromStatus === TRANSACTION_STATUS.TIMEOUT">
-                  CLOSED
-                </template>
-                <template v-else>
-                  <p>CHECKING TRANSFER</p>
-                  <p
-                    class="underline cursor-pointer"
-                    @click="openDetailModal(item)"
-                  >
-                    TRANSFER INSTRUCTIONS
-                  </p>
-                </template>
-              </div>
-              <p
-                class="text-[14px] md:text-[16px] text-[#616161] leading-none"
-                v-else
-              >
-                TX:
-                <a
-                  :href="combineURLs(CHAIN_BLOCK_EXPLORER_URL_MAP[item.fromChainName], `/tx/${item.fromTxnHash}`)"
-                  target="_blank"
-                >
-                  {{ formatHashWithEllipsis(item.fromTxnHash) }}
-                </a>
-              </p>
-            </div>
+            <TransactionStatus
+              class="ml-[28px] mt-[4px]"
+              :status="item.fromStatus"
+              :chain-name="item.fromChainName"
+              :txn-hash="item.fromTxnHash"
+              @checking="openDetailModal(item)"
+            />
           </div>
           <Icon
             class="shrink-0 mx-auto text-[24px] text-primary rotate-90 md:rotate-0"
@@ -163,26 +131,13 @@ const openDetailModal = (item: Transaction) => {
                 {{ item.toSwapAmount }} {{ item.toAssetCode }}
               </p>
             </div>
-            <div
-              class="flex items-center gap-[4px] ml-[28px] mt-[4px]"
+            <TransactionStatus
+              class="ml-[28px] mt-[4px]"
               v-if="![TRANSACTION_STATUS.CLOSED, TRANSACTION_STATUS.TIMEOUT].includes(item.fromStatus)"
-            >
-              <Icon :name="TRANSACTION_STATUS_MAP[item.toStatus].icon" />
-              <p class="text-[14px] md:text-[16px] text-[#616161] leading-none">
-                <template v-if="item.toTxnHash">
-                  TX:
-                  <a
-                    :href="combineURLs(CHAIN_BLOCK_EXPLORER_URL_MAP[item.toChainName], `/tx/${item.toTxnHash}`)"
-                    target="_blank"
-                  >
-                    {{ formatHashWithEllipsis(item.toTxnHash) }}
-                  </a>
-                </template>
-                <template v-else>
-                  WAITING
-                </template>
-              </p>
-            </div>
+              :status="item.toStatus"
+              :chain-name="item.toChainName"
+              :txn-hash="item.toTxnHash"
+            />
           </div>
         </div>
       </div>
