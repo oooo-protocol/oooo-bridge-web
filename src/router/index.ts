@@ -24,6 +24,11 @@ const routes: RouteRecordRaw[] = [
       }
     ]
   }, {
+    path: '/binance-pay',
+    name: 'binance-pay',
+    component: async () => await import('@/pages/bridge/binance-pay.vue'),
+    props: true
+  }, {
     path: '/:pathMatch(.*)*',
     redirect: '/'
   }
@@ -34,7 +39,7 @@ const router = createRouter({
   routes
 })
 
-const WHITE_LIST = ['bridge']
+const WHITE_LIST = ['bridge', 'binance-pay']
 
 router.beforeEach((to, from, next) => {
   const { address } = useWallet()

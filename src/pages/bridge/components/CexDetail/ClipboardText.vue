@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import copy from 'copy-text-to-clipboard'
+import { useClipboard } from '@/composables/hooks/use-clipboard'
 import { Button } from 'oooo-components/ui/button'
 import Icon from 'oooo-components/ui/Icon.vue'
 import { useToast } from 'oooo-components/ui/toast'
 
 const { toast } = useToast()
+const { copy } = useClipboard()
 
 const props = defineProps<{
   text: string | number
@@ -13,15 +14,11 @@ const props = defineProps<{
 
 const container = ref<HTMLDivElement | null>(null)
 
-const onClick = () => {
-  const success = copy(String(props.text), {
-    target: container.value!
+const onClick = async () => {
+  await copy(String(props.text), container.value!)
+  toast({
+    description: '💌 Copied to clipboard!'
   })
-  if (success) {
-    toast({
-      description: '💌 Copied to clipboard!'
-    })
-  }
 }
 </script>
 

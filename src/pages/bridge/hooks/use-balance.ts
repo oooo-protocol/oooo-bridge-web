@@ -18,7 +18,7 @@ export const useBalance = (from: Ref<string>, config: ComputedRef<PairConfig | n
     mutationFn: async () => {
       const _address = address.value
       const _config = config.value
-      if (_address == null || _config == null || from.value === CHAIN.BINANCE_CEX) return
+      if (_address == null || _config == null || [CHAIN.BINANCE_PAY, CHAIN.BINANCE_CEX].includes(from.value as CHAIN)) return
       const instance = getInstance()
       if (instance.type === WALLET_TYPE.BITCOIN) {
         return await instance.getNativeBalance()
