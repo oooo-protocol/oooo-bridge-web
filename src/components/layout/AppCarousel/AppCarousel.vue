@@ -15,8 +15,8 @@ import MERLIN_MOBILE_IMAGE from '@/assets/images/activity/merlin-mob.png'
 import MERLIN_PC_IMAGE from '@/assets/images/activity/merlin-pc.png'
 import B2_HONEY_MOBILE_IMAGE from '@/assets/images/activity/b2-honey-mob.png'
 import B2_HONEY_PC_IMAGE from '@/assets/images/activity/b2-honey-pc.png'
-import ROOTSTOCK_MOBILE_IMAGE from '@/assets/images/activity/rootstock-mob.png'
-import ROOTSTOCK_PC_IMAGE from '@/assets/images/activity/rootstock-pc.png'
+import TOKENPOCKET_MOBILE_IMAGE from '@/assets/images/activity/tokenpocket-mob.png'
+import TOKENPOCKET_PC_IMAGE from '@/assets/images/activity/tokenpocket-pc.png'
 
 import { NETWORK } from '@/entities/chain'
 
@@ -33,15 +33,15 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
       imagePC: BEVM_PC_IMAGE,
       url: 'https://www.bybit.com/en/web3/airdrop/activity?activityId=109&activityTag=4'
     }, {
-      name: 'oooo x Rootstock',
-      imageMobile: ROOTSTOCK_MOBILE_IMAGE,
-      imagePC: ROOTSTOCK_PC_IMAGE,
-      url: 'https://app.galxe.com/quest/oooo/GCPUXtzGt4'
-    }, {
       name: 'Goooo Airdrop',
       imageMobile: MERLIN_MOBILE_IMAGE,
       imagePC: MERLIN_PC_IMAGE,
       url: 'https://app.galxe.com/quest/oooo/GCXMctdbZ4'
+    }, {
+      name: 'oooo x TokenPocket',
+      imageMobile: TOKENPOCKET_MOBILE_IMAGE,
+      imagePC: TOKENPOCKET_PC_IMAGE,
+      url: 'https://oooo.money/goooo'
     }
   ]
   : []
