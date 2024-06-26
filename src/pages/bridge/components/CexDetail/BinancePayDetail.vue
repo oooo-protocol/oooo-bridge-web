@@ -211,9 +211,7 @@ const onTimeEnd = () => {
           </p>
           <Button
             class="mb-[10px] w-full bg-[#fccc0a] hover:bg-[#BD9907] xl:hidden"
-            as="a"
-            :href="binancePayOrder.deeplink"
-            target="_blank"
+            @click="onClickUnable"
           >
             CONTINUE ON BINANCE APP
           </Button>
