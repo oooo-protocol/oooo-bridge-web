@@ -9,8 +9,6 @@ import {
 import Autoplay from 'embla-carousel-autoplay'
 import AppCarouselItem from './AppCarouselItem.vue'
 
-import BEVM_MOBILE_IMAGE from '@/assets/images/activity/bevm-mob.png'
-import BEVM_PC_IMAGE from '@/assets/images/activity/bevm-pc.png'
 import MERLIN_MOBILE_IMAGE from '@/assets/images/activity/merlin-mob.png'
 import MERLIN_PC_IMAGE from '@/assets/images/activity/merlin-pc.png'
 import B2_HONEY_MOBILE_IMAGE from '@/assets/images/activity/b2-honey-mob.png'
@@ -34,11 +32,6 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
       imageMobile: B2_HONEY_MOBILE_IMAGE,
       imagePC: B2_HONEY_PC_IMAGE,
       url: 'https://honey.bsquared.network/'
-    }, {
-      name: 'BEVM Airdrop',
-      imageMobile: BEVM_MOBILE_IMAGE,
-      imagePC: BEVM_PC_IMAGE,
-      url: 'https://www.bybit.com/en/web3/airdrop/activity?activityId=109&activityTag=4'
     }, {
       name: 'Goooo Airdrop',
       imageMobile: MERLIN_MOBILE_IMAGE,
