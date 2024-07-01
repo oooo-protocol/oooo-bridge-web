@@ -1,39 +1,37 @@
 import { useWallet } from '@/composables/hooks/use-wallet'
 import { getArrayFirst } from '@preflower/utils'
-import { uuid } from 'oooo-components/lib/utils'
 import { createInvitationRelationship } from '@/request/api/user'
 import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
+import useSignatureStore from '@/store/signature'
+import useWalletStore from '@/store/wallet'
 
 export const useInvite = () => {
   const route = useRoute()
-  const inviteCode = getArrayFirst(route.query.inviteCode)
+  const inviteCode = computed(() => getArrayFirst(route.query.inviteCode))
 
-  const { address, getInstance, onConnect } = useWallet()
+  const signature = useSignatureStore()
+  const { address, onConnect } = useWallet()
+  const store = useWalletStore()
 
   watch(address, async (address) => {
-    if (address == null || inviteCode == null) return
-    const instance = getInstance()
-    if (instance.type === WALLET_TYPE.ETHEREUM) {
-      const signContent =
-        'oooo Authentication \n' +
-        'Welcome to oooo! \n' +
-        'The signature is only used to verify your wallet address and does not involve any asset transfers. \n' +
-        `Timestamp: ${+new Date()} \n` +
-        'Thank you for using oooo for a secure and decentralized experience. \n' +
-        'oooo Team \n' +
-        `Nonce: ${uuid()}`
-      const signature = await instance.sign(signContent, address)
-      void createInvitationRelationship({
-        walletAddress: address,
-        signature,
-        signContent,
-        inviteCode
-      })
+    if (address == null) return
+    if (inviteCode.value == null) return
+    if (signature.signInfo == null) {
+      await signature.onSign()
     }
+    await createInvitationRelationship({
+      ...signature.signInfo!,
+      inviteCode: inviteCode.value
+    })
+  }, {
+    immediate: true
   })
 
   onMounted(() => {
-    if (inviteCode == null || address.value != null) return
-    onConnect(WALLET_TYPE.ETHEREUM)
+    if (inviteCode.value == null) return
+    if (store.walletType === WALLET_TYPE.BITCOIN) return
+    if (address.value == null) {
+      onConnect(WALLET_TYPE.ETHEREUM)
+    }
   })
 }

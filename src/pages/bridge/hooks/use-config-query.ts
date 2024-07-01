@@ -82,9 +82,12 @@ export const useConfigQuery = (
 
   watch([token, from, to], ([token, from, to]) => {
     if (!isQueryInited.value) return
+
     void router.push({
       name: 'bridge',
       query: {
+        // Keep other query unchanged
+        ...route.query,
         token,
         from,
         to

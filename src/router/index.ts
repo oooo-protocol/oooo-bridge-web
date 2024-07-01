@@ -24,6 +24,14 @@ const routes: RouteRecordRaw[] = [
       }
     ]
   }, {
+    path: '/goooo/callback/twitter',
+    name: 'CallbackTwitter',
+    component: async () => await import('@/pages/goooo-points/callback/twitter.vue')
+  }, {
+    path: '/goooo/callback/discord',
+    name: 'CallbackDiscord',
+    component: async () => await import('@/pages/goooo-points/callback/discord.vue')
+  }, {
     path: '/binance-pay',
     name: 'binance-pay',
     component: async () => await import('@/pages/bridge/binance-pay.vue'),
@@ -39,7 +47,15 @@ const router = createRouter({
   routes
 })
 
-const WHITE_LIST = ['bridge', 'binance-pay']
+if (import.meta.env.VITE_MODE === 'dev' || import.meta.env.VITE_MODE === 'livenet') {
+  router.addRoute('layout', {
+    path: '/goooo',
+    name: 'goooo',
+    component: async () => await import('@/pages/goooo-points/index.vue')
+  })
+}
+
+export const WHITE_LIST = ['bridge', 'binance-pay', 'goooo']
 
 router.beforeEach((to, from, next) => {
   const { address } = useWallet()

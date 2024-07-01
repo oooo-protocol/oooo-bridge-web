@@ -59,32 +59,79 @@ const menus = [
   }
 ]
 
+const navs = [
+  {
+    name: 'BRIDGE',
+    icon: 'bridge',
+    ...(import.meta.env.VITE_MODE === 'testnet'
+      ? {
+        tag: 'a',
+        attributes: {
+          href: 'https://bridge.oooo.money'
+        }
+      }
+      : {
+        tag: 'router-link',
+        attributes: {
+          to: '/'
+        }
+      })
+  }, {
+    name: 'Goooo',
+    icon: 'Goooo',
+    ...(import.meta.env.VITE_MODE === 'testnet'
+      ? {
+        tag: 'a',
+        attributes: {
+          href: 'https://bridge.oooo.money/goooo'
+        }
+      }
+      : {
+        tag: 'router-link',
+        attributes: {
+          to: '/goooo'
+        }
+      })
+  }
+]
+
 const isSupportNotification = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
+
+const route = useRoute()
+
+watch(route, (route) => {
+  const name = route.name
+  const appEl = document.querySelector('#app') as HTMLElement
+  if (name === 'goooo') {
+    appEl.style.background = '#000'
+  } else {
+    appEl.style.background = ''
+  }
+}, {
+  immediate: true
+})
 </script>
 
 <template>
   <AppHeader class="justify-between">
     <AppNav :menus="menus" />
-    <a
-      class="hidden md:flex gap-[8px] md:ml-auto -tracking-tighter hover:text-[#bce4cd]"
-      href="https://bridge.oooo.money"
+    <component
+      v-for="(nav, index) of navs"
+      :key="nav.name"
+      class="flex items-center gap-[8px] -tracking-tighter hover:text-[#bce4cd]"
+      :class="{
+        'md:ml-auto': index === 0,
+        'hidden md:flex': nav.name === 'BRIDGE'
+      }"
+      :is="nav.tag"
+      v-bind="nav.attributes"
     >
       <Icon
         class="text-[22px] text-[#ff961e]"
-        name="bridge"
+        :name="nav.icon"
       />
-      BRIDGE
-    </a>
-    <a
-      class="flex items-center gap-[8px] -tracking-tighter hover:text-[#bce4cd]"
-      href="https://oooo.money/goooo"
-    >
-      <Icon
-        class="text-[20px] text-[#ff961e]"
-        name="Goooo"
-      />
-      Goooo
-    </a>
+      {{ nav.name }}
+    </component>
     <WalletConnectButton />
   </AppHeader>
   <AppCarousel />
@@ -101,11 +148,6 @@ const isSupportNotification = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
     />
     <!-- </KeepAlive> -->
   </RouterView>
-  <p
-    class="text-[#a4a4a4] text-center text-[13px] md:text-[16px]"
-  >
-    Powered by oooo.money
-  </p>
   <AppFooter />
 </template>
 
