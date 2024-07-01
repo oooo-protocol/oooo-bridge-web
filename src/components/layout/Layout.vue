@@ -134,7 +134,7 @@ watch(route, (route) => {
     </component>
     <WalletConnectButton />
   </AppHeader>
-  <AppCarousel />
+  <AppCarousel v-if="route.name !== 'goooo'" />
   <AppNotification
     v-if="isSupportNotification"
     class="mt-[20px]"
