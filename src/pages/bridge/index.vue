@@ -20,7 +20,6 @@ import { ResponseError } from '@/request/axios'
 import { Network, validate } from 'bitcoin-address-validation'
 import { NoAlarmException } from 'oooo-components/lib/exception'
 import { CHAIN, NETWORK } from '@/entities/chain'
-import { useInvite } from './hooks/use-invite'
 import TransferProcessingModal from './components/TransferProcessingModal.vue'
 import { useBalance } from './hooks/use-balance'
 import { CexDetailModal, BinancePayDetailModal } from './components/CexDetail'
@@ -29,6 +28,7 @@ import { useEstimateData } from './hooks/use-estimate-data'
 import { useTimeSpend } from './hooks/use-time-spend'
 import { SERVER_ASSET } from '@/entities/server'
 import TooltipPro from 'oooo-components/ui/TooltipPro.vue'
+import { useInvite } from './hooks/use-invite'
 
 const { address, transfer, sign, getPublicKey, onConnect, calcEstimateGas } = useWallet()
 
@@ -335,6 +335,7 @@ const availableGooooPoints = computed(() => {
   if (import.meta.env.VITE_NETWORK !== NETWORK.LIVENET) return false
   if (to.value === CHAIN.B2) return 8
   if (from.value === CHAIN.BINANCE_CEX && to.value === CHAIN.MERLIN) return 8
+  if (from.value === CHAIN.BINANCE_PAY && to.value === CHAIN.MERLIN) return 8
   return false
 })
 </script>

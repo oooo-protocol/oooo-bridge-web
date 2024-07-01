@@ -8,5 +8,10 @@
     >
       <slot />
     </div>
+    <p
+      class="mt-[6px] text-[#a4a4a4] text-center text-[13px] md:text-[16px]"
+    >
+      Powered by oooo.money
+    </p>
   </div>
 </template>

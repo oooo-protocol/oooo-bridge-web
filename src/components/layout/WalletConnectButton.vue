@@ -7,6 +7,7 @@ import { WALLET, WALLET_CONFIG_MAP } from 'oooo-components/oooo-wallet'
 import { useWallet } from '@/composables/hooks/use-wallet'
 import { createFuncall } from 'vue-funcall'
 import BybitWalletAlert from './BybitWalletAlert.vue'
+import { WHITE_LIST } from '@/router'
 
 const route = useRoute()
 const router = useRouter()
@@ -17,7 +18,8 @@ const config = computed(() => name.value != null ? WALLET_CONFIG_MAP[name.value]
 
 const onClickLogout = () => {
   void onLogout()
-  if (route.name !== 'bridge') {
+
+  if (!WHITE_LIST.includes(route.name as string)) {
     void router.replace({ name: 'bridge' })
   }
 }
