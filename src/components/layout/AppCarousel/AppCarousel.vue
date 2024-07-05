@@ -9,8 +9,6 @@ import {
 import Autoplay from 'embla-carousel-autoplay'
 import AppCarouselItem from './AppCarouselItem.vue'
 
-import MERLIN_MOBILE_IMAGE from '@/assets/images/activity/merlin-mob.png'
-import MERLIN_PC_IMAGE from '@/assets/images/activity/merlin-pc.png'
 import B2_HONEY_MOBILE_IMAGE from '@/assets/images/activity/b2-honey-mob.png'
 import B2_HONEY_PC_IMAGE from '@/assets/images/activity/b2-honey-pc.png'
 import ALIENX_MOBILE_IMAGE from '@/assets/images/activity/alienx-mob.png'
@@ -30,11 +28,6 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
       imageMobile: B2_HONEY_MOBILE_IMAGE,
       imagePC: B2_HONEY_PC_IMAGE,
       url: 'https://honey.bsquared.network/'
-    }, {
-      name: 'Goooo Airdrop',
-      imageMobile: MERLIN_MOBILE_IMAGE,
-      imagePC: MERLIN_PC_IMAGE,
-      url: 'https://app.galxe.com/quest/oooo/GCXMctdbZ4'
     }
   ]
   : []
