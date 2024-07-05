@@ -18,5 +18,7 @@ export enum CHAIN {
   ARIBTRUM = 'arbitrum',
   BSC = 'bsc',
   ZKLINK = 'zklink',
-  ALIENX = 'alienx'
+  ALIENX = 'alienx',
+  ZKSYNC = 'zksync',
+  SCROLL = 'scroll'
 }

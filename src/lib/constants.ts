@@ -14,6 +14,8 @@ import ARBITRUM_IMAGE from '@/assets/tokens/arbitrum.png'
 import BSC_IMAGE from '@/assets/tokens/bsc.png'
 import ZKLINK_IMAGE from '@/assets/tokens/zklink.png'
 import ALIENX_IMAGE from '@/assets/tokens/alienx.png'
+import ZKSYNC_IMAGE from '@/assets/tokens/zksync.png'
+import SCROLL_IMAGE from '@/assets/tokens/scroll.png'
 
 import { CHAIN, NETWORK } from '@/entities/chain'
 import {
@@ -40,7 +42,11 @@ import {
   ZKLINK_TESTNET,
   ZKLINK_LIVENET,
   ALIENX_TESTNET,
-  ALIENX_LIVENET
+  ALIENX_LIVENET,
+  ZKSYNC_TESTNET,
+  ZKSYNC_LIVENET,
+  SCROLL_TESTNET,
+  SCROLL_LIVENET
 } from 'oooo-components/lib/chain-config'
 import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
@@ -111,6 +117,16 @@ export const CHAIN_LIST = [
     value: CHAIN.ALIENX,
     [NETWORK.TESTNET]: ALIENX_TESTNET,
     [NETWORK.LIVENET]: ALIENX_LIVENET
+  }, {
+    image: ZKSYNC_IMAGE,
+    value: CHAIN.ZKSYNC,
+    [NETWORK.TESTNET]: ZKSYNC_TESTNET,
+    [NETWORK.LIVENET]: ZKSYNC_LIVENET
+  }, {
+    image: SCROLL_IMAGE,
+    value: CHAIN.SCROLL,
+    [NETWORK.TESTNET]: SCROLL_TESTNET,
+    [NETWORK.LIVENET]: SCROLL_LIVENET
   }
 ]
 
