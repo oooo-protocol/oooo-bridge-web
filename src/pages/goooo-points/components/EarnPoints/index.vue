@@ -7,7 +7,6 @@ import TaskCard from './TaskCard.vue'
 
 import B2BridgeTask from './Tasks/B2BridgeTask.vue'
 import BinanceMerlinBridgeTask from './Tasks/BinanceMerlinBridgeTask.vue'
-import TokenPocketBridgeTask from './Tasks/TokenPocketBridgeTask.vue'
 import AlienxBridgeTask from './Tasks/AlienxBridgeTask.vue'
 
 // import TwitterTask from './Tasks/TwitterTask.vue'
@@ -42,7 +41,6 @@ import BRIDGE_TO_EARN_IMAGE from '@/assets/images/goooo-points/bridge.png'
       :img="BRIDGE_TO_EARN_IMAGE"
     >
       <AlienxBridgeTask />
-      <TokenPocketBridgeTask />
       <B2BridgeTask />
       <BinanceMerlinBridgeTask />
     </TaskCard>
