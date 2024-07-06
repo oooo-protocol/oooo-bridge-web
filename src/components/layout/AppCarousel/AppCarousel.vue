@@ -9,8 +9,6 @@ import {
 import Autoplay from 'embla-carousel-autoplay'
 import AppCarouselItem from './AppCarouselItem.vue'
 
-import B2_HONEY_MOBILE_IMAGE from '@/assets/images/activity/b2-honey-mob.png'
-import B2_HONEY_PC_IMAGE from '@/assets/images/activity/b2-honey-pc.png'
 import ALIENX_MOBILE_IMAGE from '@/assets/images/activity/alienx-mob.png'
 import ALIENX_PC_IMAGE from '@/assets/images/activity/alienx-pc.png'
 
@@ -23,11 +21,6 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
       imageMobile: ALIENX_MOBILE_IMAGE,
       imagePC: ALIENX_PC_IMAGE,
       url: 'https://alienxchain.io/quest?active=pass_card'
-    }, {
-      name: 'B2 Honey',
-      imageMobile: B2_HONEY_MOBILE_IMAGE,
-      imagePC: B2_HONEY_PC_IMAGE,
-      url: 'https://honey.bsquared.network/'
     }
   ]
   : []
