@@ -1,8 +1,6 @@
 <script setup lang="ts">
 // import MoreSoon from './MoreSoon.vue'
 
-import Airdrop from './Airdrop/index.vue'
-
 import TaskCard from './TaskCard.vue'
 
 import B2BridgeTask from './Tasks/B2BridgeTask.vue'
@@ -34,7 +32,6 @@ import BRIDGE_TO_EARN_IMAGE from '@/assets/images/goooo-points/bridge.png'
       :img="INVITE_TO_EARN_IMAGE"
     >
     </TaskCard> -->
-    <Airdrop />
     <TaskCard
       title="BRIDGE TO EARN"
       :img="BRIDGE_TO_EARN_IMAGE"
