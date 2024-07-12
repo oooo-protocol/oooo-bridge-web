@@ -11,8 +11,10 @@ import AppCarouselItem from './AppCarouselItem.vue'
 
 import ALIENX_MOBILE_IMAGE from '@/assets/images/activity/alienx-mob.png'
 import ALIENX_PC_IMAGE from '@/assets/images/activity/alienx-pc.png'
-import OOOO_1_IMAGE from '@/assets/images/activity/oooo.jpg'
-import OOOO_2_IMAGE from '@/assets/images/activity/oooo-2.jpg'
+import OOOO_1_PC_IMAGE from '@/assets/images/activity/oooo.jpg'
+import OOOO_1_MOBILE_IMAGE from '@/assets/images/activity/oooo-mob.png'
+import OOOO_2_PC_IMAGE from '@/assets/images/activity/oooo-2.jpg'
+import OOOO_2_MOBILE_IMAGE from '@/assets/images/activity/oooo-2-mob.png'
 
 import { NETWORK } from '@/entities/chain'
 
@@ -25,12 +27,12 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
       url: 'https://alienxchain.io/quest?active=pass_card'
     }, {
       name: 'oooo 1',
-      imageMobile: OOOO_1_IMAGE,
-      imagePC: OOOO_1_IMAGE
+      imageMobile: OOOO_1_MOBILE_IMAGE,
+      imagePC: OOOO_1_PC_IMAGE
     }, {
       name: 'oooo 2',
-      imageMobile: OOOO_2_IMAGE,
-      imagePC: OOOO_2_IMAGE
+      imageMobile: OOOO_2_MOBILE_IMAGE,
+      imagePC: OOOO_2_PC_IMAGE
     }
   ]
   : []
