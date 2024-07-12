@@ -6,7 +6,6 @@ import Icon from 'oooo-components/ui/Icon.vue'
 import { AppCarousel } from './AppCarousel'
 import WalletConnectButton from './WalletConnectButton.vue'
 import AppNotification from './AppNotification.vue'
-import { NETWORK } from '@/entities/chain'
 
 const menus = [
   {
@@ -95,8 +94,6 @@ const navs = [
   }
 ]
 
-const isSupportNotification = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
-
 const route = useRoute()
 
 watch(route, (route) => {
@@ -136,7 +133,6 @@ watch(route, (route) => {
   </AppHeader>
   <AppCarousel v-if="route.name !== 'goooo'" />
   <AppNotification
-    v-if="isSupportNotification"
     class="mt-[20px]"
   />
   <!-- 不设置默认key，以文件名区分(Vue默认)，确保复用最外层容器 -->

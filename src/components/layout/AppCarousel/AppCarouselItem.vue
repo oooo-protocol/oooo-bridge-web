@@ -8,7 +8,10 @@ const props = defineProps<{
 
 <template>
   <a
-    class="app-carousel__item cursor-pointer"
+    class="app-carousel__item"
+    :class="{
+      'cursor-pointer': props.link != null
+    }"
     :href="props.link"
     target="_blank"
   />

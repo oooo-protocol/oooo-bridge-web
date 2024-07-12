@@ -4,9 +4,28 @@ import { retrieveNotification } from '@/request/api/common'
 
 const marquee = ref<HTMLParagraphElement>()
 
-const { data: text } = useQuery({
+const { data: messages } = useQuery({
   queryKey: ['/v1/bridge/announcement'],
   queryFn: retrieveNotification
+})
+const message = computed(() => {
+  if (messages.value == null) {
+    return null
+  }
+  const { warning, notice } = messages.value
+  if (warning != null && warning !== '') {
+    return {
+      type: 'warning',
+      text: warning
+    }
+  }
+  if (notice != null && notice !== '') {
+    return {
+      type: 'notice',
+      text: notice
+    }
+  }
+  return null
 })
 
 watch(marquee, async () => {
@@ -20,21 +39,25 @@ watch(marquee, async () => {
 
 <template>
   <div
-    v-if="text"
-    class="flex justify-center items-center gap-[8px] px-[12px] py-[8px] bg-[#ff3300]/[0.24] rounded-md border-b-[2px] border-[#ff3300] mx-[24px] md:mx-[48px] xl:mx-auto xl:max-w-[832px] xl:w-full"
+    v-if="message"
+    class="flex justify-center items-center gap-[8px] px-[12px] py-[8px] rounded-md mx-[24px] md:mx-[48px] xl:mx-auto xl:max-w-[832px] xl:w-full"
+    :class="{
+      'bg-[#ff3300]/[0.3]': message.type === 'warning',
+      'bg-[#88b099]/[0.3]': message.type === 'notice'
+    }"
   >
     <p
       class="shrink-0 md:text-[18px]"
     >
-      🔔
+      {{ message.type === 'warning' ? '🚨' : '🔔' }}
     </p>
     <div class="flex overflow-hidden">
       <p
         ref="marquee"
         class="app-notification__content text-nowrap"
-        :data-text="text"
+        :data-text="message.text"
       >
-        {{ text }}
+        {{ message.text }}
       </p>
     </div>
   </div>
