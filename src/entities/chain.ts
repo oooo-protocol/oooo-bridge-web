@@ -19,6 +19,6 @@ export enum CHAIN {
   BSC = 'bsc',
   ZKLINK = 'zklink',
   ALIENX = 'alienx',
-  ZKSYNC = 'zksync',
+  ZKSYNC = 'zksyncera',
   SCROLL = 'scroll'
 }
