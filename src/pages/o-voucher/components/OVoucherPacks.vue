@@ -61,6 +61,8 @@ watch(packs, (packs) => {
   if (packs.length > 0) {
     activePackId.value = packs[0].packRecordId
   }
+}, {
+  immediate: true
 })
 
 const formatDate = (date: string) => {
@@ -223,7 +225,7 @@ const onClickDescription = (description: string) => {
         @click="scrollPrev"
       />
       <Icon
-        class="hidden md:blockabsolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 cursor-pointer text-[40px]"
+        class="hidden md:block absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 cursor-pointer text-[40px]"
         name="a-arrowleftbeifen"
         @click="scrollNext"
       />
