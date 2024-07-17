@@ -94,3 +94,12 @@ export async function invokeAuthorizationLink (url: string, isCheckClosed: boole
     }
   })
 }
+
+/**
+ * setTimeout promisify
+ * @param ms set timeout milliseconds
+ * @returns {Promise<Timeout>}
+ */
+export const timeout = async (ms: number) => {
+  return await new Promise((resolve) => setTimeout(resolve, ms))
+}

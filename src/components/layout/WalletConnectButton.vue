@@ -24,6 +24,12 @@ const onClickLogout = () => {
   }
 }
 
+const onClickOVoucher = () => {
+  void router.push({
+    name: 'o-voucher'
+  })
+}
+
 const onClickHistory = () => {
   void router.push({
     name: 'bridge-history'
@@ -68,6 +74,9 @@ watch(name, (name) => {
     <DropdownMenuContent class="px-0 py-[12px] border-none min-w-[var(--radix-popper-anchor-width)]">
       <DropdownMenuItem @click="onClickHistory">
         HISTORY
+      </DropdownMenuItem>
+      <DropdownMenuItem @click="onClickOVoucher">
+        o-VOUCHER
       </DropdownMenuItem>
       <DropdownMenuItem @click="onClickLogout">
         DISCONNECT

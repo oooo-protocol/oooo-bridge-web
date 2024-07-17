@@ -3,7 +3,7 @@ import { useInfiniteScroll } from '@vueuse/core'
 import { retrieveTransactionList } from '@/request/api/bridge'
 import Icon from 'oooo-components/ui/Icon.vue'
 import dayjs from 'dayjs'
-import { BridgeContainer, BridgeHeader } from './components/BridgeContainer'
+import { OContainer, OHeader } from '@/components/OContainer'
 import type { Transaction } from '@/entities/bridge'
 import { CHAIN_IMAGE_MAP } from '@/lib/constants'
 import LoadingIcon from '@/components/LoadingIcon.vue'
@@ -74,8 +74,8 @@ const openDetailModal = (item: Transaction) => {
 </script>
 
 <template>
-  <BridgeContainer>
-    <BridgeHeader
+  <OContainer>
+    <OHeader
       title="_ HISTORY"
       @close="router.back"
       is-close
@@ -157,7 +157,7 @@ const openDetailModal = (item: Transaction) => {
     <div class="flex justify-center py-[20px] px-[16px]">
       <NeedHelp />
     </div>
-  </BridgeContainer>
+  </OContainer>
 </template>
 
 <style lang="scss" scoped>

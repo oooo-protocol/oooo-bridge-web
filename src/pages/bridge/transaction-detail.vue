@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BridgeContainer, BridgeHeader, BridgeContent } from './components/BridgeContainer'
+import { OContainer, OHeader, OContent } from '@/components/OContainer'
 import Icon from 'oooo-components/ui/Icon.vue'
 import { useQuery } from '@tanstack/vue-query'
 import { retrieveTransactionDetail, retrieveTransactionStatus } from '@/request/api/bridge'
@@ -160,13 +160,13 @@ useQuery({
 </script>
 
 <template>
-  <BridgeContainer>
-    <BridgeHeader
+  <OContainer>
+    <OHeader
       title="_ TRANSFER"
       @close="router.back"
       is-close
     />
-    <BridgeContent
+    <OContent
       class="md:pt-[70px] md:pb-[56px] xl:pt-[64px]"
     >
       <PageLoading v-if="!data" />
@@ -217,8 +217,8 @@ useQuery({
           </div>
         </div>
       </template>
-    </BridgeContent>
-  </BridgeContainer>
+    </OContent>
+  </OContainer>
 </template>
 
 <style lang="scss" scoped>

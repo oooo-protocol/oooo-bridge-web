@@ -5,14 +5,15 @@ import EarnPoints from './components/EarnPoints/index.vue'
 import { ScrollNavProvider, ScrollNavItem, ScrollNavContent } from './components/ScrollNav'
 import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
 import useWalletStore from '@/store/wallet'
-import useSignatureStore from '@/store/signature'
-import { useWallet } from '@/composables/hooks/use-wallet'
+import { useSignatureCheck } from '@/composables/hooks/use-signature-check'
 
 const { updateWalletType } = useWalletStore()
 
 onBeforeMount(() => {
   updateWalletType(WALLET_TYPE.ETHEREUM)
 })
+
+useSignatureCheck()
 
 const navs = [
   {
@@ -27,22 +28,6 @@ const navs = [
   //   title: 'TOP 50 ACCOUNTS'
   // }
 ]
-
-const { address, onLogout } = useWallet()
-const signature = useSignatureStore()
-
-watch(address, async (address) => {
-  if (address == null) return
-  try {
-    if (signature.signInfo == null || address !== signature.signInfo.walletAddress) {
-      await signature.onSign()
-    }
-  } catch {
-    void onLogout()
-  }
-}, {
-  immediate: true
-})
 </script>
 
 <template>

@@ -97,3 +97,17 @@ export interface Transaction {
   platformName?: string
   binancePayOrder?: BinancePayOrder
 }
+
+export interface EstimateData {
+  /**
+   * platform fee before use voucher
+   */
+  platformFee: string
+  /**
+   * platform fee after use voucher
+   */
+  actualPlatformFee: string
+  discount: string
+  toAmount: string
+  save: string
+}

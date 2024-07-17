@@ -21,6 +21,10 @@ const routes: RouteRecordRaw[] = [
         name: 'transaction-detail',
         component: async () => await import('@/pages/bridge/transaction-detail.vue'),
         props: true
+      }, {
+        path: 'o-voucher',
+        name: 'o-voucher',
+        component: async () => await import('@/pages/o-voucher/index.vue')
       }
     ]
   }, {
@@ -55,7 +59,7 @@ if (import.meta.env.VITE_MODE === 'dev' || import.meta.env.VITE_MODE === 'livene
   })
 }
 
-export const WHITE_LIST = ['bridge', 'binance-pay', 'goooo']
+export const WHITE_LIST = ['bridge', 'binance-pay', 'goooo', 'o-voucher']
 
 router.beforeEach((to, from, next) => {
   const { address } = useWallet()

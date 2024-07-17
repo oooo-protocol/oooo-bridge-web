@@ -1,5 +1,5 @@
 import axios from '../axios'
-import { type Transaction, type TransactionConfig, type Chain, TRANSACTION_STATUS } from '@/entities/bridge'
+import { type Transaction, type TransactionConfig, type Chain, TRANSACTION_STATUS, type EstimateData } from '@/entities/bridge'
 import type { Pagination } from './type'
 import { CHAIN_RPC_MAP } from '@/lib/constants'
 import { combineURLs } from '@/lib/utils'
@@ -17,11 +17,9 @@ export const retrieveBridgeConfigs = async () => {
 export const retrieveEstimateData = async (data: {
   pairId: number
   fromAmount: string
+  voucherRecordId?: number
 }) => {
-  return await axios<{
-    platformFee: string
-    toAmount: string
-  }>({
+  return await axios<EstimateData>({
     url: '/v1/bridge/transaction/fee/estimate',
     params: data
   })
@@ -75,6 +73,7 @@ export const createTransaction = async (data: {
   signature: string
   signContent: string
   publicKey: string
+  voucherRecordId?: number
 }) => {
   return await axios<Transaction>({
     method: 'POST',
