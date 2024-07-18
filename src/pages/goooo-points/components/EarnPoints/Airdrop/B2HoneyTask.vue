@@ -78,17 +78,15 @@ const onMint = async () => {
     const contract = new ethers.Contract(config.CONTRACT_ADDRESS, CONTRACT_ABI, signer)
     const gasPrice = (await provider.getFeeData()).gasPrice
     const gas = await contract.claim.estimateGas('B2_buzz')
-    const hash: string = await contract.claim('B2_buzz', {
+    await contract.claim('B2_buzz', {
       gasPrice,
       gasLimit: gas
     })
-    if (hash) {
-      createPointConfetti('CLAIMED')
-      queryClient.setQueryData(
-        ['checkIsMinted', address],
-        true
-      )
-    }
+    createPointConfetti('CLAIMED')
+    queryClient.setQueryData(
+      ['checkIsMinted', address],
+      true
+    )
   } catch (e) {
     toast({
       description: (e as Error).message
