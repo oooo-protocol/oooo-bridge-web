@@ -79,8 +79,8 @@ const onChainClaim = async (claimConfig: VoucherPackClaimConfig) => {
     const signer = await provider.getSigner()
     const contract = new ethers.Contract(claimConfig.contractAddress, CONTRACT_ABI, signer)
     const gasPrice = (await provider.getFeeData()).gasPrice
-    const gas = await contract.claim.estimateGas('B2_buzz')
-    const hash: string = await contract.claim('B2_buzz', {
+    const gas = await contract.claim.estimateGas('o-voucher')
+    const hash: string = await contract.claim('o-voucher', {
       gasPrice,
       gasLimit: gas
     })
