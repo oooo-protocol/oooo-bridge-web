@@ -16,7 +16,7 @@ const router = useRouter()
 
 const { name, address, walletType, onConnect, onLogout } = useWallet()
 
-const isEthereumWallet = computed(() => walletType.value === WALLET_TYPE.ETHEREUM)
+const isEthereumWallet = computed(() => address.value != null && walletType.value === WALLET_TYPE.ETHEREUM)
 const { data: packs } = useQuery({
   queryKey: ['/voucher/pack/list', address],
   queryFn: async () => {
@@ -81,7 +81,10 @@ watch(name, (name) => {
           >
           <p>{{ formatHashWithEllipsis(address!) }}</p>
         </div>
-        <div class="voucher-pack-hint">
+        <div
+          class="voucher-pack-hint"
+          v-if="hasAvailableVoucherPack"
+        >
           <img src="@/assets/images/redpack.gif">
           REWARD
         </div>
