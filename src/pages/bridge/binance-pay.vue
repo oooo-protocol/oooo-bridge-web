@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BridgeContainer, BridgeHeader } from './components/BridgeContainer'
+import { OContainer, OHeader } from '@/components/OContainer'
 import BinancePayDetail from './components/CexDetail/BinancePayDetail.vue'
 import { type CHAIN } from '@/entities/chain'
 import { getArrayFirst } from '@preflower/utils'
@@ -22,8 +22,8 @@ watch([fromChain, fromTxnHash, fromWalletAddr, assetType, assetCode], ([fromChai
 </script>
 
 <template>
-  <BridgeContainer>
-    <BridgeHeader
+  <OContainer>
+    <OHeader
       title="_ TRANSFER PROCESSING"
     />
     <BinancePayDetail
@@ -35,7 +35,7 @@ watch([fromChain, fromTxnHash, fromWalletAddr, assetType, assetCode], ([fromChai
       :asset-code="assetCode"
       is-sharing
     />
-  </BridgeContainer>
+  </OContainer>
   <AppFooter />
 </template>
 

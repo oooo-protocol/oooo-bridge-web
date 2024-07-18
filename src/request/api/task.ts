@@ -1,10 +1,5 @@
 import axios from '../axios'
-
-interface SignatureRequest {
-  walletAddress: string
-  signature: string
-  signContent: string
-}
+import { type SignatureRequest } from './type'
 
 export const isFollowedTwitter = async (data: SignatureRequest) => {
   return await axios<boolean>({

@@ -2,17 +2,17 @@ import { retrieveEstimateData } from '@/request/api/bridge'
 import { useMutation } from '@tanstack/vue-query'
 import { useDebounceFn } from '@vueuse/core'
 import { type MaybeRefOrGetter } from 'vue'
-import { type PairConfig } from './use-config'
 import { useToast } from 'oooo-components/ui/toast'
+import { type EstimateData } from '@/entities/bridge'
 
 export const useEstimateData = (
   amount: MaybeRefOrGetter<string>,
-  config: ComputedRef<PairConfig | null>
+  pairId: ComputedRef<number | undefined>,
+  voucherRecordId: MaybeRefOrGetter<number | undefined>
 ) => {
   const { toast } = useToast()
 
-  const toAmount = ref(0)
-  const platformFee = ref<string>()
+  const estimateData = ref<EstimateData>()
 
   const { isPending: estimating, data, mutateAsync } = useMutation({
     mutationFn: retrieveEstimateData,
@@ -26,31 +26,28 @@ export const useEstimateData = (
   // listen data change to avoid request race-condition
   watch(data, (result) => {
     if (result) {
-      toAmount.value = Number(result.toAmount)
-      platformFee.value = result.platformFee
+      estimateData.value = result
     }
   })
 
   const debouncedFn = useDebounceFn(mutateAsync, 500, { maxWait: 5000 })
 
-  watch([config, amount], async () => {
-    const pairId = config.value?.pairId
+  watchEffect(() => {
     const fromAmount = toValue(amount)
     const fromAmountNumber = Number(fromAmount)
-    if (pairId == null || fromAmountNumber === 0 || Number.isNaN(fromAmountNumber)) {
-      toAmount.value = 0
-      platformFee.value = undefined
+    if (pairId.value == null || fromAmountNumber === 0 || Number.isNaN(fromAmountNumber)) {
+      estimateData.value = undefined
     } else {
       void debouncedFn({
-        pairId,
-        fromAmount
+        pairId: pairId.value,
+        fromAmount,
+        voucherRecordId: toValue(voucherRecordId)
       })
     }
   })
 
   return {
     estimating,
-    toAmount,
-    platformFee
+    estimateData
   }
 }
