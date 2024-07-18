@@ -9,7 +9,7 @@ const useWalletStore = defineStore('wallet', () => {
   }
 
   return {
-    walletType: readonly(walletType),
+    walletType,
     updateWalletType
   }
 }, {

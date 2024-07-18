@@ -20,7 +20,7 @@ export const useCodeQuery = () => {
     onSuccess: (pack) => {
       queryClient.setQueryData(
         ['/voucher/pack/list', address],
-        (old: VoucherPack[]) => [pack, ...old]
+        (old?: VoucherPack[]) => old ? [pack, ...old] : [pack]
       )
     },
     onError: (e) => {

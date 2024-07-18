@@ -505,7 +505,7 @@ const availableGooooPoints = computed(() => {
               v-if="estimateData"
             >
               SERVICE FEE
-              <del>{{ estimateData.platformFee }}</del>
+              <del v-if="Number(estimateData.discount) > 0">{{ estimateData.platformFee }}</del>
               {{ serviceFee }} |
             </p>
             <div class="flex gap-[8px]">

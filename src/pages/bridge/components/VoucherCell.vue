@@ -70,7 +70,7 @@ const onSelectChange = (id?: number) => {
             SAVE ${{ saveText }}
           </template>
           <template v-else>
-            No o-voucher used
+            DON'T USE o-VOUCHER
           </template>
         </p>
         <Icon
@@ -118,7 +118,7 @@ const onSelectChange = (id?: number) => {
           @click="onSelectChange()"
         >
           <p class="voucher-cell-item__title">
-            DON’T USE o-VOUCHER
+            DON'T USE o-VOUCHER
           </p>
           <i
             class="ml-auto voucher-cell-item__check"

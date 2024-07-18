@@ -31,7 +31,7 @@ const { isPending: loading, mutate } = useMutation({
   onSuccess: (pack) => {
     queryClient.setQueryData(
       ['/voucher/pack/list', address],
-      (old: VoucherPack[]) => [pack, ...old]
+      (old?: VoucherPack[]) => old ? [pack, ...old] : [pack]
     )
     open.value = false
     toast({

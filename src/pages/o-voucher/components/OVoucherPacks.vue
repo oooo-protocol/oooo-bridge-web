@@ -159,7 +159,7 @@ const onClickDescription = (description: string) => {
   <div>
     <PageLoading v-if="loading" />
     <OVoucherPackPlaceholder
-      class="flex-col mx-auto px-[28px] text-center"
+      class="flex-col mx-auto text-center"
       v-else-if="!packs"
     >
       <p class="text-[14px] md:text-[16px] font-[500]">
