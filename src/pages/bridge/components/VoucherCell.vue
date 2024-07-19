@@ -8,16 +8,19 @@ import {
 import Icon from 'oooo-components/ui/Icon.vue'
 import { useVoucher } from '../hooks/use-voucher'
 import dayjs from 'dayjs'
+import { type EstimateData } from '@/entities/bridge'
 
 const props = defineProps<{
   pairId?: number
-  saveText?: string
+  estimateData?: EstimateData
 }>()
 const open = ref(false)
 const selectedId = defineModel<number | undefined>()
 
 const { vouchers } = useVoucher(computed(() => props.pairId))
 const selectedVoucher = computed(() => vouchers.value?.find((v) => v.voucherRecordId === selectedId.value))
+
+const isShowVoucherCell = computed(() => props.estimateData != null && vouchers.value != null && vouchers.value.length > 0)
 
 watch(vouchers, (vouchers) => {
   if (!vouchers || vouchers.length === 0) {
@@ -42,8 +45,7 @@ const onSelectChange = (id?: number) => {
 <template>
   <div
     class="flex"
-    v-if="vouchers && vouchers.length > 0"
-    v-show="saveText != null"
+    v-if="isShowVoucherCell"
   >
     <Icon
       class="mr-[8px] text-[18px] text-[#616161]"
@@ -58,19 +60,18 @@ const onSelectChange = (id?: number) => {
       >
         o-VOUCHER
         <template v-if="selectedVoucher">
-          -{{ selectedVoucher.discountAmount }} |
+          -{{ estimateData!.discount }} |
         </template>
       </p>
       <div class="flex items-center gap-[8px]">
         <p
           class="text-[#a4a4a4]"
-          v-if="saveText"
         >
-          <template v-if="selectedVoucher">
-            SAVE ${{ saveText }}
-          </template>
-          <template v-else>
+          <template v-if="!selectedVoucher">
             DON'T USE o-VOUCHER
+          </template>
+          <template v-else-if="estimateData?.save">
+            SAVE ${{ estimateData.save }}
           </template>
         </p>
         <Icon
