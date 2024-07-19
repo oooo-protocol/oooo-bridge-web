@@ -131,6 +131,9 @@ const onClaim = async () => {
         (old: VoucherPack[]) => old.filter((pack) => pack.packRecordId !== selectedPack.packRecordId)
       )
       void queryClient.invalidateQueries({ queryKey: ['/voucher/record/list'] })
+      toast({
+        description: 'Claim successful'
+      })
     }
   } catch (e) {
     toast({
