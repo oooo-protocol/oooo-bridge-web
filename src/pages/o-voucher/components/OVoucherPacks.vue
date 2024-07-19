@@ -167,14 +167,24 @@ const onClickDescription = (description: string) => {
       </p>
       <p class="mt-[8px] text-[12px]">
         YOU CAN ENTER THE o-VOUCHER CODE OR FOLLOW
-        <Icon
-          class="inline text-[16px]"
-          name="issue1"
-        />
-        <Icon
-          class="ml-[8px] inline text-[16px]"
-          name="issuebeifen"
-        />
+        <a
+          href="https://discord.com/invite/ooooprotocol"
+          target="_blank"
+        >
+          <Icon
+            class="inline text-[16px]"
+            name="issue1"
+          />
+        </a>
+        <a
+          href="https://twitter.com/oooo_money"
+          target="_blank"
+        >
+          <Icon
+            class="ml-[8px] inline text-[16px]"
+            name="issuebeifen"
+          />
+        </a>
         AND PARTICIPATE IN EVENTS TO GET.
       </p>
     </OVoucherPackPlaceholder>
