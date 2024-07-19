@@ -57,8 +57,9 @@ watch(activePackId, (id) => {
   }
 })
 watch(packs, (packs) => {
-  if (packs == null) return
-  if (packs.length > 0) {
+  if (packs == null || packs.length === 0) {
+    activePackId.value = undefined
+  } else {
     activePackId.value = packs[0].packRecordId
   }
 }, {
