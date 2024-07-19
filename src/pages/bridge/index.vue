@@ -525,7 +525,7 @@ const availableGooooPoints = computed(() => {
           class="mt-[8px]"
           :pair-id="pairId"
           v-model="form.voucherRecordId"
-          :save-text="estimateData?.save"
+          :estimate-data="estimateData"
         />
         <div class="mt-[8px] flex">
           <Icon

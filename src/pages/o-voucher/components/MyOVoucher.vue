@@ -153,14 +153,24 @@ const onClickMorePairs = (configs: VoucherPariConfig[]) => {
       </p>
       <p class="mt-[16px] text-[#a4a4a4] text-[12px] text-center">
         FOLLOW
-        <Icon
-          class="inline text-[16px]"
-          name="issue1"
-        />
-        <Icon
-          class="ml-[8px] inline text-[16px]"
-          name="issuebeifen"
-        />
+        <a
+          href="https://discord.com/invite/ooooprotocol"
+          target="_blank"
+        >
+          <Icon
+            class="inline text-[16px]"
+            name="issue1"
+          />
+        </a>
+        <a
+          href="https://twitter.com/oooo_money"
+          target="_blank"
+        >
+          <Icon
+            class="ml-[8px] inline text-[16px]"
+            name="issuebeifen"
+          />
+        </a>
         AND PARTICIPATE IN EVENTS TO GET
       </p>
     </div>
