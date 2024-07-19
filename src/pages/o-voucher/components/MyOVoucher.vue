@@ -128,10 +128,10 @@ const onClickMorePairs = (configs: VoucherPariConfig[]) => {
           </div>
           <p
             class="o-voucher-category"
-            :class="`o-voucher-category--${currentCategory}`"
+            :class="`o-voucher-category--${voucher.status}`"
             v-if="voucher.status !== VOUCHER_STATUS.AVAILABLE"
           >
-            {{ CATEGORY_LABEL_MAP[currentCategory] }}
+            {{ CATEGORY_LABEL_MAP[voucher.status] }}
           </p>
         </div>
       </div>
@@ -189,8 +189,8 @@ const onClickMorePairs = (configs: VoucherPariConfig[]) => {
     width: 100%;
     height: 100%;
     background:
-      radial-gradient(circle at right top, transparent 8px, #212322 0) 0 0 / 26% 50% no-repeat,
-      radial-gradient(circle at right bottom, transparent 8px, #212322 0) 0 100% / 26% 50% no-repeat,
+      radial-gradient(circle at right top, transparent 8px, #212322 0) 0 0 / 26% 50.5% no-repeat,
+      radial-gradient(circle at right bottom, transparent 8px, #212322 0) 0 100% / 26% 50.5% no-repeat,
       radial-gradient(circle at left top, transparent 8px, #212322 0) 100% 0 / 74.5% 50.5% no-repeat,
       radial-gradient(circle at left bottom, transparent 8px, #212322 0) 100% 100% / 74.5% 50.5% no-repeat;
     filter: drop-shadow(0 0 1px #5a6960) drop-shadow(0 0 1px #5a6960);
@@ -206,10 +206,12 @@ const onClickMorePairs = (configs: VoucherPariConfig[]) => {
   &-category {
     @apply absolute top-[16px] right-[16px] px-[4px] py-[2px] text-[12px] text-[#000] rounded-md;
 
+    // voucher status: USED
     &--1 {
       @apply bg-[#b6d3c1];
     }
 
+    // voucher status: EXPIRED
     &--2 {
       @apply bg-[#eb7241];
     }
