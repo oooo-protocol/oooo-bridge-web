@@ -131,6 +131,9 @@ const onClaim = async () => {
         (old: VoucherPack[]) => old.filter((pack) => pack.packRecordId !== selectedPack.packRecordId)
       )
       void queryClient.invalidateQueries({ queryKey: ['/voucher/record/list'] })
+      toast({
+        description: 'Claim successful'
+      })
     }
   } catch (e) {
     toast({
@@ -160,7 +163,7 @@ const onClickDescription = (description: string) => {
     <PageLoading v-if="loading" />
     <OVoucherPackPlaceholder
       class="flex-col mx-auto text-center"
-      v-else-if="!packs"
+      v-else-if="packs == null || packs.length === 0"
     >
       <p class="text-[14px] md:text-[16px] font-[500]">
         NO o-VOUCHER TO CALIM
