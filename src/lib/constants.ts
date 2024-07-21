@@ -16,6 +16,9 @@ import ZKLINK_IMAGE from '@/assets/tokens/zklink.png'
 import ALIENX_IMAGE from '@/assets/tokens/alienx.png'
 import ZKSYNC_IMAGE from '@/assets/tokens/zksync.png'
 import SCROLL_IMAGE from '@/assets/tokens/scroll.png'
+import LINEA_IMAGE from '@/assets/tokens/linea.png'
+import BLAST_IMAGE from '@/assets/tokens/blast.png'
+import BASE_IMAGE from '@/assets/tokens/base.png'
 
 import { CHAIN, NETWORK } from '@/entities/chain'
 import {
@@ -46,7 +49,13 @@ import {
   ZKSYNC_TESTNET,
   ZKSYNC_LIVENET,
   SCROLL_TESTNET,
-  SCROLL_LIVENET
+  SCROLL_LIVENET,
+  BASE_TESTNET,
+  BASE_LIVENET,
+  LINEA_TESTNET,
+  LINEA_LIVENET,
+  BLAST_TESTNET,
+  BLAST_LIVENET
 } from 'oooo-components/lib/chain-config'
 import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
@@ -127,6 +136,21 @@ export const CHAIN_LIST = [
     value: CHAIN.SCROLL,
     [NETWORK.TESTNET]: SCROLL_TESTNET,
     [NETWORK.LIVENET]: SCROLL_LIVENET
+  }, {
+    image: LINEA_IMAGE,
+    value: CHAIN.LINEA,
+    [NETWORK.TESTNET]: LINEA_TESTNET,
+    [NETWORK.LIVENET]: LINEA_LIVENET
+  }, {
+    image: BLAST_IMAGE,
+    value: CHAIN.BLAST,
+    [NETWORK.TESTNET]: BLAST_TESTNET,
+    [NETWORK.LIVENET]: BLAST_LIVENET
+  }, {
+    image: BASE_IMAGE,
+    value: CHAIN.BASE,
+    [NETWORK.TESTNET]: BASE_TESTNET,
+    [NETWORK.LIVENET]: BASE_LIVENET
   }
 ]
 

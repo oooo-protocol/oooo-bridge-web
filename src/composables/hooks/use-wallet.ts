@@ -18,6 +18,7 @@ export const useWallet = () => {
   const { name: btcName, address: btcAddress, getWalletInstance: getBTCWalletInstance, onLogout: onBTCLogout } = useBTCWallet()
   const { name: evmName, address: evmAddress, getWalletInstance: getEVMWalletInstance, onLogout: onEVMLogout } = useEVMWallet()
   const store = useWalletStore()
+  const walletType = computed(() => store.walletType)
 
   const name = computed(() => {
     if (store.walletType === WALLET_TYPE.BITCOIN) {
@@ -124,6 +125,7 @@ export const useWallet = () => {
   return {
     name,
     address,
+    walletType,
     sign,
     transfer,
     getPublicKey,

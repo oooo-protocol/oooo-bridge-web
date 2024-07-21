@@ -20,5 +20,8 @@ export enum CHAIN {
   ZKLINK = 'zklinknova',
   ALIENX = 'alienx',
   ZKSYNC = 'zksyncera',
-  SCROLL = 'scroll'
+  SCROLL = 'scroll',
+  BASE = 'base',
+  LINEA = 'linea',
+  BLAST = 'blast'
 }

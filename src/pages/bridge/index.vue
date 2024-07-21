@@ -4,7 +4,7 @@ import ChainSelect from './components/ChainSelect.vue'
 import TokenSelect from './components/TokenSelect.vue'
 import Button from 'oooo-components/ui/button/Button.vue'
 import Input from 'oooo-components/ui/input/Input.vue'
-import { BridgeContainer, BridgeHeader, BridgeContent } from './components/BridgeContainer'
+import { OContainer, OHeader, OContent } from '@/components/OContainer'
 import { useMutation, useQuery } from '@tanstack/vue-query'
 import { retrieveTransactionConfig, createTransaction, retrieveBridgeConfigs } from '@/request/api/bridge'
 import Decimal from 'decimal.js-light'
@@ -29,6 +29,7 @@ import { useTimeSpend } from './hooks/use-time-spend'
 import { SERVER_ASSET } from '@/entities/server'
 import TooltipPro from 'oooo-components/ui/TooltipPro.vue'
 import { useInvite } from './hooks/use-invite'
+import VoucherCell from './components/VoucherCell.vue'
 
 const { address, transfer, sign, getPublicKey, onConnect, calcEstimateGas } = useWallet()
 
@@ -50,20 +51,30 @@ const {
   toChainList,
   config
 } = useConfig(configs)
+const pairId = computed(() => {
+  return config.value?.pairId
+})
 const form = reactive<{
   amount: string
   receiveAddress?: string
+  voucherRecordId?: number
 }>({
   amount: '',
-  receiveAddress: undefined
+  receiveAddress: undefined,
+  voucherRecordId: undefined
 })
 const balance = useBalance(from, config)
 const title = import.meta.env.VITE_TITLE
 const isTestnetNetwork = import.meta.env.VITE_NETWORK === NETWORK.TESTNET
-const { estimating, toAmount, platformFee } = useEstimateData(computed(() => form.amount), config)
+const { estimating, estimateData } = useEstimateData(
+  computed(() => form.amount),
+  pairId,
+  computed(() => form.voucherRecordId)
+)
+const toAmount = computed(() => estimateData.value?.toAmount ?? '0')
 const serviceFee = computed(() => {
-  if (platformFee.value == null) return
-  return Number(platformFee.value) === 0 ? 'FREE' : `${platformFee.value} ${token.value}`
+  if (estimateData.value == null) return
+  return Number(estimateData.value.actualPlatformFee) === 0 ? 'FREE' : `${estimateData.value.actualPlatformFee} ${token.value}`
 })
 const SPEND_TEXT = useTimeSpend(to, config)
 /** --------------------- Update receiveAddress field  -------------- */
@@ -173,6 +184,7 @@ const createCexTransaction = async (parameter: {
   amount: string
   toChain: string
   toAddress: string
+  voucherRecordId?: number
 }) => {
   if (![CHAIN.BINANCE_CEX, CHAIN.BINANCE_PAY].includes(parameter.fromChain as CHAIN)) throw new Error(`${parameter.fromChain} NOT SUPPORT CEX TRANSACTION`)
 
@@ -218,6 +230,7 @@ const createChainTransaction = async (parameter: {
   amount: string
   toChain: string
   toAddress: string
+  voucherRecordId?: number
 }) => {
   const { gasPrice, platformAddress } = await retrieveTransactionConfig({
     pairId: parameter.pairId,
@@ -260,7 +273,7 @@ const createChainTransaction = async (parameter: {
     fromChain: parameter.fromChain,
     fromAmount: parameter.amount,
     toChain: parameter.toChain,
-    toAmount: toAmount.value.toString()
+    toAmount: toAmount.value
   })
   try {
     let hash: string
@@ -308,7 +321,8 @@ const onSubmit = async (values: Record<string, any>) => {
       fromAddress: address.value,
       toChain: to.value,
       toAddress: values.receiveAddress,
-      amount: values.amount
+      amount: values.amount,
+      voucherRecordId: form.voucherRecordId
     }
     if ([CHAIN.BINANCE_CEX, CHAIN.BINANCE_PAY].includes(parameter.fromChain as CHAIN)) {
       await createCexTransaction(parameter)
@@ -339,8 +353,8 @@ const availableGooooPoints = computed(() => {
 </script>
 
 <template>
-  <BridgeContainer class="oooo-bridge">
-    <BridgeHeader
+  <OContainer class="oooo-bridge">
+    <OHeader
       class="flex flex-col md:flex-row-reverse md:items-center md:pt-[40px]"
       :title="title"
     >
@@ -371,9 +385,9 @@ const availableGooooPoints = computed(() => {
           :list="tokenList"
         />
       </div>
-    </BridgeHeader>
+    </OHeader>
     <PageLoading v-if="initializing" />
-    <BridgeContent v-else>
+    <OContent v-else>
       <Form
         @submit="onSubmit"
       >
@@ -473,7 +487,7 @@ const availableGooooPoints = computed(() => {
         </FormField>
         <Button
           class="mt-[32px] w-full md:w-[240px]"
-          :disabled="isInsufficient || platformFee == null"
+          :disabled="isInsufficient || estimateData == null"
           :loading="loading || estimating"
         >
           {{ isInsufficient ? 'INSUFFICIENT FUNDS' : 'TRANSFER' }}
@@ -488,9 +502,11 @@ const availableGooooPoints = computed(() => {
           <div class="flex flex-col md:flex-row gap-[8px] text-[14px] leading-[1.2]">
             <p
               class="text-[#616161]"
-              v-if="serviceFee"
+              v-if="estimateData"
             >
-              SERVICE FEE {{ serviceFee }} |
+              SERVICE FEE
+              <del v-if="Number(estimateData.discount) > 0">{{ estimateData.platformFee }}</del>
+              {{ serviceFee }} |
             </p>
             <div class="flex gap-[8px]">
               <p class="text-[#a4a4a4]">
@@ -505,6 +521,12 @@ const availableGooooPoints = computed(() => {
             </div>
           </div>
         </div>
+        <VoucherCell
+          class="mt-[8px]"
+          :pair-id="pairId"
+          v-model="form.voucherRecordId"
+          :estimate-data="estimateData"
+        />
         <div class="mt-[8px] flex">
           <Icon
             class="mr-[8px] text-[18px] text-[#616161]"
@@ -530,8 +552,8 @@ const availableGooooPoints = computed(() => {
           </div>
         </div>
       </template>
-    </BridgeContent>
-  </BridgeContainer>
+    </OContent>
+  </OContainer>
 </template>
 
 <style lang="scss" scoped>
