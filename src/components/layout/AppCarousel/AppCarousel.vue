@@ -15,11 +15,24 @@ import OOOO_1_PC_IMAGE from '@/assets/images/activity/oooo.jpg'
 import OOOO_1_MOBILE_IMAGE from '@/assets/images/activity/oooo-mob.png'
 import OOOO_2_PC_IMAGE from '@/assets/images/activity/oooo-2.jpg'
 import OOOO_2_MOBILE_IMAGE from '@/assets/images/activity/oooo-2-mob.png'
+import OOOO_3_PC_IMAGE from '@/assets/images/activity/oooo-3.jpg'
+import OOOO_3_MOBILE_IMAGE from '@/assets/images/activity/oooo-3-mob.jpg'
+import OOOO_4_PC_IMAGE from '@/assets/images/activity/oooo-4.jpg'
+import OOOO_4_MOBILE_IMAGE from '@/assets/images/activity/oooo-4-mob.jpg'
 
 import { NETWORK } from '@/entities/chain'
 
 const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
   ? [
+    {
+      name: 'oooo 4',
+      imageMobile: OOOO_4_MOBILE_IMAGE,
+      imagePC: OOOO_4_PC_IMAGE
+    }, {
+      name: 'oooo 3',
+      imageMobile: OOOO_3_MOBILE_IMAGE,
+      imagePC: OOOO_3_PC_IMAGE
+    },
     {
       name: 'ALIENX Genesis Passcard',
       imageMobile: ALIENX_MOBILE_IMAGE,
