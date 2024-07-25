@@ -3,7 +3,6 @@
 
 import TaskCard from './TaskCard.vue'
 
-import B2BridgeTask from './Tasks/B2BridgeTask.vue'
 import AlienxBridgeTask from './Tasks/AlienxBridgeTask.vue'
 
 // import TwitterTask from './Tasks/TwitterTask.vue'
@@ -37,7 +36,6 @@ import BRIDGE_TO_EARN_IMAGE from '@/assets/images/goooo-points/bridge.png'
       :img="BRIDGE_TO_EARN_IMAGE"
     >
       <AlienxBridgeTask />
-      <B2BridgeTask />
     </TaskCard>
   </div>
 </template>
