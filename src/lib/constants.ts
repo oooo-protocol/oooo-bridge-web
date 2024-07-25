@@ -19,6 +19,8 @@ import SCROLL_IMAGE from '@/assets/tokens/scroll.png'
 import LINEA_IMAGE from '@/assets/tokens/linea.png'
 import BLAST_IMAGE from '@/assets/tokens/blast.png'
 import BASE_IMAGE from '@/assets/tokens/base.png'
+import OP_IMAGE from '@/assets/tokens/op.png'
+import POLYGON_IMAGE from '@/assets/tokens/polygon.png'
 
 import { CHAIN, NETWORK } from '@/entities/chain'
 import {
@@ -55,7 +57,11 @@ import {
   LINEA_TESTNET,
   LINEA_LIVENET,
   BLAST_TESTNET,
-  BLAST_LIVENET
+  BLAST_LIVENET,
+  OP_TESTNET,
+  OP_LIVENET,
+  POLYGON_TESTNET,
+  POLYGON_LIVENET
 } from 'oooo-components/lib/chain-config'
 import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
@@ -151,6 +157,16 @@ export const CHAIN_LIST = [
     value: CHAIN.BASE,
     [NETWORK.TESTNET]: BASE_TESTNET,
     [NETWORK.LIVENET]: BASE_LIVENET
+  }, {
+    image: OP_IMAGE,
+    value: CHAIN.OP,
+    [NETWORK.TESTNET]: OP_TESTNET,
+    [NETWORK.LIVENET]: OP_LIVENET
+  }, {
+    image: POLYGON_IMAGE,
+    value: CHAIN.POLYGON,
+    [NETWORK.TESTNET]: POLYGON_TESTNET,
+    [NETWORK.LIVENET]: POLYGON_LIVENET
   }
 ]
 
