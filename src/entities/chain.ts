@@ -23,5 +23,7 @@ export enum CHAIN {
   SCROLL = 'scroll',
   BASE = 'base',
   LINEA = 'linea',
-  BLAST = 'blast'
+  BLAST = 'blast',
+  OP = 'optimism',
+  POLYGON = 'polygon_pos'
 }
