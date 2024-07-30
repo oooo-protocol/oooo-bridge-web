@@ -23,6 +23,7 @@ import OP_IMAGE from '@/assets/tokens/op.png'
 import POLYGON_IMAGE from '@/assets/tokens/polygon.png'
 import TAIKO_IMAGE from '@/assets/tokens/taiko.png'
 import FANTOM_IMAGE from '@/assets/tokens/fantom.png'
+import ETHEREUM_IMAGE from '@/assets/tokens/ethereum.png'
 
 import { CHAIN, NETWORK } from '@/entities/chain'
 import {
@@ -67,7 +68,9 @@ import {
   TAIKO_TESTNET,
   TAIKO_LIVENET,
   FANTOM_TESTNET,
-  FANTOM_LIVENET
+  FANTOM_LIVENET,
+  ETHEREUM_TESTNET,
+  ETHEREUM_LIVENET
 } from 'oooo-components/lib/chain-config'
 import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
@@ -183,6 +186,11 @@ export const CHAIN_LIST = [
     value: CHAIN.FANTOM,
     [NETWORK.TESTNET]: FANTOM_TESTNET,
     [NETWORK.LIVENET]: FANTOM_LIVENET
+  }, {
+    image: ETHEREUM_IMAGE,
+    value: CHAIN.ETHEREUM,
+    [NETWORK.TESTNET]: ETHEREUM_TESTNET,
+    [NETWORK.LIVENET]: ETHEREUM_LIVENET
   }
 ]
 

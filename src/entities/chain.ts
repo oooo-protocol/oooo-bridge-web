@@ -27,5 +27,6 @@ export enum CHAIN {
   OP = 'optimism',
   POLYGON = 'polygon_pos',
   TAIKO = 'taiko',
-  FANTOM = 'fantom'
+  FANTOM = 'fantom',
+  ETHEREUM = 'ethereum'
 }
