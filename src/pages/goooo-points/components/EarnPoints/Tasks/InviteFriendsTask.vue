@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/vue-query'
 import { useWallet } from '@/composables/hooks/use-wallet'
 import { useClipboard } from '@/composables/hooks/use-clipboard'
 import { useToast } from 'oooo-components/ui/toast'
+import Icon from 'oooo-components/ui/Icon.vue'
 
 const { address } = useWallet()
 const signature = useSignatureStore()
@@ -20,6 +21,8 @@ const { data: account } = useQuery({
   enabled
 })
 const pointInviteUrl = computed(() => account.value ? `${window.location.origin}/goooo-points?inviteCode=${account.value.inviteCode}` : undefined)
+const telegramUrl = computed(() => `https://t.me/share/url?url=${pointInviteUrl.value}&text=Bridge%20to%20earn%20Goooo!%20oooo%20is%20the%20first%20modular%20omnichain%20interoperability%20protocol%20supporting%20bitcoin%20ecosystem.`)
+const twitterUrl = computed(() => `https://twitter.com/intent/tweet?url=${pointInviteUrl.value}&text=Bridge%20to%20earn%20Goooo!%20oooo%20is%20the%20first%20modular%20omnichain%20interoperability%20protocol%20supporting%20bitcoin%20ecosystem.`)
 
 const onCopy = async (text: string) => {
   await copy(text)
@@ -36,36 +39,40 @@ const onCopy = async (text: string) => {
     points="10"
     icon="giftbox"
   >
-    <Button
-      variant="ghost"
-      size="icon"
-      as="a"
-      href=""
-    >
-      <Icon
-        class="text-[22px]"
-        name="twitter"
-      />
-    </Button>
-    <Button
-      variant="ghost"
-      size="icon"
-      as="a"
-      href=""
-    >
-      <Icon
-        class="text-[22px]"
-        name="telegram"
-      />
-    </Button>
-    <Button
-      variant="secondary"
-      size="sm"
-      :disabled="!pointInviteUrl"
-      @click="onCopy(pointInviteUrl!)"
-    >
-      COPY URL
-    </Button>
+    <div class="flex gap-[10px]">
+      <Button
+        variant="ghost"
+        size="icon"
+        as="a"
+        :href="twitterUrl"
+        target="_blank"
+      >
+        <Icon
+          class="text-[22px]"
+          name="twitter"
+        />
+      </Button>
+      <Button
+        variant="ghost"
+        size="icon"
+        as="a"
+        :href="telegramUrl"
+        target="_blank"
+      >
+        <Icon
+          class="text-[22px]"
+          name="telegram"
+        />
+      </Button>
+      <Button
+        variant="secondary"
+        size="sm"
+        :disabled="!pointInviteUrl"
+        @click="onCopy(pointInviteUrl!)"
+      >
+        COPY URL
+      </Button>
+    </div>
   </TaskItem>
 </template>
 

@@ -74,32 +74,35 @@ const { isPending: loading, mutate } = useMutation({
         <a
           class="underline"
           href="https://discord.gg/ooooprotocol"
+          target="_blank"
         >
           @oooo ON DISCORD
         </a>
       </p>
     </template>
-    <Button
-      variant="ghost"
-      size="icon"
-      @click="check"
-      :disabled="isChecking || disabled"
-    >
-      <Icon
-        :class="{
-          'animate-spin-reverse': isChecking
-        }"
-        name="refresh"
-      />
-    </Button>
-    <Button
-      class="w-[90px]"
-      size="sm"
-      :disabled="disabled"
-      @click="isOpenFollowDialog = !isOpenFollowDialog"
-    >
-      JOIN
-    </Button>
+    <div class="flex gap-[10px]">
+      <Button
+        variant="ghost"
+        size="icon"
+        @click="check"
+        :disabled="isChecking || disabled"
+      >
+        <Icon
+          :class="{
+            'animate-spin-reverse': isChecking
+          }"
+          name="refresh"
+        />
+      </Button>
+      <Button
+        class="w-[90px]"
+        size="sm"
+        :disabled="disabled"
+        @click="isOpenFollowDialog = !isOpenFollowDialog"
+      >
+        JOIN
+      </Button>
+    </div>
   </TaskItem>
   <Dialog v-model:open="isOpenFollowDialog">
     <DialogContent>
