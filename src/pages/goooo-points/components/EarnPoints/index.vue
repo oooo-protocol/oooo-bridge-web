@@ -11,6 +11,7 @@ import AlienxBridgeTask from './Tasks/AlienxBridgeTask.vue'
 // import FOLLOW_TO_EARN_IMAGE from '@/assets/images/goooo-points/follow.png'
 // import INVITE_TO_EARN_IMAGE from '@/assets/images/goooo-points/invite.png'
 import BRIDGE_TO_EARN_IMAGE from '@/assets/images/goooo-points/bridge.png'
+import BitlayerBridgeTask from './Tasks/BitlayerBridgeTask.vue'
 </script>
 
 <template>
@@ -36,6 +37,7 @@ import BRIDGE_TO_EARN_IMAGE from '@/assets/images/goooo-points/bridge.png'
       :img="BRIDGE_TO_EARN_IMAGE"
     >
       <AlienxBridgeTask />
+      <BitlayerBridgeTask />
     </TaskCard>
   </div>
 </template>
