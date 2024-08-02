@@ -76,7 +76,7 @@ const { mutate } = useMutation({
           href="https://twitter.com/intent/follow?screen_name=oooo_money"
           target="_blank"
         >
-          @oooo ON TWITTER
+          @oooo ON X
         </a>
       </p>
     </template>
