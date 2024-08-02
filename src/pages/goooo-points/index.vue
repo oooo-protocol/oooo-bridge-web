@@ -6,6 +6,7 @@ import { ScrollNavProvider, ScrollNavItem, ScrollNavContent } from './components
 import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
 import useWalletStore from '@/store/wallet'
 import { useSignatureCheck } from '@/composables/hooks/use-signature-check'
+import { useInvite } from './hooks/use-invite'
 
 const { updateWalletType } = useWalletStore()
 
@@ -14,6 +15,7 @@ onBeforeMount(() => {
 })
 
 useSignatureCheck()
+useInvite()
 
 const navs = [
   {
