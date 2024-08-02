@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMutation } from '@tanstack/vue-query'
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import { isFollowedDiscord, getDiscordAuthorizationUrl } from '@/request/api/task'
 import Icon from 'oooo-components/ui/Icon.vue'
 import { Button } from 'oooo-components/ui/button'
@@ -19,6 +19,7 @@ const isOpenErrorDialog = ref(false)
 
 const signature = useSignatureStore()
 const createPointConfetti = useCreatePointConfetti()
+const queryClient = useQueryClient()
 
 const disabled = computed(() => signature.signInfo == null)
 
@@ -56,6 +57,7 @@ const { isPending: loading, mutate } = useMutation({
       const succeed = await check()
       if (succeed) {
         createPointConfetti('GET 1 POINTS')
+        void queryClient.invalidateQueries({ queryKey: ['/point/account', signature.signInfo.walletAddress] })
       }
     } else {
       isOpenErrorDialog.value = true
