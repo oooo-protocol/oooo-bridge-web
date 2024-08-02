@@ -10,11 +10,13 @@ import BybitWalletAlert from './BybitWalletAlert.vue'
 import { WHITE_LIST } from '@/router'
 import { useQuery } from '@tanstack/vue-query'
 import { retrieveVoucherPacks } from '@/request/api/voucher'
+import useSignatureStore from '@/store/signature'
 
 const route = useRoute()
 const router = useRouter()
 
 const { name, address, walletType, onConnect, onLogout } = useWallet()
+const { onSignout } = useSignatureStore()
 
 const isEthereumWallet = computed(() => address.value != null && walletType.value === WALLET_TYPE.ETHEREUM)
 const { data: packs } = useQuery({
@@ -30,6 +32,7 @@ const config = computed(() => name.value != null ? WALLET_CONFIG_MAP[name.value]
 
 const onClickLogout = () => {
   void onLogout()
+  onSignout()
 
   if (!WHITE_LIST.includes(route.name as string)) {
     void router.replace({ name: 'bridge' })
