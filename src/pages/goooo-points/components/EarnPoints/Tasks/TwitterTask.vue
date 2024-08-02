@@ -25,6 +25,8 @@ const disabled = computed(() => signature.signInfo == null)
 watch(() => [signature.signInfo], ([signInfo]) => {
   if (disabled.value) return
   void check()
+}, {
+  immediate: true
 })
 
 const { isPending: isChecking, data: succeed, mutateAsync: check } = useMutation({
