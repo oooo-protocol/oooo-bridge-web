@@ -50,7 +50,7 @@ const { isPending: loading, mutate } = useMutation({
       isOpenFollowDialog.value = false
       const succeed = await check()
       if (succeed) {
-        createPointConfetti('GET 10 POINTS')
+        createPointConfetti('GET 1 POINTS')
       }
     } else {
       isOpenErrorDialog.value = true
@@ -64,7 +64,7 @@ const { isPending: loading, mutate } = useMutation({
 
 <template>
   <TaskItem
-    hint="+10 Goooo"
+    hint="+1 Goooo"
     icon="discord1"
     :succeed="succeed"
   >
