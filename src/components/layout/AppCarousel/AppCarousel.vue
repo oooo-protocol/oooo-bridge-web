@@ -21,8 +21,8 @@ import ALLSPARK_PC_IMAGE from '@/assets/images/activity/allspark-pc.jpg'
 import ALLSPARL_MOBILE_IMAGE from '@/assets/images/activity/allspark-mob.png'
 import BEVM_SUMMER_PC_IMAGE from '@/assets/images/activity/bevm-summer.jpg'
 import BEVM_SUMMER_MOBILE_IMAGE from '@/assets/images/activity/bevm-summer-mob.png'
-import VOUCHER_PC_IMAGE from '@/assets/images/activity/voucher.png'
-import VOUCHER_MOBILE_IMAGE from '@/assets/images/activity/voucher-mob.png'
+import VOUCHER_PC_IMAGE from '@/assets/images/activity/voucher.jpg'
+import VOUCHER_MOBILE_IMAGE from '@/assets/images/activity/voucher-mob.jpg'
 
 import { NETWORK } from '@/entities/chain'
 
