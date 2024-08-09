@@ -1,30 +1,6 @@
 import { defineMap } from '@preflower/utils'
 import { TRANSACTION_STATUS } from '@/entities/bridge'
 
-import BEVM_IMAGE from '@/assets/tokens/bevm.png'
-import B2_IMAGE from '@/assets/tokens/b2.png'
-import BTC_IMAGE from '@/assets/tokens/btc.png'
-import MERLIN_IMAGE from '@/assets/tokens/merlin.png'
-import ROOTSTOCK_IMAGE from '@/assets/tokens/rootstock.png'
-import BITLAYER_IMAGE from '@/assets/tokens/bitlayer.png'
-import BEVM_CANARY_IMAGE from '@/assets/tokens/bevm_canary.png'
-import BINANCE_CEX_IMAGE from '@/assets/tokens/binance.png'
-import BOB_IMAGE from '@/assets/tokens/bob.png'
-import ARBITRUM_IMAGE from '@/assets/tokens/arbitrum.png'
-import BSC_IMAGE from '@/assets/tokens/bsc.png'
-import ZKLINK_IMAGE from '@/assets/tokens/zklink.png'
-import ALIENX_IMAGE from '@/assets/tokens/alienx.png'
-import ZKSYNC_IMAGE from '@/assets/tokens/zksync.png'
-import SCROLL_IMAGE from '@/assets/tokens/scroll.png'
-import LINEA_IMAGE from '@/assets/tokens/linea.png'
-import BLAST_IMAGE from '@/assets/tokens/blast.png'
-import BASE_IMAGE from '@/assets/tokens/base.png'
-import OP_IMAGE from '@/assets/tokens/op.png'
-import POLYGON_IMAGE from '@/assets/tokens/polygon.png'
-import TAIKO_IMAGE from '@/assets/tokens/taiko.png'
-import FANTOM_IMAGE from '@/assets/tokens/fantom.png'
-import ETHEREUM_IMAGE from '@/assets/tokens/ethereum.png'
-
 import { CHAIN, NETWORK } from '@/entities/chain'
 import {
   BEVM_TESTNET,
@@ -70,127 +46,142 @@ import {
   FANTOM_TESTNET,
   FANTOM_LIVENET,
   ETHEREUM_TESTNET,
-  ETHEREUM_LIVENET
+  ETHEREUM_LIVENET,
+  XLAYER_TESTNET,
+  XLAYER_LIVENET,
+  ZETACHAIN_TESTNET,
+  ZETACHAIN_LIVENET
 } from 'oooo-components/lib/chain-config'
 import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
 export const CHAIN_LIST = [
   {
-    image: BEVM_IMAGE,
+    image: 'https://oooo.money/static/images/bevm.png',
     value: CHAIN.BEVM,
     [NETWORK.TESTNET]: BEVM_TESTNET,
     [NETWORK.LIVENET]: BEVM_LIVENET
   }, {
-    image: BEVM_CANARY_IMAGE,
+    image: 'https://oooo.money/static/images/bevm_canary.png',
     value: CHAIN.BEVM_CANARY,
     [NETWORK.TESTNET]: BEVM_CANARY_TESTNET,
     [NETWORK.LIVENET]: BEVM_CANARY_LIVENET
   }, {
-    image: B2_IMAGE,
+    image: 'https://oooo.money/static/images/b2.png',
     value: CHAIN.B2,
     [NETWORK.TESTNET]: B2_TESTNET,
     [NETWORK.LIVENET]: B2_LIVENET
   }, {
-    image: BTC_IMAGE,
+    image: 'https://oooo.money/static/images/btc.png',
     value: CHAIN.BTC,
     [NETWORK.TESTNET]: BTC_TESTNET,
     [NETWORK.LIVENET]: BTC_LIVENET
   }, {
-    image: MERLIN_IMAGE,
+    image: 'https://oooo.money/static/images/merlin.png',
     value: CHAIN.MERLIN,
     [NETWORK.TESTNET]: MERLIN_TESTNET,
     [NETWORK.LIVENET]: MERLIN_LIVENET
   }, {
-    image: ROOTSTOCK_IMAGE,
+    image: 'https://oooo.money/static/images/rootstock.png',
     value: CHAIN.ROOTSTOCK,
     [NETWORK.TESTNET]: ROOTSTOCK_TESTNET,
     [NETWORK.LIVENET]: ROOTSTOCK_LIVENET
   }, {
-    image: BITLAYER_IMAGE,
+    image: 'https://oooo.money/static/images/bitlayer.png',
     value: CHAIN.BITLAYER,
     [NETWORK.TESTNET]: BITLAYER_TESTNET,
     [NETWORK.LIVENET]: BITLAYER_LIVENET
   }, {
-    image: BINANCE_CEX_IMAGE,
+    image: 'https://oooo.money/static/images/binance.png',
     value: CHAIN.BINANCE_CEX
   }, {
-    image: BINANCE_CEX_IMAGE,
+    image: 'https://oooo.money/static/images/binance.png',
     value: CHAIN.BINANCE_PAY
   }, {
-    image: BOB_IMAGE,
+    image: 'https://oooo.money/static/images/bob.png',
     value: CHAIN.BOB,
     [NETWORK.TESTNET]: BOB_TESTNET,
     [NETWORK.LIVENET]: BOB_LIVENET
   }, {
-    image: ARBITRUM_IMAGE,
+    image: 'https://oooo.money/static/images/arbitrum.png',
     value: CHAIN.ARIBTRUM,
     [NETWORK.TESTNET]: ARBITRUM_TESTNET,
     [NETWORK.LIVENET]: ARBITRUM_LIVENET
   }, {
-    image: BSC_IMAGE,
+    image: 'https://oooo.money/static/images/bsc.png',
     value: CHAIN.BSC,
     [NETWORK.TESTNET]: BSC_TESTNET,
     [NETWORK.LIVENET]: BSC_LIVENET
   }, {
-    image: ZKLINK_IMAGE,
+    image: 'https://oooo.money/static/images/zklink.png',
     value: CHAIN.ZKLINK,
     [NETWORK.TESTNET]: ZKLINK_TESTNET,
     [NETWORK.LIVENET]: ZKLINK_LIVENET
   }, {
-    image: ALIENX_IMAGE,
+    image: 'https://oooo.money/static/images/alienx.png',
     value: CHAIN.ALIENX,
     [NETWORK.TESTNET]: ALIENX_TESTNET,
     [NETWORK.LIVENET]: ALIENX_LIVENET
   }, {
-    image: ZKSYNC_IMAGE,
+    image: 'https://oooo.money/static/images/zksyncera.png',
     value: CHAIN.ZKSYNC,
     [NETWORK.TESTNET]: ZKSYNC_TESTNET,
     [NETWORK.LIVENET]: ZKSYNC_LIVENET
   }, {
-    image: SCROLL_IMAGE,
+    image: 'https://oooo.money/static/images/scroll.png',
     value: CHAIN.SCROLL,
     [NETWORK.TESTNET]: SCROLL_TESTNET,
     [NETWORK.LIVENET]: SCROLL_LIVENET
   }, {
-    image: LINEA_IMAGE,
+    image: 'https://oooo.money/static/images/linea.png',
     value: CHAIN.LINEA,
     [NETWORK.TESTNET]: LINEA_TESTNET,
     [NETWORK.LIVENET]: LINEA_LIVENET
   }, {
-    image: BLAST_IMAGE,
+    image: 'https://oooo.money/static/images/blast.png',
     value: CHAIN.BLAST,
     [NETWORK.TESTNET]: BLAST_TESTNET,
     [NETWORK.LIVENET]: BLAST_LIVENET
   }, {
-    image: BASE_IMAGE,
+    image: 'https://oooo.money/static/images/base.png',
     value: CHAIN.BASE,
     [NETWORK.TESTNET]: BASE_TESTNET,
     [NETWORK.LIVENET]: BASE_LIVENET
   }, {
-    image: OP_IMAGE,
+    image: 'https://oooo.money/static/images/optimism.png',
     value: CHAIN.OP,
     [NETWORK.TESTNET]: OP_TESTNET,
     [NETWORK.LIVENET]: OP_LIVENET
   }, {
-    image: POLYGON_IMAGE,
+    image: 'https://oooo.money/static/images/polygon.png',
     value: CHAIN.POLYGON,
     [NETWORK.TESTNET]: POLYGON_TESTNET,
     [NETWORK.LIVENET]: POLYGON_LIVENET
   }, {
-    image: TAIKO_IMAGE,
+    image: 'https://oooo.money/static/images/taiko.png',
     value: CHAIN.TAIKO,
     [NETWORK.TESTNET]: TAIKO_TESTNET,
     [NETWORK.LIVENET]: TAIKO_LIVENET
   }, {
-    image: FANTOM_IMAGE,
+    image: 'https://oooo.money/static/images/fantom.png',
     value: CHAIN.FANTOM,
     [NETWORK.TESTNET]: FANTOM_TESTNET,
     [NETWORK.LIVENET]: FANTOM_LIVENET
   }, {
-    image: ETHEREUM_IMAGE,
+    image: 'https://oooo.money/static/images/ethereum.png',
     value: CHAIN.ETHEREUM,
     [NETWORK.TESTNET]: ETHEREUM_TESTNET,
     [NETWORK.LIVENET]: ETHEREUM_LIVENET
+  },
+  {
+    image: 'https://oooo.money/static/images/xlayer.png',
+    value: CHAIN.XLAYER,
+    [NETWORK.TESTNET]: XLAYER_TESTNET,
+    [NETWORK.LIVENET]: XLAYER_LIVENET
+  }, {
+    image: 'https://oooo.money/static/images/zetachain.png',
+    value: CHAIN.ZETACHAIN,
+    [NETWORK.TESTNET]: ZETACHAIN_TESTNET,
+    [NETWORK.LIVENET]: ZETACHAIN_LIVENET
   }
 ]
 
