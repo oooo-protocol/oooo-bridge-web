@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMutation } from '@tanstack/vue-query'
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import { isFollowedDiscord, getDiscordAuthorizationUrl } from '@/request/api/task'
 import Icon from 'oooo-components/ui/Icon.vue'
 import { Button } from 'oooo-components/ui/button'
@@ -19,10 +19,16 @@ const isOpenErrorDialog = ref(false)
 
 const signature = useSignatureStore()
 const createPointConfetti = useCreatePointConfetti()
+const queryClient = useQueryClient()
 
 const disabled = computed(() => signature.signInfo == null)
 
 watch(() => [signature.signInfo], ([signInfo]) => {
+  if (disabled.value) return
+  void check()
+})
+
+onBeforeMount(() => {
   if (disabled.value) return
   void check()
 })
@@ -50,7 +56,8 @@ const { isPending: loading, mutate } = useMutation({
       isOpenFollowDialog.value = false
       const succeed = await check()
       if (succeed) {
-        createPointConfetti('GET 10 POINTS')
+        createPointConfetti('GET 1 POINTS')
+        void queryClient.invalidateQueries({ queryKey: ['/point/account', signature.signInfo.walletAddress] })
       }
     } else {
       isOpenErrorDialog.value = true
@@ -64,7 +71,7 @@ const { isPending: loading, mutate } = useMutation({
 
 <template>
   <TaskItem
-    hint="+10 Goooo"
+    hint="+1 Goooo"
     icon="discord1"
     :succeed="succeed"
   >
@@ -74,32 +81,35 @@ const { isPending: loading, mutate } = useMutation({
         <a
           class="underline"
           href="https://discord.gg/ooooprotocol"
+          target="_blank"
         >
           @oooo ON DISCORD
         </a>
       </p>
     </template>
-    <Button
-      variant="ghost"
-      size="icon"
-      @click="check"
-      :disabled="isChecking || disabled"
-    >
-      <Icon
-        :class="{
-          'animate-spin-reverse': isChecking
-        }"
-        name="refresh"
-      />
-    </Button>
-    <Button
-      class="w-[90px]"
-      size="sm"
-      :disabled="disabled"
-      @click="isOpenFollowDialog = !isOpenFollowDialog"
-    >
-      JOIN
-    </Button>
+    <div class="flex gap-[10px]">
+      <Button
+        variant="ghost"
+        size="icon"
+        @click="check"
+        :disabled="isChecking || disabled"
+      >
+        <Icon
+          :class="{
+            'animate-spin-reverse': isChecking
+          }"
+          name="refresh"
+        />
+      </Button>
+      <Button
+        class="w-[90px]"
+        size="sm"
+        :disabled="disabled"
+        @click="isOpenFollowDialog = !isOpenFollowDialog"
+      >
+        JOIN
+      </Button>
+    </div>
   </TaskItem>
   <Dialog v-model:open="isOpenFollowDialog">
     <DialogContent>

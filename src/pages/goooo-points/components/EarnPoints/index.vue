@@ -5,12 +5,16 @@ import TaskCard from './TaskCard.vue'
 
 import AlienxBridgeTask from './Tasks/AlienxBridgeTask.vue'
 
-// import TwitterTask from './Tasks/TwitterTask.vue'
-// import DiscordTask from './Tasks/DiscordTask.vue'
+import TwitterTask from './Tasks/TwitterTask.vue'
+import DiscordTask from './Tasks/DiscordTask.vue'
 
-// import FOLLOW_TO_EARN_IMAGE from '@/assets/images/goooo-points/follow.png'
-// import INVITE_TO_EARN_IMAGE from '@/assets/images/goooo-points/invite.png'
+import FOLLOW_TO_EARN_IMAGE from '@/assets/images/goooo-points/follow.png'
+import INVITE_TO_EARN_IMAGE from '@/assets/images/goooo-points/invite.png'
 import BRIDGE_TO_EARN_IMAGE from '@/assets/images/goooo-points/bridge.png'
+import BitlayerBridgeTask from './Tasks/BitlayerBridgeTask.vue'
+
+import InviteFriendsTask from './Tasks/InviteFriendsTask.vue'
+import InviteBridgeTask from './Tasks/InviteBridgeTask.vue'
 </script>
 
 <template>
@@ -19,23 +23,26 @@ import BRIDGE_TO_EARN_IMAGE from '@/assets/images/goooo-points/bridge.png'
       EARN POINTS
     </h3>
     <!-- <MoreSoon /> -->
-    <!-- <TaskCard
+    <TaskCard
       title="FOLLOW TO EARN"
       :img="FOLLOW_TO_EARN_IMAGE"
     >
       <TwitterTask />
       <DiscordTask />
-    </TaskCard> -->
-    <!-- <TaskCard
+    </TaskCard>
+    <TaskCard
       title="INVITE TO EARN"
       :img="INVITE_TO_EARN_IMAGE"
     >
-    </TaskCard> -->
+      <InviteFriendsTask />
+      <InviteBridgeTask />
+    </TaskCard>
     <TaskCard
       title="BRIDGE TO EARN"
       :img="BRIDGE_TO_EARN_IMAGE"
     >
       <AlienxBridgeTask />
+      <BitlayerBridgeTask />
     </TaskCard>
   </div>
 </template>

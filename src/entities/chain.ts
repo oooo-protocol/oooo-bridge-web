@@ -28,5 +28,7 @@ export enum CHAIN {
   POLYGON = 'polygon_pos',
   TAIKO = 'taiko',
   FANTOM = 'fantom',
-  ETHEREUM = 'ethereum'
+  ETHEREUM = 'ethereum',
+  XLAYER = 'x_layer',
+  ZETACHAIN = 'zetachain'
 }
