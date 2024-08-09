@@ -20,7 +20,7 @@ const { data: account } = useQuery({
   queryFn: async () => await retrieveAccountInfo(signature.signInfo!),
   enabled
 })
-const pointInviteUrl = computed(() => account.value ? `${window.location.origin}/goooo?inviteCode=${account.value.inviteCode}` : undefined)
+const pointInviteUrl = computed(() => account.value ? `${window.location.origin}?inviteCode=${account.value.inviteCode}` : undefined)
 const telegramUrl = computed(() => `https://t.me/share/url?url=${pointInviteUrl.value}&text=Bridge%20to%20earn%20Goooo!%20oooo%20is%20the%20first%20modular%20omnichain%20interoperability%20protocol%20supporting%20bitcoin%20ecosystem.`)
 const twitterUrl = computed(() => `https://twitter.com/intent/tweet?url=${pointInviteUrl.value}&text=Bridge%20to%20earn%20Goooo!%20oooo%20is%20the%20first%20modular%20omnichain%20interoperability%20protocol%20supporting%20bitcoin%20ecosystem.`)
 
