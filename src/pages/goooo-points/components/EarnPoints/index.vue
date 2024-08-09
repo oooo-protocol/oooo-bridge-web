@@ -14,6 +14,7 @@ import BRIDGE_TO_EARN_IMAGE from '@/assets/images/goooo-points/bridge.png'
 import BitlayerBridgeTask from './Tasks/BitlayerBridgeTask.vue'
 
 import InviteFriendsTask from './Tasks/InviteFriendsTask.vue'
+import InviteBridgeTask from './Tasks/InviteBridgeTask.vue'
 </script>
 
 <template>
@@ -34,6 +35,7 @@ import InviteFriendsTask from './Tasks/InviteFriendsTask.vue'
       :img="INVITE_TO_EARN_IMAGE"
     >
       <InviteFriendsTask />
+      <InviteBridgeTask />
     </TaskCard>
     <TaskCard
       title="BRIDGE TO EARN"
