@@ -3,8 +3,6 @@
 
 import TaskCard from './TaskCard.vue'
 
-import AlienxBridgeTask from './Tasks/AlienxBridgeTask.vue'
-
 import TwitterTask from './Tasks/TwitterTask.vue'
 import DiscordTask from './Tasks/DiscordTask.vue'
 
@@ -41,7 +39,6 @@ import InviteBridgeTask from './Tasks/InviteBridgeTask.vue'
       title="BRIDGE TO EARN"
       :img="BRIDGE_TO_EARN_IMAGE"
     >
-      <AlienxBridgeTask />
       <BitlayerBridgeTask />
     </TaskCard>
   </div>
