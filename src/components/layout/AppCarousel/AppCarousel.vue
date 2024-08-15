@@ -17,8 +17,6 @@ import OOOO_3_PC_IMAGE from '@/assets/images/activity/oooo-3.jpg'
 import OOOO_3_MOBILE_IMAGE from '@/assets/images/activity/oooo-3-mob.jpg'
 import OOOO_4_PC_IMAGE from '@/assets/images/activity/oooo-4.jpg'
 import OOOO_4_MOBILE_IMAGE from '@/assets/images/activity/oooo-4-mob.jpg'
-import ALLSPARK_PC_IMAGE from '@/assets/images/activity/allspark-pc.jpg'
-import ALLSPARL_MOBILE_IMAGE from '@/assets/images/activity/allspark-mob.png'
 import BEVM_SUMMER_PC_IMAGE from '@/assets/images/activity/bevm-summer.jpg'
 import BEVM_SUMMER_MOBILE_IMAGE from '@/assets/images/activity/bevm-summer-mob.png'
 import VOUCHER_PC_IMAGE from '@/assets/images/activity/voucher.jpg'
@@ -38,11 +36,6 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
       name: 'o-Voucher',
       imageMobile: VOUCHER_MOBILE_IMAGE,
       imagePC: VOUCHER_PC_IMAGE
-    },
-    {
-      name: 'allspark',
-      imageMobile: ALLSPARL_MOBILE_IMAGE,
-      imagePC: ALLSPARK_PC_IMAGE
     },
     {
       name: 'oooo 4',
