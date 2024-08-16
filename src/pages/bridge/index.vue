@@ -30,6 +30,8 @@ import { SERVER_ASSET } from '@/entities/server'
 import TooltipPro from 'oooo-components/ui/TooltipPro.vue'
 import { useInvite } from './hooks/use-invite'
 import VoucherCell from './components/VoucherCell.vue'
+import { formatEtherError } from '@/lib/utils'
+import { type EthersError } from 'ethers'
 
 const { address, transfer, sign, getPublicKey, onConnect, calcEstimateGas } = useWallet()
 
@@ -249,7 +251,6 @@ const createChainTransaction = async (parameter: {
     gas: gasPrice,
     value: parameter.amount
   }
-
   if (assetType === SERVER_ASSET.COIN) {
     const estimateGas = await calcEstimateGas(transferParameter, parameter.fromChain)
     /**
@@ -257,7 +258,6 @@ const createChainTransaction = async (parameter: {
      */
     checkBalanceIsEnough(parameter.amount, estimateGas)
   }
-
   const signContent = JSON.stringify({
     ...parameter,
     timestamp: +new Date()
@@ -330,7 +330,7 @@ const onSubmit = async (values: Record<string, any>) => {
       await createChainTransaction(parameter)
     }
   } catch (e) {
-    let message = (e as Error).message
+    let message = formatEtherError(e as EthersError).message
     if (e instanceof ResponseError) {
       if (e.code === 53006) {
         message = 'INVALID RECEVING WALLET ADDRESS'

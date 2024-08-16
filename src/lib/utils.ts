@@ -1,3 +1,5 @@
+import { type EthersError } from 'ethers'
+
 function trimExtraChar (value: string, char: string, regExp: RegExp) {
   const index = value.indexOf(char)
 
@@ -102,4 +104,23 @@ export async function invokeAuthorizationLink (url: string, isCheckClosed: boole
  */
 export const timeout = async (ms: number) => {
   return await new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+/**
+ * parse ether error and format it to get original error
+ * @param e EthersError
+ * @returns Error
+ */
+export function formatEtherError (e: EthersError) {
+  try {
+    if (e.info?.error != null) {
+      return e.info.error
+    } else if (e.error) {
+      return e.error
+    } else {
+      return e
+    }
+  } catch {
+    return e
+  }
 }

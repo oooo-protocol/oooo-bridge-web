@@ -1,5 +1,5 @@
 import { type CHAIN } from '@/entities/chain'
-import { CHAIN_CONFIG_MAP } from '@/lib/constants'
+import { CHAIN_CONFIG_MAP, CHAIN_RPC_MAP } from '@/lib/constants'
 import useWalletStore from '@/store/wallet'
 import { ethers } from 'ethers'
 import { WALLET_TYPE, useBTCWallet, useEVMWallet, WalletConnectModal, type NETWORK, type TransactionParameter, type ChainConfig } from 'oooo-components/oooo-wallet'
@@ -90,10 +90,15 @@ export const useWallet = () => {
     if (instance.type === WALLET_TYPE.BITCOIN) throw new Error('transfer mismatch wallet type')
     const config = CHAIN_CONFIG_MAP[chainName as CHAIN] as ChainConfig
     if (config == null) throw new Error(`Chain ${chainName} not config`)
+    console.log('switchToChain')
     await instance.switchToChain(config)
     if (contractAddress != null) {
+      console.log('switchToChain')
+
       return await instance.tokenTransfer(parameter, contractAddress)
     } else {
+      console.log('transfer')
+
       return await instance.transfer(parameter, config)
     }
   }
@@ -107,7 +112,8 @@ export const useWallet = () => {
       const config = CHAIN_CONFIG_MAP[chainName as CHAIN] as ChainConfig
       if (config == null) throw new Error(`Chain ${chainName} not config`)
       await instance.switchToChain(config)
-      const provider = new ethers.BrowserProvider(instance.provider)
+      const rpc = CHAIN_RPC_MAP[chainName as CHAIN]
+      const provider = new ethers.JsonRpcProvider(rpc)
       try {
         const gasLimit = await provider.estimateGas({
           from: parameter.from,
