@@ -21,11 +21,19 @@ import BEVM_SUMMER_PC_IMAGE from '@/assets/images/activity/bevm-summer.jpg'
 import BEVM_SUMMER_MOBILE_IMAGE from '@/assets/images/activity/bevm-summer-mob.png'
 import VOUCHER_PC_IMAGE from '@/assets/images/activity/voucher.jpg'
 import VOUCHER_MOBILE_IMAGE from '@/assets/images/activity/voucher-mob.jpg'
+import RSK_PC_IMAGE from '@/assets/images/activity/rsk.png'
+import RSK_MOBILE_IMAGE from '@/assets/images/activity/rsk-mob.png'
 
 import { NETWORK } from '@/entities/chain'
 
 const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
   ? [
+    {
+      name: 'RSK activity',
+      imageMobile: RSK_MOBILE_IMAGE,
+      imagePC: RSK_PC_IMAGE,
+      url: 'https://app.galxe.com/quest/oooo/GCmLCtvRvd'
+    },
     {
       name: 'BEVM Defi Summer',
       imageMobile: BEVM_SUMMER_MOBILE_IMAGE,

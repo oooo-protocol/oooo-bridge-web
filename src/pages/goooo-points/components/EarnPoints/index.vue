@@ -8,10 +8,12 @@ import DiscordTask from './Tasks/DiscordTask.vue'
 
 import FOLLOW_TO_EARN_IMAGE from '@/assets/images/goooo-points/follow.png'
 import INVITE_TO_EARN_IMAGE from '@/assets/images/goooo-points/invite.png'
-// import BRIDGE_TO_EARN_IMAGE from '@/assets/images/goooo-points/bridge.png'
+import BRIDGE_TO_EARN_IMAGE from '@/assets/images/goooo-points/bridge.png'
 
 import InviteFriendsTask from './Tasks/InviteFriendsTask.vue'
 import InviteBridgeTask from './Tasks/InviteBridgeTask.vue'
+
+import RSKBridgeTask from './Tasks/RSKBridgeTask.vue'
 </script>
 
 <template>
@@ -34,11 +36,12 @@ import InviteBridgeTask from './Tasks/InviteBridgeTask.vue'
       <InviteFriendsTask />
       <InviteBridgeTask />
     </TaskCard>
-    <!-- <TaskCard
+    <TaskCard
       title="BRIDGE TO EARN"
       :img="BRIDGE_TO_EARN_IMAGE"
     >
-    </TaskCard> -->
+      <RSKBridgeTask />
+    </TaskCard>
   </div>
 </template>
 
