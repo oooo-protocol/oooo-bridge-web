@@ -363,7 +363,7 @@ const availableGooooPoints = computed(() => {
           class="mt-[28px] md:mt-[0] md:ml-[20px] relative min-w-[219px]"
           v-if="isTestnetNetwork"
         >
-          <p class="absolute -top-[24px] left-0 text-[14px] text-[#a4a4a4] -tracking-tighter">
+          <p class="absolute -top-[24px] left-0 text-[14px] md:text-[12px] text-[#a4a4a4] -tracking-tighter">
             TEST TOKEN ON DISCORD FAUCET
           </p>
           <Button
