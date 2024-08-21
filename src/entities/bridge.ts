@@ -1,58 +1,25 @@
 import { type CHAIN } from '@/entities/chain'
+import { type ServerChain, type ServerToken } from './server'
 
-export interface Chain {
-  chainId: string
-  chainName: CHAIN
-  assetCode: string
+export interface Token {
+  tokenName: string
   assetType: string
+  assetCode: string
+  icon: string
 }
 
-export interface ServerChainConfig extends Chain {
-  /**
-   * Platform walllet address, currently unused.
-   */
-  platformWalletAddr: string
-  /**
-   * Platform fee
-   */
-  platformFee: string
-  /**
-   * transfer chain support minimal amount
-   */
-  minAmount: number
-  /**
-   * transfer chain support maximal amount
-   */
-  maxAmount: number
-  toChains: Array<ServerChainConfig & {
-    /**
-     * Platform transfer bitcoin can support max sat gas fee
-     */
-    toMaxSat?: number
-    /**
-     * @deprecated now we support user re-write receive address
-     */
-    wAddress: boolean
-    /**
-     * @deprecated address validate regexp
-     */
-    reg: string
-  }>
+export interface Chain extends ServerToken {
+  showName: ServerChain['showName']
+  chainConfig: ServerChain['chainConfig']
+  type: ServerChain['type']
 }
 
 export interface TransactionConfig {
   platformAddress: string
   chain: string
   gasPrice: string
-  asetType: string
-  assetCode: string
-}
-
-export interface UserToken {
-  chain: CHAIN
   assetType: string
   assetCode: string
-  balance: string
 }
 
 export enum TRANSACTION_STATUS {
