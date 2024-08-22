@@ -102,7 +102,9 @@ watch([to, address], ([to, address]) => {
   }
   form.receiveAddress = undefined
 }, {
-  immediate: true
+  immediate: true,
+  // fix component rendering sync with update modelValue will cause input not display modelValue error
+  flush: 'post'
 })
 /** --------------------- End  -------------- */
 
