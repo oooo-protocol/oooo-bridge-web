@@ -131,9 +131,9 @@ const onChainClick = (chain: Chain) => {
         </template>
         <template #content>
           <div class="flex-1 h-0 flex flex-col px-[16px] py-[24px] md:px-[40px] md:py-[32px]">
-            <div class="flex gap-[14px] border-b border-[#bce4cd]/0.6">
+            <div class="flex items-center gap-[20px] border-b border-[#bce4cd]/0.6 overflow-x-auto">
               <p
-                class="p-[8px] cursor-pointer"
+                class="py-[8px] cursor-pointer text-nowrap"
                 :class="currentTab === tab.value ? 'text-[#bce4cd]' : 'text-[#616161]'"
                 v-for="tab of tabs"
                 :key="tab.value"
