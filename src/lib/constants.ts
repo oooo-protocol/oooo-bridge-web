@@ -50,7 +50,11 @@ import {
   XLAYER_TESTNET,
   XLAYER_LIVENET,
   ZETACHAIN_TESTNET,
-  ZETACHAIN_LIVENET
+  ZETACHAIN_LIVENET,
+  MODE_TESTNET,
+  MODE_LIVENET,
+  CORE_TESTNET,
+  CORE_LIVENET
 } from 'oooo-components/lib/chain-config'
 import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
@@ -182,6 +186,16 @@ export const CHAIN_LIST = [
     value: CHAIN.ZETACHAIN,
     [NETWORK.TESTNET]: ZETACHAIN_TESTNET,
     [NETWORK.LIVENET]: ZETACHAIN_LIVENET
+  }, {
+    image: 'https://oooo.money/static/images/mode.png',
+    value: CHAIN.MODE,
+    [NETWORK.TESTNET]: MODE_TESTNET,
+    [NETWORK.LIVENET]: MODE_LIVENET
+  }, {
+    image: 'https://oooo.money/static/images/core.png',
+    value: CHAIN.CORE,
+    [NETWORK.TESTNET]: CORE_TESTNET,
+    [NETWORK.LIVENET]: CORE_LIVENET
   }
 ]
 

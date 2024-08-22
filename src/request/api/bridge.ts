@@ -6,11 +6,18 @@ import { combineURLs } from '@/lib/utils'
 import { ethers } from 'ethers'
 import axiosOrigin from 'axios'
 import { CHAIN } from '@/entities/chain'
-import { type ServerConfigs } from '@/entities/server'
+import { type ServerTokenPair, type ServerConfigs } from '@/entities/server'
 
 export const retrieveBridgeConfigs = async () => {
   return await axios<ServerConfigs>({
     url: '/v1/bridge/global/configuration'
+  })
+}
+
+export const retreieveBridgePairs = async (data: { assetCode: string }) => {
+  return await axios<Pagination<ServerTokenPair>>({
+    url: '/v1/bridge/global/pairs',
+    params: data
   })
 }
 

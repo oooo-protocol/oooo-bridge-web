@@ -1,35 +1,27 @@
-import { type ServerTokenPairConfig, type ServerConfigs, type ServerToken } from '@/entities/server'
+import { type ServerTokenPairConfig, type ServerToken, type ServerTokenPair } from '@/entities/server'
 import { useConfigQuery } from './use-config-query'
 import { useConfigWallet } from './use-config-wallet'
 import { CHAIN } from '@/entities/chain'
 import { useWallet } from '@/composables/hooks/use-wallet'
 import { WALLET } from 'oooo-components/oooo-wallet'
+import { retreieveBridgePairs, retrieveBridgeConfigs } from '@/request/api/bridge'
+import { useQuery } from '@tanstack/vue-query'
+import { defineMap } from '@preflower/utils'
+import { type Token, type Chain } from '@/entities/bridge'
 
 export type PairConfig =
   ServerTokenPairConfig &
   Pick<ServerToken, 'assetType' | 'assetCode' | 'frontDecimal' | 'contractAddress' | 'platformAddress'>
 
-interface ToPair {
-  chainName: string
-  config: PairConfig
+interface ToPair extends Chain {
+  config: ServerTokenPairConfig
 }
 
-interface FromPair {
-  chainName: string
+export interface Pair extends Chain {
   tos: ToPair[]
 }
 
-export interface Token {
-  tokenName: string
-  assetCode: string
-  icon: string
-}
-
-export interface TokenPair extends Token {
-  pairs: FromPair[]
-}
-
-export const useConfig = (configs: Ref<ServerConfigs | undefined>) => {
+export const useConfig = () => {
   const { name } = useWallet()
   /**
    * token = tokenName
@@ -38,128 +30,147 @@ export const useConfig = (configs: Ref<ServerConfigs | undefined>) => {
   const from = ref(import.meta.env.VITE_DEFAULT_SELECT_FROM)
   const to = ref(import.meta.env.VITE_DEFAULT_SELECT_TO)
 
-  const filterTxPairs = computed(() => {
-    if (configs.value == null) return []
+  const { data: configs } = useQuery({
+    queryKey: ['/v1/bridge/global/configuration'],
+    queryFn: retrieveBridgeConfigs
+  })
+  const enabled = computed(() => configs.value != null && token.value != null)
+  const { data: rawPairs } = useQuery({
+    queryKey: ['/v1/bridge/global/pairs', token],
+    queryFn: async () => {
+      const { list } = await retreieveBridgePairs({ assetCode: token.value })
+      return list
+    },
+    enabled
+  })
+
+  const initializing = computed(() => configs.value == null || rawPairs.value == null)
+
+  const tokenList = computed(() => {
+    if (configs.value == null) return undefined
+
+    const chainMap = defineMap(configs.value.chainList, 'chainName', ['chainConfig', 'showName', 'type'])
+
+    return configs.value.tokenList.map<Chain>(token => {
+      const chain = chainMap[token.chainName]
+      return {
+        ...token,
+        ...chain
+      }
+    })
+  })
+  const tokenMap = computed(() => {
+    if (tokenList.value == null) return undefined
+    return Object.fromEntries(tokenList.value.map(token => [token.tokenId, token]))
+  })
+
+  const filterRawPairs = computed<ServerTokenPair[]>(() => {
+    if (rawPairs.value == null) return []
+    if (tokenMap.value == null) return []
+    const _tokenMap = tokenMap.value
     const BYBIT_TO_CHAIN: string[] = [CHAIN.BTC, CHAIN.MERLIN, CHAIN.BEVM]
     if (name.value === WALLET.BYBIT) {
       const BYBIT_FROM_CHAIN: string[] = [CHAIN.MERLIN, CHAIN.BEVM]
-      return configs.value.txPairList.filter(pair => BYBIT_FROM_CHAIN.includes(pair.fromChainName) && BYBIT_TO_CHAIN.includes(pair.toChainName))
+      return rawPairs.value.filter(pair => {
+        const fromChainName = _tokenMap[pair.fromTokenId].chainName
+        const toChainName = _tokenMap[pair.toTokenId].chainName
+        return BYBIT_FROM_CHAIN.includes(fromChainName) && BYBIT_TO_CHAIN.includes(toChainName)
+      })
     }
     if (name.value === WALLET.BYBIT_BITCOIN) {
       const BYBIT_FROM_CHAIN: string[] = [CHAIN.BTC]
-      return configs.value.txPairList.filter(pair => BYBIT_FROM_CHAIN.includes(pair.fromChainName) && BYBIT_TO_CHAIN.includes(pair.toChainName))
+      return rawPairs.value.filter(pair => {
+        const fromChainName = _tokenMap[pair.fromTokenId].chainName
+        const toChainName = _tokenMap[pair.toTokenId].chainName
+        return BYBIT_FROM_CHAIN.includes(fromChainName) && BYBIT_TO_CHAIN.includes(toChainName)
+      })
     }
-    return configs.value.txPairList
-  })
-  const serverTokenMap = computed(() => {
-    const map: Record<number, ServerToken> = {}
-    if (configs.value == null) return map
-    for (const token of configs.value.tokenList) {
-      map[token.tokenId] = token
-    }
-    return map
+    return rawPairs.value
   })
 
-  useConfigQuery(token, from, to, filterTxPairs)
-  useConfigWallet(from)
+  /**
+   * define inner pair map to reduce index cost
+   * pairMap: Record<fromChainName, Pair>
+   */
+  const pairMap = computed(() => {
+    if (tokenMap.value == null) return undefined
+    if (filterRawPairs.value.length === 0) return undefined
 
-  const tokens = computed<TokenPair[]>(() => {
-    /**
-     * Record<tokenName, Token & Record<chainName, ToPair[]>>
-     */
-    const tokenMap: Record<string, Token & {
-      chainMap: Record<string, ToPair[]>
-    }> = {}
+    const _pairMap: Record<string, Pair> = {}
+    const _tokenMap = tokenMap.value
 
-    for (const pair of filterTxPairs.value) {
-      const serverToken = serverTokenMap.value[pair.fromTokenId]
-      let tokenChainMap = tokenMap[serverToken.tokenName]
-      // init Record<chainName, ToPair[]>
-      if (tokenChainMap == null) {
-        tokenChainMap = tokenMap[serverToken.tokenName] = {
-          tokenName: serverToken.tokenName,
-          assetCode: serverToken.assetCode,
-          icon: serverToken.icon,
-          chainMap: {}
+    for (const rawPair of filterRawPairs.value) {
+      const { fromTokenId, toTokenId, ...config } = rawPair
+      const fromToken = _tokenMap[fromTokenId]
+      const toToken = _tokenMap[toTokenId]
+
+      let pair = _pairMap[fromToken.chainName]
+      if (pair == null) {
+        pair = _pairMap[fromToken.chainName] = {
+          ...fromToken,
+          tos: []
         }
       }
-
-      const chainMap = tokenChainMap.chainMap
-      let chain = chainMap[pair.fromChainName]
-      // init ToPair[]
-      if (chain == null) chain = chainMap[pair.fromChainName] = []
-
-      chain.push({
-        chainName: pair.toChainName,
-        config: {
-          pairId: pair.pairId,
-          minAmount: pair.minAmount,
-          maxAmount: pair.maxAmount,
-          feeSaveTips: pair.feeSaveTips,
-          timeSpendTips: pair.timeSpendTips,
-          timeSaveTips: pair.timeSaveTips,
-          toMaxPrice: pair.toMaxPrice,
-          frontDecimal: serverToken.frontDecimal,
-          contractAddress: serverToken.contractAddress,
-          platformAddress: serverToken.platformAddress,
-          assetType: serverToken.assetType,
-          assetCode: serverToken.assetCode
-        }
+      pair.tos.push({
+        ...toToken,
+        config
       })
     }
 
-    const list = Object.entries(tokenMap).map(([_, token]) => {
-      return {
-        tokenName: token.tokenName,
-        assetCode: token.assetCode,
-        icon: token.icon,
-        pairs: Object.entries(token.chainMap).map(([chainName, toPairs]) => {
-          return {
-            chainName,
-            tos: toPairs
-          }
-        })
-      }
-    })
+    return _pairMap
+  })
 
-    return list
+  /**
+   * List of tokens to be displayed to user, so we will eliminate same tokenName item.
+   */
+  const displayTokenList = computed(() => {
+    if (tokenList.value == null) return []
+    const _tokenMap: Record<string, Token> = {}
+    for (const token of tokenList.value) {
+      if (_tokenMap[token.tokenName] == null) {
+        _tokenMap[token.tokenName] = {
+          tokenName: token.tokenName,
+          assetCode: token.assetCode,
+          assetType: token.assetType,
+          icon: token.icon
+        }
+      }
+    }
+    return Object.values(_tokenMap)
   })
-  const tokenList = computed(() => {
-    if (configs.value == null) return []
-    return tokens.value.map(item => ({
-      tokenName: item.tokenName,
-      assetCode: item.assetCode,
-      icon: item.icon
-    }))
-  })
-  const pairs = computed(() => {
-    const current = tokens.value.find(t => t.tokenName === token.value)
-    return current?.pairs
-  })
+
+  useConfigQuery(token, from, to, tokenList, filterRawPairs)
+  useConfigWallet(from)
+
   const fromChainList = computed(() => {
-    if (configs.value == null) return []
-    const _pairs = pairs.value
-    if (_pairs == null) return []
-    return configs.value.chainList.filter(chain => {
-      return _pairs.some(pair => pair.chainName === chain.chainName)
+    if (pairMap.value == null) return []
+    return Object.values(pairMap.value).map<Chain>(item => {
+      const { tos, ...chain } = item
+      return chain
     })
   })
   const currentFromPair = computed(() => {
-    return pairs.value?.find(pair => pair.chainName === from.value)
+    return pairMap.value?.[from.value]
   })
   const toChainList = computed(() => {
-    if (configs.value == null) return []
     if (currentFromPair.value == null) return []
-    const toIds = currentFromPair.value.tos.map(pair => pair.chainName)
-    return configs.value.chainList.filter(chain => {
-      return toIds.some(chainName => chainName === chain.chainName)
+    return currentFromPair.value.tos.map<Chain>(item => {
+      const { config, ...chain } = item
+      return chain
     })
   })
   const config = computed(() => {
     if (currentFromPair.value == null) return null
     const _to = currentFromPair.value.tos.find(pair => pair.chainName === to.value)
     if (_to == null) return null
-    return _to.config
+    return {
+      ..._to.config,
+      assetType: currentFromPair.value.assetType,
+      assetCode: currentFromPair.value.assetCode,
+      frontDecimal: currentFromPair.value.frontDecimal,
+      contractAddress: currentFromPair.value.contractAddress,
+      platformAddress: currentFromPair.value.platformAddress
+    } satisfies PairConfig
   })
   watch([from, fromChainList], ([val]) => {
     const isValid = fromChainList.value.some(chain => chain.chainName === val)
@@ -176,10 +187,11 @@ export const useConfig = (configs: Ref<ServerConfigs | undefined>) => {
   })
 
   return {
+    initializing,
     token,
     from,
     to,
-    tokenList,
+    tokenList: displayTokenList,
     fromChainList,
     toChainList,
     config

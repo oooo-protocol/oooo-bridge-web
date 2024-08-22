@@ -5,8 +5,8 @@ import TokenSelect from './components/TokenSelect.vue'
 import Button from 'oooo-components/ui/button/Button.vue'
 import Input from 'oooo-components/ui/input/Input.vue'
 import { OContainer, OHeader, OContent } from '@/components/OContainer'
-import { useMutation, useQuery } from '@tanstack/vue-query'
-import { retrieveTransactionConfig, createTransaction, retrieveBridgeConfigs } from '@/request/api/bridge'
+import { useMutation } from '@tanstack/vue-query'
+import { retrieveTransactionConfig, createTransaction } from '@/request/api/bridge'
 import Decimal from 'decimal.js-light'
 import { useWallet } from '@/composables/hooks/use-wallet'
 import { EVM_ADDRESS_REGEXP } from '@/lib/constants'
@@ -40,11 +40,8 @@ const { toast } = useToast()
 
 useInvite()
 
-const { isPending: initializing, isError: isConfigInvalid, data: configs } = useQuery({
-  queryKey: ['/v1/bridge/global/configuration'],
-  queryFn: retrieveBridgeConfigs
-})
 const {
+  initializing,
   token,
   from,
   to,
@@ -52,7 +49,7 @@ const {
   fromChainList,
   toChainList,
   config
-} = useConfig(configs)
+} = useConfig()
 const pairId = computed(() => {
   return config.value?.pairId
 })
@@ -135,9 +132,6 @@ const onClickMax = () => {
 
 const rules: Record<string, RuleExpression<any>> = {
   amount: (val: string) => {
-    if (isConfigInvalid.value) {
-      return 'NO ROUTE AVAILABLE, PLEASE TRY AGAIN LATER.'
-    }
     const amount = Number(val)
     if (Number.isNaN(amount) || amount < min.value) {
       return `THE MINIMUM AMOUNT IS ${min.value}`
@@ -357,16 +351,23 @@ const availableGooooPoints = computed(() => {
       class="flex flex-col md:flex-row-reverse md:items-center md:pt-[40px]"
       :title="title"
     >
-      <div class="flex flex-col md:flex-row gap-[8px] md:gap-[20px] mt-[40px] md:mt-0 md:mr-[20px]">
+      <div class="flex flex-col md:flex-row md:items-center mt-[20px] md:mt-0 md:mr-auto">
+        <p class="mr-[8px] text-[14px] md:text-base text-[#a4a4a4] -tracking-tighter">
+          TOKEN
+        </p>
+        <TokenSelect
+          v-model="token"
+          :list="tokenList"
+        />
         <div
-          class="relative min-w-[219px]"
+          class="mt-[28px] md:mt-[0] md:ml-[20px] relative min-w-[219px]"
           v-if="isTestnetNetwork"
         >
-          <p class="absolute -top-[24px] left-0 text-[13px] text-[#a4a4a4]">
+          <p class="absolute -top-[24px] left-0 text-[14px] md:text-[12px] text-[#a4a4a4] -tracking-tighter">
             TEST TOKEN ON DISCORD FAUCET
           </p>
           <Button
-            class="cursor-pointer gap-[8px] justify-start h-auto font-normal w-full"
+            class="flex cursor-pointer gap-[8px] justify-start h-auto py-[4px] font-normal w-full"
             as="a"
             variant="outline"
             href="https://discord.gg/ooooprotocol"
@@ -379,10 +380,6 @@ const availableGooooPoints = computed(() => {
             BTC FAUCET
           </Button>
         </div>
-        <TokenSelect
-          v-model="token"
-          :list="tokenList"
-        />
       </div>
     </OHeader>
     <PageLoading v-if="initializing" />

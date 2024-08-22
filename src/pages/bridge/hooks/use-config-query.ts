@@ -1,88 +1,73 @@
-import { getArrayFirst } from '@preflower/utils'
+import { defineMap, getArrayFirst } from '@preflower/utils'
+import { type Chain } from '@/entities/bridge'
 import { type ServerTokenPair } from '@/entities/server'
 
 export const useConfigQuery = (
   token: Ref<string>,
   from: Ref<string>,
   to: Ref<string>,
-  txPairs: ComputedRef<ServerTokenPair[]>
+  tokenList: ComputedRef<Chain[] | undefined>,
+  pairList: ComputedRef<ServerTokenPair[]>
 ) => {
-  const isQueryInited = ref(false)
   const route = useRoute()
   const router = useRouter()
 
-  const stop = watch(txPairs, (pairs) => {
-    if (isQueryInited.value || pairs.length === 0) return
+  const stopWatchToken = watch(tokenList, (tokenList) => {
+    if (tokenList == null) return
 
-    try {
-      const queryFromChain = getArrayFirst(route.query.from)
-      const queryToChain = getArrayFirst(route.query.to)
-      const queryToken = getArrayFirst(route.query.token)
+    const queryTokenName = getArrayFirst(route.query.token)
 
-      const supportTokenPairs = pairs.filter(pair => pair.fromAssetCode === queryToken)
-
-      if (supportTokenPairs.length > 0) {
-        const supportFromPairs = supportTokenPairs.filter(pair => pair.fromChainName === queryFromChain)
-
-        /**
-         * token and fromChain match query scenario
-         */
-        if (supportFromPairs.length > 0) {
-          const supportPair = supportFromPairs.find(pair => pair.toChainName === queryToChain) ?? supportFromPairs[0]
-
-          token.value = supportPair.fromAssetCode
-          from.value = supportPair.fromChainName
-          to.value = supportPair.toChainName
-        } else {
-          /**
-           * token match, but fromChain mismatch query scenario
-           */
-          const supportToChainPair = supportTokenPairs.find(pair => pair.toChainName === queryToChain) ?? supportTokenPairs[0]
-
-          token.value = supportToChainPair.fromAssetCode
-          from.value = supportToChainPair.fromChainName
-          to.value = supportToChainPair.toChainName
-        }
-      } else {
-        const supportFromPairs = pairs.filter(pair => pair.fromChainName === queryFromChain)
-
-        /**
-         * token mismatch, but fromChain match query scenario
-         */
-        if (supportFromPairs.length > 0) {
-          from.value = queryFromChain!
-
-          const supportPair = supportFromPairs.find(pair => pair.toChainName === queryToChain) ?? supportFromPairs[0]
-
-          token.value = supportPair.fromAssetCode
-          to.value = supportPair.toChainName
-        } else {
-          /**
-           * token and fromChain mismatch query scenario
-           */
-          const supportToChainPair = pairs.find(pair => pair.toChainName === queryToChain) ?? pairs[0]
-
-          token.value = supportToChainPair.fromAssetCode
-          from.value = supportToChainPair.fromChainName
-          to.value = supportToChainPair.toChainName
-        }
-      }
-    } finally {
-      isQueryInited.value = true
+    const hasQueryToken = queryTokenName != null ? tokenList.some(token => token.tokenName === queryTokenName) : false
+    if (hasQueryToken) {
+      token.value = queryTokenName!
+    } else {
+      token.value = tokenList[0].tokenName
     }
+
+    void nextTick(() => {
+      stopWatchToken()
+    })
   }, {
     immediate: true
   })
 
-  watch(isQueryInited, (inited) => {
-    if (inited) {
-      stop()
+  const stopWatchPair = watch(pairList, (pairList) => {
+    if (tokenList.value == null) return
+    if (pairList == null || pairList.length === 0) return
+
+    const queryFromChain = getArrayFirst(route.query.from)
+    const queryToChain = getArrayFirst(route.query.to)
+
+    const tokenMap = defineMap(tokenList.value, 'tokenId', 'chainName')
+
+    let suitablePair: ServerTokenPair | undefined
+    for (const pair of pairList) {
+      const fromChainName = tokenMap[pair.fromTokenId]
+      const toChainName = tokenMap[pair.toTokenId]
+      if (fromChainName === queryFromChain) {
+        if (suitablePair == null) {
+          suitablePair = pair
+        }
+        if (toChainName === queryToChain) {
+          suitablePair = pair
+        }
+      }
     }
+    if (suitablePair == null) {
+      suitablePair = pairList[0]
+    }
+
+    from.value = tokenMap[suitablePair.fromTokenId]
+    to.value = tokenMap[suitablePair.toTokenId]
+
+    void nextTick(() => {
+      stopWatchPair()
+    })
+  }, {
+    immediate: true
   })
 
   watch([token, from, to], ([token, from, to]) => {
-    if (!isQueryInited.value) return
-
     void router.push({
       name: 'bridge',
       query: {
@@ -95,8 +80,4 @@ export const useConfigQuery = (
       replace: true
     })
   })
-
-  return {
-    isQueryInited
-  }
 }
