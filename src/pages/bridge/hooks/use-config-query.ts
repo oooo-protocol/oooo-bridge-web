@@ -11,6 +11,7 @@ export const useConfigQuery = (
 ) => {
   const route = useRoute()
   const router = useRouter()
+  const initializing = ref(true)
 
   const stopWatchToken = watch(tokenList, (tokenList) => {
     if (tokenList == null) return
@@ -62,12 +63,14 @@ export const useConfigQuery = (
 
     void nextTick(() => {
       stopWatchPair()
+      initializing.value = false
     })
   }, {
     immediate: true
   })
 
   watch([token, from, to], ([token, from, to]) => {
+    if (initializing.value) return
     void router.push({
       name: 'bridge',
       query: {

@@ -58,7 +58,7 @@ const { data: balance } = useQuery({
         {{ chain.showName }}
       </p>
       <p class="text-[14px] md:text-base -tracking-tighter text-[#a4a4a4] md:text-[#fff] break-words">
-        {{ balance ?? '- -' }}
+        {{ Number(balance) > 0 ? balance : '- -' }}
       </p>
     </div>
   </div>

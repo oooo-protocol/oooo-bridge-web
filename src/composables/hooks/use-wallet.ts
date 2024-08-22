@@ -90,15 +90,10 @@ export const useWallet = () => {
     if (instance.type === WALLET_TYPE.BITCOIN) throw new Error('transfer mismatch wallet type')
     const config = CHAIN_CONFIG_MAP[chainName as CHAIN] as ChainConfig
     if (config == null) throw new Error(`Chain ${chainName} not config`)
-    console.log('switchToChain')
     await instance.switchToChain(config)
     if (contractAddress != null) {
-      console.log('switchToChain')
-
       return await instance.tokenTransfer(parameter, contractAddress)
     } else {
-      console.log('transfer')
-
       return await instance.transfer(parameter, config)
     }
   }
