@@ -43,7 +43,7 @@ const currentTab = ref<TAB>(TAB.ALL)
 const list = computed(() => {
   let filterList = props.list
   if (search.value != null && search.value.length > 0) {
-    filterList = filterList.filter(item => item.chainName.includes(search.value!))
+    filterList = filterList.filter(item => item.showName.toUpperCase().includes((search.value ?? '').toUpperCase()))
   }
   if (currentTab.value !== TAB.ALL) {
     filterList = filterList.filter(item => item.type === (currentTab.value as unknown as SERVER_CHAIN_TYPE))
