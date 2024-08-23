@@ -30,5 +30,7 @@ export enum CHAIN {
   FANTOM = 'fantom',
   ETHEREUM = 'ethereum',
   XLAYER = 'x_layer',
-  ZETACHAIN = 'zetachain'
+  ZETACHAIN = 'zetachain',
+  MODE = 'mode',
+  CORE = 'core'
 }

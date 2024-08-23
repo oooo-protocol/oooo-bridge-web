@@ -5,7 +5,7 @@ import {
   SelectItem,
   SelectTrigger
 } from 'oooo-components/ui/select'
-import { type Token } from '../hooks/use-config'
+import { type Token } from '@/entities/bridge'
 
 const model = defineModel<string>()
 
@@ -19,13 +19,14 @@ const selected = computed(() => {
   }
   return undefined
 })
+
 </script>
 
 <template>
   <Select
     v-model="model"
   >
-    <SelectTrigger class="w-auto px-[8px]">
+    <SelectTrigger class="w-auto px-[8px] py-[4px]">
       <div
         class="flex items-center gap-[8px] pr-[15px] select-none"
         v-if="selected"

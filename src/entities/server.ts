@@ -15,13 +15,25 @@ export interface ServerToken {
   frontDecimal: number
   tokenDecimal: number
   contractAddress: string
+  /**
+   * Platform walllet address
+   */
   platformAddress: string
+  /**
+   * @deprecated address validate regexp
+   */
   reg: string
 }
 
 export interface ServerTokenPairConfig {
   pairId: number
+  /**
+   * transfer chain support minimal amount
+   */
   minAmount: number
+  /**
+   * transfer chain support maximal amount
+   */
   maxAmount: number
   feeSaveTips: string
   timeSpendTips: string
@@ -31,24 +43,29 @@ export interface ServerTokenPairConfig {
 
 export interface ServerTokenPair extends ServerTokenPairConfig {
   fromTokenId: number
-  fromChainName: string
-  fromAssetCode: string
-  fromAssetType: SERVER_ASSET
   toTokenId: number
-  toChainName: string
-  toAssetCode: string
-  toAssetType: SERVER_ASSET
 }
 
 export enum SERVER_CHAIN_TYPE {
-  ON_CHAIN = 'blockchain',
-  CEX = 'cex'
+  /**
+   * Unexposed type
+   */
+  UNSET,
+  /**
+   * Bitcoin & Bitcoin L2
+   */
+  BITCOIN_L2,
+  /**
+   * Ethereum & Ethereum L2
+   */
+  ETHEREUM_L2,
+  CEX
 }
 
 export interface ServerChain {
   chainName: string
   showName: string
-  chainType: SERVER_CHAIN_TYPE
+  type: SERVER_CHAIN_TYPE
   nativeSymbol: string
   chainConfig: ChainConfig
   rpcUrls?: string[]
@@ -58,5 +75,4 @@ export interface ServerChain {
 export interface ServerConfigs {
   chainList: ServerChain[]
   tokenList: ServerToken[]
-  txPairList: ServerTokenPair[]
 }
