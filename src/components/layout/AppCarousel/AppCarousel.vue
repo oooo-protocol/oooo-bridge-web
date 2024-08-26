@@ -15,8 +15,6 @@ import OOOO_2_PC_IMAGE from '@/assets/images/activity/oooo-2.jpg'
 import OOOO_2_MOBILE_IMAGE from '@/assets/images/activity/oooo-2-mob.png'
 import OOOO_3_PC_IMAGE from '@/assets/images/activity/oooo-3.jpg'
 import OOOO_3_MOBILE_IMAGE from '@/assets/images/activity/oooo-3-mob.jpg'
-import OOOO_4_PC_IMAGE from '@/assets/images/activity/oooo-4.jpg'
-import OOOO_4_MOBILE_IMAGE from '@/assets/images/activity/oooo-4-mob.jpg'
 import BEVM_SUMMER_PC_IMAGE from '@/assets/images/activity/bevm-summer.jpg'
 import BEVM_SUMMER_MOBILE_IMAGE from '@/assets/images/activity/bevm-summer-mob.png'
 import VOUCHER_PC_IMAGE from '@/assets/images/activity/voucher.jpg'
@@ -46,10 +44,6 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
       imagePC: VOUCHER_PC_IMAGE
     },
     {
-      name: 'oooo 4',
-      imageMobile: OOOO_4_MOBILE_IMAGE,
-      imagePC: OOOO_4_PC_IMAGE
-    }, {
       name: 'oooo 3',
       imageMobile: OOOO_3_MOBILE_IMAGE,
       imagePC: OOOO_3_PC_IMAGE
