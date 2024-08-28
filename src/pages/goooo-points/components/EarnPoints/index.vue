@@ -14,6 +14,7 @@ import InviteFriendsTask from './Tasks/InviteFriendsTask.vue'
 import InviteBridgeTask from './Tasks/InviteBridgeTask.vue'
 
 import RSKBridgeTask from './Tasks/RSKBridgeTask.vue'
+import MacaronBridgeTask from './Tasks/MacaronBridgeTask.vue'
 </script>
 
 <template>
@@ -41,6 +42,7 @@ import RSKBridgeTask from './Tasks/RSKBridgeTask.vue'
       :img="BRIDGE_TO_EARN_IMAGE"
     >
       <RSKBridgeTask />
+      <MacaronBridgeTask />
     </TaskCard>
   </div>
 </template>
