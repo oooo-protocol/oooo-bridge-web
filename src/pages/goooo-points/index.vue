@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import YourAccount from './components/YourAccount/index.vue'
 import EarnPoints from './components/EarnPoints/index.vue'
-// import Top50Accounts from './components/Top50Accounts/index.vue'
+import Top50Accounts from './components/Top50Accounts/index.vue'
 import { ScrollNavProvider, ScrollNavItem, ScrollNavContent } from './components/ScrollNav'
 import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
 import useWalletStore from '@/store/wallet'
@@ -24,11 +24,11 @@ const navs = [
   }, {
     name: 'earn-points',
     title: 'EARN POINTS'
+  },
+  {
+    name: 'top-50-accounts',
+    title: 'TOP 50 ACCOUNTS'
   }
-  // {
-  //   name: 'top-50-accounts',
-  //   title: 'TOP 50 ACCOUNTS'
-  // }
 ]
 </script>
 
@@ -73,9 +73,12 @@ const navs = [
         >
           <EarnPoints />
         </ScrollNavContent>
-        <!-- <ScrollNavContent class="pt-[60px] xl:pt-[70px]" name="top-50-accounts">
+        <ScrollNavContent
+          class="pt-[60px] xl:pt-[70px]"
+          name="top-50-accounts"
+        >
           <Top50Accounts />
-        </ScrollNavContent> -->
+        </ScrollNavContent>
       </div>
     </div>
   </ScrollNavProvider>

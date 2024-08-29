@@ -34,7 +34,7 @@ const { isPending, data } = useQuery({
       </h3>
       <p
         class="text-[14px] -tracking-tighter"
-        v-if="data"
+        v-if="data?.total"
       >
         🎖TOTAL ACCOUNTS: <span class="text-[#ff5402]">{{ data.total }}</span>
       </p>
