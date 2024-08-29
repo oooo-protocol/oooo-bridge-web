@@ -27,7 +27,7 @@ const navs = [
   },
   {
     name: 'top-50-accounts',
-    title: 'TOP 50 ACCOUNTS'
+    title: 'LEADERBOARD'
   }
 ]
 </script>
