@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import MACARON_IMAGE from '@/assets/images/goooo-points/macaron.png'
+import XLAYER_IMAGE from '@/assets/images/goooo-points/xlayer.png'
 import { Button } from 'oooo-components/ui/button'
 import TaskItem from '../TaskItem.vue'
 </script>
 
 <template>
   <TaskItem
-    title="COMPLETE MACARON EVENT TO WIN Goooo AND o-VOUCHER"
-    description="REWARDS: 2X MACARON DEFI POINTS, 8 Goooo, $20 o-VOUCHER PACK"
-    :image="MACARON_IMAGE"
+    title="MISSION X LAYER WITH oooo TO SHARE PRIZE POOL!"
+    description="REWARDS: 8 Goooo + $20 o-VOUCHER PACK"
+    :image="XLAYER_IMAGE"
     hint="+8 Goooo"
   >
     <Button
       class="w-full md:w-[174px]"
       size="sm"
       as="a"
-      href="https://competition.macaron.xyz/#/points"
+      href="https://app.galxe.com/quest/oooo/GCS1YtxTSY"
       target="_blank"
     >
       GO TO BRIDGE
