@@ -32,5 +32,8 @@ export enum CHAIN {
   XLAYER = 'x_layer',
   ZETACHAIN = 'zetachain',
   MODE = 'mode',
-  CORE = 'core'
+  CORE = 'core',
+  MANTA = 'manta',
+  ZORA = 'zora',
+  OPBNB = 'opbnb'
 }
