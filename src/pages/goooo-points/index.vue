@@ -33,7 +33,7 @@ const navs = [
 </script>
 
 <template>
-  <header class="goooo-header relative shrink-0 flex flex-col justify-center items-center -mt-[80px] px-[30px] h-[250px] xl:h-[520px] text-center">
+  <header class="goooo-header relative shrink-0 flex flex-col justify-center items-center px-[30px] h-[250px] xl:h-[520px] text-center">
     <p class="text-[24px] xl:text-[50px] font-medium tracking-[1.2px] leading-[1.17]">
       BRIDGER TO EARN Goooo! LET'S Goooo!
     </p>
