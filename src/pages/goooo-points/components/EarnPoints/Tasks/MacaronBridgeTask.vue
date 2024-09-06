@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import ROOTSTOCK_IMAGE from '@/assets/images/goooo-points/rootstock.png'
+import MACARON_IMAGE from '@/assets/images/goooo-points/macaron.png'
 import { Button } from 'oooo-components/ui/button'
 import TaskItem from '../TaskItem.vue'
 </script>
 
 <template>
   <TaskItem
-    title="COMPLETE QUESTS TO WIN Goooo AND O-VOUCHER"
-    description="BRIDGE TO ROOTSTOCK AND GET 8 Goooo AND 1 O-VOUCHER"
-    :image="ROOTSTOCK_IMAGE"
+    title="COMPLETE MACARON EVENT TO WIN Goooo AND o-VOUCHER"
+    description="REWARDS: 2X MACARON DEFI POINTS, 8 Goooo, $20 o-VOUCHER PACK"
+    :image="MACARON_IMAGE"
     hint="+8 Goooo"
   >
     <Button
       class="w-full md:w-[174px]"
       size="sm"
       as="a"
-      href="https://app.galxe.com/quest/oooo/GCmLCtvRvd"
+      href="https://competition.macaron.xyz/#/points"
       target="_blank"
     >
       GO TO BRIDGE

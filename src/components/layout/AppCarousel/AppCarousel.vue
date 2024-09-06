@@ -15,30 +15,28 @@ import OOOO_2_PC_IMAGE from '@/assets/images/activity/oooo-2.jpg'
 import OOOO_2_MOBILE_IMAGE from '@/assets/images/activity/oooo-2-mob.png'
 import OOOO_3_PC_IMAGE from '@/assets/images/activity/oooo-3.jpg'
 import OOOO_3_MOBILE_IMAGE from '@/assets/images/activity/oooo-3-mob.jpg'
-import OOOO_4_PC_IMAGE from '@/assets/images/activity/oooo-4.jpg'
-import OOOO_4_MOBILE_IMAGE from '@/assets/images/activity/oooo-4-mob.jpg'
-import BEVM_SUMMER_PC_IMAGE from '@/assets/images/activity/bevm-summer.jpg'
-import BEVM_SUMMER_MOBILE_IMAGE from '@/assets/images/activity/bevm-summer-mob.png'
 import VOUCHER_PC_IMAGE from '@/assets/images/activity/voucher.jpg'
 import VOUCHER_MOBILE_IMAGE from '@/assets/images/activity/voucher-mob.jpg'
-import RSK_PC_IMAGE from '@/assets/images/activity/rsk.png'
-import RSK_MOBILE_IMAGE from '@/assets/images/activity/rsk-mob.png'
+import MACARON_PC_IMAGE from '@/assets/images/activity/macaron.png'
+import MACARON_MOBILE_IMAGE from '@/assets/images/activity/macaron-mob.png'
+import XLAYER_PC_IMAGE from '@/assets/images/activity/xlayer.png'
+import XLAYER_MOBILE_IMAGE from '@/assets/images/activity/xlayer-mob.png'
 
 import { NETWORK } from '@/entities/chain'
 
 const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
   ? [
     {
-      name: 'RSK activity',
-      imageMobile: RSK_MOBILE_IMAGE,
-      imagePC: RSK_PC_IMAGE,
-      url: 'https://app.galxe.com/quest/oooo/GCmLCtvRvd'
+      name: 'XLayer activity',
+      imageMobile: XLAYER_MOBILE_IMAGE,
+      imagePC: XLAYER_PC_IMAGE,
+      url: 'https://app.galxe.com/quest/oooo/GCS1YtxTSY'
     },
     {
-      name: 'BEVM Defi Summer',
-      imageMobile: BEVM_SUMMER_MOBILE_IMAGE,
-      imagePC: BEVM_SUMMER_PC_IMAGE,
-      url: 'https://defiolympics.bevm.io/'
+      name: 'Macaron activity',
+      imageMobile: MACARON_MOBILE_IMAGE,
+      imagePC: MACARON_PC_IMAGE,
+      url: 'https://competition.macaron.xyz/#/points'
     },
     {
       name: 'o-Voucher',
@@ -46,10 +44,6 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
       imagePC: VOUCHER_PC_IMAGE
     },
     {
-      name: 'oooo 4',
-      imageMobile: OOOO_4_MOBILE_IMAGE,
-      imagePC: OOOO_4_PC_IMAGE
-    }, {
       name: 'oooo 3',
       imageMobile: OOOO_3_MOBILE_IMAGE,
       imagePC: OOOO_3_PC_IMAGE

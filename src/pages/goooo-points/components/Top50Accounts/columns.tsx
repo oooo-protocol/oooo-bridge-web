@@ -1,5 +1,4 @@
 import { type ColumnDef } from '@tanstack/vue-table'
-import { formatHashWithEllipsis } from 'oooo-components/lib/utils'
 import { type AccountListItem } from '@/request/api/task'
 import Icon from 'oooo-components/ui/Icon.vue'
 
@@ -32,7 +31,7 @@ export const columns: Array<ColumnDef<AccountListItem>> = [
     size: 300,
     cell: ({ row }) => {
       const address = row.getValue<string>('walletAddress')
-      return <div>{ formatHashWithEllipsis(address, 8, 10) }</div>
+      return <div>{ address }</div>
     }
   }, {
     accessorKey: 'divider',

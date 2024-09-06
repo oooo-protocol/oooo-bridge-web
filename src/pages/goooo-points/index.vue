@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import YourAccount from './components/YourAccount/index.vue'
 import EarnPoints from './components/EarnPoints/index.vue'
-// import Top50Accounts from './components/Top50Accounts/index.vue'
+import Top50Accounts from './components/Top50Accounts/index.vue'
 import { ScrollNavProvider, ScrollNavItem, ScrollNavContent } from './components/ScrollNav'
 import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
 import useWalletStore from '@/store/wallet'
@@ -24,16 +24,16 @@ const navs = [
   }, {
     name: 'earn-points',
     title: 'EARN POINTS'
+  },
+  {
+    name: 'top-50-accounts',
+    title: 'LEADERBOARD'
   }
-  // {
-  //   name: 'top-50-accounts',
-  //   title: 'TOP 50 ACCOUNTS'
-  // }
 ]
 </script>
 
 <template>
-  <header class="goooo-header relative shrink-0 flex flex-col justify-center items-center -mt-[80px] px-[30px] h-[250px] xl:h-[520px] text-center">
+  <header class="goooo-header relative shrink-0 flex flex-col justify-center items-center px-[30px] h-[250px] xl:h-[520px] text-center">
     <p class="text-[24px] xl:text-[50px] font-medium tracking-[1.2px] leading-[1.17]">
       BRIDGER TO EARN Goooo! LET'S Goooo!
     </p>
@@ -73,9 +73,12 @@ const navs = [
         >
           <EarnPoints />
         </ScrollNavContent>
-        <!-- <ScrollNavContent class="pt-[60px] xl:pt-[70px]" name="top-50-accounts">
+        <ScrollNavContent
+          class="pt-[60px] xl:pt-[70px]"
+          name="top-50-accounts"
+        >
           <Top50Accounts />
-        </ScrollNavContent> -->
+        </ScrollNavContent>
       </div>
     </div>
   </ScrollNavProvider>

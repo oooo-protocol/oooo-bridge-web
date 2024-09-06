@@ -13,7 +13,8 @@ import BRIDGE_TO_EARN_IMAGE from '@/assets/images/goooo-points/bridge.png'
 import InviteFriendsTask from './Tasks/InviteFriendsTask.vue'
 import InviteBridgeTask from './Tasks/InviteBridgeTask.vue'
 
-import RSKBridgeTask from './Tasks/RSKBridgeTask.vue'
+import MacaronBridgeTask from './Tasks/MacaronBridgeTask.vue'
+import XLayerBridgeTask from './Tasks/XLayerBridgeTask.vue'
 </script>
 
 <template>
@@ -40,7 +41,8 @@ import RSKBridgeTask from './Tasks/RSKBridgeTask.vue'
       title="BRIDGE TO EARN"
       :img="BRIDGE_TO_EARN_IMAGE"
     >
-      <RSKBridgeTask />
+      <MacaronBridgeTask />
+      <XLayerBridgeTask />
     </TaskCard>
   </div>
 </template>

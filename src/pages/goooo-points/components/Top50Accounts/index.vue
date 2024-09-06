@@ -30,11 +30,11 @@ const { isPending, data } = useQuery({
   <div>
     <div class="flex flex-col justify-between md:flex-row md:items-center gap-[8px]">
       <h3 class="text-[24px] md:text-[32px] font-[600] -tracking-tighter">
-        TOP 50 ACCOUNTS
+        LEADERBOARD - TOP 50
       </h3>
       <p
         class="text-[14px] -tracking-tighter"
-        v-if="data"
+        v-if="data?.total"
       >
         🎖TOTAL ACCOUNTS: <span class="text-[#ff5402]">{{ data.total }}</span>
       </p>
