@@ -15,8 +15,6 @@ import OOOO_2_PC_IMAGE from '@/assets/images/activity/oooo-2.jpg'
 import OOOO_2_MOBILE_IMAGE from '@/assets/images/activity/oooo-2-mob.png'
 import OOOO_3_PC_IMAGE from '@/assets/images/activity/oooo-3.jpg'
 import OOOO_3_MOBILE_IMAGE from '@/assets/images/activity/oooo-3-mob.jpg'
-import BEVM_SUMMER_PC_IMAGE from '@/assets/images/activity/bevm-summer.jpg'
-import BEVM_SUMMER_MOBILE_IMAGE from '@/assets/images/activity/bevm-summer-mob.png'
 import VOUCHER_PC_IMAGE from '@/assets/images/activity/voucher.jpg'
 import VOUCHER_MOBILE_IMAGE from '@/assets/images/activity/voucher-mob.jpg'
 import MACARON_PC_IMAGE from '@/assets/images/activity/macaron.png'
@@ -39,12 +37,6 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
       imageMobile: MACARON_MOBILE_IMAGE,
       imagePC: MACARON_PC_IMAGE,
       url: 'https://competition.macaron.xyz/#/points'
-    },
-    {
-      name: 'BEVM Defi Summer',
-      imageMobile: BEVM_SUMMER_MOBILE_IMAGE,
-      imagePC: BEVM_SUMMER_PC_IMAGE,
-      url: 'https://defiolympics.bevm.io/'
     },
     {
       name: 'o-Voucher',
