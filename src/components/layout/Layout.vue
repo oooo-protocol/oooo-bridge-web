@@ -131,10 +131,15 @@ watch(route, (route) => {
     </component>
     <WalletConnectButton />
   </AppHeader>
-  <AppCarousel v-if="route.name !== 'goooo'" />
-  <AppNotification
-    class="mt-[20px]"
-  />
+  <div
+    class="mt-[80px]"
+    v-if="route.name !== 'goooo'"
+  >
+    <AppCarousel />
+    <AppNotification
+      class="mt-[20px]"
+    />
+  </div>
   <!-- 不设置默认key，以文件名区分(Vue默认)，确保复用最外层容器 -->
   <RouterView v-slot="{ Component }">
     <!-- Romove KeepAlive to ensure child page is latest data -->
