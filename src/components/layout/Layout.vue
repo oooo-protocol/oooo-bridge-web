@@ -155,5 +155,6 @@ watch(route, (route) => {
   height: 100%;
   overflow-y: scroll;
   background: url('@/assets/images/background.jpg') top/cover no-repeat;
+  padding-top: 80px;
 }
 </style>
