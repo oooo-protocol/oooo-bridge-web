@@ -15,6 +15,7 @@ import InviteBridgeTask from './Tasks/InviteBridgeTask.vue'
 
 import MacaronBridgeTask from './Tasks/MacaronBridgeTask.vue'
 import XLayerBridgeTask from './Tasks/XLayerBridgeTask.vue'
+import ScrollBridgeTask from './Tasks/ScrollBridgeTask.vue'
 </script>
 
 <template>
@@ -41,6 +42,7 @@ import XLayerBridgeTask from './Tasks/XLayerBridgeTask.vue'
       title="BRIDGE TO EARN"
       :img="BRIDGE_TO_EARN_IMAGE"
     >
+      <ScrollBridgeTask />
       <MacaronBridgeTask />
       <XLayerBridgeTask />
     </TaskCard>
