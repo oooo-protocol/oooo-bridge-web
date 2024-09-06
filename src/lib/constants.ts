@@ -54,7 +54,13 @@ import {
   MODE_TESTNET,
   MODE_LIVENET,
   CORE_TESTNET,
-  CORE_LIVENET
+  CORE_LIVENET,
+  MANTA_TESTNET,
+  MANTA_LIVENET,
+  ZORA_TESTNET,
+  ZORA_LIVENET,
+  OPBNB_TESTNET,
+  OPBNB_LIVENET
 } from 'oooo-components/lib/chain-config'
 import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
@@ -196,6 +202,21 @@ export const CHAIN_LIST = [
     value: CHAIN.CORE,
     [NETWORK.TESTNET]: CORE_TESTNET,
     [NETWORK.LIVENET]: CORE_LIVENET
+  }, {
+    image: 'https://oooo.money/static/images/manta.png',
+    value: CHAIN.MANTA,
+    [NETWORK.TESTNET]: MANTA_TESTNET,
+    [NETWORK.LIVENET]: MANTA_LIVENET
+  }, {
+    image: 'https://oooo.money/static/images/zora.png',
+    value: CHAIN.ZORA,
+    [NETWORK.TESTNET]: ZORA_TESTNET,
+    [NETWORK.LIVENET]: ZORA_LIVENET
+  }, {
+    image: 'https://oooo.money/static/images/bsc.png',
+    value: CHAIN.OPBNB,
+    [NETWORK.TESTNET]: OPBNB_TESTNET,
+    [NETWORK.LIVENET]: OPBNB_LIVENET
   }
 ]
 
