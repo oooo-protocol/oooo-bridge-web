@@ -2,14 +2,12 @@ import { useWallet } from '@/composables/hooks/use-wallet'
 import { SERVER_ASSET } from '@/entities/server'
 import { useMutation } from '@tanstack/vue-query'
 import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
-import { useToast } from 'oooo-components/ui/toast'
 import { type PairConfig } from './use-config'
 import { CHAIN_RPC_MAP } from '@/lib/constants'
 import { CHAIN } from '@/entities/chain'
 
 export const useBalance = (from: Ref<string>, config: ComputedRef<PairConfig | null>) => {
   const { address, getInstance } = useWallet()
-  const { toast } = useToast()
 
   const contractAddress = computed(() => config.value?.contractAddress)
 
@@ -29,11 +27,6 @@ export const useBalance = (from: Ref<string>, config: ComputedRef<PairConfig | n
       } else {
         return await instance.getTokenBalance(_address, rpc, _config.contractAddress)
       }
-    },
-    onError: (e) => {
-      toast({
-        description: e.message
-      })
     }
   })
 
