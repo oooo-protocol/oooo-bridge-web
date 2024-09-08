@@ -21,11 +21,19 @@ import MACARON_PC_IMAGE from '@/assets/images/activity/macaron.png'
 import MACARON_MOBILE_IMAGE from '@/assets/images/activity/macaron-mob.png'
 import XLAYER_PC_IMAGE from '@/assets/images/activity/xlayer.png'
 import XLAYER_MOBILE_IMAGE from '@/assets/images/activity/xlayer-mob.png'
+import SCROLL_PC_IMAGE from '@/assets/images/activity/scroll.png'
+import SCROLL_MOBILE_IMAGE from '@/assets/images/activity/scroll-mob.png'
 
 import { NETWORK } from '@/entities/chain'
 
 const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
   ? [
+    {
+      name: 'Scroll activity',
+      imageMobile: SCROLL_MOBILE_IMAGE,
+      imagePC: SCROLL_PC_IMAGE,
+      url: 'https://scroll.io/canvas/badge-contract/0xE3346Df9bDF67308152E69a1EEF7173094F51989'
+    },
     {
       name: 'XLayer activity',
       imageMobile: XLAYER_MOBILE_IMAGE,
