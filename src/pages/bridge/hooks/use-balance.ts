@@ -5,6 +5,7 @@ import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
 import { type PairConfig } from './use-config'
 import { CHAIN_RPC_MAP } from '@/lib/constants'
 import { CHAIN } from '@/entities/chain'
+import { captureMessage } from '@sentry/vue'
 
 export const useBalance = (from: Ref<string>, config: ComputedRef<PairConfig | null>) => {
   const { address, getInstance } = useWallet()
@@ -27,6 +28,9 @@ export const useBalance = (from: Ref<string>, config: ComputedRef<PairConfig | n
       } else {
         return await instance.getTokenBalance(_address, rpc, _config.contractAddress)
       }
+    },
+    onError: () => {
+      captureMessage(`Failed to get user balance; chain: ${from.value} address: ${address.value}`)
     }
   })
 
