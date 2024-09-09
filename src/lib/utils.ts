@@ -1,4 +1,6 @@
 import { type EthersError } from 'ethers'
+import { CHAIN_CONFIG_MAP } from './constants'
+import { type CHAIN } from '@/entities/chain'
 
 function trimExtraChar (value: string, char: string, regExp: RegExp) {
   const index = value.indexOf(char)
@@ -123,4 +125,15 @@ export function formatEtherError (e: EthersError) {
   } catch {
     return e
   }
+}
+
+/**
+ * get chain config from chain name
+ * @param chain chain name
+ * @returns {ChainConfig}
+ */
+export function getConfigFromChain (chain: string) {
+  const chainConfig = CHAIN_CONFIG_MAP[chain as CHAIN]
+  if (chainConfig == null) throw new Error(`Chain ${chain} not config`)
+  return chainConfig
 }

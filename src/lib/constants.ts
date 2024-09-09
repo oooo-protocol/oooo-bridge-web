@@ -231,12 +231,6 @@ export const CHAIN_BLOCK_EXPLORER_URL_MAP =
     return pre
   }, {})
 
-export const CHAIN_RPC_MAP = Object.entries(CHAIN_CONFIG_MAP)
-  .reduce<Record<string, string>>((pre, [name, config]) => {
-  if (config?.rpcUrls) pre[name] = config.rpcUrls[0]
-  return pre
-}, {})
-
 export const TRANSACTION_STATUS_MAP = {
   [TRANSACTION_STATUS.PENDING]: {
     icon: 'time'
