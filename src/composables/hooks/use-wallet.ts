@@ -1,7 +1,9 @@
 import { type CHAIN } from '@/entities/chain'
-import { CHAIN_CONFIG_MAP, CHAIN_RPC_MAP } from '@/lib/constants'
+import { CHAIN_CONFIG_MAP } from '@/lib/constants'
+import { getConfigFromChain } from '@/lib/utils'
 import useWalletStore from '@/store/wallet'
 import { ethers } from 'ethers'
+import { getRpcProvider } from 'oooo-components/lib/utils'
 import { WALLET_TYPE, useBTCWallet, useEVMWallet, WalletConnectModal, type NETWORK, type TransactionParameter, type ChainConfig } from 'oooo-components/oooo-wallet'
 import { createFuncall } from 'vue-funcall'
 
@@ -104,11 +106,10 @@ export const useWallet = () => {
       const gasLimit = 200
       return Number(parameter.gas) * gasLimit * 1e-8
     } else {
-      const config = CHAIN_CONFIG_MAP[chainName as CHAIN] as ChainConfig
-      if (config == null) throw new Error(`Chain ${chainName} not config`)
+      if (chainName == null) throw new Error('chainName cannot be empty.')
+      const config = getConfigFromChain(chainName)
       await instance.switchToChain(config)
-      const rpc = CHAIN_RPC_MAP[chainName as CHAIN]
-      const provider = new ethers.JsonRpcProvider(rpc)
+      const provider = await getRpcProvider(config.rpcUrls)
       try {
         const gasLimit = await provider.estimateGas({
           from: parameter.from,

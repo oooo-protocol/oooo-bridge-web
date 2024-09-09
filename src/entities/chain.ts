@@ -35,5 +35,7 @@ export enum CHAIN {
   CORE = 'core',
   MANTA = 'manta',
   ZORA = 'zora',
-  OPBNB = 'opbnb'
+  OPBNB = 'opbnb',
+  SONEIUM = 'soneium',
+  STORY = 'story'
 }

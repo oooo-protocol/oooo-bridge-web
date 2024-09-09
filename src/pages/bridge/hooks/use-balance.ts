@@ -3,9 +3,9 @@ import { SERVER_ASSET } from '@/entities/server'
 import { useMutation } from '@tanstack/vue-query'
 import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
 import { type PairConfig } from './use-config'
-import { CHAIN_RPC_MAP } from '@/lib/constants'
 import { CHAIN } from '@/entities/chain'
 import { captureMessage } from '@sentry/vue'
+import { getConfigFromChain } from '@/lib/utils'
 
 export const useBalance = (from: Ref<string>, config: ComputedRef<PairConfig | null>) => {
   const { address, getInstance } = useWallet()
@@ -22,11 +22,11 @@ export const useBalance = (from: Ref<string>, config: ComputedRef<PairConfig | n
       if (instance.type === WALLET_TYPE.BITCOIN) {
         return await instance.getNativeBalance()
       }
-      const rpc = CHAIN_RPC_MAP[from.value]
+      const chainConfig = getConfigFromChain(from.value)
       if (_config.assetType === SERVER_ASSET.COIN) {
-        return await instance.getNativeBalance(_address, rpc)
+        return await instance.getNativeBalance(_address, chainConfig)
       } else {
-        return await instance.getTokenBalance(_address, rpc, _config.contractAddress)
+        return await instance.getTokenBalance(_address, chainConfig, _config.contractAddress)
       }
     },
     onError: () => {
