@@ -60,7 +60,9 @@ import {
   ZORA_TESTNET,
   ZORA_LIVENET,
   OPBNB_TESTNET,
-  OPBNB_LIVENET
+  OPBNB_LIVENET,
+  SONEIUM_TESTNET,
+  STORY_TESTNET
 } from 'oooo-components/lib/chain-config'
 import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
@@ -217,6 +219,14 @@ export const CHAIN_LIST = [
     value: CHAIN.OPBNB,
     [NETWORK.TESTNET]: OPBNB_TESTNET,
     [NETWORK.LIVENET]: OPBNB_LIVENET
+  }, {
+    image: 'https://oooo.money/static/images/soneium.png',
+    value: CHAIN.SONEIUM,
+    [NETWORK.TESTNET]: SONEIUM_TESTNET
+  }, {
+    image: 'https://oooo.money/static/images/story.png',
+    value: CHAIN.STORY,
+    [NETWORK.TESTNET]: STORY_TESTNET
   }
 ]
 
