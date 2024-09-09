@@ -1,12 +1,11 @@
 import axios from '../axios'
 import { type Transaction, type TransactionConfig, type Chain, TRANSACTION_STATUS, type EstimateData } from '@/entities/bridge'
 import type { Pagination } from './type'
-import { CHAIN_RPC_MAP } from '@/lib/constants'
-import { combineURLs } from '@/lib/utils'
-import { ethers } from 'ethers'
+import { combineURLs, getConfigFromChain } from '@/lib/utils'
 import axiosOrigin from 'axios'
 import { CHAIN } from '@/entities/chain'
 import { type ServerTokenPair, type ServerConfigs } from '@/entities/server'
+import { getRpcProvider } from 'oooo-components/lib/utils'
 
 export const retrieveBridgeConfigs = async () => {
   return await axios<ServerConfigs>({
@@ -117,10 +116,10 @@ export const retrieveTransactionList = async (params: {
  * refer: https://docs.ethers.org/v6/api/providers/#TransactionResponse
  */
 export const retrieveEthereumTransactionStatus = async (chain: CHAIN, hash: string) => {
-  const rpc = CHAIN_RPC_MAP[chain]
-  const jsonRpcProvider = new ethers.JsonRpcProvider(rpc)
+  const config = getConfigFromChain(chain)
+  const provider = await getRpcProvider(config.rpcUrls)
   try {
-    const response = await jsonRpcProvider.getTransaction(hash)
+    const response = await provider.getTransaction(hash)
     console.log(response)
     if (response == null) return TRANSACTION_STATUS.PENDING
     const receipt = await response.wait()
@@ -133,7 +132,7 @@ export const retrieveEthereumTransactionStatus = async (chain: CHAIN, hash: stri
       return TRANSACTION_STATUS.PROCESSING
     }
   } finally {
-    jsonRpcProvider.destroy()
+    provider.destroy()
   }
 }
 

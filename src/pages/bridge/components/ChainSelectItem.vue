@@ -5,7 +5,8 @@ import { CHAIN } from '@/entities/chain'
 import { SERVER_ASSET } from '@/entities/server'
 import { useQuery } from '@tanstack/vue-query'
 import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
-import { CHAIN_IMAGE_MAP, CHAIN_RPC_MAP } from '@/lib/constants'
+import { CHAIN_IMAGE_MAP } from '@/lib/constants'
+import { getConfigFromChain } from '@/lib/utils'
 
 const props = defineProps<{
   chain: Chain
@@ -33,11 +34,11 @@ const { data: balance } = useQuery({
     if (instance.type === WALLET_TYPE.BITCOIN) {
       return await instance.getNativeBalance()
     }
-    const rpc = CHAIN_RPC_MAP[props.chain.chainName]
+    const chainConfig = getConfigFromChain(props.chain.chainName)
     if (props.chain.assetType === SERVER_ASSET.COIN) {
-      return await instance.getNativeBalance(_address, rpc)
+      return await instance.getNativeBalance(_address, chainConfig)
     } else {
-      return await instance.getTokenBalance(_address, rpc, props.chain.contractAddress)
+      return await instance.getTokenBalance(_address, chainConfig, props.chain.contractAddress)
     }
   },
   staleTime: 5 * 1000,
