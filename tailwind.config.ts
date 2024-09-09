@@ -10,5 +10,18 @@ export default {
     './components/**/*.{ts,tsx,vue}',
     './submodules/**/*.{ts,tsx,vue}',
     './src/**/*.{ts,tsx,vue}'
-  ]
+  ],
+  theme: {
+    extend: {
+      animation: {
+        'spin-reverse': 'spin-reverse 1s linear infinite'
+      },
+      keyframes: {
+        'spin-reverse': {
+          from: { transform: 'rotate(0deg)' },
+          to: { transform: 'rotate(-360deg)' }
+        }
+      }
+    }
+  }
 } satisfies Config

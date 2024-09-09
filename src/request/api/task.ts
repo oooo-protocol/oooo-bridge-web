@@ -9,6 +9,14 @@ export const isFollowedTwitter = async (data: SignatureRequest) => {
   })
 }
 
+export const verifyTwitter = async (data: SignatureRequest) => {
+  return await axios<boolean>({
+    method: 'POST',
+    url: '/point/twitter/verify',
+    data
+  })
+}
+
 export const getTwitterAuthorizationUrl = async (data: SignatureRequest) => {
   return await axios<string>({
     method: 'POST',
