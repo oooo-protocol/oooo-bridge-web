@@ -33,7 +33,11 @@ const navs = [
 </script>
 
 <template>
-  <header class="goooo-header relative shrink-0 flex flex-col justify-center items-center px-[30px] h-[250px] xl:h-[520px] text-center" />
+  <a
+    href="https://medium.com/@oooo-prot/oooo-x-lumoz-quidditch-campaign-eb15f399e209"
+    target="_blank"
+    class="goooo-header relative shrink-0 flex flex-col justify-center items-center px-[30px] h-[250px] xl:h-[520px] text-center"
+  />
   <ScrollNavProvider
     target="#app"
     default-value="your-account"
