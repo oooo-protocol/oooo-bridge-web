@@ -33,14 +33,11 @@ const navs = [
 </script>
 
 <template>
-  <header class="goooo-header relative shrink-0 flex flex-col justify-center items-center px-[30px] h-[250px] xl:h-[520px] text-center">
-    <p class="text-[24px] xl:text-[50px] font-medium tracking-[1.2px] leading-[1.17]">
-      BRIDGER TO EARN Goooo! LET'S Goooo!
-    </p>
-    <p class="mt-[12px] text-[13px] xl:text-[24px] tracking-[1.2px]">
-      READY TO EARN YOUR Goooo?
-    </p>
-  </header>
+  <a
+    href="https://medium.com/@oooo-prot/oooo-x-lumoz-quidditch-campaign-eb15f399e209"
+    target="_blank"
+    class="goooo-header relative shrink-0 flex flex-col justify-center items-center px-[30px] h-[250px] xl:h-[520px] text-center"
+  />
   <ScrollNavProvider
     target="#app"
     default-value="your-account"
@@ -87,7 +84,11 @@ const navs = [
 <style lang="scss" scoped>
 .goooo {
   &-header {
-    background: url('@/assets/images/goooo-points/banner.png') no-repeat center / cover;
+    background: url('@/assets/images/goooo-points/lumoz-mob.jpg') no-repeat center / cover;
+
+    @media (min-width: 768px) {
+      background-image: url('@/assets/images/goooo-points/lumoz.jpg')
+    }
   }
 }
 </style>
