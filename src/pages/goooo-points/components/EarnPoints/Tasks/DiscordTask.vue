@@ -162,7 +162,7 @@ const { isPending: loading, mutate } = useMutation({
             JOIN
           </Button>
         </TaskItem>
-        <TaskItem description="AUTHORIZE DISCORD TO ACCESS YOUR FOLLOW STATUS. ONLY REPLY THE TRANSLATED RESULT AND NOTHING ELSE">
+        <TaskItem description="AUTHORIZE DISCORD TO ACCESS YOUR FOLLOW STATUS">
           <template #title>
             <p class="text-[#abeec4]">
               STEP 3
