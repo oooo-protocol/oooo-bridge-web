@@ -9,7 +9,7 @@ import TaskItem from '../TaskItem.vue'
     title="BRIDGE TO GET YOUR EXCLUSIVE BADGE ON SCROLL"
     description="REWARDS: oooo PIONEER BADGE ON SCROLL, 8 Goooo"
     :image="SCROLL_IMAGE"
-    hint="+8 Goooo"
+    hint="+8 Goooo & +80 Lumoz Points"
   >
     <Button
       class="w-full md:w-[174px]"

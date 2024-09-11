@@ -34,8 +34,8 @@ const onCopy = async (text: string) => {
 
 <template>
   <TaskItem
-    title="INVITE FRIENDS TO COMPLETED MAINNET BRIDGE TRANSACTION."
-    description="6 POINTS PER TRANSACTION."
+    title="INVITE FRIENDS TO COMPLETED MAINNET BRIDGE TRANSACTION"
+    description="6 Goooo & 60 Lumoz Points PER TRANSACTION"
     icon="bbitcoin"
   >
     <div class="flex gap-[10px]">

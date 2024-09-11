@@ -75,7 +75,7 @@ const onVerify = async () => {
 
 <template>
   <TaskItem
-    hint="+1 Goooo"
+    hint="+1 Goooo & +10 Lumoz Points"
     icon="twitter2"
     :succeed="succeed"
   >
@@ -87,8 +87,17 @@ const onVerify = async () => {
           href="https://twitter.com/intent/follow?screen_name=oooo_money"
           target="_blank"
         >
-          @oooo ON X
+          @oooo
         </a>
+        &
+        <a
+          class="underline"
+          href="https://twitter.com/intent/follow?screen_name=lumozorg"
+          target="_blank"
+        >
+          @Lumoz
+        </a>
+        ON X
       </p>
     </template>
     <div class="flex gap-[10px]">
@@ -141,10 +150,26 @@ const onVerify = async () => {
             FOLLOW
           </Button>
         </TaskItem>
-        <TaskItem description="VERIFY YOUR FOLLOW STATUS">
+        <TaskItem description="FOLLOW @Lumoz ON X">
           <template #title>
             <p class="text-[#abeec4]">
               STEP 2
+            </p>
+          </template>
+          <Button
+            class="w-[90px]"
+            size="sm"
+            as="a"
+            href="https://twitter.com/intent/follow?screen_name=lumozorg"
+            target="_blank"
+          >
+            FOLLOW
+          </Button>
+        </TaskItem>
+        <TaskItem description="VERIFY YOUR FOLLOW STATUS">
+          <template #title>
+            <p class="text-[#abeec4]">
+              STEP 3
             </p>
           </template>
           <Button

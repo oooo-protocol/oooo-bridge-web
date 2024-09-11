@@ -35,7 +35,7 @@ const onCopy = async (text: string) => {
 <template>
   <TaskItem
     title="INVITE FRIENDS TO EARN MORE POINTS"
-    description="THEY NEED TO COMPLETE TASKS FOR 𝕏 AND DISCORD, YOU WILL RECEIVE 2 POINTS."
+    description="THEY NEED TO COMPLETE TASKS FOR 𝕏 AND DISCORD, YOU WILL RECEIVE 2 Goooo & 20 Lumoz Points"
     icon="giftbox"
   >
     <div class="flex gap-[10px]">
