@@ -7,7 +7,7 @@ import TaskItem from '../TaskItem.vue'
 <template>
   <TaskItem
     title="BRIDGE TO GET YOUR EXCLUSIVE BADGE ON SCROLL"
-    description="REWARDS: oooo BADGES ON SCROLL, o-VOUCHER PACK, UNLIMITED 8 Goooo & 80 Lumoz Points FOR EACH TRANSACTION"
+    description="REWARDS: oooo BADGES on SCROLL, o-VOUCHER PACK, UNLIMITED 8 Goooo & 80 Lumoz Points for EACH TRANSACTION"
     :image="SCROLL_IMAGE"
     hint="+8 Goooo & +80 Lumoz Points"
   >
