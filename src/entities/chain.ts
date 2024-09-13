@@ -33,6 +33,7 @@ export enum CHAIN {
   ZETACHAIN = 'zetachain',
   MODE = 'mode',
   CORE = 'core',
+  FRACTAL = 'fractal',
   MANTA = 'manta',
   ZORA = 'zora',
   OPBNB = 'opbnb',

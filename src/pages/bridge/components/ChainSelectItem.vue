@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/vue-query'
 import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
 import { CHAIN_IMAGE_MAP } from '@/lib/constants'
 import { getConfigFromChain } from '@/lib/utils'
+import { retrieveBitcoinOrFractalAddressBalance } from '@/request/api/bridge'
 
 const props = defineProps<{
   chain: Chain
@@ -31,8 +32,8 @@ const { data: balance } = useQuery({
   queryFn: async () => {
     const _address = address.value!
     const instance = getInstance()
-    if (instance.type === WALLET_TYPE.BITCOIN) {
-      return await instance.getNativeBalance()
+    if (instance.type === WALLET_TYPE.BITCOIN || instance.type === WALLET_TYPE.FRACTAL) {
+      return await retrieveBitcoinOrFractalAddressBalance(props.chain.chainName as CHAIN.BTC | CHAIN.FRACTAL, _address)
     }
     const chainConfig = getConfigFromChain(props.chain.chainName)
     if (props.chain.assetType === SERVER_ASSET.COIN) {
