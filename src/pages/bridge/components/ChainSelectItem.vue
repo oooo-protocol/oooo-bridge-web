@@ -23,6 +23,8 @@ const enabled = computed(() => {
       return false
     case CHAIN.BTC:
       return walletType.value === WALLET_TYPE.BITCOIN
+    case CHAIN.FRACTAL:
+      return walletType.value === WALLET_TYPE.FRACTAL
     default:
       return walletType.value === WALLET_TYPE.ETHEREUM
   }

@@ -78,10 +78,11 @@ const serviceFee = computed(() => {
 const SPEND_TEXT = useTimeSpend(to, config)
 /** --------------------- Update receiveAddress field  -------------- */
 const checkAddress = (address: string, chain: string) => {
-  const isBTCAddress = [CHAIN.BTC, CHAIN.FRACTAL].includes(chain as CHAIN)
-  if (isBTCAddress) {
+  if (chain === CHAIN.BTC) {
     const network = import.meta.env.VITE_NETWORK === NETWORK.LIVENET ? Network.mainnet : Network.testnet
     return validate(address, network)
+  } else if (chain === CHAIN.FRACTAL) {
+    return validate(address, Network.mainnet)
   } else {
     // it's assumed to be a EVM address
     return EVM_ADDRESS_REGEXP.test(address)
