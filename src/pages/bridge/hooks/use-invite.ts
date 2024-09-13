@@ -27,7 +27,7 @@ export const useInvite = () => {
 
   onMounted(() => {
     if (inviteCode.value == null) return
-    if (walletType.value === WALLET_TYPE.BITCOIN) return
+    if (walletType.value === WALLET_TYPE.BITCOIN || walletType.value === WALLET_TYPE.FRACTAL) return
     if (address.value == null) {
       onConnect(WALLET_TYPE.ETHEREUM)
     }
