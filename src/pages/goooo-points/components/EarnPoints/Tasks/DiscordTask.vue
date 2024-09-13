@@ -71,7 +71,7 @@ const { isPending: loading, mutate } = useMutation({
 
 <template>
   <TaskItem
-    hint="+1 Goooo"
+    hint="+1 Goooo & +10 Lumoz Points"
     icon="discord1"
     :succeed="succeed"
   >
@@ -83,8 +83,17 @@ const { isPending: loading, mutate } = useMutation({
           href="https://discord.gg/ooooprotocol"
           target="_blank"
         >
-          @oooo ON DISCORD
+          @oooo
         </a>
+        &
+        <a
+          class="underline"
+          href="https://discord.com/invite/lumozorg"
+          target="_blank"
+        >
+          @Lumoz
+        </a>
+        ON DISCORD
       </p>
     </template>
     <div class="flex gap-[10px]">
@@ -121,7 +130,7 @@ const { isPending: loading, mutate } = useMutation({
         </DialogHeader>
       </template>
       <div class="space-y-[16px]">
-        <TaskItem description="COMPLETE DISCORD FOLLOW, READ RULES AND COMPLETE VERIFICATION.">
+        <TaskItem description="COMPLETE DISCORD FOLLOW, READ RULES AND COMPLETE VERIFICATION">
           <template #title>
             <p class="text-[#abeec4]">
               STEP 1
@@ -137,10 +146,26 @@ const { isPending: loading, mutate } = useMutation({
             JOIN
           </Button>
         </TaskItem>
-        <TaskItem description="AUTHORIZE DISCORD TO ACCESS YOUR FOLLOW STATUS. ONLY REPLY THE TRANSLATED RESULT AND NOTHING ELSE.">
+        <TaskItem description="FOLLOW @Lumoz ON DISCORD">
           <template #title>
             <p class="text-[#abeec4]">
               STEP 2
+            </p>
+          </template>
+          <Button
+            class="w-[90px]"
+            size="sm"
+            as="a"
+            href="https://discord.com/invite/lumozorg"
+            target="_blank"
+          >
+            JOIN
+          </Button>
+        </TaskItem>
+        <TaskItem description="AUTHORIZE DISCORD TO ACCESS YOUR FOLLOW STATUS">
+          <template #title>
+            <p class="text-[#abeec4]">
+              STEP 3
             </p>
           </template>
           <Button

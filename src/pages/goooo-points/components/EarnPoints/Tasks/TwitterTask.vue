@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
-import { isFollowedTwitter, getTwitterAuthorizationUrl } from '@/request/api/task'
+import { isFollowedTwitter, verifyTwitter } from '@/request/api/task'
 import Icon from 'oooo-components/ui/Icon.vue'
 import { Button } from 'oooo-components/ui/button'
 import TaskItem from '../TaskItem.vue'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from 'oooo-components/ui/dialog'
 import { useToast } from 'oooo-components/ui/toast'
-import { invokeAuthorizationLink } from '@/lib/utils'
 import useSignatureStore from '@/store/signature'
 import { useCreatePointConfetti } from '../../../hooks/use-create-point-confetti'
 
@@ -15,7 +14,6 @@ defineOptions({ name: 'TwitterTaskItem' })
 const { toast } = useToast()
 
 const isOpenFollowDialog = ref(false)
-const isOpenErrorDialog = ref(false)
 
 const signature = useSignatureStore()
 const createPointConfetti = useCreatePointConfetti()
@@ -45,33 +43,39 @@ const { isPending: isChecking, data: succeed, mutateAsync: check } = useMutation
   }
 })
 
-const { mutate } = useMutation({
-  mutationFn: async () => {
+let lastClickVerifyTimestamp: number
+
+const onVerify = async () => {
+  try {
     if (signature.signInfo == null) {
       throw new Error('Wallet or signature is not available, please re-connect wallet')
     }
-    const url = await getTwitterAuthorizationUrl(signature.signInfo)
-    const succeed = await invokeAuthorizationLink(url, false)
-    if (succeed) {
+    const current = +new Date()
+    if (lastClickVerifyTimestamp == null) {
+      lastClickVerifyTimestamp = current
+    }
+    if (current - lastClickVerifyTimestamp < 3000) {
+      toast({ description: "No Follow found, X's Follow data is being synchronized, please wait a few seconds and click Verify again." })
+      return
+    }
+    const verified = await verifyTwitter(signature.signInfo)
+    if (verified) {
       isOpenFollowDialog.value = false
       const succeed = await check()
       if (succeed) {
         createPointConfetti('GET 1 POINTS')
         void queryClient.invalidateQueries({ queryKey: ['/point/account', signature.signInfo.walletAddress] })
       }
-    } else {
-      isOpenErrorDialog.value = true
     }
-  },
-  onError: (e) => {
-    toast({ description: e.message })
+  } catch (e) {
+    toast({ description: (e as Error).message })
   }
-})
+}
 </script>
 
 <template>
   <TaskItem
-    hint="+1 Goooo"
+    hint="+1 Goooo & +10 Lumoz Points"
     icon="twitter2"
     :succeed="succeed"
   >
@@ -83,8 +87,17 @@ const { mutate } = useMutation({
           href="https://twitter.com/intent/follow?screen_name=oooo_money"
           target="_blank"
         >
-          @oooo ON X
+          @oooo
         </a>
+        &
+        <a
+          class="underline"
+          href="https://twitter.com/intent/follow?screen_name=lumozorg"
+          target="_blank"
+        >
+          @Lumoz
+        </a>
+        ON X
       </p>
     </template>
     <div class="flex gap-[10px]">
@@ -137,7 +150,7 @@ const { mutate } = useMutation({
             FOLLOW
           </Button>
         </TaskItem>
-        <TaskItem description="AUTHORIZE X TO ACCESS YOUR FOLLOW STATUS">
+        <TaskItem description="FOLLOW @Lumoz ON X">
           <template #title>
             <p class="text-[#abeec4]">
               STEP 2
@@ -146,33 +159,27 @@ const { mutate } = useMutation({
           <Button
             class="w-[90px]"
             size="sm"
-            @click="mutate"
+            as="a"
+            href="https://twitter.com/intent/follow?screen_name=lumozorg"
+            target="_blank"
           >
-            AUTH
+            FOLLOW
           </Button>
         </TaskItem>
-      </div>
-    </DialogContent>
-  </Dialog>
-  <Dialog v-model:open="isOpenErrorDialog">
-    <DialogContent>
-      <template #header>
-        <DialogHeader>
-          <DialogTitle>
-            _ OOPS
-          </DialogTitle>
-        </DialogHeader>
-      </template>
-      <div class="font-light tracking-[0.8px]">
-        <p>
-          NO FOLLOW FOUND FOR X, PLEASE TRY AGAIN.
-        </p>
-        <p class="mt-[30px] text-[#abeec4]">
-          1. CONFIRM THAT X HAS BEEN AUTHORIZED.
-        </p>
-        <p class="mt-[10px] text-[#abeec4]">
-          2. THE X ACCOUNT HAS NOT BEEN USED BY ANY OTHER ADDRESS.
-        </p>
+        <TaskItem description="VERIFY YOUR FOLLOW STATUS">
+          <template #title>
+            <p class="text-[#abeec4]">
+              STEP 3
+            </p>
+          </template>
+          <Button
+            class="w-[90px]"
+            size="sm"
+            @click="onVerify"
+          >
+            VERIFY
+          </Button>
+        </TaskItem>
       </div>
     </DialogContent>
   </Dialog>

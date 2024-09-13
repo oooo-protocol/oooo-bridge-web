@@ -9,7 +9,7 @@ import TaskItem from '../TaskItem.vue'
     title="MISSION X LAYER WITH oooo TO SHARE PRIZE POOL!"
     description="REWARDS: 8 Goooo + $20 o-VOUCHER PACK"
     :image="XLAYER_IMAGE"
-    hint="+8 Goooo"
+    hint="+8 Goooo & +80 Lumoz Points"
   >
     <Button
       class="w-full md:w-[174px]"
