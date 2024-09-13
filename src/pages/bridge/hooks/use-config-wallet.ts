@@ -10,6 +10,8 @@ export const useConfigWallet = (
   watch(from, (from) => {
     if (from === CHAIN.BTC) {
       updateWalletType(WALLET_TYPE.BITCOIN)
+    } else if (from === CHAIN.FRACTAL) {
+      updateWalletType(WALLET_TYPE.FRACTAL)
     } else {
       updateWalletType(WALLET_TYPE.ETHEREUM)
     }

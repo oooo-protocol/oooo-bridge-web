@@ -1,7 +1,11 @@
 {
   "name": "oooo-bridge",
   "private": true,
+<<<<<<< HEAD
   "version": "1.27.2",
+=======
+  "version": "1.28.0",
+>>>>>>> 492f0c6 (feat: add fractal bitcoin support)
   "type": "module",
   "scripts": {
     "pnpm:devPreinstall": "git submodule update --init",

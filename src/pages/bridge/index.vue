@@ -78,7 +78,7 @@ const serviceFee = computed(() => {
 const SPEND_TEXT = useTimeSpend(to, config)
 /** --------------------- Update receiveAddress field  -------------- */
 const checkAddress = (address: string, chain: string) => {
-  const isBTCAddress = chain === CHAIN.BTC
+  const isBTCAddress = [CHAIN.BTC, CHAIN.FRACTAL].includes(chain as CHAIN)
   if (isBTCAddress) {
     const network = import.meta.env.VITE_NETWORK === NETWORK.LIVENET ? Network.mainnet : Network.testnet
     return validate(address, network)
@@ -273,9 +273,7 @@ const createChainTransaction = async (parameter: {
   })
   try {
     let hash: string
-    if (parameter.fromChain === CHAIN.BTC) {
-      hash = await transfer(transferParameter)
-    } else if (assetType === SERVER_ASSET.TOKEN) {
+    if (assetType === SERVER_ASSET.TOKEN) {
       hash = await transfer(transferParameter, parameter.fromChain, contractAddress)
     } else {
       hash = await transfer(transferParameter, parameter.fromChain)
