@@ -85,7 +85,6 @@ export const CHAIN_LIST = [
     [NETWORK.LIVENET]: B2_LIVENET
   }, {
     image: 'https://oooo.money/static/images/btc.png',
-    testnetImage: 'https://oooo.money/static/images/tbtc.png',
     value: CHAIN.BTC,
     [NETWORK.TESTNET]: BTC_TESTNET,
     [NETWORK.LIVENET]: BTC_LIVENET
