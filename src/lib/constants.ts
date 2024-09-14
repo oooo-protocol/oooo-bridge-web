@@ -85,6 +85,7 @@ export const CHAIN_LIST = [
     [NETWORK.LIVENET]: B2_LIVENET
   }, {
     image: 'https://oooo.money/static/images/btc.png',
+    testnetImage: 'https://oooo.money/static/images/tbtc.png',
     value: CHAIN.BTC,
     [NETWORK.TESTNET]: BTC_TESTNET,
     [NETWORK.LIVENET]: BTC_LIVENET
@@ -230,6 +231,7 @@ export const CHAIN_LIST = [
     [NETWORK.TESTNET]: STORY_TESTNET
   }, {
     image: 'https://oooo.money/static/images/fractal.png',
+    testnetImage: 'https://oooo.money/static/images/fractal-testnet.png',
     value: CHAIN.FRACTAL,
     [NETWORK.TESTNET]: FRACTAL_TESTNET
   }
@@ -237,7 +239,14 @@ export const CHAIN_LIST = [
 
 export const CHAIN_CONFIG_MAP = defineMap(CHAIN_LIST, 'value', import.meta.env.VITE_NETWORK as NETWORK) as Record<CHAIN, ChainConfig | undefined>
 
-export const CHAIN_IMAGE_MAP = defineMap(CHAIN_LIST, 'value', 'image')
+export const CHAIN_IMAGE_MAP = CHAIN_LIST.reduce<Record<string, string>>((map, chain) => {
+  let image = chain.image
+  if (import.meta.env.VITE_NETWORK === NETWORK.TESTNET && (chain.testnetImage != null)) {
+    image = chain.testnetImage
+  }
+  map[chain.value] = image
+  return map
+}, {})
 
 export const CHAIN_BLOCK_EXPLORER_URL_MAP =
   Object.entries(CHAIN_CONFIG_MAP)
