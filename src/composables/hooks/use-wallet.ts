@@ -1,10 +1,10 @@
-import { type CHAIN } from '@/entities/chain'
+import { CHAIN } from '@/entities/chain'
 import { CHAIN_CONFIG_MAP } from '@/lib/constants'
 import { getConfigFromChain } from '@/lib/utils'
 import useWalletStore from '@/store/wallet'
 import { ethers } from 'ethers'
 import { getRpcProvider } from 'oooo-components/lib/utils'
-import { WALLET_TYPE, useBTCWallet, useEVMWallet, WalletConnectModal, type NETWORK, type TransactionParameter, type ChainConfig } from 'oooo-components/oooo-wallet'
+import { WALLET_TYPE, useBTCWallet, useFractalWallet, useEVMWallet, WalletConnectModal, type NETWORK, type TransactionParameter, type ChainConfig } from 'oooo-components/oooo-wallet'
 import { createFuncall } from 'vue-funcall'
 
 export interface TransferParameter {
@@ -18,6 +18,7 @@ export interface TransferParameter {
 
 export const useWallet = () => {
   const { name: btcName, address: btcAddress, getWalletInstance: getBTCWalletInstance, onLogout: onBTCLogout } = useBTCWallet()
+  const { name: fractalName, address: fractalAddress, getWalletInstance: getFractalWalletInstance, onLogout: onFractalLogout } = useFractalWallet()
   const { name: evmName, address: evmAddress, getWalletInstance: getEVMWalletInstance, onLogout: onEVMLogout } = useEVMWallet()
   const store = useWalletStore()
   const walletType = computed(() => store.walletType)
@@ -25,6 +26,8 @@ export const useWallet = () => {
   const name = computed(() => {
     if (store.walletType === WALLET_TYPE.BITCOIN) {
       return btcName.value
+    } else if (store.walletType === WALLET_TYPE.FRACTAL) {
+      return fractalName.value
     } else {
       return evmName.value
     }
@@ -33,6 +36,8 @@ export const useWallet = () => {
   const address = computed(() => {
     if (store.walletType === WALLET_TYPE.BITCOIN) {
       return btcAddress.value
+    } else if (store.walletType === WALLET_TYPE.FRACTAL) {
+      return fractalAddress.value
     } else {
       return evmAddress.value
     }
@@ -41,6 +46,8 @@ export const useWallet = () => {
   function getInstance () {
     if (store.walletType === WALLET_TYPE.BITCOIN) {
       return getBTCWalletInstance()
+    } else if (store.walletType === WALLET_TYPE.FRACTAL) {
+      return getFractalWalletInstance()
     } else {
       return getEVMWalletInstance()
     }
@@ -57,6 +64,8 @@ export const useWallet = () => {
   async function onLogout () {
     if (store.walletType === WALLET_TYPE.BITCOIN) {
       await onBTCLogout()
+    } else if (store.walletType === WALLET_TYPE.FRACTAL) {
+      await onFractalLogout()
     } else {
       await onEVMLogout()
     }
@@ -71,38 +80,47 @@ export const useWallet = () => {
   async function getPublicKey () {
     if (address.value == null) throw new Error('Please login wallet before call function')
     const instance = getInstance()
-    if (instance.type === WALLET_TYPE.BITCOIN) {
+    if (instance.type === WALLET_TYPE.BITCOIN || instance.type === WALLET_TYPE.FRACTAL) {
       return await instance.getPublicKey()
     } else {
       return address.value
     }
   }
 
-  async function transfer (parameter: TransactionParameter): Promise<string>
   async function transfer (parameter: TransactionParameter, chainName: string): Promise<string>
   async function transfer (parameter: TransactionParameter, chainName: string, contractAddress: string): Promise<string>
-  async function transfer (parameter: TransactionParameter, chainName?: string, contractAddress?: string) {
+  async function transfer (parameter: TransactionParameter, chainName: string, contractAddress?: string) {
     if (address.value == null) throw new Error('Please login wallet before call function')
     const instance = getInstance()
-    if (chainName == null) {
-      if (instance.type !== WALLET_TYPE.BITCOIN) throw new Error('transfer mismatch wallet type')
-      await instance.switchNetwork(import.meta.env.VITE_NETWORK)
-      return await instance.transfer(parameter)
-    }
-    if (instance.type === WALLET_TYPE.BITCOIN) throw new Error('transfer mismatch wallet type')
     const config = CHAIN_CONFIG_MAP[chainName as CHAIN] as ChainConfig
     if (config == null) throw new Error(`Chain ${chainName} not config`)
-    await instance.switchToChain(config)
-    if (contractAddress != null) {
-      return await instance.tokenTransfer(parameter, contractAddress)
+    /** BTC  */
+    if (instance.type === WALLET_TYPE.BITCOIN) {
+      if (chainName !== CHAIN.BTC) throw new Error('transfer mismatch wallet type')
+      await instance.switchNetwork(import.meta.env.VITE_NETWORK)
+      return await instance.transfer(parameter)
+    /** FRACTAL */
+    } else if (instance.type === WALLET_TYPE.FRACTAL) {
+      if (chainName !== CHAIN.FRACTAL) throw new Error('transfer mismatch wallet type')
+      await instance.switchChain(config.chainName)
+      return await instance.transfer(parameter)
     } else {
-      return await instance.transfer(parameter, config)
+      /** EVM  */
+      await instance.switchToChain(config)
+      if (contractAddress != null) {
+        return await instance.tokenTransfer(parameter, contractAddress)
+      } else {
+        return await instance.transfer(parameter, config)
+      }
     }
   }
 
   async function calcEstimateGas (parameter: TransactionParameter, chainName?: string) {
     const instance = getInstance()
     if (instance.type === WALLET_TYPE.BITCOIN) {
+      const gasLimit = 200
+      return Number(parameter.gas) * gasLimit * 1e-8
+    } else if (instance.type === WALLET_TYPE.FRACTAL) {
       const gasLimit = 200
       return Number(parameter.gas) * gasLimit * 1e-8
     } else {

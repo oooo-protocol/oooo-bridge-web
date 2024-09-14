@@ -6,6 +6,7 @@ import { type PairConfig } from './use-config'
 import { CHAIN } from '@/entities/chain'
 import { captureMessage } from '@sentry/vue'
 import { getConfigFromChain } from '@/lib/utils'
+import { retrieveBitcoinOrFractalAddressBalance } from '@/request/api/bridge'
 
 export const useBalance = (from: Ref<string>, config: ComputedRef<PairConfig | null>) => {
   const { address, getInstance } = useWallet()
@@ -19,8 +20,8 @@ export const useBalance = (from: Ref<string>, config: ComputedRef<PairConfig | n
       const _config = config.value
       if (_address == null || _config == null || [CHAIN.BINANCE_PAY, CHAIN.BINANCE_CEX].includes(from.value as CHAIN)) return
       const instance = getInstance()
-      if (instance.type === WALLET_TYPE.BITCOIN) {
-        return await instance.getNativeBalance()
+      if (instance.type === WALLET_TYPE.BITCOIN || instance.type === WALLET_TYPE.FRACTAL) {
+        return await retrieveBitcoinOrFractalAddressBalance(from.value as CHAIN.BTC | CHAIN.FRACTAL, _address)
       }
       const chainConfig = getConfigFromChain(from.value)
       if (_config.assetType === SERVER_ASSET.COIN) {

@@ -2,6 +2,7 @@ import axios from '../axios'
 import { type Transaction, type TransactionConfig, type Chain, TRANSACTION_STATUS, type EstimateData } from '@/entities/bridge'
 import type { Pagination } from './type'
 import { combineURLs, getConfigFromChain } from '@/lib/utils'
+import { CHAIN_BLOCK_EXPLORER_URL_MAP } from '@/lib/constants'
 import axiosOrigin from 'axios'
 import { CHAIN } from '@/entities/chain'
 import { type ServerTokenPair, type ServerConfigs } from '@/entities/server'
@@ -136,10 +137,11 @@ export const retrieveEthereumTransactionStatus = async (chain: CHAIN, hash: stri
   }
 }
 
-export const retrieveBitcoinTransactionStatus = async (hash: string) => {
+export const retrieveBitcoinOrFractalTransactionStatus = async (chain: CHAIN.FRACTAL | CHAIN.BTC, hash: string) => {
+  const blockExplorerUrl = CHAIN_BLOCK_EXPLORER_URL_MAP[chain]
   const { data: { status } } = await axiosOrigin.get<{
     status: { confirmed: boolean }
-  }>(combineURLs(import.meta.env.VITE_MEMPOOL_URL, `/tx/${hash}`), {
+  }>(combineURLs(blockExplorerUrl, `/api/tx/${hash}`), {
     withCredentials: false
   })
   if (status.confirmed) {
@@ -153,8 +155,8 @@ export const retrieveTransactionStatus = async (
   chain: CHAIN,
   hash: string
 ) => {
-  if (chain === CHAIN.BTC) {
-    return await retrieveBitcoinTransactionStatus(hash)
+  if (chain === CHAIN.BTC || chain === CHAIN.FRACTAL) {
+    return await retrieveBitcoinOrFractalTransactionStatus(chain, hash)
   } else {
     return await retrieveEthereumTransactionStatus(chain, hash)
   }
@@ -171,4 +173,14 @@ export const retrieveBitcoinRecommendFees = async () => {
     withCredentials: false
   })
   return data
+}
+
+export const retrieveBitcoinOrFractalAddressBalance = async (chain: CHAIN.FRACTAL | CHAIN.BTC, address: string) => {
+  const blockExplorerUrl = CHAIN_BLOCK_EXPLORER_URL_MAP[chain]
+  const { data: { chain_stats: chainStats } } = await axiosOrigin.get<{
+    chain_stats: { funded_txo_sum: number, spent_txo_sum: number }
+  }>(combineURLs(blockExplorerUrl, `/api/address/${address}`), {
+    withCredentials: false
+  })
+  return ((chainStats.funded_txo_sum - chainStats.spent_txo_sum) * Math.pow(10, -8)).toString()
 }
