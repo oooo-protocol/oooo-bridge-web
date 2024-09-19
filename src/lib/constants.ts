@@ -63,7 +63,9 @@ import {
   OPBNB_LIVENET,
   SONEIUM_TESTNET,
   STORY_TESTNET,
-  FRACTAL_TESTNET
+  FRACTAL_TESTNET,
+  BERA_TESTNET,
+  PLUME_TESTNET
 } from 'oooo-components/lib/chain-config'
 import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
@@ -233,6 +235,14 @@ export const CHAIN_LIST = [
     testnetImage: 'https://oooo.money/static/images/fractal-testnet.png',
     value: CHAIN.FRACTAL,
     [NETWORK.TESTNET]: FRACTAL_TESTNET
+  }, {
+    image: 'https://oooo.money/static/images/bera.png',
+    value: CHAIN.BERA,
+    [NETWORK.TESTNET]: BERA_TESTNET
+  }, {
+    image: 'https://oooo.money/static/images/plume.png',
+    value: CHAIN.PLUME,
+    [NETWORK.TESTNET]: PLUME_TESTNET
   }
 ]
 
