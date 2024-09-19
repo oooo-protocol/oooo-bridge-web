@@ -23,7 +23,8 @@ import XLAYER_PC_IMAGE from '@/assets/images/activity/xlayer.png'
 import XLAYER_MOBILE_IMAGE from '@/assets/images/activity/xlayer-mob.png'
 import SCROLL_PC_IMAGE from '@/assets/images/activity/scroll.png'
 import SCROLL_MOBILE_IMAGE from '@/assets/images/activity/scroll-mob.png'
-
+import B2_PC_IMAGE from '@/assets/images/activity/b2.jpg'
+import B2_MOBILE_IMAGE from '@/assets/images/activity/b2-mob.jpg'
 import { NETWORK } from '@/entities/chain'
 
 const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
@@ -33,6 +34,12 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
       imageMobile: SCROLL_MOBILE_IMAGE,
       imagePC: SCROLL_PC_IMAGE,
       url: 'https://scroll.io/canvas/badge-contract/0xE3346Df9bDF67308152E69a1EEF7173094F51989'
+    },
+    {
+      name: 'B2 activity',
+      imageMobile: B2_MOBILE_IMAGE,
+      imagePC: B2_PC_IMAGE,
+      url: 'https://deagent.ai/'
     },
     {
       name: 'XLayer activity',
