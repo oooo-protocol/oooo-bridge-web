@@ -236,7 +236,7 @@ export const CHAIN_LIST = [
     value: CHAIN.FRACTAL,
     [NETWORK.TESTNET]: FRACTAL_TESTNET
   }, {
-    image: 'https://oooo.money/static/images/bear.png',
+    image: 'https://oooo.money/static/images/bera.png',
     value: CHAIN.BERA,
     [NETWORK.TESTNET]: BERA_TESTNET
   }, {
