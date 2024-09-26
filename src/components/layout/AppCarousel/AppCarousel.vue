@@ -89,7 +89,7 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
   <Carousel
     class="app-navbar mx-[24px] md:mx-[48px] xl:mx-auto xl:max-w-[832px] xl:w-full"
     v-if="activies.length > 0"
-    :plugins="[Autoplay()]"
+    :plugins="[Autoplay({ stopOnInteraction: false, stopOnMouseEnter: true })]"
     :opts="{
       loop: true
     }"
