@@ -27,11 +27,19 @@ import B2_PC_IMAGE from '@/assets/images/activity/b2.jpg'
 import B2_MOBILE_IMAGE from '@/assets/images/activity/b2-mob.jpg'
 import LASER_DOG_PC_IMAGE from '@/assets/images/activity/laser-dog.jpg'
 import LASER_DOG_MOBILE_IMAGE from '@/assets/images/activity/laser-dog-mob.jpg'
+import BOB_PC_IMAGE from '@/assets/images/activity/bob.jpg'
+import BOB_MOBILE_IMAGE from '@/assets/images/activity/bob-mob.jpg'
 
 import { NETWORK } from '@/entities/chain'
 
 const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
   ? [
+    {
+      name: 'Bob activity',
+      imageMobile: BOB_MOBILE_IMAGE,
+      imagePC: BOB_PC_IMAGE,
+      url: 'https://app.gobob.xyz/apps?category=Bridge'
+    },
     {
       name: 'Laser dog activity',
       imageMobile: LASER_DOG_MOBILE_IMAGE,
