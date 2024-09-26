@@ -40,5 +40,6 @@ export enum CHAIN {
   SONEIUM = 'soneium',
   STORY = 'story',
   BERA = 'bera',
-  PLUME = 'plume'
+  PLUME = 'plume',
+  GRAVITY = 'gravity'
 }

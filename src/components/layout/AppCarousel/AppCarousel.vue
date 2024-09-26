@@ -23,16 +23,32 @@ import XLAYER_PC_IMAGE from '@/assets/images/activity/xlayer.png'
 import XLAYER_MOBILE_IMAGE from '@/assets/images/activity/xlayer-mob.png'
 import SCROLL_PC_IMAGE from '@/assets/images/activity/scroll.png'
 import SCROLL_MOBILE_IMAGE from '@/assets/images/activity/scroll-mob.png'
+import B2_PC_IMAGE from '@/assets/images/activity/b2.jpg'
+import B2_MOBILE_IMAGE from '@/assets/images/activity/b2-mob.jpg'
+import LASER_DOG_PC_IMAGE from '@/assets/images/activity/laser-dog.jpg'
+import LASER_DOG_MOBILE_IMAGE from '@/assets/images/activity/laser-dog-mob.jpg'
 
 import { NETWORK } from '@/entities/chain'
 
 const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
   ? [
     {
+      name: 'Laser dog activity',
+      imageMobile: LASER_DOG_MOBILE_IMAGE,
+      imagePC: LASER_DOG_PC_IMAGE,
+      url: 'https://laserdog.xyz/'
+    },
+    {
       name: 'Scroll activity',
       imageMobile: SCROLL_MOBILE_IMAGE,
       imagePC: SCROLL_PC_IMAGE,
       url: 'https://scroll.io/canvas/badge-contract/0xE3346Df9bDF67308152E69a1EEF7173094F51989'
+    },
+    {
+      name: 'B2 activity',
+      imageMobile: B2_MOBILE_IMAGE,
+      imagePC: B2_PC_IMAGE,
+      url: 'https://deagent.ai/'
     },
     {
       name: 'XLayer activity',
@@ -73,7 +89,7 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
   <Carousel
     class="app-navbar mx-[24px] md:mx-[48px] xl:mx-auto xl:max-w-[832px] xl:w-full"
     v-if="activies.length > 0"
-    :plugins="[Autoplay()]"
+    :plugins="[Autoplay({ stopOnInteraction: false, stopOnMouseEnter: true })]"
     :opts="{
       loop: true
     }"
