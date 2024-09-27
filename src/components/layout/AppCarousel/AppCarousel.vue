@@ -17,8 +17,6 @@ import OOOO_3_PC_IMAGE from '@/assets/images/activity/oooo-3.jpg'
 import OOOO_3_MOBILE_IMAGE from '@/assets/images/activity/oooo-3-mob.jpg'
 import VOUCHER_PC_IMAGE from '@/assets/images/activity/voucher.jpg'
 import VOUCHER_MOBILE_IMAGE from '@/assets/images/activity/voucher-mob.jpg'
-import MACARON_PC_IMAGE from '@/assets/images/activity/macaron.png'
-import MACARON_MOBILE_IMAGE from '@/assets/images/activity/macaron-mob.png'
 import XLAYER_PC_IMAGE from '@/assets/images/activity/xlayer.png'
 import XLAYER_MOBILE_IMAGE from '@/assets/images/activity/xlayer-mob.png'
 import SCROLL_PC_IMAGE from '@/assets/images/activity/scroll.png'
@@ -55,12 +53,6 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
       imageMobile: XLAYER_MOBILE_IMAGE,
       imagePC: XLAYER_PC_IMAGE,
       url: 'https://app.galxe.com/quest/oooo/GCS1YtxTSY'
-    },
-    {
-      name: 'Macaron activity',
-      imageMobile: MACARON_MOBILE_IMAGE,
-      imagePC: MACARON_PC_IMAGE,
-      url: 'https://competition.macaron.xyz/#/points'
     },
     {
       name: 'o-Voucher',
