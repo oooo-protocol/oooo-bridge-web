@@ -25,8 +25,6 @@ import SCROLL_PC_IMAGE from '@/assets/images/activity/scroll.png'
 import SCROLL_MOBILE_IMAGE from '@/assets/images/activity/scroll-mob.png'
 import B2_PC_IMAGE from '@/assets/images/activity/b2.jpg'
 import B2_MOBILE_IMAGE from '@/assets/images/activity/b2-mob.jpg'
-import LASER_DOG_PC_IMAGE from '@/assets/images/activity/laser-dog.jpg'
-import LASER_DOG_MOBILE_IMAGE from '@/assets/images/activity/laser-dog-mob.jpg'
 import BOB_PC_IMAGE from '@/assets/images/activity/bob.jpg'
 import BOB_MOBILE_IMAGE from '@/assets/images/activity/bob-mob.jpg'
 
@@ -39,12 +37,6 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
       imageMobile: BOB_MOBILE_IMAGE,
       imagePC: BOB_PC_IMAGE,
       url: 'https://app.gobob.xyz/apps?category=Bridge'
-    },
-    {
-      name: 'Laser dog activity',
-      imageMobile: LASER_DOG_MOBILE_IMAGE,
-      imagePC: LASER_DOG_PC_IMAGE,
-      url: 'https://laserdog.xyz/'
     },
     {
       name: 'Scroll activity',
