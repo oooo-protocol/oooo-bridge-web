@@ -17,26 +17,24 @@ import OOOO_3_PC_IMAGE from '@/assets/images/activity/oooo-3.jpg'
 import OOOO_3_MOBILE_IMAGE from '@/assets/images/activity/oooo-3-mob.jpg'
 import VOUCHER_PC_IMAGE from '@/assets/images/activity/voucher.jpg'
 import VOUCHER_MOBILE_IMAGE from '@/assets/images/activity/voucher-mob.jpg'
-import MACARON_PC_IMAGE from '@/assets/images/activity/macaron.png'
-import MACARON_MOBILE_IMAGE from '@/assets/images/activity/macaron-mob.png'
 import XLAYER_PC_IMAGE from '@/assets/images/activity/xlayer.png'
 import XLAYER_MOBILE_IMAGE from '@/assets/images/activity/xlayer-mob.png'
 import SCROLL_PC_IMAGE from '@/assets/images/activity/scroll.png'
 import SCROLL_MOBILE_IMAGE from '@/assets/images/activity/scroll-mob.png'
 import B2_PC_IMAGE from '@/assets/images/activity/b2.jpg'
 import B2_MOBILE_IMAGE from '@/assets/images/activity/b2-mob.jpg'
-import LASER_DOG_PC_IMAGE from '@/assets/images/activity/laser-dog.jpg'
-import LASER_DOG_MOBILE_IMAGE from '@/assets/images/activity/laser-dog-mob.jpg'
+import BOB_PC_IMAGE from '@/assets/images/activity/bob.jpg'
+import BOB_MOBILE_IMAGE from '@/assets/images/activity/bob-mob.jpg'
 
 import { NETWORK } from '@/entities/chain'
 
 const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
   ? [
     {
-      name: 'Laser dog activity',
-      imageMobile: LASER_DOG_MOBILE_IMAGE,
-      imagePC: LASER_DOG_PC_IMAGE,
-      url: 'https://laserdog.xyz/'
+      name: 'Bob activity',
+      imageMobile: BOB_MOBILE_IMAGE,
+      imagePC: BOB_PC_IMAGE,
+      url: 'https://app.gobob.xyz/apps?category=Bridge'
     },
     {
       name: 'Scroll activity',
@@ -55,12 +53,6 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
       imageMobile: XLAYER_MOBILE_IMAGE,
       imagePC: XLAYER_PC_IMAGE,
       url: 'https://app.galxe.com/quest/oooo/GCS1YtxTSY'
-    },
-    {
-      name: 'Macaron activity',
-      imageMobile: MACARON_MOBILE_IMAGE,
-      imagePC: MACARON_PC_IMAGE,
-      url: 'https://competition.macaron.xyz/#/points'
     },
     {
       name: 'o-Voucher',

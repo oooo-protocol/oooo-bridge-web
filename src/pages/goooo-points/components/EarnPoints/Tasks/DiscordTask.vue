@@ -71,7 +71,7 @@ const { isPending: loading, mutate } = useMutation({
 
 <template>
   <TaskItem
-    hint="+1 Goooo & +10 Lumoz Points"
+    hint="+1 Goooo"
     icon="discord1"
     :succeed="succeed"
   >
@@ -84,14 +84,6 @@ const { isPending: loading, mutate } = useMutation({
           target="_blank"
         >
           @oooo
-        </a>
-        &
-        <a
-          class="underline"
-          href="https://discord.com/invite/lumozorg"
-          target="_blank"
-        >
-          @Lumoz
         </a>
         ON DISCORD
       </p>
@@ -141,22 +133,6 @@ const { isPending: loading, mutate } = useMutation({
             size="sm"
             as="a"
             href="https://discord.gg/ooooprotocol"
-            target="_blank"
-          >
-            JOIN
-          </Button>
-        </TaskItem>
-        <TaskItem description="FOLLOW @Lumoz ON DISCORD">
-          <template #title>
-            <p class="text-[#abeec4]">
-              STEP 2
-            </p>
-          </template>
-          <Button
-            class="w-[90px]"
-            size="sm"
-            as="a"
-            href="https://discord.com/invite/lumozorg"
             target="_blank"
           >
             JOIN
