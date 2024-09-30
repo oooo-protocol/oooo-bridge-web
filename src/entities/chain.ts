@@ -42,5 +42,6 @@ export enum CHAIN {
   BERA = 'bera',
   PLUME = 'plume',
   GRAVITY = 'gravity',
-  CITREA = 'citrea'
+  CITREA = 'citrea',
+  DUCKCHAIN = 'duckchain'
 }
