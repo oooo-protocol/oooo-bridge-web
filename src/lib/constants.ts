@@ -68,7 +68,9 @@ import {
   PLUME_TESTNET,
   FRACTAL_LIVENET,
   GRAVITY_LIVENET,
-  GRAVITY_TESTNET
+  GRAVITY_TESTNET,
+  CITREA_TESTNET,
+  DUCKCHAIN_TESTNET
 } from 'oooo-components/lib/chain-config'
 import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
@@ -252,6 +254,14 @@ export const CHAIN_LIST = [
     value: CHAIN.GRAVITY,
     [NETWORK.TESTNET]: GRAVITY_TESTNET,
     [NETWORK.LIVENET]: GRAVITY_LIVENET
+  }, {
+    image: 'https://oooo.money/static/images/citrea.png',
+    value: CHAIN.CITREA,
+    [NETWORK.TESTNET]: CITREA_TESTNET
+  }, {
+    image: 'https://oooo.money/static/images/duckchain.png',
+    value: CHAIN.DUCKCHAIN,
+    [NETWORK.TESTNET]: DUCKCHAIN_TESTNET
   }
 ]
 
