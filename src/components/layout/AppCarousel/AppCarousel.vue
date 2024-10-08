@@ -40,7 +40,7 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
       name: 'Scroll activity',
       imageMobile: SCROLL_MOBILE_IMAGE,
       imagePC: SCROLL_PC_IMAGE,
-      url: 'https://scroll.io/canvas/badge-contract/0xE3346Df9bDF67308152E69a1EEF7173094F51989'
+      url: 'https://x.com/oooo_money/status/1841447841920950704?s=46'
     },
     {
       name: 'B2 activity',
