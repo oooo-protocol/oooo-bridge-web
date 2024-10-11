@@ -70,7 +70,9 @@ import {
   GRAVITY_LIVENET,
   GRAVITY_TESTNET,
   CITREA_TESTNET,
-  DUCKCHAIN_TESTNET
+  DUCKCHAIN_TESTNET,
+  BITFINITY_TESTNET,
+  BITFINITY_LIVENET
 } from 'oooo-components/lib/chain-config'
 import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
@@ -262,6 +264,11 @@ export const CHAIN_LIST = [
     image: 'https://oooo.money/static/images/duckchain.png',
     value: CHAIN.DUCKCHAIN,
     [NETWORK.TESTNET]: DUCKCHAIN_TESTNET
+  }, {
+    image: 'https://oooo.money/static/images/bitfinity.png',
+    value: CHAIN.BITFINITY,
+    [NETWORK.TESTNET]: BITFINITY_TESTNET,
+    [NETWORK.LIVENET]: BITFINITY_LIVENET
   }
 ]
 
