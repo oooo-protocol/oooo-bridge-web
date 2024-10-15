@@ -273,6 +273,7 @@ export const CHAIN_LIST = [
     [NETWORK.LIVENET]: BITFINITY_LIVENET
   }, {
     image: 'https://oooo.money/static/images/unichain.png',
+    testnetImage: 'https://oooo.money/static/images/unichain-testnet.png',
     value: CHAIN.UNICHAIN,
     [NETWORK.TESTNET]: UNICHAIN_TESTNET
   }, {
