@@ -44,5 +44,7 @@ export enum CHAIN {
   GRAVITY = 'gravity',
   CITREA = 'citrea',
   DUCKCHAIN = 'duckchain',
-  BITFINITY = 'bitfinity'
+  BITFINITY = 'bitfinity',
+  UNICHAIN = 'unichain',
+  ZIRCUIT = 'zircuit'
 }
