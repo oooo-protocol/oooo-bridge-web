@@ -72,7 +72,9 @@ import {
   CITREA_TESTNET,
   DUCKCHAIN_TESTNET,
   BITFINITY_TESTNET,
-  BITFINITY_LIVENET
+  BITFINITY_LIVENET,
+  UNICHAIN_TESTNET,
+  ZIRCUIT_TESTNET
 } from 'oooo-components/lib/chain-config'
 import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
@@ -269,6 +271,14 @@ export const CHAIN_LIST = [
     value: CHAIN.BITFINITY,
     [NETWORK.TESTNET]: BITFINITY_TESTNET,
     [NETWORK.LIVENET]: BITFINITY_LIVENET
+  }, {
+    image: 'https://oooo.money/static/images/unichain.png',
+    value: CHAIN.UNICHAIN,
+    [NETWORK.TESTNET]: UNICHAIN_TESTNET
+  }, {
+    image: 'https://oooo.money/static/images/zircuit.png',
+    value: CHAIN.ZIRCUIT,
+    [NETWORK.TESTNET]: ZIRCUIT_TESTNET
   }
 ]
 
