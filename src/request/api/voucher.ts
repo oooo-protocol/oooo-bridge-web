@@ -58,3 +58,10 @@ export const checkVoucherPackIsClaimed = async (data: SignatureRequest & {
     data
   })
 }
+
+export const retrieveVoucherPack = async (data: { packCode: string }) => {
+  return await axios<VoucherPack>({
+    url: '/voucher/pack/info',
+    params: data
+  })
+}
