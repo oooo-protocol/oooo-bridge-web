@@ -21,8 +21,8 @@ import XLAYER_PC_IMAGE from '@/assets/images/activity/xlayer.png'
 import XLAYER_MOBILE_IMAGE from '@/assets/images/activity/xlayer-mob.png'
 import SCROLL_PC_IMAGE from '@/assets/images/activity/scroll.png'
 import SCROLL_MOBILE_IMAGE from '@/assets/images/activity/scroll-mob.png'
-import B2_PC_IMAGE from '@/assets/images/activity/b2.jpg'
-import B2_MOBILE_IMAGE from '@/assets/images/activity/b2-mob.jpg'
+import DEAGENT_PC_IMAGE from '@/assets/images/activity/deagent.jpg'
+import DEAGENT_MOBILE_IMAGE from '@/assets/images/activity/deagent-mob.jpg'
 import BOB_PC_IMAGE from '@/assets/images/activity/bob.jpg'
 import BOB_MOBILE_IMAGE from '@/assets/images/activity/bob-mob.jpg'
 
@@ -30,6 +30,12 @@ import { NETWORK } from '@/entities/chain'
 
 const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
   ? [
+    {
+      name: 'Deagent activity',
+      imageMobile: DEAGENT_MOBILE_IMAGE,
+      imagePC: DEAGENT_PC_IMAGE,
+      url: 'https://bit.ly/alpha_x'
+    },
     {
       name: 'Bob activity',
       imageMobile: BOB_MOBILE_IMAGE,
@@ -41,12 +47,6 @@ const activies = import.meta.env.VITE_NETWORK === NETWORK.LIVENET
       imageMobile: SCROLL_MOBILE_IMAGE,
       imagePC: SCROLL_PC_IMAGE,
       url: 'https://x.com/oooo_money/status/1841447841920950704?s=46'
-    },
-    {
-      name: 'B2 activity',
-      imageMobile: B2_MOBILE_IMAGE,
-      imagePC: B2_PC_IMAGE,
-      url: 'https://deagent.ai/'
     },
     {
       name: 'XLayer activity',
