@@ -9,7 +9,6 @@ import { useQuery, useQueryClient } from '@tanstack/vue-query'
 import { retrieveVoucherPacks, claimVoucherPack, checkVoucherPackIsClaimed } from '@/request/api/voucher'
 import OVoucherPackPlaceholder from './OVoucherPackPlaceholder.vue'
 import PageLoading from '@/components/PageLoading.vue'
-import dayjs from 'dayjs'
 import { ethers } from 'ethers'
 import { useToast } from 'oooo-components/ui/toast'
 import { type VoucherPackClaimConfig, type VoucherPack } from '@/entities/voucher'
@@ -17,7 +16,7 @@ import { CHAIN_CONFIG_MAP } from '@/lib/constants'
 import { type CHAIN } from '@/entities/chain'
 import useSignatureStore from '@/store/signature'
 import { timeout } from '@/lib/utils'
-import OVoucherPackDescriptionModal from './OVoucherPackDescriptionModal.vue'
+import OVoucherPack from './OVoucherPack.vue'
 
 const { address, getWalletInstance } = useEVMWallet()
 const { toast } = useToast()
@@ -65,10 +64,6 @@ watch(packs, (packs) => {
 }, {
   immediate: true
 })
-
-const formatDate = (date: string) => {
-  return dayjs(date).format('YYYY/MM/DD HH:mm')
-}
 
 const onChainClaim = async (claimConfig: VoucherPackClaimConfig) => {
   const instance = getWalletInstance()
@@ -151,12 +146,6 @@ const onClickEnter = () => {
   })
 }
 
-const onClickDescription = (description: string) => {
-  createFuncall(OVoucherPackDescriptionModal, {
-    modelValue: true,
-    description
-  })
-}
 </script>
 
 <template>
@@ -204,33 +193,11 @@ const onClickDescription = (description: string) => {
           :key="pack.packRecordId"
           class="basis-auto select-none"
         >
-          <div
-            class="o-voucher-pack flex flex-col"
-            :class="{
-              'o-voucher-pack--active': activePackId === pack.packRecordId
-            }"
+          <OVoucherPack
+            :pack="pack"
+            :active="activePackId === pack.packRecordId"
             @click="activePackId = pack.packRecordId"
-          >
-            <p class="text-[28px] md:text-[32px] font-[500] -tracking-tighter">
-              {{ pack.title }}
-            </p>
-            <p class="text-[14px] md:text-[16px] font-[500] -tracking-tighter">
-              o-VOUCHER PACK
-            </p>
-            <div class="mt-[16px] md:mt-[42px] flex justify-between items-end text-[10px]">
-              <div>
-                <p>CLAIM DURING</p>
-                <p class="w-[160px] md:w-full">
-                  {{ formatDate(pack.startTime) }} - {{ formatDate(pack.endTime) }}
-                </p>
-              </div>
-              <Icon
-                class="text-[18px] text-[#616161]"
-                name="issue"
-                @click="onClickDescription(pack.description)"
-              />
-            </div>
-          </div>
+          />
         </CarouselItem>
       </CarouselContent>
       <Icon
@@ -265,14 +232,4 @@ const onClickDescription = (description: string) => {
 </template>
 
 <style lang="scss" scoped>
-.o-voucher-pack {
-  @apply mt-[8px] w-[220px] md:w-[310px] p-[16px] pr-[10px] bg-[#e4e7e5] rounded-md text-[#000000]/[0.85] cursor-pointer;
-  box-shadow: 0 -16px 0 -8px #8b8b8b;
-  transition: all 0.2s ease-in-out;
-
-  &--active {
-    @apply bg-[#bce4cd];
-    box-shadow: 0 -16px 0 -8px #677d70;
-  }
-}
 </style>

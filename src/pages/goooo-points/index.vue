@@ -34,7 +34,7 @@ const navs = [
 
 <template>
   <a
-    href="https://app.gobob.xyz/apps?category=Bridge"
+    href="https://bit.ly/alpha_x"
     target="_blank"
     class="goooo-header relative shrink-0 flex flex-col justify-center items-center px-[30px] h-[250px] xl:h-[520px] text-center"
   />
@@ -84,10 +84,10 @@ const navs = [
 <style lang="scss" scoped>
 .goooo {
   &-header {
-    background: url('@/assets/images/goooo-points/bob-mob.jpg') no-repeat center / cover;
+    background: url('@/assets/images/goooo-points/deagent-goooo-mob.jpg') no-repeat center / cover;
 
     @media (min-width: 768px) {
-      background-image: url('@/assets/images/goooo-points/bob.jpg')
+      background-image: url('@/assets/images/goooo-points/deagent-goooo.jpg')
     }
   }
 }

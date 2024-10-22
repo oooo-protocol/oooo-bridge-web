@@ -74,7 +74,9 @@ import {
   BITFINITY_TESTNET,
   BITFINITY_LIVENET,
   UNICHAIN_TESTNET,
-  ZIRCUIT_TESTNET
+  ZIRCUIT_TESTNET,
+  APECHAIN_TESTNET,
+  APECHAIN_LIVENET
 } from 'oooo-components/lib/chain-config'
 import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
@@ -280,6 +282,11 @@ export const CHAIN_LIST = [
     image: 'https://oooo.money/static/images/zircuit.png',
     value: CHAIN.ZIRCUIT,
     [NETWORK.TESTNET]: ZIRCUIT_TESTNET
+  }, {
+    image: 'https://oooo.money/static/images/apechain.png',
+    value: CHAIN.APECHAIN,
+    [NETWORK.TESTNET]: APECHAIN_TESTNET,
+    [NETWORK.LIVENET]: APECHAIN_LIVENET
   }
 ]
 
