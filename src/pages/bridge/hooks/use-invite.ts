@@ -14,11 +14,9 @@ export const useInvite = () => {
   watch(address, async (address) => {
     if (address == null) return
     if (inviteCode.value == null) return
-    if (signature.signInfo == null) {
-      await signature.onSign()
-    }
+    const signInfo = await signature.getSignInfo()
     await createInvitationRelationship({
-      ...signature.signInfo!,
+      ...signInfo,
       inviteCode: inviteCode.value
     })
   }, {

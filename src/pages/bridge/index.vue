@@ -32,6 +32,8 @@ import { useInvite } from './hooks/use-invite'
 import VoucherCell from './components/VoucherCell.vue'
 import { formatEtherError } from '@/lib/utils'
 import { type EthersError } from 'ethers'
+import { RewardsHub } from './components/RewardsHub'
+import { useEstimatePoints } from './hooks/use-estimate-points'
 
 const { address, transfer, sign, getPublicKey, onConnect, calcEstimateGas } = useWallet()
 
@@ -200,7 +202,7 @@ const createCexTransaction = async (parameter: {
   /**
    * Not need infinite retries to ensure transfer submitted
    */
-  const { fromTxnHash } = await sendTransfer({
+  const { fromTxnHash } = await createTransaction({
     ...parameter,
     signature,
     signContent,
@@ -340,20 +342,18 @@ const onSubmit = async (values: Record<string, any>) => {
   }
 }
 
-const availableGooooPoints = computed(() => {
-  if (import.meta.env.VITE_NETWORK !== NETWORK.LIVENET) return false
-  return false
-})
+const { estimatePoints } = useEstimatePoints(pairId)
 </script>
 
 <template>
   <OContainer class="oooo-bridge">
+    <RewardsHub />
     <OHeader
       class="flex flex-col md:flex-row-reverse md:items-center md:pt-[40px]"
       :title="title"
     >
       <div class="flex flex-col md:flex-row md:items-center mt-[20px] md:mt-0 md:mr-auto">
-        <p class="mr-[8px] text-[14px] md:text-base text-[#a4a4a4] -tracking-tighter">
+        <p class="mr-[8px] text-[14px] text-[#a4a4a4] -tracking-tighter">
           TOKEN
         </p>
         <TokenSelect
@@ -420,7 +420,7 @@ const availableGooooPoints = computed(() => {
                   :decimal="config?.frontDecimal ?? 8"
                 />
                 <button
-                  class="xl:text-[19px] pl-[8px] cursor-pointer text-[#ff5402]"
+                  class="pl-[8px] cursor-pointer text-[#ff5402]"
                   :class="{
                     'cursor-not-allowed': !address
                   }"
@@ -441,20 +441,19 @@ const availableGooooPoints = computed(() => {
             <p>TO</p>
           </div>
           <ChainSelect
-            class="items-start"
             v-model="to"
             :list="toChainList"
           >
             <template #suffix>
               <div class="flex flex-col items-end md:flex-row md:items-center gap-[12px] md:gap-[8px] w-full select-none overflow-hidden">
-                <p class="w-full text-[19px] text-right truncate">
+                <p class="w-full text-right truncate">
                   {{ toAmount }}
                 </p>
                 <p
-                  v-if="availableGooooPoints"
+                  v-if="estimatePoints"
                   class="shrink-0 px-[4px] rounded-md bg-[#4d4f4e]"
                 >
-                  +{{ availableGooooPoints }} Goooo
+                  +{{ estimatePoints }} Goooo
                 </p>
               </div>
             </template>
@@ -483,7 +482,7 @@ const availableGooooPoints = computed(() => {
           />
         </FormField>
         <Button
-          class="mt-[32px] w-full md:w-[240px]"
+          class="mt-[32px] w-full"
           :disabled="isInsufficient || estimateData == null"
           :loading="loading || estimating"
         >
@@ -555,8 +554,20 @@ const availableGooooPoints = computed(() => {
 
 <style lang="scss" scoped>
 .oooo-bridge {
+  .o-header {
+    padding: 24px 30px;
+
+    :deep(.o-header__title) {
+      font-size: 14px;
+    }
+  }
+
+  .o-content {
+    padding: 24px 30px;
+  }
+
   &__title {
-    @apply mb-[8px] text-[#a4a4a4] text-[14px] md:text-[16px];
+    @apply mb-[8px] text-[#a4a4a4] text-[14px];
     &:not(:first-child) {
       @apply mt-[16px];
     }

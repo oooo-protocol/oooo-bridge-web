@@ -99,7 +99,7 @@ const route = useRoute()
 watch(route, (route) => {
   const name = route.name
   const appEl = document.querySelector('#app') as HTMLElement
-  if (name === 'goooo') {
+  if (name === 'quest') {
     appEl.style.background = '#000'
   } else {
     appEl.style.background = ''
@@ -132,23 +132,36 @@ watch(route, (route) => {
     <WalletConnectButton />
   </AppHeader>
   <div
-    class="mt-[80px]"
-    v-if="route.name !== 'goooo'"
+    :class="[
+      route.meta.fullscreen
+        ? 'w-full'
+        : route.name === 'bridge'
+          ? 'xl:w-[580px]'
+          : 'xl:w-[832px]',
+      {
+        'mx-[24px] md:mx-[48px] xl:mx-auto': !route.meta.fullscreen,
+      }
+    ]"
   >
-    <AppCarousel />
-    <AppNotification
-      class="mt-[20px]"
-    />
-  </div>
-  <!-- 不设置默认key，以文件名区分(Vue默认)，确保复用最外层容器 -->
-  <RouterView v-slot="{ Component }">
-    <!-- Romove KeepAlive to ensure child page is latest data -->
-    <!-- <KeepAlive> -->
-    <component
-      :is="Component"
-    />
+    <div
+      class="mt-[80px]"
+      v-if="route.name !== 'quest'"
+    >
+      <AppCarousel />
+      <AppNotification
+        class="mt-[20px]"
+      />
+    </div>
+    <!-- 不设置默认key，以文件名区分(Vue默认)，确保复用最外层容器 -->
+    <RouterView v-slot="{ Component }">
+      <!-- Romove KeepAlive to ensure child page is latest data -->
+      <!-- <KeepAlive> -->
+      <component
+        :is="Component"
+      />
     <!-- </KeepAlive> -->
-  </RouterView>
+    </RouterView>
+  </div>
   <AppFooter />
 </template>
 

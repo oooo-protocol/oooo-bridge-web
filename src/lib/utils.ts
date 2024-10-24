@@ -1,6 +1,7 @@
 import { type EthersError } from 'ethers'
 import { CHAIN_CONFIG_MAP } from './constants'
 import { type CHAIN } from '@/entities/chain'
+import dayjs from 'dayjs'
 
 function trimExtraChar (value: string, char: string, regExp: RegExp) {
   const index = value.indexOf(char)
@@ -136,4 +137,8 @@ export function getConfigFromChain (chain: string) {
   const chainConfig = CHAIN_CONFIG_MAP[chain as CHAIN]
   if (chainConfig == null) throw new Error(`Chain ${chain} not config`)
   return chainConfig
+}
+
+export function formatDate (date: string | number | Date, format = 'YYYY/MM/DD HH:mm') {
+  return dayjs(date).format(format)
 }

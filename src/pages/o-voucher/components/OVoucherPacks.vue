@@ -89,9 +89,10 @@ const onChainClaim = async (claimConfig: VoucherPackClaimConfig) => {
 const checkIsClaimed = async (packRecordId: number) => {
   let claimed = false
   const timestamp = +new Date()
+  const signInfo = await signature.getSignInfo()
   while (!claimed) {
     claimed = await checkVoucherPackIsClaimed({
-      ...signature.signInfo!,
+      ...signInfo,
       packRecordId
     })
     if (!claimed) {
@@ -115,8 +116,9 @@ const onClaim = async () => {
     if (selectedPack.claimConfig != null) {
       hash = await onChainClaim(selectedPack.claimConfig)
     }
+    const signInfo = await signature.getSignInfo()
     const succeed = await claimVoucherPack({
-      ...signature.signInfo!,
+      ...signInfo,
       claimTxnHash: hash,
       packRecordId: selectedPack.packRecordId
     })

@@ -28,13 +28,19 @@ const routes: RouteRecordRaw[] = [
       }
     ]
   }, {
-    path: '/goooo/callback/twitter',
-    name: 'CallbackTwitter',
-    component: async () => await import('@/pages/goooo-points/callback/twitter.vue')
+    path: '/goooo/:pathMatch(.*)*',
+    redirect: (to) => {
+      const pathMatch = typeof to.params.pathMatch === 'string' ? to.params.pathMatch : to.params.pathMatch.join('/')
+      return pathMatch !== '' ? `/quest/${pathMatch}` : '/quest'
+    }
   }, {
-    path: '/goooo/callback/discord',
+    path: '/quest/callback/twitter',
+    name: 'CallbackTwitter',
+    component: async () => await import('@/pages/quest/callback/twitter.vue')
+  }, {
+    path: '/quest/callback/discord',
     name: 'CallbackDiscord',
-    component: async () => await import('@/pages/goooo-points/callback/discord.vue')
+    component: async () => await import('@/pages/quest/callback/discord.vue')
   }, {
     path: '/binance-pay',
     name: 'binance-pay',
@@ -53,13 +59,16 @@ const router = createRouter({
 
 if (import.meta.env.VITE_MODE === 'dev' || import.meta.env.VITE_MODE === 'livenet') {
   router.addRoute('layout', {
-    path: '/goooo',
-    name: 'goooo',
-    component: async () => await import('@/pages/goooo-points/index.vue')
+    path: '/quest',
+    name: 'quest',
+    component: async () => await import('@/pages/quest/index.vue'),
+    meta: {
+      fullscreen: true
+    }
   })
 }
 
-export const WHITE_LIST = ['bridge', 'binance-pay', 'goooo', 'o-voucher']
+export const WHITE_LIST = ['bridge', 'binance-pay', 'quest', 'o-voucher']
 
 router.beforeEach((to, from, next) => {
   const { address } = useWallet()

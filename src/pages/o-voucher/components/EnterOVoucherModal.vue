@@ -23,8 +23,9 @@ const { toast } = useToast()
 
 const { isPending: loading, mutate } = useMutation({
   mutationFn: async () => {
+    const signInfo = await signature.getSignInfo()
     return await redeemVoucherPack({
-      ...signature.signInfo!,
+      ...signInfo,
       packCode: code.value
     })
   },

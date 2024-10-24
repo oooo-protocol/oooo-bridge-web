@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { Button } from 'oooo-components/ui/button'
-import { createFuncall } from 'vue-funcall'
-import { type NETWORK, WALLET_TYPE, WalletConnectModal } from 'oooo-components/oooo-wallet'
+import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
+import { useWallet } from '@/composables/hooks/use-wallet'
+
+const { onConnect } = useWallet()
 
 const onClickConnect = () => {
-  createFuncall(WalletConnectModal, {
-    modelValue: true,
-    type: WALLET_TYPE.ETHEREUM,
-    network: import.meta.env.VITE_NETWORK as NETWORK
-  })
+  onConnect(WALLET_TYPE.ETHEREUM)
 }
 </script>
 

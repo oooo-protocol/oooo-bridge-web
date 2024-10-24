@@ -26,7 +26,7 @@ const selected = computed(() => {
   <Select
     v-model="model"
   >
-    <SelectTrigger class="w-auto px-[8px] py-[4px]">
+    <SelectTrigger class="shrink-0 w-auto px-[8px] py-[4px]">
       <div
         class="flex items-center gap-[8px] pr-[15px] select-none"
         v-if="selected"

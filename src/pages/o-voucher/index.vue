@@ -7,7 +7,7 @@ import { useCodeQuery } from './hooks/use-code-query'
 
 const router = useRouter()
 
-useSignatureCheck()
+useSignatureCheck({ immediate: true })
 useCodeQuery()
 </script>
 

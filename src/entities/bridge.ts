@@ -63,6 +63,10 @@ export interface Transaction {
   platformAddr?: string
   platformName?: string
   binancePayOrder?: BinancePayOrder
+  /**
+   * return the point that be earned for this transaction
+   */
+  point?: string
 }
 
 export interface EstimateData {
