@@ -46,5 +46,6 @@ export enum CHAIN {
   DUCKCHAIN = 'duckchain',
   BITFINITY = 'bitfinity',
   UNICHAIN = 'unichain',
-  ZIRCUIT = 'zircuit'
+  ZIRCUIT = 'zircuit',
+  APECHAIN = 'apechain'
 }
