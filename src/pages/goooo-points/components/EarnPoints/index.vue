@@ -13,7 +13,6 @@ import BRIDGE_TO_EARN_IMAGE from '@/assets/images/goooo-points/bridge.png'
 import InviteFriendsTask from './Tasks/InviteFriendsTask.vue'
 import InviteBridgeTask from './Tasks/InviteBridgeTask.vue'
 
-import MacaronBridgeTask from './Tasks/MacaronBridgeTask.vue'
 import XLayerBridgeTask from './Tasks/XLayerBridgeTask.vue'
 import ScrollBridgeTask from './Tasks/ScrollBridgeTask.vue'
 </script>
@@ -43,7 +42,6 @@ import ScrollBridgeTask from './Tasks/ScrollBridgeTask.vue'
       :img="BRIDGE_TO_EARN_IMAGE"
     >
       <ScrollBridgeTask />
-      <MacaronBridgeTask />
       <XLayerBridgeTask />
     </TaskCard>
   </div>
