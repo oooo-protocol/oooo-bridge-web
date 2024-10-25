@@ -4,7 +4,9 @@ import AppCarouselItem from './AppCarouselItem.vue'
 import { useQuery } from '@tanstack/vue-query'
 import { retrieveBridgeBannerConfig } from '@/request/api/config'
 import { CarouselPro, CarouselItem } from '@/components/CarouselPro'
+import { getArrayFirst } from '@preflower/utils'
 
+const route = useRoute()
 const { data } = useQuery({
   queryKey: ['/config/bridge/banners'],
   queryFn: retrieveBridgeBannerConfig
@@ -13,9 +15,18 @@ const banners = computed(() => {
   if (data.value == null) return []
   return data.value
     .filter(item => {
-      const current = new Date()
-      if (item.startDate != null && current < new Date(item.startDate)) return false
-      if (item.endDate != null && current > new Date(item.endDate)) return false
+      /**
+       * add query `date` to test quest is work.
+       */
+      const queryDateBase64 = getArrayFirst(route.query.date)
+      const queryDate = queryDateBase64 != null
+        ? isNaN(+new Date(atob(queryDateBase64)))
+          ? null
+          : +new Date(atob(queryDateBase64))
+        : null
+      const current = queryDate ?? +new Date()
+      if (item.startDate != null && current < +new Date(item.startDate)) return false
+      if (item.endDate != null && current > +new Date(item.endDate)) return false
       return true
     })
     .sort((a, b) => {
