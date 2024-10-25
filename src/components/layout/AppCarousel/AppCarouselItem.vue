@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{
-  imageMobile: string
+  imageMobile?: string
   imagePC: string
   link?: string
 }>()
@@ -24,12 +24,12 @@ const props = defineProps<{
   width: 100%;
   background: no-repeat center/contain;
 
-  padding-bottom: 22.63%;
-  background-image: v-bind("`url('${props.imageMobile}')`");
+  padding-bottom: 15.625%;
+  background-image: v-bind("`url('${props.imagePC}')`");
 
-  @media (min-width: 768px) {
-    padding-bottom: 15.625%;
-    background-image: v-bind("`url('${props.imagePC}')`");
+  @media (max-width: 768px) {
+    padding-bottom: 22.63%;
+    background-image: v-bind("`url('${props.imageMobile}')`");
   }
 }
 </style>

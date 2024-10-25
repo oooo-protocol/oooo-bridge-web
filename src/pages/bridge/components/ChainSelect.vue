@@ -109,7 +109,7 @@ const onChainClick = (chain: Chain) => {
         class="w-[32px] h-[32px]"
         :src="CHAIN_IMAGE_MAP[selected.chainName as CHAIN]"
       >
-      <p class="xl:text-[19px]">
+      <p>
         {{ selected.showName }}
       </p>
       <Icon

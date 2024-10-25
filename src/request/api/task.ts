@@ -88,9 +88,10 @@ export const retrieveTopAccountList = async (params: Pagination) => {
   })
 }
 
-export const retrieveAccountInfo = async (data: SignatureRequest) => {
+export const retrieveAccountInfo = async (data: { walletAddress: string }) => {
   return await axios<{
     point: string
+    gem: string
     rank: string
     inviteCode: string
   }>({

@@ -8,6 +8,7 @@ import {
 import { type CHAIN } from '@/entities/chain'
 import { usePreventUnload } from '../../hooks/use-before-unload'
 import BinancePayDetail from './BinancePayDetail.vue'
+import QuestCarousel from '../QuestCarousel.vue'
 
 const open = defineModel<boolean>()
 
@@ -39,6 +40,9 @@ usePreventUnload()
           v-bind="props"
           @close="open = false"
         />
+        <div class="mt-[40px] md:mt-[50px] md:px-[44px]">
+          <QuestCarousel />
+        </div>
       </template>
     </DialogContent>
   </Dialog>
