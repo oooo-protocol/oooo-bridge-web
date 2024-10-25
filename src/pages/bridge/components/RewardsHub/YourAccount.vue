@@ -25,7 +25,7 @@ const { data } = useQuery({
         +{{ data.point }}
       </PointTag>
       <PointTag type="gem">
-        +{{ data.gem }}
+        {{ data.gem }}
       </PointTag>
     </template>
     <EVMWalletConnectButton
