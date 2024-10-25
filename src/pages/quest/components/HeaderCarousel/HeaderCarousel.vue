@@ -3,7 +3,9 @@ import { CarouselPro, CarouselItem } from '@/components/CarouselPro'
 import { retrieveQuestConfig } from '@/request/api/config'
 import { useQuery } from '@tanstack/vue-query'
 import DEFAULT_BANNER_IMAGE from '@/assets/images/quest/banner.png'
+import { getArrayFirst } from '@preflower/utils'
 
+const route = useRoute()
 const { isPending, data } = useQuery({
   queryKey: ['/config/quests'],
   queryFn: retrieveQuestConfig
@@ -12,9 +14,18 @@ const banners = computed(() => {
   const questsTopBanners = data.value?.questsTopBanners ?? []
   const activeBanners = questsTopBanners
     .filter(item => {
-      const current = new Date()
-      if (item.startDate != null && current < new Date(item.startDate)) return false
-      if (item.endDate != null && current > new Date(item.endDate)) return false
+      /**
+       * add query `date` to test quest is work.
+       */
+      const queryDateBase64 = getArrayFirst(route.query.date)
+      const queryDate = queryDateBase64 != null
+        ? isNaN(+new Date(atob(queryDateBase64)))
+          ? null
+          : +new Date(atob(queryDateBase64))
+        : null
+      const current = queryDate ?? +new Date()
+      if (item.startDate != null && current < +new Date(item.startDate)) return false
+      if (item.endDate != null && current > +new Date(item.endDate)) return false
       return true
     })
     .sort((a, b) => {
