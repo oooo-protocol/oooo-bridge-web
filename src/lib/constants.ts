@@ -76,7 +76,10 @@ import {
   UNICHAIN_TESTNET,
   ZIRCUIT_TESTNET,
   APECHAIN_TESTNET,
-  APECHAIN_LIVENET
+  APECHAIN_LIVENET,
+  TELOS_TESTNET,
+  TELOS_LIVENET,
+  ABSTRACT_TESTNET
 } from 'oooo-components/lib/chain-config'
 import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
@@ -287,6 +290,15 @@ export const CHAIN_LIST = [
     value: CHAIN.APECHAIN,
     [NETWORK.TESTNET]: APECHAIN_TESTNET,
     [NETWORK.LIVENET]: APECHAIN_LIVENET
+  }, {
+    image: 'https://oooo.money/static/images/telos.png',
+    value: CHAIN.TELOS,
+    [NETWORK.TESTNET]: TELOS_TESTNET,
+    [NETWORK.LIVENET]: TELOS_LIVENET
+  }, {
+    image: 'https://oooo.money/static/images/abstract.png',
+    value: CHAIN.ABSTRACT,
+    [NETWORK.TESTNET]: ABSTRACT_TESTNET
   }
 ]
 
