@@ -47,5 +47,7 @@ export enum CHAIN {
   BITFINITY = 'bitfinity',
   UNICHAIN = 'unichain',
   ZIRCUIT = 'zircuit',
-  APECHAIN = 'apechain'
+  APECHAIN = 'apechain',
+  TELOS = 'telos',
+  ABSTRACT = 'abstract'
 }
