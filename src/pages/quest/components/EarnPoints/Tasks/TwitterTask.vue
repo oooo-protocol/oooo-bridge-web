@@ -157,7 +157,7 @@ const onVerify = async () => {
         <TaskItem description="VERIFY YOUR FOLLOW STATUS">
           <template #title>
             <p class="text-[#abeec4]">
-              STEP 3
+              STEP 2
             </p>
           </template>
           <Button

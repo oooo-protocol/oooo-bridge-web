@@ -154,7 +154,7 @@ const { isPending: loading, mutate } = useMutation({
         <TaskItem description="AUTHORIZE DISCORD TO ACCESS YOUR FOLLOW STATUS">
           <template #title>
             <p class="text-[#abeec4]">
-              STEP 3
+              STEP 2
             </p>
           </template>
           <Button
