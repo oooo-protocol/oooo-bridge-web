@@ -40,7 +40,7 @@ watch(marquee, async () => {
 <template>
   <div
     v-if="message"
-    class="flex justify-center items-center gap-[8px] px-[12px] py-[8px] rounded-md mx-[24px] md:mx-[48px] xl:mx-auto xl:max-w-[832px] xl:w-full"
+    class="flex justify-center items-center gap-[8px] px-[12px] py-[8px] rounded-md"
     :class="{
       'bg-[#ff3300]/[0.3]': message.type === 'warning',
       'bg-[#88b099]/[0.3]': message.type === 'notice'

@@ -41,8 +41,9 @@ const { isPending: loading, data } = useQuery({
   queryKey: ['/voucher/record/list', pageSize, pageNumber, currentCategory],
   queryFn: async () => {
     const status = currentCategory.value === VOUCHER_ALL_STATUS ? undefined : currentCategory.value as VOUCHER_STATUS
+    const signInfo = await signature.getSignInfo()
     return await retrieveVouchers({
-      ...signature.signInfo!,
+      ...signInfo,
       page: pageNumber.value,
       pagesize: pageSize,
       status

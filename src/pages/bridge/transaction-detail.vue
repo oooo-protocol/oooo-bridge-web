@@ -13,6 +13,8 @@ import TRANSFER_PROCESSING_IMAGE from '@/assets/images/transfer-loading.gif'
 import { type CHAIN } from '@/entities/chain'
 import { getArrayFirst } from '@preflower/utils'
 import TransactionStatus from './components/TransactionStatus.vue'
+import QuestCarousel from './components/QuestCarousel.vue'
+import PointTag from './components/PointTag.vue'
 
 enum TRANSACTION_DETAIL_STATUS {
   PENDING,
@@ -197,7 +199,7 @@ useQuery({
             class="shrink-0 mx-auto mt-[13px] text-[24px] text-primary rotate-90 md:rotate-0"
             name="next"
           />
-          <div class="w-full">
+          <div class="relative w-full">
             <div class="transaction-detail-token">
               <img
                 class="transaction-detail-token__image"
@@ -214,9 +216,19 @@ useQuery({
               :chain-name="data.toChainName"
               :txn-hash="data.toTxnHash"
             />
+            <PointTag
+              v-if="data.point"
+              class="absolute right-0 -top-[40px]"
+              type="goooo"
+            >
+              +{{ data.point }}
+            </PointTag>
           </div>
         </div>
       </template>
+      <div class="mt-[40px] md:mt-[50px] md:px-[44px]">
+        <QuestCarousel />
+      </div>
     </OContent>
   </OContainer>
 </template>

@@ -184,3 +184,13 @@ export const retrieveBitcoinOrFractalAddressBalance = async (chain: CHAIN.FRACTA
   })
   return ((chainStats.funded_txo_sum - chainStats.spent_txo_sum) * Math.pow(10, -8)).toString()
 }
+
+export const retrievePairEstimatePoint = async (data: {
+  pairId: number
+  walletAddress: string
+}) => {
+  return await axios<string>({
+    url: '/point/pair',
+    params: data
+  })
+}

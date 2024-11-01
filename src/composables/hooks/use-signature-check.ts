@@ -1,7 +1,9 @@
 import useSignatureStore from '@/store/signature'
 import { useWallet } from './use-wallet'
 
-export const useSignatureCheck = () => {
+export const useSignatureCheck = ({
+  immediate = true
+}) => {
   const { address, onLogout } = useWallet()
   const signature = useSignatureStore()
 
@@ -15,7 +17,7 @@ export const useSignatureCheck = () => {
       void onLogout()
     }
   }, {
-    immediate: true
+    immediate
   })
 
   return {

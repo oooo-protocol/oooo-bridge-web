@@ -46,7 +46,15 @@ Nonce: ${uuid()}`
     signInfo.value = undefined
   }
 
+  const getSignInfo = async () => {
+    if (signInfo.value == null || address.value !== signInfo.value.walletAddress) {
+      await onSign()
+    }
+    return signInfo.value!
+  }
+
   return {
+    getSignInfo,
     signInfo,
     onSign,
     onSignout

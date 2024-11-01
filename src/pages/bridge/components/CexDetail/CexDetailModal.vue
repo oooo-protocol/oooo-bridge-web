@@ -16,6 +16,7 @@ import { useQuery } from '@tanstack/vue-query'
 import { retrieveTransactionDetail } from '@/request/api/bridge'
 import PageLoading from '@/components/PageLoading.vue'
 import { usePreventUnload } from '../../hooks/use-before-unload'
+import QuestCarousel from '../QuestCarousel.vue'
 
 const open = defineModel<boolean>()
 
@@ -220,6 +221,9 @@ const binanceInfo = computed(() => {
             </Button>
           </div>
         </template>
+        <div class="mt-[40px] md:mt-[50px] md:px-[44px]">
+          <QuestCarousel />
+        </div>
       </template>
     </DialogContent>
   </Dialog>
