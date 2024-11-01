@@ -48,7 +48,7 @@ const isShowTask = computed(() => {
     <div class="quest-item__content flex items-start md:items-center">
       <img
         v-if="quest.icon"
-        class="quest-item__image shrink-0 mr-[8px] md:mr-[12px] h-[24px] md:h-[78px]"
+        class="quest-item__image shrink-0 mr-[8px] md:mr-[12px] w-[24px] h-[24px] md:w-[78px] md:h-[78px]"
         :src="quest.icon"
       >
       <div class="text-[14px] font-medium -tracking-tighter">
