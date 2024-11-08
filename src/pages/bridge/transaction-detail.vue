@@ -118,6 +118,7 @@ const toBeCheckedHash = computed(() => {
     return {
       source: 'from',
       chain: data.value.fromChainName,
+      type: data.value.fromChainType,
       hash: data.value.fromTxnHash
     }
   }
@@ -125,6 +126,7 @@ const toBeCheckedHash = computed(() => {
     return {
       source: 'to',
       chain: data.value.toChainName,
+      type: data.value.toChainType,
       hash: data.value.toTxnHash!
     }
   }
@@ -135,6 +137,7 @@ useQuery({
   queryKey: ['retrieveTransactionStatus', toBeCheckedHash],
   queryFn: async () => await retrieveTransactionStatus(
     toBeCheckedHash.value!.chain,
+    toBeCheckedHash.value!.type,
     toBeCheckedHash.value!.hash
   ),
   refetchInterval: (query) => {

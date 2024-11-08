@@ -20,14 +20,17 @@ export const useBalance = (from: Ref<string>, config: ComputedRef<PairConfig | n
       const _config = config.value
       if (_address == null || _config == null || [CHAIN.BINANCE_PAY, CHAIN.BINANCE_CEX].includes(from.value as CHAIN)) return
       const instance = getInstance()
+      const chainConfig = getConfigFromChain(from.value)
       if (instance.type === WALLET_TYPE.BITCOIN || instance.type === WALLET_TYPE.FRACTAL) {
         return await retrieveBitcoinOrFractalAddressBalance(from.value as CHAIN.BTC | CHAIN.FRACTAL, _address)
-      }
-      const chainConfig = getConfigFromChain(from.value)
-      if (_config.assetType === SERVER_ASSET.COIN) {
+      } else if (instance.type === WALLET_TYPE.APTOS) {
         return await instance.getNativeBalance(_address, chainConfig)
       } else {
-        return await instance.getTokenBalance(_address, chainConfig, _config.contractAddress)
+        if (_config.assetType === SERVER_ASSET.COIN) {
+          return await instance.getNativeBalance(_address, chainConfig)
+        } else {
+          return await instance.getTokenBalance(_address, chainConfig, _config.contractAddress)
+        }
       }
     },
     onError: () => {

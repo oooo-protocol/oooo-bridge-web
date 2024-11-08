@@ -9,7 +9,7 @@ import { useMutation } from '@tanstack/vue-query'
 import { retrieveTransactionConfig, createTransaction } from '@/request/api/bridge'
 import Decimal from 'decimal.js-light'
 import { useWallet } from '@/composables/hooks/use-wallet'
-import { EVM_ADDRESS_REGEXP } from '@/lib/constants'
+import { APTOS_ADDRESS_REGEXP, EVM_ADDRESS_REGEXP } from '@/lib/constants'
 import { useToast } from 'oooo-components/ui/toast/use-toast'
 import PageLoading from '@/components/PageLoading.vue'
 import { createFuncall } from 'vue-funcall'
@@ -26,7 +26,7 @@ import { CexDetailModal, BinancePayDetailModal } from './components/CexDetail'
 import { useConfig } from './hooks/use-config'
 import { useEstimateData } from './hooks/use-estimate-data'
 import { useTimeSpend } from './hooks/use-time-spend'
-import { SERVER_ASSET } from '@/entities/server'
+import { SERVER_ASSET, SERVER_CHAIN_TYPE } from '@/entities/server'
 import TooltipPro from 'oooo-components/ui/TooltipPro.vue'
 import { useInvite } from './hooks/use-invite'
 import VoucherCell from './components/VoucherCell.vue'
@@ -79,12 +79,14 @@ const serviceFee = computed(() => {
 })
 const SPEND_TEXT = useTimeSpend(to, config)
 /** --------------------- Update receiveAddress field  -------------- */
-const checkAddress = (address: string, chain: string) => {
+const checkAddress = (address: string, chain: string, type: SERVER_CHAIN_TYPE) => {
   if (chain === CHAIN.BTC) {
     const network = import.meta.env.VITE_NETWORK === NETWORK.LIVENET ? Network.mainnet : Network.testnet
     return validate(address, network)
   } else if (chain === CHAIN.FRACTAL) {
     return validate(address, Network.mainnet)
+  } else if (type === SERVER_CHAIN_TYPE.APTOS) {
+    return APTOS_ADDRESS_REGEXP.test(address)
   } else {
     // it's assumed to be a EVM address
     return EVM_ADDRESS_REGEXP.test(address)
@@ -92,12 +94,13 @@ const checkAddress = (address: string, chain: string) => {
 }
 
 watch([to, address], ([to, address]) => {
+  if (config.value == null) return
   if (form.receiveAddress != null) {
-    const isValid = checkAddress(form.receiveAddress, to)
+    const isValid = checkAddress(form.receiveAddress, to, config.value.toChainType)
     if (isValid) return
   }
   if (address != null) {
-    const isValid = checkAddress(address, to)
+    const isValid = checkAddress(address, to, config.value.toChainType)
     if (isValid) {
       form.receiveAddress = address
       return
@@ -147,7 +150,7 @@ const rules: Record<string, RuleExpression<any>> = {
     return true
   },
   receiveAddress: (val: string) => {
-    const isValid = checkAddress(val, to.value)
+    const isValid = checkAddress(val, to.value, config.value!.toChainType)
     if (!isValid) {
       return 'INVALID WALLET ADDRESS'
     }
@@ -189,11 +192,11 @@ const createCexTransaction = async (parameter: {
 }) => {
   if (![CHAIN.BINANCE_CEX, CHAIN.BINANCE_PAY].includes(parameter.fromChain as CHAIN)) throw new Error(`${parameter.fromChain} NOT SUPPORT CEX TRANSACTION`)
 
-  const signContent = JSON.stringify({
+  const message = JSON.stringify({
     ...parameter,
     timestamp: +new Date()
   })
-  const signature = await sign(signContent)
+  const { signature, signContent } = await sign(message)
   const publicKey = await getPublicKey()
   if (publicKey == null) {
     throw new Error('INVALID SIGNATURE, PLEASE TRY AGAIN.')
@@ -257,12 +260,13 @@ const createChainTransaction = async (parameter: {
      */
     checkBalanceIsEnough(parameter.amount, estimateGas)
   }
-  const signContent = JSON.stringify({
+  const message = JSON.stringify({
     ...parameter,
     timestamp: +new Date()
   })
-  const signature = await sign(signContent)
+  const { signature, signContent } = await sign(message)
   const publicKey = await getPublicKey()
+  console.log('publicKey: ', publicKey)
   if (publicKey == null) {
     throw new Error('INVALID SIGNATURE, PLEASE TRY AGAIN.')
   }

@@ -79,7 +79,8 @@ import {
   APECHAIN_LIVENET,
   TELOS_TESTNET,
   TELOS_LIVENET,
-  ABSTRACT_TESTNET
+  ABSTRACT_TESTNET,
+  MOVEMENT_APTOS_TESTNET
 } from 'oooo-components/lib/chain-config'
 import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
@@ -299,6 +300,10 @@ export const CHAIN_LIST = [
     image: 'https://oooo.money/static/images/abstract.png',
     value: CHAIN.ABSTRACT,
     [NETWORK.TESTNET]: ABSTRACT_TESTNET
+  }, {
+    image: 'https://oooo.money/static/images/movement.png',
+    value: CHAIN.MOVEMENT_APTOS,
+    [NETWORK.TESTNET]: MOVEMENT_APTOS_TESTNET
   }
 ]
 
@@ -345,3 +350,5 @@ export const TRANSACTION_STATUS_MAP = {
 }
 
 export const EVM_ADDRESS_REGEXP = /^(0x)[0-9A-Fa-f]{40}$/
+
+export const APTOS_ADDRESS_REGEXP = /^(0x)[0-9A-Fa-f]{64}$/

@@ -59,7 +59,11 @@ export enum SERVER_CHAIN_TYPE {
    * Ethereum & Ethereum L2
    */
   ETHEREUM_L2,
-  CEX
+  CEX,
+  /**
+   * Aptos & Aptos compatible network (such as: Movment)
+   */
+  APTOS
 }
 
 export interface ServerChain {

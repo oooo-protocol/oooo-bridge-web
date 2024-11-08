@@ -49,5 +49,6 @@ export enum CHAIN {
   ZIRCUIT = 'zircuit',
   APECHAIN = 'apechain',
   TELOS = 'telos',
-  ABSTRACT = 'abstract'
+  ABSTRACT = 'abstract',
+  MOVEMENT_APTOS = 'movement_aptos'
 }
