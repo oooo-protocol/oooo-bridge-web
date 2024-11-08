@@ -34,14 +34,17 @@ const { data: balance } = useQuery({
   queryFn: async () => {
     const _address = address.value!
     const instance = getInstance()
+    const chainConfig = getConfigFromChain(props.chain.chainName)
     if (instance.type === WALLET_TYPE.BITCOIN || instance.type === WALLET_TYPE.FRACTAL) {
       return await retrieveBitcoinOrFractalAddressBalance(props.chain.chainName as CHAIN.BTC | CHAIN.FRACTAL, _address)
-    }
-    const chainConfig = getConfigFromChain(props.chain.chainName)
-    if (props.chain.assetType === SERVER_ASSET.COIN) {
+    } else if (instance.type === WALLET_TYPE.APTOS) {
       return await instance.getNativeBalance(_address, chainConfig)
     } else {
-      return await instance.getTokenBalance(_address, chainConfig, props.chain.contractAddress)
+      if (props.chain.assetType === SERVER_ASSET.COIN) {
+        return await instance.getNativeBalance(_address, chainConfig)
+      } else {
+        return await instance.getTokenBalance(_address, chainConfig, props.chain.contractAddress)
+      }
     }
   },
   staleTime: 5 * 1000,
