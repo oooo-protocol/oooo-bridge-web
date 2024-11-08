@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useWallet } from '@/composables/hooks/use-wallet'
 import { type Chain } from '@/entities/bridge'
-import { CHAIN } from '@/entities/chain'
-import { SERVER_ASSET } from '@/entities/server'
+import { type CHAIN } from '@/entities/chain'
+import { SERVER_ASSET, SERVER_CHAIN_TYPE } from '@/entities/server'
 import { useQuery } from '@tanstack/vue-query'
 import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
 import { CHAIN_IMAGE_MAP } from '@/lib/constants'
@@ -17,16 +17,15 @@ const { address, walletType, getInstance } = useWallet()
 
 const enabled = computed(() => {
   if (address.value == null) return false
-  switch (props.chain.chainName) {
-    case CHAIN.BINANCE_PAY:
-    case CHAIN.BINANCE_CEX:
+  switch (props.chain.type) {
+    case SERVER_CHAIN_TYPE.CEX:
       return false
-    case CHAIN.BTC:
-      return walletType.value === WALLET_TYPE.BITCOIN
-    case CHAIN.FRACTAL:
-      return walletType.value === WALLET_TYPE.FRACTAL
+    case SERVER_CHAIN_TYPE.BITCOIN_L2:
+      return walletType.value === WALLET_TYPE.BITCOIN || walletType.value === WALLET_TYPE.FRACTAL
+    case SERVER_CHAIN_TYPE.APTOS:
+      return walletType.value === WALLET_TYPE.APTOS
     default:
-      return walletType.value === WALLET_TYPE.ETHEREUM
+      return true
   }
 })
 const { data: balance } = useQuery({
@@ -34,10 +33,12 @@ const { data: balance } = useQuery({
   queryFn: async () => {
     const _address = address.value!
     const instance = getInstance()
+    console.log('get balance')
     const chainConfig = getConfigFromChain(props.chain.chainName)
     if (instance.type === WALLET_TYPE.BITCOIN || instance.type === WALLET_TYPE.FRACTAL) {
       return await retrieveBitcoinOrFractalAddressBalance(props.chain.chainName as CHAIN.BTC | CHAIN.FRACTAL, _address)
     } else if (instance.type === WALLET_TYPE.APTOS) {
+      console.log('get balance')
       return await instance.getNativeBalance(_address, chainConfig)
     } else {
       if (props.chain.assetType === SERVER_ASSET.COIN) {
