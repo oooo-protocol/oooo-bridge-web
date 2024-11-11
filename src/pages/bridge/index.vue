@@ -9,7 +9,7 @@ import { useMutation } from '@tanstack/vue-query'
 import { retrieveTransactionConfig, createTransaction } from '@/request/api/bridge'
 import Decimal from 'decimal.js-light'
 import { useWallet } from '@/composables/hooks/use-wallet'
-import { APTOS_ADDRESS_REGEXP, EVM_ADDRESS_REGEXP } from '@/lib/constants'
+import { APTOS_ADDRESS_REGEXP, CHAIN_TYPE_MAP, EVM_ADDRESS_REGEXP } from '@/lib/constants'
 import { useToast } from 'oooo-components/ui/toast/use-toast'
 import PageLoading from '@/components/PageLoading.vue'
 import { createFuncall } from 'vue-funcall'
@@ -19,14 +19,14 @@ import { type RuleExpression } from 'vee-validate'
 import { ResponseError } from '@/request/axios'
 import { Network, validate } from 'bitcoin-address-validation'
 import { NoAlarmException } from 'oooo-components/lib/exception'
-import { CHAIN, NETWORK } from '@/entities/chain'
+import { CHAIN, CHAIN_TYPE, NETWORK } from '@/entities/chain'
 import TransferProcessingModal from './components/TransferProcessingModal.vue'
 import { useBalance } from './hooks/use-balance'
 import { CexDetailModal, BinancePayDetailModal } from './components/CexDetail'
 import { useConfig } from './hooks/use-config'
 import { useEstimateData } from './hooks/use-estimate-data'
 import { useTimeSpend } from './hooks/use-time-spend'
-import { SERVER_ASSET, SERVER_CHAIN_TYPE } from '@/entities/server'
+import { SERVER_ASSET } from '@/entities/server'
 import TooltipPro from 'oooo-components/ui/TooltipPro.vue'
 import { useInvite } from './hooks/use-invite'
 import VoucherCell from './components/VoucherCell.vue'
@@ -79,13 +79,14 @@ const serviceFee = computed(() => {
 })
 const SPEND_TEXT = useTimeSpend(to, config)
 /** --------------------- Update receiveAddress field  -------------- */
-const checkAddress = (address: string, chain: string, type: SERVER_CHAIN_TYPE) => {
+const checkAddress = (address: string, chain: string) => {
+  const chainType = CHAIN_TYPE_MAP[chain as CHAIN]
   if (chain === CHAIN.BTC) {
     const network = import.meta.env.VITE_NETWORK === NETWORK.LIVENET ? Network.mainnet : Network.testnet
     return validate(address, network)
   } else if (chain === CHAIN.FRACTAL) {
     return validate(address, Network.mainnet)
-  } else if (type === SERVER_CHAIN_TYPE.APTOS) {
+  } else if (chainType === CHAIN_TYPE.APTOS) {
     return APTOS_ADDRESS_REGEXP.test(address)
   } else {
     // it's assumed to be a EVM address
@@ -96,11 +97,11 @@ const checkAddress = (address: string, chain: string, type: SERVER_CHAIN_TYPE) =
 watch([to, address], ([to, address]) => {
   if (config.value == null) return
   if (form.receiveAddress != null) {
-    const isValid = checkAddress(form.receiveAddress, to, config.value.toChainType)
+    const isValid = checkAddress(form.receiveAddress, to)
     if (isValid) return
   }
   if (address != null) {
-    const isValid = checkAddress(address, to, config.value.toChainType)
+    const isValid = checkAddress(address, to)
     if (isValid) {
       form.receiveAddress = address
       return
@@ -150,7 +151,7 @@ const rules: Record<string, RuleExpression<any>> = {
     return true
   },
   receiveAddress: (val: string) => {
-    const isValid = checkAddress(val, to.value, config.value!.toChainType)
+    const isValid = checkAddress(val, to.value)
     if (!isValid) {
       return 'INVALID WALLET ADDRESS'
     }

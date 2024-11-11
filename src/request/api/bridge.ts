@@ -2,10 +2,10 @@ import axios from '../axios'
 import { type Transaction, type TransactionConfig, type Chain, TRANSACTION_STATUS, type EstimateData } from '@/entities/bridge'
 import type { Pagination } from './type'
 import { combineURLs, getConfigFromChain } from '@/lib/utils'
-import { CHAIN_BLOCK_EXPLORER_URL_MAP, CHAIN_CONFIG_MAP } from '@/lib/constants'
+import { CHAIN_BLOCK_EXPLORER_URL_MAP, CHAIN_CONFIG_MAP, CHAIN_TYPE_MAP } from '@/lib/constants'
 import axiosOrigin from 'axios'
-import { type CHAIN } from '@/entities/chain'
-import { type ServerTokenPair, type ServerConfigs, SERVER_CHAIN_TYPE } from '@/entities/server'
+import { CHAIN_TYPE, type CHAIN } from '@/entities/chain'
+import { type ServerTokenPair, type ServerConfigs } from '@/entities/server'
 import { getRpcProvider } from 'oooo-components/lib/utils'
 import { Aptos, AptosConfig, TransactionResponseType } from '@aptos-labs/ts-sdk'
 
@@ -171,12 +171,12 @@ export const retrieveAptosTransactionStatus = async (chain: CHAIN, hash: string)
 
 export const retrieveTransactionStatus = async (
   chain: CHAIN,
-  type: SERVER_CHAIN_TYPE,
   hash: string
 ) => {
-  if (type === SERVER_CHAIN_TYPE.BITCOIN_L2) {
+  const chainType = CHAIN_TYPE_MAP[chain]
+  if (chainType === CHAIN_TYPE.BITCOIN) {
     return await retrieveBitcoinOrFractalTransactionStatus(chain, hash)
-  } else if (type === SERVER_CHAIN_TYPE.APTOS) {
+  } else if (chainType === CHAIN_TYPE.APTOS) {
     return await retrieveAptosTransactionStatus(chain, hash)
   } else {
     return await retrieveEthereumTransactionStatus(chain, hash)

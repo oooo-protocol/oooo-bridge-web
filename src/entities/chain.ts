@@ -52,3 +52,10 @@ export enum CHAIN {
   ABSTRACT = 'abstract',
   MOVEMENT_APTOS = 'movement_aptos'
 }
+
+export enum CHAIN_TYPE {
+  BITCOIN,
+  ETHEREUM,
+  CEX,
+  APTOS
+}

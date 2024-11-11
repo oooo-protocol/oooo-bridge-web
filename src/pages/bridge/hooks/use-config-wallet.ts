@@ -1,26 +1,24 @@
-import { CHAIN } from '@/entities/chain'
+import { CHAIN, CHAIN_TYPE } from '@/entities/chain'
 import useWalletStore from '@/store/wallet'
 import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
-import type { PairConfig } from './use-config'
-import { SERVER_CHAIN_TYPE } from '@/entities/server'
+import { CHAIN_TYPE_MAP } from '@/lib/constants'
 
 export const useConfigWallet = (
-  from: Ref<string>,
-  config: ComputedRef<PairConfig | null>
+  from: Ref<string>
 ) => {
   const { updateWalletType } = useWalletStore()
-  const type = computed(() => config.value?.fromChainType)
 
-  watch(() => [from.value, type.value], ([from, type]) => {
-    if (type === SERVER_CHAIN_TYPE.BITCOIN_L2) {
+  watch(from, (from) => {
+    const chianType = CHAIN_TYPE_MAP[from as CHAIN]
+    if (chianType === CHAIN_TYPE.BITCOIN) {
       if (from === CHAIN.BTC) {
         updateWalletType(WALLET_TYPE.BITCOIN)
       } else if (from === CHAIN.FRACTAL) {
         updateWalletType(WALLET_TYPE.FRACTAL)
       } else {
-        console.error(`Current chain type: ${type} is not support chain: ${from}`)
+        console.error(`Current chain type: ${chianType} is not support chain: ${from}`)
       }
-    } else if (type === SERVER_CHAIN_TYPE.APTOS) {
+    } else if (chianType === CHAIN_TYPE.APTOS) {
       updateWalletType(WALLET_TYPE.APTOS)
     } else {
       updateWalletType(WALLET_TYPE.ETHEREUM)

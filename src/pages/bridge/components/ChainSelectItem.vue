@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useWallet } from '@/composables/hooks/use-wallet'
 import { type Chain } from '@/entities/bridge'
-import { type CHAIN } from '@/entities/chain'
-import { SERVER_ASSET, SERVER_CHAIN_TYPE } from '@/entities/server'
+import { CHAIN_TYPE, type CHAIN } from '@/entities/chain'
+import { SERVER_ASSET } from '@/entities/server'
 import { useQuery } from '@tanstack/vue-query'
 import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
-import { CHAIN_IMAGE_MAP } from '@/lib/constants'
+import { CHAIN_IMAGE_MAP, CHAIN_TYPE_MAP } from '@/lib/constants'
 import { getConfigFromChain } from '@/lib/utils'
 import { retrieveBitcoinOrFractalAddressBalance } from '@/request/api/bridge'
 
@@ -17,12 +17,13 @@ const { address, walletType, getInstance } = useWallet()
 
 const enabled = computed(() => {
   if (address.value == null) return false
-  switch (props.chain.type) {
-    case SERVER_CHAIN_TYPE.CEX:
+  const chainType = CHAIN_TYPE_MAP[props.chain.chainName as CHAIN]
+  switch (chainType) {
+    case CHAIN_TYPE.CEX:
       return false
-    case SERVER_CHAIN_TYPE.BITCOIN_L2:
+    case CHAIN_TYPE.BITCOIN:
       return walletType.value === WALLET_TYPE.BITCOIN || walletType.value === WALLET_TYPE.FRACTAL
-    case SERVER_CHAIN_TYPE.APTOS:
+    case CHAIN_TYPE.APTOS:
       return walletType.value === WALLET_TYPE.APTOS
     default:
       return true

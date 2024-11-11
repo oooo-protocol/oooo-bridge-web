@@ -137,7 +137,6 @@ useQuery({
   queryKey: ['retrieveTransactionStatus', toBeCheckedHash],
   queryFn: async () => await retrieveTransactionStatus(
     toBeCheckedHash.value!.chain,
-    toBeCheckedHash.value!.type,
     toBeCheckedHash.value!.hash
   ),
   refetchInterval: (query) => {

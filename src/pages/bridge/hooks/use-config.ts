@@ -1,4 +1,4 @@
-import type { ServerTokenPairConfig, ServerToken, ServerTokenPair, ServerChain } from '@/entities/server'
+import type { ServerTokenPairConfig, ServerToken, ServerTokenPair } from '@/entities/server'
 import { useConfigQuery } from './use-config-query'
 import { useConfigWallet } from './use-config-wallet'
 import { CHAIN } from '@/entities/chain'
@@ -11,11 +11,7 @@ import type { Token, Chain } from '@/entities/bridge'
 
 export type PairConfig =
   ServerTokenPairConfig &
-  Pick<ServerToken, 'assetType' | 'assetCode' | 'frontDecimal' | 'contractAddress' | 'platformAddress'> &
-  {
-    fromChainType: ServerChain['type']
-    toChainType: ServerChain['type']
-  }
+  Pick<ServerToken, 'assetType' | 'assetCode' | 'frontDecimal' | 'contractAddress' | 'platformAddress'>
 
 interface ToPair extends Chain {
   config: ServerTokenPairConfig
@@ -144,6 +140,7 @@ export const useConfig = () => {
   })
 
   useConfigQuery(token, from, to, tokenList, filterRawPairs)
+  useConfigWallet(from)
 
   const fromChainList = computed(() => {
     if (pairMap.value == null) return []
@@ -172,12 +169,9 @@ export const useConfig = () => {
       assetCode: currentFromPair.value.assetCode,
       frontDecimal: currentFromPair.value.frontDecimal,
       contractAddress: currentFromPair.value.contractAddress,
-      platformAddress: currentFromPair.value.platformAddress,
-      fromChainType: currentFromPair.value.type,
-      toChainType: _to.type
+      platformAddress: currentFromPair.value.platformAddress
     } satisfies PairConfig
   })
-  useConfigWallet(from, config)
 
   watch([from, fromChainList], ([val]) => {
     const isValid = fromChainList.value.some(chain => chain.chainName === val)
