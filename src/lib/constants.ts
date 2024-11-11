@@ -106,7 +106,7 @@ export const CHAIN_LIST = [
   }, {
     image: 'https://oooo.money/static/images/btc.png',
     value: CHAIN.BTC,
-    type: CHAIN_TYPE.ETHEREUM,
+    type: CHAIN_TYPE.BITCOIN,
     [NETWORK.TESTNET]: BTC_TESTNET,
     [NETWORK.LIVENET]: BTC_LIVENET
   }, {
