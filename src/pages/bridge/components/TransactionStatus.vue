@@ -17,7 +17,8 @@ defineEmits<(e: 'checking') => void>()
 const txnUrl = computed(() => {
   if (props.txnHash == null) return undefined
   const explorer = CHAIN_BLOCK_EXPLORER_URL_MAP[props.chainName]
-  if (props.chainName === CHAIN.MOVEMENT_APTOS) {
+  console.log(explorer)
+  if ([CHAIN.MOVEMENT_APTOS, CHAIN.APTOS].includes(props.chainName)) {
     return combineURLs(explorer, `/txn/${props.txnHash}`)
   } else {
     return combineURLs(explorer, `/tx/${props.txnHash}`)

@@ -80,7 +80,9 @@ import {
   TELOS_TESTNET,
   TELOS_LIVENET,
   ABSTRACT_TESTNET,
-  MOVEMENT_APTOS_TESTNET
+  MOVEMENT_APTOS_TESTNET,
+  APTOS_TESTNET,
+  APTOS_LIVENET
 } from 'oooo-components/lib/chain-config'
 import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
@@ -349,6 +351,12 @@ export const CHAIN_LIST = [
     value: CHAIN.MOVEMENT_APTOS,
     type: CHAIN_TYPE.APTOS,
     [NETWORK.TESTNET]: MOVEMENT_APTOS_TESTNET
+  }, {
+    image: 'https://oooo.money/static/images/aptos.png',
+    value: CHAIN.APTOS,
+    type: CHAIN_TYPE.APTOS,
+    [NETWORK.TESTNET]: APTOS_TESTNET,
+    [NETWORK.LIVENET]: APTOS_LIVENET
   }
 ]
 
