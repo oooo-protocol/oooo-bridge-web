@@ -50,7 +50,11 @@ export function formatNumber (
  * @returns {string} The combined URL
  */
 export const combineURLs = (baseURL: string, relativeURL: string) => {
-  return relativeURL ? `${baseURL.replace(/\/+$/, '')}/${relativeURL.replace(/^\/+/, '')}` : baseURL
+  const url = new URL(baseURL)
+  if (relativeURL) {
+    url.pathname += relativeURL.replace(/^\/+/, '')
+  }
+  return url.href
 }
 
 /**

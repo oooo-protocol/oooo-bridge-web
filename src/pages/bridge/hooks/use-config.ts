@@ -11,13 +11,13 @@ import type { Token, Chain } from '@/entities/bridge'
 
 export type PairConfig =
   ServerTokenPairConfig &
-  Pick<ServerToken, 'assetType' | 'assetCode' | 'frontDecimal' | 'contractAddress' | 'platformAddress'>
+  ServerToken
 
-interface ToPair extends Chain {
+type ToPair = Chain & {
   config: ServerTokenPairConfig
 }
 
-export interface Pair extends Chain {
+export type Pair = Chain & {
   tos: ToPair[]
 }
 
@@ -49,7 +49,7 @@ export const useConfig = () => {
   const tokenList = computed(() => {
     if (configs.value == null) return undefined
 
-    const chainMap = defineMap(configs.value.chainList, 'chainName', ['chainConfig', 'showName', 'type'])
+    const chainMap = defineMap(configs.value.chainList, 'chainName', ['showName', 'type'])
 
     return configs.value.tokenList.map<Chain>(token => {
       const chain = chainMap[token.chainName]
@@ -165,11 +165,7 @@ export const useConfig = () => {
     if (_to == null) return null
     return {
       ..._to.config,
-      assetType: currentFromPair.value.assetType,
-      assetCode: currentFromPair.value.assetCode,
-      frontDecimal: currentFromPair.value.frontDecimal,
-      contractAddress: currentFromPair.value.contractAddress,
-      platformAddress: currentFromPair.value.platformAddress
+      ...currentFromPair.value
     } satisfies PairConfig
   })
 

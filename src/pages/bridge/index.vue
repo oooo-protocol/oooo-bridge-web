@@ -246,7 +246,7 @@ const createChainTransaction = async (parameter: {
     toAddress: parameter.toAddress
   })
 
-  const { assetType, assetCode, contractAddress } = config.value!
+  const { assetType, assetCode } = config.value!
 
   const transferParameter = {
     from: parameter.fromAddress,
@@ -280,12 +280,7 @@ const createChainTransaction = async (parameter: {
     toAmount: toAmount.value
   })
   try {
-    let hash: string
-    if (assetType === SERVER_ASSET.TOKEN) {
-      hash = await transfer(transferParameter, parameter.fromChain, contractAddress)
-    } else {
-      hash = await transfer(transferParameter, parameter.fromChain)
-    }
+    const hash = await transfer(transferParameter, config.value!)
     await sendTransfer({
       ...parameter,
       txnHash: hash,
