@@ -21,7 +21,8 @@ const enum TAB {
   ALL = 'tab_all',
   BITCOIN = SERVER_CHAIN_TYPE.BITCOIN_L2,
   ETHEREUM = SERVER_CHAIN_TYPE.ETHEREUM_L2,
-  CEX = SERVER_CHAIN_TYPE.CEX
+  CEX = SERVER_CHAIN_TYPE.CEX,
+  APTOS = SERVER_CHAIN_TYPE.APTOS
 }
 const tabs = [
   {
@@ -36,6 +37,9 @@ const tabs = [
   }, {
     label: 'CEX',
     value: TAB.CEX
+  }, {
+    label: 'APTOS',
+    value: TAB.APTOS
   }
 ]
 const currentTab = ref<TAB>(TAB.ALL)

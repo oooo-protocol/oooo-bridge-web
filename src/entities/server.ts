@@ -2,10 +2,21 @@ import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
 export enum SERVER_ASSET {
   COIN = 'coin',
-  TOKEN = 'erc20'
+  TOKEN = 'erc20',
+  APTOS_TOKEN = 'aptos_coin'
 }
 
-export interface ServerToken {
+export enum SERVER_TOKEN_TYPE {
+  BITCOIN = 1,
+  FRACTAL,
+  ETH_COIN,
+  ETH_TOKEN,
+  APTOS_COIN,
+  APTOS_TOKEN,
+  CEX
+}
+
+export interface CommonServerToken {
   tokenId: number
   tokenName: string
   icon: string
@@ -14,9 +25,8 @@ export interface ServerToken {
   assetType: SERVER_ASSET
   frontDecimal: number
   tokenDecimal: number
-  contractAddress: string
   /**
-   * Platform walllet address
+   * Platform wallet address
    */
   platformAddress: string
   /**
@@ -24,6 +34,31 @@ export interface ServerToken {
    */
   reg: string
 }
+
+export interface AptosServerToken extends CommonServerToken {
+  tokenType: SERVER_TOKEN_TYPE.APTOS_COIN | SERVER_TOKEN_TYPE.APTOS_TOKEN
+  aptosFunction: string
+  aptosTypeArgument: string
+}
+
+export interface BitcoinServerToken extends CommonServerToken {
+  tokenType: SERVER_TOKEN_TYPE.BITCOIN
+}
+
+export interface FractalServerToken extends CommonServerToken {
+  tokenType: SERVER_TOKEN_TYPE.FRACTAL
+}
+
+export interface EthereumServerToken extends CommonServerToken {
+  tokenType: SERVER_TOKEN_TYPE.ETH_COIN | SERVER_TOKEN_TYPE.ETH_TOKEN
+  contractAddress: string
+}
+
+export interface CexServerToken extends CommonServerToken {
+  tokenType: SERVER_TOKEN_TYPE.CEX
+}
+
+export type ServerToken = AptosServerToken | BitcoinServerToken | FractalServerToken | EthereumServerToken | CexServerToken
 
 export interface ServerTokenPairConfig {
   pairId: number
@@ -59,7 +94,11 @@ export enum SERVER_CHAIN_TYPE {
    * Ethereum & Ethereum L2
    */
   ETHEREUM_L2,
-  CEX
+  CEX,
+  /**
+   * Aptos & Aptos compatible network (such as: Movment)
+   */
+  APTOS
 }
 
 export interface ServerChain {

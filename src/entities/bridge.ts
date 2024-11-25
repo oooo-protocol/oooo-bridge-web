@@ -1,5 +1,5 @@
 import { type CHAIN } from '@/entities/chain'
-import { type ServerChain, type ServerToken } from './server'
+import type { SERVER_CHAIN_TYPE, ServerChain, ServerToken } from './server'
 
 export interface Token {
   tokenName: string
@@ -8,9 +8,8 @@ export interface Token {
   icon: string
 }
 
-export interface Chain extends ServerToken {
+export type Chain = ServerToken & {
   showName: ServerChain['showName']
-  chainConfig: ServerChain['chainConfig']
   type: ServerChain['type']
 }
 
@@ -47,6 +46,7 @@ export interface BinancePayOrder {
 export interface Transaction {
   createTime: string
   fromChainName: CHAIN
+  fromChainType: SERVER_CHAIN_TYPE
   fromAssetType: string
   fromAssetCode: string
   fromWalletAddr: string
@@ -54,6 +54,7 @@ export interface Transaction {
   fromSwapAmount: string
   fromStatus: TRANSACTION_STATUS
   toChainName: CHAIN
+  toChainType: SERVER_CHAIN_TYPE
   toAssetType: string
   toAssetCode: string
   toStatus: TRANSACTION_STATUS

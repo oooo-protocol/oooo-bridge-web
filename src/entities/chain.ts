@@ -49,5 +49,14 @@ export enum CHAIN {
   ZIRCUIT = 'zircuit',
   APECHAIN = 'apechain',
   TELOS = 'telos',
-  ABSTRACT = 'abstract'
+  ABSTRACT = 'abstract',
+  MOVEMENT_APTOS = 'movement_aptos',
+  APTOS = 'aptos'
+}
+
+export enum CHAIN_TYPE {
+  BITCOIN,
+  ETHEREUM,
+  CEX,
+  APTOS
 }

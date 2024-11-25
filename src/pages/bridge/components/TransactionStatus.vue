@@ -6,13 +6,24 @@ import { formatHashWithEllipsis } from 'oooo-components/lib/utils'
 import { CHAIN } from '@/entities/chain'
 import Icon from 'oooo-components/ui/Icon.vue'
 
-defineProps<{
+const props = defineProps<{
   status: TRANSACTION_STATUS
   chainName: CHAIN
   txnHash?: string
 }>()
 
 defineEmits<(e: 'checking') => void>()
+
+const txnUrl = computed(() => {
+  if (props.txnHash == null) return undefined
+  const explorer = CHAIN_BLOCK_EXPLORER_URL_MAP[props.chainName]
+  console.log(explorer)
+  if ([CHAIN.MOVEMENT_APTOS, CHAIN.APTOS].includes(props.chainName)) {
+    return combineURLs(explorer, `/txn/${props.txnHash}`)
+  } else {
+    return combineURLs(explorer, `/tx/${props.txnHash}`)
+  }
+})
 </script>
 
 <template>
@@ -51,7 +62,7 @@ defineEmits<(e: 'checking') => void>()
         <p v-else-if="txnHash">
           TX:
           <a
-            :href="combineURLs(CHAIN_BLOCK_EXPLORER_URL_MAP[chainName], `/tx/${txnHash}`)"
+            :href="txnUrl"
             target="_blank"
           >
             {{ formatHashWithEllipsis(txnHash) }}

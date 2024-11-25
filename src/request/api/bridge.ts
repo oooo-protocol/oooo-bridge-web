@@ -2,11 +2,12 @@ import axios from '../axios'
 import { type Transaction, type TransactionConfig, type Chain, TRANSACTION_STATUS, type EstimateData } from '@/entities/bridge'
 import type { Pagination } from './type'
 import { combineURLs, getConfigFromChain } from '@/lib/utils'
-import { CHAIN_BLOCK_EXPLORER_URL_MAP } from '@/lib/constants'
+import { CHAIN_BLOCK_EXPLORER_URL_MAP, CHAIN_CONFIG_MAP, CHAIN_TYPE_MAP } from '@/lib/constants'
 import axiosOrigin from 'axios'
-import { CHAIN } from '@/entities/chain'
+import { CHAIN_TYPE, type CHAIN } from '@/entities/chain'
 import { type ServerTokenPair, type ServerConfigs } from '@/entities/server'
 import { getRpcProvider } from 'oooo-components/lib/utils'
+import { Aptos, AptosConfig, TransactionResponseType } from '@aptos-labs/ts-sdk'
 
 export const retrieveBridgeConfigs = async () => {
   return await axios<ServerConfigs>({
@@ -137,7 +138,7 @@ export const retrieveEthereumTransactionStatus = async (chain: CHAIN, hash: stri
   }
 }
 
-export const retrieveBitcoinOrFractalTransactionStatus = async (chain: CHAIN.FRACTAL | CHAIN.BTC, hash: string) => {
+export const retrieveBitcoinOrFractalTransactionStatus = async (chain: CHAIN, hash: string) => {
   const blockExplorerUrl = CHAIN_BLOCK_EXPLORER_URL_MAP[chain]
   const { data: { status } } = await axiosOrigin.get<{
     status: { confirmed: boolean }
@@ -151,12 +152,32 @@ export const retrieveBitcoinOrFractalTransactionStatus = async (chain: CHAIN.FRA
   }
 }
 
+export const retrieveAptosTransactionStatus = async (chain: CHAIN, hash: string) => {
+  const chainConfig = CHAIN_CONFIG_MAP[chain]
+  if (chainConfig == null) {
+    throw new Error('Method: retrieveAptosTransactionStatus Failed to get chain config')
+  }
+  const config = new AptosConfig({
+    fullnode: chainConfig.rpcUrls[0]
+  })
+  const aptos = new Aptos(config)
+  const result = await aptos.getTransactionByHash({ transactionHash: hash })
+  if (result.type === TransactionResponseType.Pending) {
+    return TRANSACTION_STATUS.PROCESSING
+  } else {
+    return TRANSACTION_STATUS.SUCCEED
+  }
+}
+
 export const retrieveTransactionStatus = async (
   chain: CHAIN,
   hash: string
 ) => {
-  if (chain === CHAIN.BTC || chain === CHAIN.FRACTAL) {
+  const chainType = CHAIN_TYPE_MAP[chain]
+  if (chainType === CHAIN_TYPE.BITCOIN) {
     return await retrieveBitcoinOrFractalTransactionStatus(chain, hash)
+  } else if (chainType === CHAIN_TYPE.APTOS) {
+    return await retrieveAptosTransactionStatus(chain, hash)
   } else {
     return await retrieveEthereumTransactionStatus(chain, hash)
   }

@@ -1,4 +1,4 @@
-import { type ServerTokenPairConfig, type ServerToken, type ServerTokenPair } from '@/entities/server'
+import type { ServerTokenPairConfig, ServerToken, ServerTokenPair } from '@/entities/server'
 import { useConfigQuery } from './use-config-query'
 import { useConfigWallet } from './use-config-wallet'
 import { CHAIN } from '@/entities/chain'
@@ -7,17 +7,17 @@ import { WALLET } from 'oooo-components/oooo-wallet'
 import { retreieveBridgePairs, retrieveBridgeConfigs } from '@/request/api/bridge'
 import { useQuery } from '@tanstack/vue-query'
 import { defineMap } from '@preflower/utils'
-import { type Token, type Chain } from '@/entities/bridge'
+import type { Token, Chain } from '@/entities/bridge'
 
 export type PairConfig =
   ServerTokenPairConfig &
-  Pick<ServerToken, 'assetType' | 'assetCode' | 'frontDecimal' | 'contractAddress' | 'platformAddress'>
+  ServerToken
 
-interface ToPair extends Chain {
+type ToPair = Chain & {
   config: ServerTokenPairConfig
 }
 
-export interface Pair extends Chain {
+export type Pair = Chain & {
   tos: ToPair[]
 }
 
@@ -49,7 +49,7 @@ export const useConfig = () => {
   const tokenList = computed(() => {
     if (configs.value == null) return undefined
 
-    const chainMap = defineMap(configs.value.chainList, 'chainName', ['chainConfig', 'showName', 'type'])
+    const chainMap = defineMap(configs.value.chainList, 'chainName', ['showName', 'type'])
 
     return configs.value.tokenList.map<Chain>(token => {
       const chain = chainMap[token.chainName]
@@ -165,13 +165,10 @@ export const useConfig = () => {
     if (_to == null) return null
     return {
       ..._to.config,
-      assetType: currentFromPair.value.assetType,
-      assetCode: currentFromPair.value.assetCode,
-      frontDecimal: currentFromPair.value.frontDecimal,
-      contractAddress: currentFromPair.value.contractAddress,
-      platformAddress: currentFromPair.value.platformAddress
+      ...currentFromPair.value
     } satisfies PairConfig
   })
+
   watch([from, fromChainList], ([val]) => {
     const isValid = fromChainList.value.some(chain => chain.chainName === val)
     if (!isValid) {

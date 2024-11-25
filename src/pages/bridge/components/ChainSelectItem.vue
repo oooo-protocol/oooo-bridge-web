@@ -1,48 +1,43 @@
 <script setup lang="ts">
 import { useWallet } from '@/composables/hooks/use-wallet'
 import { type Chain } from '@/entities/bridge'
-import { CHAIN } from '@/entities/chain'
-import { SERVER_ASSET } from '@/entities/server'
+import { type CHAIN } from '@/entities/chain'
 import { useQuery } from '@tanstack/vue-query'
 import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
 import { CHAIN_IMAGE_MAP } from '@/lib/constants'
-import { getConfigFromChain } from '@/lib/utils'
-import { retrieveBitcoinOrFractalAddressBalance } from '@/request/api/bridge'
+import { SERVER_TOKEN_TYPE } from '@/entities/server'
 
 const props = defineProps<{
   chain: Chain
 }>()
 
-const { address, walletType, getInstance } = useWallet()
+const { address, walletType, getBalance } = useWallet()
 
 const enabled = computed(() => {
   if (address.value == null) return false
-  switch (props.chain.chainName) {
-    case CHAIN.BINANCE_PAY:
-    case CHAIN.BINANCE_CEX:
+  const tokenType = props.chain.tokenType
+  switch (tokenType) {
+    case SERVER_TOKEN_TYPE.CEX:
       return false
-    case CHAIN.BTC:
+    case SERVER_TOKEN_TYPE.BITCOIN:
       return walletType.value === WALLET_TYPE.BITCOIN
-    case CHAIN.FRACTAL:
+    case SERVER_TOKEN_TYPE.FRACTAL:
       return walletType.value === WALLET_TYPE.FRACTAL
-    default:
+    case SERVER_TOKEN_TYPE.APTOS_COIN:
+    case SERVER_TOKEN_TYPE.APTOS_TOKEN:
+      return walletType.value === WALLET_TYPE.APTOS
+    case SERVER_TOKEN_TYPE.ETH_COIN:
+    case SERVER_TOKEN_TYPE.ETH_TOKEN:
       return walletType.value === WALLET_TYPE.ETHEREUM
+    default:
+      return false
   }
 })
 const { data: balance } = useQuery({
-  queryKey: ['getNativeBalance', props.chain.chainName, address, props.chain.contractAddress],
+  queryKey: ['getBalance', props.chain.tokenId, address],
   queryFn: async () => {
-    const _address = address.value!
-    const instance = getInstance()
-    if (instance.type === WALLET_TYPE.BITCOIN || instance.type === WALLET_TYPE.FRACTAL) {
-      return await retrieveBitcoinOrFractalAddressBalance(props.chain.chainName as CHAIN.BTC | CHAIN.FRACTAL, _address)
-    }
-    const chainConfig = getConfigFromChain(props.chain.chainName)
-    if (props.chain.assetType === SERVER_ASSET.COIN) {
-      return await instance.getNativeBalance(_address, chainConfig)
-    } else {
-      return await instance.getTokenBalance(_address, chainConfig, props.chain.contractAddress)
-    }
+    console.log('get balance')
+    return await getBalance(props.chain)
   },
   staleTime: 5 * 1000,
   enabled
