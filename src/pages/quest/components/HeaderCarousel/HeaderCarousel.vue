@@ -4,6 +4,7 @@ import { retrieveQuestConfig } from '@/request/api/config'
 import { useQuery } from '@tanstack/vue-query'
 import DEFAULT_BANNER_IMAGE from '@/assets/images/quest/banner.png'
 import { getArrayFirst } from '@preflower/utils'
+import HeaderCarouselItem from './HeaderCarouselItem.vue'
 
 const route = useRoute()
 const { isPending, data } = useQuery({
@@ -50,16 +51,11 @@ const banners = computed(() => {
       v-for="(banner, index) of banners"
       :key="index"
     >
-      <a
-        class="block h-[250px] xl:h-[520px]"
-        :href="banner.link"
-        target="_blank"
-      >
-        <img
-          class="h-full w-full object-cover"
-          :src="banner.imageUrl"
-        >
-      </a>
+      <HeaderCarouselItem
+        :image-mobile="banner.mobileImageUrl"
+        :image-p-c="banner.imageUrl"
+        :link="banner.link"
+      />
     </CarouselItem>
   </CarouselPro>
 </template>
