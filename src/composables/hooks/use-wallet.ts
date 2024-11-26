@@ -6,7 +6,7 @@ import useWalletStore from '@/store/wallet'
 import { Aptos, AptosConfig, Network } from '@aptos-labs/ts-sdk'
 import { ethers } from 'ethers'
 import { getRpcProvider } from 'oooo-components/lib/utils'
-import { WALLET_TYPE, useBTCWallet, useFractalWallet, useEVMWallet, WalletConnectModal, useAptosWallet, type NETWORK, type TransactionParameter } from 'oooo-components/oooo-wallet'
+import { WALLET_TYPE, useBTCWallet, useFractalWallet, useEVMWallet, WalletConnectModal, useAptosWallet, type NETWORK, type TransactionParameter, useMovementAptosWallet } from 'oooo-components/oooo-wallet'
 import { createFuncall } from 'vue-funcall'
 import { retrieveBitcoinOrFractalAddressBalance } from '@/request/api/bridge'
 
@@ -15,6 +15,7 @@ export const useWallet = () => {
   const { name: fractalName, address: fractalAddress, getWalletInstance: getFractalWalletInstance, onLogout: onFractalLogout } = useFractalWallet()
   const { name: evmName, address: evmAddress, getWalletInstance: getEVMWalletInstance, onLogout: onEVMLogout } = useEVMWallet()
   const { name: aptosName, address: aptosAddress, getWalletInstance: getAptosWalletInstance, onLogout: onAptosLogout } = useAptosWallet()
+  const { name: movementAptosName, address: movementAptosAddress, getWalletInstance: getMovementAptosWalletInstance, onLogout: onMovementAptosLogout } = useMovementAptosWallet()
   const store = useWalletStore()
   const walletType = computed(() => store.walletType)
 
@@ -25,6 +26,8 @@ export const useWallet = () => {
       return fractalName.value
     } else if (store.walletType === WALLET_TYPE.APTOS) {
       return aptosName.value
+    } else if (store.walletType === WALLET_TYPE.MOVEMENT_APTOS) {
+      return movementAptosName.value
     } else {
       return evmName.value
     }
@@ -37,6 +40,8 @@ export const useWallet = () => {
       return fractalAddress.value
     } else if (store.walletType === WALLET_TYPE.APTOS) {
       return aptosAddress.value
+    } else if (store.walletType === WALLET_TYPE.MOVEMENT_APTOS) {
+      return movementAptosAddress.value
     } else {
       return evmAddress.value
     }
@@ -49,6 +54,8 @@ export const useWallet = () => {
       return getFractalWalletInstance()
     } else if (store.walletType === WALLET_TYPE.APTOS) {
       return getAptosWalletInstance()
+    } else if (store.walletType === WALLET_TYPE.MOVEMENT_APTOS) {
+      return getMovementAptosWalletInstance()
     } else {
       return getEVMWalletInstance()
     }
@@ -69,6 +76,8 @@ export const useWallet = () => {
       await onFractalLogout()
     } else if (store.walletType === WALLET_TYPE.APTOS) {
       await onAptosLogout()
+    } else if (store.walletType === WALLET_TYPE.MOVEMENT_APTOS) {
+      await onMovementAptosLogout()
     } else {
       await onEVMLogout()
     }
@@ -80,7 +89,7 @@ export const useWallet = () => {
     if (instance.type === WALLET_TYPE.BITCOIN || instance.type === WALLET_TYPE.FRACTAL) {
       const signature = await instance.sign(message)
       return { signature, signContent: message }
-    } else if (instance.type === WALLET_TYPE.APTOS) {
+    } else if (instance.type === WALLET_TYPE.APTOS || instance.type === WALLET_TYPE.MOVEMENT_APTOS) {
       const res = await instance.sign(message)
       return {
         signature: res.signature.toString(),
@@ -97,7 +106,7 @@ export const useWallet = () => {
     const instance = getInstance()
     if (instance.type === WALLET_TYPE.BITCOIN || instance.type === WALLET_TYPE.FRACTAL) {
       return await instance.getPublicKey()
-    } else if (instance.type === WALLET_TYPE.APTOS) {
+    } else if (instance.type === WALLET_TYPE.APTOS || instance.type === WALLET_TYPE.MOVEMENT_APTOS) {
       return (await instance.getPublicKey()).toString()
     } else {
       return address.value
@@ -125,7 +134,7 @@ export const useWallet = () => {
         return await instance.getTokenBalance(address.value, chainConfig, token.contractAddress)
       case SERVER_TOKEN_TYPE.APTOS_COIN:
       case SERVER_TOKEN_TYPE.APTOS_TOKEN: {
-        if (instance.type !== WALLET_TYPE.APTOS) throw new Error('transfer mismatch wallet type')
+        if (instance.type !== WALLET_TYPE.APTOS && instance.type !== WALLET_TYPE.MOVEMENT_APTOS) throw new Error('transfer mismatch wallet type')
         return await instance.getBalance(address.value, {
           function: token.aptosFunction,
           decimals: token.tokenDecimal,
@@ -161,7 +170,7 @@ export const useWallet = () => {
         return await instance.tokenTransfer(parameter, token.contractAddress)
       case SERVER_TOKEN_TYPE.APTOS_COIN:
       case SERVER_TOKEN_TYPE.APTOS_TOKEN: {
-        if (instance.type !== WALLET_TYPE.APTOS) throw new Error('transfer mismatch wallet type')
+        if (instance.type !== WALLET_TYPE.APTOS && instance.type !== WALLET_TYPE.MOVEMENT_APTOS) throw new Error('transfer mismatch wallet type')
         await instance.switchToChain({
           chainId: Number(chainConfig.chainId),
           name: chainConfig.chainName as Network,
@@ -186,7 +195,7 @@ export const useWallet = () => {
     } else if (instance.type === WALLET_TYPE.FRACTAL) {
       const gasLimit = 200
       return Number(parameter.gas) * gasLimit * 1e-8
-    } else if (instance.type === WALLET_TYPE.APTOS) {
+    } else if (instance.type === WALLET_TYPE.APTOS || instance.type === WALLET_TYPE.MOVEMENT_APTOS) {
       const config = new AptosConfig({ network: import.meta.env.VITE_MODE === 'testnet' ? Network.TESTNET : Network.MAINNET })
       const aptos = new Aptos(config)
 

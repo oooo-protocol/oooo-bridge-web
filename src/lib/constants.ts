@@ -353,7 +353,7 @@ export const CHAIN_LIST = [
   }, {
     image: 'https://oooo.money/static/images/movement.png',
     value: CHAIN.MOVEMENT_APTOS,
-    type: CHAIN_TYPE.APTOS,
+    type: CHAIN_TYPE.MOVEMENT_APTOS,
     [NETWORK.TESTNET]: MOVEMENT_APTOS_TESTNET
   }, {
     image: 'https://oooo.money/static/images/aptos.png',

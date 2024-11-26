@@ -58,5 +58,6 @@ export enum CHAIN_TYPE {
   BITCOIN,
   ETHEREUM,
   CEX,
+  MOVEMENT_APTOS,
   APTOS
 }

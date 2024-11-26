@@ -25,7 +25,7 @@ const enabled = computed(() => {
       return walletType.value === WALLET_TYPE.FRACTAL
     case SERVER_TOKEN_TYPE.APTOS_COIN:
     case SERVER_TOKEN_TYPE.APTOS_TOKEN:
-      return walletType.value === WALLET_TYPE.APTOS
+      return walletType.value === WALLET_TYPE.APTOS || walletType.value === WALLET_TYPE.MOVEMENT_APTOS
     case SERVER_TOKEN_TYPE.ETH_COIN:
     case SERVER_TOKEN_TYPE.ETH_TOKEN:
       return walletType.value === WALLET_TYPE.ETHEREUM
