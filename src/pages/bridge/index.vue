@@ -86,7 +86,7 @@ const checkAddress = (address: string, chain: string) => {
     return validate(address, network)
   } else if (chain === CHAIN.FRACTAL) {
     return validate(address, Network.mainnet)
-  } else if (chainType === CHAIN_TYPE.APTOS) {
+  } else if (chainType === CHAIN_TYPE.APTOS || chainType === CHAIN_TYPE.MOVEMENT_APTOS) {
     return APTOS_ADDRESS_REGEXP.test(address)
   } else {
     // it's assumed to be a EVM address
