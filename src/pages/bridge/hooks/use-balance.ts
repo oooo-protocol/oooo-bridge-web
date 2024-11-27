@@ -24,7 +24,7 @@ export const useBalance = (from: Ref<string>, config: ComputedRef<PairConfig | n
       if (instance.type === WALLET_TYPE.BITCOIN || instance.type === WALLET_TYPE.FRACTAL) {
         return await retrieveBitcoinOrFractalAddressBalance(from.value as CHAIN.BTC | CHAIN.FRACTAL, _address)
       } else if (instance.type === WALLET_TYPE.APTOS) {
-        return await instance.getNativeBalance(_address, chainConfig)
+        return instance.getNativeBalance(_address, chainConfig)
       } else {
         if (_config.assetType === SERVER_ASSET.COIN) {
           return await instance.getNativeBalance(_address, chainConfig)
