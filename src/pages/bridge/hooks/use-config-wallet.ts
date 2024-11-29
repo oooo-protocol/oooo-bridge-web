@@ -20,6 +20,8 @@ export const useConfigWallet = (
       }
     } else if (chianType === CHAIN_TYPE.APTOS) {
       updateWalletType(WALLET_TYPE.APTOS)
+    } else if (chianType === CHAIN_TYPE.MOVEMENT_APTOS) {
+      updateWalletType(WALLET_TYPE.MOVEMENT_APTOS)
     } else {
       updateWalletType(WALLET_TYPE.ETHEREUM)
     }

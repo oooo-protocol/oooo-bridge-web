@@ -176,7 +176,7 @@ export const retrieveTransactionStatus = async (
   const chainType = CHAIN_TYPE_MAP[chain]
   if (chainType === CHAIN_TYPE.BITCOIN) {
     return await retrieveBitcoinOrFractalTransactionStatus(chain, hash)
-  } else if (chainType === CHAIN_TYPE.APTOS) {
+  } else if (chainType === CHAIN_TYPE.APTOS || chainType === CHAIN_TYPE.MOVEMENT_APTOS) {
     return await retrieveAptosTransactionStatus(chain, hash)
   } else {
     return await retrieveEthereumTransactionStatus(chain, hash)

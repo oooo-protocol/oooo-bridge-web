@@ -8,9 +8,8 @@ export interface Token {
   icon: string
 }
 
-export interface Chain extends ServerToken {
+export type Chain = ServerToken & {
   showName: ServerChain['showName']
-  chainConfig: ServerChain['chainConfig']
   type: ServerChain['type']
 }
 

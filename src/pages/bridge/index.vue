@@ -86,7 +86,7 @@ const checkAddress = (address: string, chain: string) => {
     return validate(address, network)
   } else if (chain === CHAIN.FRACTAL) {
     return validate(address, Network.mainnet)
-  } else if (chainType === CHAIN_TYPE.APTOS) {
+  } else if (chainType === CHAIN_TYPE.APTOS || chainType === CHAIN_TYPE.MOVEMENT_APTOS) {
     return APTOS_ADDRESS_REGEXP.test(address)
   } else {
     // it's assumed to be a EVM address
@@ -246,7 +246,7 @@ const createChainTransaction = async (parameter: {
     toAddress: parameter.toAddress
   })
 
-  const { assetType, assetCode, contractAddress } = config.value!
+  const { assetType, assetCode } = config.value!
 
   const transferParameter = {
     from: parameter.fromAddress,
@@ -280,12 +280,7 @@ const createChainTransaction = async (parameter: {
     toAmount: toAmount.value
   })
   try {
-    let hash: string
-    if (assetType === SERVER_ASSET.TOKEN) {
-      hash = await transfer(transferParameter, parameter.fromChain, contractAddress)
-    } else {
-      hash = await transfer(transferParameter, parameter.fromChain)
-    }
+    const hash = await transfer(transferParameter, config.value!)
     await sendTransfer({
       ...parameter,
       txnHash: hash,
