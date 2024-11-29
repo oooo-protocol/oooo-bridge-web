@@ -50,7 +50,9 @@ export enum CHAIN {
   APECHAIN = 'apechain',
   TELOS = 'telos',
   ABSTRACT = 'abstract',
-  MOVEMENT_APTOS = 'movement_aptos'
+  MOVEMENT_APTOS = 'movement_aptos',
+  MORPH = 'morph',
+  MEZO = 'mezo'
 }
 
 export enum CHAIN_TYPE {

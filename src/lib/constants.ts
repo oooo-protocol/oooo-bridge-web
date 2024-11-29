@@ -82,7 +82,10 @@ import {
   ABSTRACT_TESTNET,
   MOVEMENT_APTOS_TESTNET,
   DUCKCHAIN_LIVENET,
-  ZIRCUIT_LIVENET
+  ZIRCUIT_LIVENET,
+  MORPH_TESTNET,
+  MORPH_LIVENET,
+  MEZO_TESTNET
 } from 'oooo-components/lib/chain-config'
 import { type ChainConfig } from 'oooo-components/oooo-wallet'
 
@@ -353,6 +356,17 @@ export const CHAIN_LIST = [
     value: CHAIN.MOVEMENT_APTOS,
     type: CHAIN_TYPE.APTOS,
     [NETWORK.TESTNET]: MOVEMENT_APTOS_TESTNET
+  }, {
+    image: 'https://oooo.money/static/images/morph.png',
+    value: CHAIN.MORPH,
+    type: CHAIN_TYPE.ETHEREUM,
+    [NETWORK.TESTNET]: MORPH_TESTNET,
+    [NETWORK.LIVENET]: MORPH_LIVENET
+  }, {
+    image: 'https://oooo.money/static/images/mezo.png',
+    value: CHAIN.MEZO,
+    type: CHAIN_TYPE.ETHEREUM,
+    [NETWORK.TESTNET]: MEZO_TESTNET
   }
 ]
 
