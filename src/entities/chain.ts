@@ -52,7 +52,8 @@ export enum CHAIN {
   ABSTRACT = 'abstract',
   MOVEMENT_APTOS = 'movement_aptos',
   MORPH = 'morph',
-  MEZO = 'mezo'
+  MEZO = 'mezo',
+  SWAN = 'swan'
 }
 
 export enum CHAIN_TYPE {
