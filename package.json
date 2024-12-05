@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@aptos-labs/ts-sdk": "^1.23.0",
+    "@mysten/sui": "1.12.0",
     "@preflower/utils": "^1.1.0",
     "@sentry/vue": "^7.107.0",
     "@tanstack/vue-query": "^5.28.7",

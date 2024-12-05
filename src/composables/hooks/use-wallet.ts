@@ -6,7 +6,7 @@ import useWalletStore from '@/store/wallet'
 import { Aptos, AptosConfig, Network } from '@aptos-labs/ts-sdk'
 import { ethers } from 'ethers'
 import { getRpcProvider } from 'oooo-components/lib/utils'
-import { WALLET_TYPE, useBTCWallet, useFractalWallet, useEVMWallet, WalletConnectModal, useAptosWallet, type NETWORK, type TransactionParameter, useMovementAptosWallet } from 'oooo-components/oooo-wallet'
+import { NETWORK, WALLET_TYPE, useBTCWallet, useFractalWallet, useEVMWallet, WalletConnectModal, useAptosWallet, useSuiWallet, type TransactionParameter, useMovementAptosWallet } from 'oooo-components/oooo-wallet'
 import { createFuncall } from 'vue-funcall'
 import { retrieveBitcoinOrFractalAddressBalance } from '@/request/api/bridge'
 
@@ -16,6 +16,7 @@ export const useWallet = () => {
   const { name: evmName, address: evmAddress, getWalletInstance: getEVMWalletInstance, onLogout: onEVMLogout } = useEVMWallet()
   const { name: aptosName, address: aptosAddress, getWalletInstance: getAptosWalletInstance, onLogout: onAptosLogout } = useAptosWallet()
   const { name: movementAptosName, address: movementAptosAddress, getWalletInstance: getMovementAptosWalletInstance, onLogout: onMovementAptosLogout } = useMovementAptosWallet()
+  const { name: suiName, address: suiAddress, getWalletInstance: getSuiWalletInstance, onLogout: onSuiLogout } = useSuiWallet()
   const store = useWalletStore()
   const walletType = computed(() => store.walletType)
 
@@ -28,6 +29,8 @@ export const useWallet = () => {
       return aptosName.value
     } else if (store.walletType === WALLET_TYPE.MOVEMENT_APTOS) {
       return movementAptosName.value
+    } else if (store.walletType === WALLET_TYPE.SUI) {
+      return suiName.value
     } else {
       return evmName.value
     }
@@ -42,6 +45,8 @@ export const useWallet = () => {
       return aptosAddress.value
     } else if (store.walletType === WALLET_TYPE.MOVEMENT_APTOS) {
       return movementAptosAddress.value
+    } else if (store.walletType === WALLET_TYPE.SUI) {
+      return suiAddress.value
     } else {
       return evmAddress.value
     }
@@ -56,6 +61,8 @@ export const useWallet = () => {
       return getAptosWalletInstance()
     } else if (store.walletType === WALLET_TYPE.MOVEMENT_APTOS) {
       return getMovementAptosWalletInstance()
+    } else if (store.walletType === WALLET_TYPE.SUI) {
+      return getSuiWalletInstance()
     } else {
       return getEVMWalletInstance()
     }
@@ -78,6 +85,8 @@ export const useWallet = () => {
       await onAptosLogout()
     } else if (store.walletType === WALLET_TYPE.MOVEMENT_APTOS) {
       await onMovementAptosLogout()
+    } else if (store.walletType === WALLET_TYPE.SUI) {
+      await onSuiLogout()
     } else {
       await onEVMLogout()
     }
@@ -95,6 +104,9 @@ export const useWallet = () => {
         signature: res.signature.toString(),
         signContent: res.fullMessage
       }
+    } else if (instance.type === WALLET_TYPE.SUI) {
+      const res = await instance.sign(message)
+      return { signature: res, signContent: message }
     } else {
       const signature = await instance.sign(message, address.value)
       return { signature, signContent: message }
@@ -108,6 +120,8 @@ export const useWallet = () => {
       return await instance.getPublicKey()
     } else if (instance.type === WALLET_TYPE.APTOS || instance.type === WALLET_TYPE.MOVEMENT_APTOS) {
       return (await instance.getPublicKey()).toString()
+    } else if (instance.type === WALLET_TYPE.SUI) {
+      return await instance.getPublicKey()
     } else {
       return address.value
     }
@@ -121,20 +135,20 @@ export const useWallet = () => {
     if (chainConfig == null) throw new Error(`Chain ${chainName} not config`)
     switch (token.tokenType) {
       case SERVER_TOKEN_TYPE.BITCOIN:
-        if (instance.type !== WALLET_TYPE.BITCOIN) throw new Error('transfer mismatch wallet type')
+        if (instance.type !== WALLET_TYPE.BITCOIN) throw new Error('Wallet type is mismatch method')
         return await retrieveBitcoinOrFractalAddressBalance(CHAIN.BTC, address.value)
       case SERVER_TOKEN_TYPE.FRACTAL:
-        if (instance.type !== WALLET_TYPE.FRACTAL) throw new Error('transfer mismatch wallet type')
+        if (instance.type !== WALLET_TYPE.FRACTAL) throw new Error('Wallet type is mismatch method')
         return await retrieveBitcoinOrFractalAddressBalance(CHAIN.FRACTAL, address.value)
       case SERVER_TOKEN_TYPE.ETH_COIN:
-        if (instance.type !== WALLET_TYPE.ETHEREUM) throw new Error('transfer mismatch wallet type')
+        if (instance.type !== WALLET_TYPE.ETHEREUM) throw new Error('Wallet type is mismatch method')
         return await instance.getNativeBalance(address.value, chainConfig)
       case SERVER_TOKEN_TYPE.ETH_TOKEN:
-        if (instance.type !== WALLET_TYPE.ETHEREUM) throw new Error('transfer mismatch wallet type')
+        if (instance.type !== WALLET_TYPE.ETHEREUM) throw new Error('Wallet type is mismatch method')
         return await instance.getTokenBalance(address.value, chainConfig, token.contractAddress)
       case SERVER_TOKEN_TYPE.APTOS_COIN:
       case SERVER_TOKEN_TYPE.APTOS_TOKEN: {
-        if (instance.type !== WALLET_TYPE.APTOS && instance.type !== WALLET_TYPE.MOVEMENT_APTOS) throw new Error('transfer mismatch wallet type')
+        if (instance.type !== WALLET_TYPE.APTOS && instance.type !== WALLET_TYPE.MOVEMENT_APTOS) throw new Error('Wallet type is mismatch method')
         return await instance.getBalance(address.value, {
           function: token.aptosFunction,
           decimals: token.tokenDecimal,
@@ -142,6 +156,15 @@ export const useWallet = () => {
           chainRpcUrl: chainConfig.rpcUrls[0]
         })
       }
+      case SERVER_TOKEN_TYPE.SUI_COIN:
+      case SERVER_TOKEN_TYPE.SUI_TOKEN:
+        if (instance.type !== WALLET_TYPE.SUI) throw new Error('Wallet type is mismatch method')
+        return await instance.getBalance(address.value, {
+          coinType: token.suiCoinType,
+          decimals: token.tokenDecimal,
+          chain: import.meta.env.VITE_NETWORK === NETWORK.TESTNET ? 'sui:testnet' : 'sui:mainnet',
+          chainRpcUrl: chainConfig.rpcUrls[0]
+        })
     }
   }
 
@@ -149,28 +172,28 @@ export const useWallet = () => {
     if (address.value == null) throw new Error('Please login wallet before call function')
     const { chainName } = token
     const chainConfig = CHAIN_CONFIG_MAP[chainName as CHAIN]
-    const instance = getInstance()
     if (chainConfig == null) throw new Error(`Chain ${chainName} not config`)
+    const instance = getInstance()
     switch (token.tokenType) {
       case SERVER_TOKEN_TYPE.BITCOIN:
-        if (instance.type !== WALLET_TYPE.BITCOIN) throw new Error('transfer mismatch wallet type')
+        if (instance.type !== WALLET_TYPE.BITCOIN) throw new Error('Wallet type is mismatch method')
         await instance.switchNetwork(import.meta.env.VITE_NETWORK)
         return await instance.transfer(parameter)
       case SERVER_TOKEN_TYPE.FRACTAL:
-        if (instance.type !== WALLET_TYPE.FRACTAL) throw new Error('transfer mismatch wallet type')
+        if (instance.type !== WALLET_TYPE.FRACTAL) throw new Error('Wallet type is mismatch method')
         await instance.switchChain(chainConfig.chainName)
         return await instance.transfer(parameter)
       case SERVER_TOKEN_TYPE.ETH_COIN:
-        if (instance.type !== WALLET_TYPE.ETHEREUM) throw new Error('transfer mismatch wallet type')
+        if (instance.type !== WALLET_TYPE.ETHEREUM) throw new Error('Wallet type is mismatch method')
         await instance.switchToChain(chainConfig)
         return await instance.transfer(parameter, chainConfig)
       case SERVER_TOKEN_TYPE.ETH_TOKEN:
-        if (instance.type !== WALLET_TYPE.ETHEREUM) throw new Error('transfer mismatch wallet type')
+        if (instance.type !== WALLET_TYPE.ETHEREUM) throw new Error('Wallet type is mismatch method')
         await instance.switchToChain(chainConfig)
         return await instance.tokenTransfer(parameter, token.contractAddress)
       case SERVER_TOKEN_TYPE.APTOS_COIN:
       case SERVER_TOKEN_TYPE.APTOS_TOKEN: {
-        if (instance.type !== WALLET_TYPE.APTOS && instance.type !== WALLET_TYPE.MOVEMENT_APTOS) throw new Error('transfer mismatch wallet type')
+        if (instance.type !== WALLET_TYPE.APTOS && instance.type !== WALLET_TYPE.MOVEMENT_APTOS) throw new Error('Wallet type is mismatch method')
         await instance.switchToChain({
           chainId: Number(chainConfig.chainId),
           name: chainConfig.chainName as Network,
@@ -182,55 +205,81 @@ export const useWallet = () => {
           coinType: (token.aptosTypeArgument != null && token.aptosTypeArgument !== '') ? token.aptosTypeArgument : undefined
         })
       }
+      case SERVER_TOKEN_TYPE.SUI_COIN:
+      case SERVER_TOKEN_TYPE.SUI_TOKEN:
+        if (instance.type !== WALLET_TYPE.SUI) throw new Error('Wallet type is mismatch method')
+        return await instance.transfer(parameter, {
+          coinType: token.suiCoinType,
+          decimals: token.tokenDecimal,
+          chainRpcUrl: chainConfig.rpcUrls[0],
+          chain: import.meta.env.VITE_NETWORK === NETWORK.TESTNET ? 'sui:testnet' : 'sui:mainnet'
+        })
       default:
         throw new Error(`Unknown transfer Type: ${instance.type}`)
     }
   }
 
-  async function calcEstimateGas (parameter: TransactionParameter, chainName: string) {
+  async function calcEstimateGas (parameter: TransactionParameter, token: ServerToken) {
     const instance = getInstance()
-    if (instance.type === WALLET_TYPE.BITCOIN) {
-      const gasLimit = 200
-      return Number(parameter.gas) * gasLimit * 1e-8
-    } else if (instance.type === WALLET_TYPE.FRACTAL) {
-      const gasLimit = 200
-      return Number(parameter.gas) * gasLimit * 1e-8
-    } else if (instance.type === WALLET_TYPE.APTOS || instance.type === WALLET_TYPE.MOVEMENT_APTOS) {
-      const config = new AptosConfig({ network: import.meta.env.VITE_MODE === 'testnet' ? Network.TESTNET : Network.MAINNET })
-      const aptos = new Aptos(config)
-
-      const publicKey = await instance.getPublicKey()
-
-      const transaction = await aptos.transaction.build.simple({
-        sender: parameter.from,
-        data: {
-          // All transactions on Aptos are implemented via smart contracts.
-          function: '0x1::aptos_account::transfer',
-          functionArguments: [parameter.to, parameter.value]
-        }
-      })
-
-      const [userTransactionResponse] = await aptos.transaction.simulate.simple({
-        signerPublicKey: publicKey,
-        transaction
-      })
-      return userTransactionResponse.gas_used
-    } else {
-      if (chainName == null) throw new Error('chainName cannot be empty.')
-      const config = getConfigFromChain(chainName)
-      await instance.switchToChain(config)
-      const provider = await getRpcProvider(config.rpcUrls)
-      try {
-        const gasLimit = await provider.estimateGas({
-          from: parameter.from,
-          to: parameter.to,
-          value: ethers.parseUnits(parameter.value, config.nativeCurrency.decimals)
-        })
-        const ratio = 1.5
-        return ethers.formatUnits(Number(parameter.gas) * Number(gasLimit) * ratio, config.nativeCurrency.decimals)
-      } finally {
-        provider.destroy()
+    const chainConfig = getConfigFromChain(token.chainName)
+    switch (token.tokenType) {
+      case SERVER_TOKEN_TYPE.BITCOIN:
+      case SERVER_TOKEN_TYPE.FRACTAL: {
+        const gasLimit = 200
+        return Number(parameter.gas) * gasLimit * 1e-8
       }
+      case SERVER_TOKEN_TYPE.APTOS_COIN:
+      case SERVER_TOKEN_TYPE.APTOS_TOKEN: {
+        if (instance.type !== WALLET_TYPE.APTOS && instance.type !== WALLET_TYPE.MOVEMENT_APTOS) throw new Error('Wallet type is mismatch method')
+        const config = new AptosConfig({ network: import.meta.env.VITE_MODE === 'testnet' ? Network.TESTNET : Network.MAINNET })
+        const aptos = new Aptos(config)
+
+        const publicKey = await instance.getPublicKey()
+
+        const transaction = await aptos.transaction.build.simple({
+          sender: parameter.from,
+          data: {
+          // All transactions on Aptos are implemented via smart contracts.
+            function: '0x1::aptos_account::transfer',
+            functionArguments: [parameter.to, parameter.value]
+          }
+        })
+
+        const [userTransactionResponse] = await aptos.transaction.simulate.simple({
+          signerPublicKey: publicKey,
+          transaction
+        })
+        return userTransactionResponse.gas_used
+      }
+      case SERVER_TOKEN_TYPE.SUI_COIN:
+      case SERVER_TOKEN_TYPE.SUI_TOKEN: {
+        if (instance.type !== WALLET_TYPE.SUI) throw new Error('Wallet type is mismatch method')
+        return await instance.estimateGas(parameter, {
+          coinType: token.suiCoinType,
+          decimals: token.tokenDecimal,
+          chainRpcUrl: chainConfig.rpcUrls[0],
+          chain: import.meta.env.VITE_NETWORK === NETWORK.TESTNET ? 'sui:testnet' : 'sui:mainnet'
+        })
+      }
+      case SERVER_TOKEN_TYPE.ETH_COIN:
+      case SERVER_TOKEN_TYPE.ETH_TOKEN: {
+        if (instance.type !== WALLET_TYPE.ETHEREUM) throw new Error('Wallet type is mismatch method')
+        await instance.switchToChain(chainConfig)
+        const provider = await getRpcProvider(chainConfig.rpcUrls)
+        try {
+          const gasLimit = await provider.estimateGas({
+            from: parameter.from,
+            to: parameter.to,
+            value: ethers.parseUnits(parameter.value, chainConfig.nativeCurrency.decimals)
+          })
+          const ratio = 1.5
+          return ethers.formatUnits(Number(parameter.gas) * Number(gasLimit) * ratio, chainConfig.nativeCurrency.decimals)
+        } finally {
+          provider.destroy()
+        }
+      }
+      default:
+        throw new Error(`Unknown transfer Type: ${instance.type}`)
     }
   }
 

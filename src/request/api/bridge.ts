@@ -8,6 +8,7 @@ import { CHAIN_TYPE, type CHAIN } from '@/entities/chain'
 import { type ServerTokenPair, type ServerConfigs } from '@/entities/server'
 import { getRpcProvider } from 'oooo-components/lib/utils'
 import { Aptos, AptosConfig, TransactionResponseType } from '@aptos-labs/ts-sdk'
+import { SuiClient } from '@mysten/sui/client'
 
 export const retrieveBridgeConfigs = async () => {
   return await axios<ServerConfigs>({
@@ -169,6 +170,28 @@ export const retrieveAptosTransactionStatus = async (chain: CHAIN, hash: string)
   }
 }
 
+export const retrieveSuiTransactionStatus = async (chain: CHAIN, hash: string) => {
+  const chainConfig = CHAIN_CONFIG_MAP[chain]
+  if (chainConfig == null) {
+    throw new Error('Method: retrieveSuiTransactionStatus Failed to get chain config')
+  }
+  const client = new SuiClient({ url: chainConfig.rpcUrls[0] })
+  const tx = await client.getTransactionBlock({
+    digest: hash,
+    options: {
+      showEffects: true
+    }
+  })
+  const status = tx.effects?.status.status
+  if (status === 'success') {
+    return TRANSACTION_STATUS.SUCCEED
+  } else if (status === 'failure') {
+    return TRANSACTION_STATUS.FAILED
+  } else {
+    return TRANSACTION_STATUS.PROCESSING
+  }
+}
+
 export const retrieveTransactionStatus = async (
   chain: CHAIN,
   hash: string
@@ -178,6 +201,8 @@ export const retrieveTransactionStatus = async (
     return await retrieveBitcoinOrFractalTransactionStatus(chain, hash)
   } else if (chainType === CHAIN_TYPE.APTOS || chainType === CHAIN_TYPE.MOVEMENT_APTOS) {
     return await retrieveAptosTransactionStatus(chain, hash)
+  } else if (chainType === CHAIN_TYPE.SUI) {
+    return await retrieveSuiTransactionStatus(chain, hash)
   } else {
     return await retrieveEthereumTransactionStatus(chain, hash)
   }

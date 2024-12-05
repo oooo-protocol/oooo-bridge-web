@@ -54,7 +54,8 @@ export enum CHAIN {
   APTOS = 'aptos',
   MORPH = 'morph',
   MEZO = 'mezo',
-  SWAN = 'swan'
+  SWAN = 'swan',
+  SUI = 'sui'
 }
 
 export enum CHAIN_TYPE {
@@ -62,5 +63,6 @@ export enum CHAIN_TYPE {
   ETHEREUM,
   CEX,
   MOVEMENT_APTOS,
-  APTOS
+  APTOS,
+  SUI
 }

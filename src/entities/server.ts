@@ -13,7 +13,9 @@ export enum SERVER_TOKEN_TYPE {
   ETH_TOKEN,
   APTOS_COIN,
   APTOS_TOKEN,
-  CEX
+  CEX,
+  SUI_COIN,
+  SUI_TOKEN
 }
 
 export interface CommonServerToken {
@@ -58,7 +60,19 @@ export interface CexServerToken extends CommonServerToken {
   tokenType: SERVER_TOKEN_TYPE.CEX
 }
 
-export type ServerToken = AptosServerToken | BitcoinServerToken | FractalServerToken | EthereumServerToken | CexServerToken
+export interface SuiServerToken extends CommonServerToken {
+  tokenType: SERVER_TOKEN_TYPE.SUI_COIN | SERVER_TOKEN_TYPE.SUI_TOKEN
+  suiCoinType: string
+  suiObjectType: string
+}
+
+export type ServerToken =
+  AptosServerToken |
+  BitcoinServerToken |
+  FractalServerToken |
+  EthereumServerToken |
+  CexServerToken |
+  SuiServerToken
 
 export interface ServerTokenPairConfig {
   pairId: number
