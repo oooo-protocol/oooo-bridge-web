@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { TRANSACTION_STATUS_MAP, CHAIN_BLOCK_EXPLORER_URL_MAP } from '@/lib/constants'
 import { TRANSACTION_STATUS } from '@/entities/bridge'
-import { combineURLs } from '@/lib/utils'
-import { formatHashWithEllipsis } from '@/lib/utils'
+import { combineURLs, formatHashWithEllipsis } from '@/lib/utils'
 import { CHAIN } from '@/entities/chain'
 import Icon from '@/components/Icon.vue'
 

@@ -109,7 +109,7 @@ export function formatNumber (
 export const combineURLs = (baseURL: string, relativeURL: string) => {
   const url = new URL(baseURL)
   if (relativeURL) {
-    url.pathname += relativeURL.replace(/^\/+/, '')
+    url.pathname = `${url.pathname.replace(/\/+$/, '')}/${relativeURL.replace(/^\/+/, '')}`
   }
   return url.href
 }
