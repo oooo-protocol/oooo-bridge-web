@@ -9,7 +9,7 @@ import { useMutation } from '@tanstack/vue-query'
 import { retrieveTransactionConfig, createTransaction } from '@/request/api/bridge'
 import Decimal from 'decimal.js-light'
 import { useWallet } from '@/composables/hooks/use-wallet'
-import { APTOS_ADDRESS_REGEXP, CHAIN_TYPE_MAP, EVM_ADDRESS_REGEXP } from '@/lib/constants'
+import { APTOS_ADDRESS_REGEXP, CHAIN_TYPE_MAP, EVM_ADDRESS_REGEXP, SUI_ADDRESS_REGEXP } from '@/lib/constants'
 import { useToast } from '@/components/ui/toast/use-toast'
 import PageLoading from '@/components/PageLoading.vue'
 import { createFuncall } from 'vue-funcall'
@@ -88,6 +88,8 @@ const checkAddress = (address: string, chain: string) => {
     return validate(address, Network.mainnet)
   } else if (chainType === CHAIN_TYPE.APTOS || chainType === CHAIN_TYPE.MOVEMENT_APTOS) {
     return APTOS_ADDRESS_REGEXP.test(address)
+  } else if (chainType === CHAIN_TYPE.SUI) {
+    return SUI_ADDRESS_REGEXP.test(address)
   } else {
     // it's assumed to be a EVM address
     return EVM_ADDRESS_REGEXP.test(address)

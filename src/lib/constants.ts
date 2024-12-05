@@ -441,3 +441,5 @@ export const TRANSACTION_STATUS_MAP = {
 export const EVM_ADDRESS_REGEXP = /^(0x)[0-9A-Fa-f]{40}$/
 
 export const APTOS_ADDRESS_REGEXP = /^(0x)[0-9A-Fa-f]{64}$/
+
+export const SUI_ADDRESS_REGEXP = /^(0x)[0-9A-Fa-f]{64}$/
