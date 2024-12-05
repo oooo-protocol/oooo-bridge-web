@@ -4,12 +4,12 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle
-} from 'oooo-components/ui/dialog'
+} from '@/components/ui/dialog'
 import { CHAIN_IMAGE_MAP } from '@/lib/constants'
-import Icon from 'oooo-components/ui/Icon.vue'
+import Icon from '@/components/Icon.vue'
 import { type CHAIN } from '@/entities/chain'
 import ClipboardText from './ClipboardText.vue'
-import { Button } from 'oooo-components/ui/button'
+import { Button } from '@/components/ui/button'
 import TRANSFER_PROCESSING_DARK_IMAGE from '@/assets/images/transfer-loading.dark.gif'
 import BINANCE_SAMPLE_IMAGE from '@/assets/images/binance-sample.png'
 import { useQuery } from '@tanstack/vue-query'

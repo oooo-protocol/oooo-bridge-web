@@ -4,9 +4,9 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle
-} from 'oooo-components/ui/dialog'
+} from '@/components/ui/dialog'
 import { CHAIN_IMAGE_MAP } from '@/lib/constants'
-import Icon from 'oooo-components/ui/Icon.vue'
+import Icon from '@/components/Icon.vue'
 import LoadingIcon from '@/components/LoadingIcon.vue'
 import { type CHAIN } from '@/entities/chain'
 import { usePreventUnload } from '../hooks/use-before-unload'

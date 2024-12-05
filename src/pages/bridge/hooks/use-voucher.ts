@@ -1,6 +1,6 @@
 import { retrieveVoucherPacks, retrieveAvailableVouchers } from '@/request/api/voucher'
 import { useQuery } from '@tanstack/vue-query'
-import { useEVMWallet } from 'oooo-components/oooo-wallet'
+import { useEVMWallet } from '@/composables/oooo-wallet'
 // import { storage } from '@preflower/utils'
 import DetectedOVoucherModal from '../components/DetectedOVoucherModal.vue'
 import { createFuncall } from 'vue-funcall'

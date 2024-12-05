@@ -4,7 +4,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle
-} from 'oooo-components/ui/dialog'
+} from '@/components/ui/dialog'
 import { type VoucherPariConfig } from '@/entities/voucher'
 
 const open = defineModel<boolean>()

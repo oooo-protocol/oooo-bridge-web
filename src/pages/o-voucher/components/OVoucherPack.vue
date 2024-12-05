@@ -3,7 +3,7 @@ import { type VoucherPack } from '@/entities/voucher'
 import dayjs from 'dayjs'
 import { createFuncall } from 'vue-funcall'
 import OVoucherPackDescriptionModal from './OVoucherPackDescriptionModal.vue'
-import Icon from 'oooo-components/ui/Icon.vue'
+import Icon from '@/components/Icon.vue'
 
 defineProps<{
   pack: VoucherPack

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Ref, onMounted, onUnmounted, provide, ref, withDefaults } from 'vue'
+import { Ref, onMounted, onUnmounted, provide, ref } from 'vue'
 import { ScrollNavProvide } from './type'
 
 const props = withDefaults(defineProps<{

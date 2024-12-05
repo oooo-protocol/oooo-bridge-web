@@ -9,10 +9,10 @@ import { checkIn, retireveCheckInChainList, retrieveCheckInDays } from '@/reques
 import useSignatureStore from '@/store/signature'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { ethers, type EthersError } from 'ethers'
-import { useEVMWallet } from 'oooo-components/oooo-wallet'
-import Icon from 'oooo-components/ui/Icon.vue'
-import { Input } from 'oooo-components/ui/input'
-import { useToast } from 'oooo-components/ui/toast'
+import { useEVMWallet } from '@/composables/oooo-wallet'
+import Icon from '@/components/Icon.vue'
+import { Input } from '@/components/ui/input'
+import { useToast } from '@/components/ui/toast'
 
 const { address, getWalletInstance } = useEVMWallet()
 const createPointConfetti = useCreatePointConfetti()

@@ -2,7 +2,7 @@ import { retrieveEstimateData } from '@/request/api/bridge'
 import { useMutation } from '@tanstack/vue-query'
 import { useDebounceFn } from '@vueuse/core'
 import { type MaybeRefOrGetter } from 'vue'
-import { useToast } from 'oooo-components/ui/toast'
+import { useToast } from '@/components/ui/toast'
 import { type EstimateData } from '@/entities/bridge'
 
 export const useEstimateData = (

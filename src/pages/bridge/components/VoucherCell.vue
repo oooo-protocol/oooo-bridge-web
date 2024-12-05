@@ -4,8 +4,8 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle
-} from 'oooo-components/ui/dialog'
-import Icon from 'oooo-components/ui/Icon.vue'
+} from '@/components/ui/dialog'
+import Icon from '@/components/Icon.vue'
 import { useVoucher } from '../hooks/use-voucher'
 import dayjs from 'dayjs'
 import { type EstimateData } from '@/entities/bridge'

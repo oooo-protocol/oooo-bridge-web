@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from 'oooo-components/ui/dialog'
-import DataTable from 'oooo-components/ui/DataTable.vue'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import DataTable from '@/components/DataTable.vue'
 import PaginationPro from '@/components/PaginationPro.vue'
 import { columns } from './columns'
 import { useQuery, keepPreviousData } from '@tanstack/vue-query'

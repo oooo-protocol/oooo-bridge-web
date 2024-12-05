@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Button } from 'oooo-components/ui/button'
-import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
+import { Button } from '@/components/ui/button'
+import { WALLET_TYPE } from '@/composables/oooo-wallet'
 import { useWallet } from '@/composables/hooks/use-wallet'
 
 const { onConnect } = useWallet()

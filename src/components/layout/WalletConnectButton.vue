@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from 'oooo-components/ui/dropdown-menu'
-import { Button } from 'oooo-components/ui/button'
-import { formatHashWithEllipsis } from 'oooo-components/lib/utils'
-import { WALLET, WALLET_CONFIG_MAP, WALLET_TYPE } from 'oooo-components/oooo-wallet'
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu'
+import { Button } from '@/components/ui/button'
+import { formatHashWithEllipsis } from '@/lib/utils'
+import { WALLET, WALLET_CONFIG_MAP, WALLET_TYPE } from '@/composables/oooo-wallet'
 import { useWallet } from '@/composables/hooks/use-wallet'
 import { createFuncall } from 'vue-funcall'
 import BybitWalletAlert from './BybitWalletAlert.vue'

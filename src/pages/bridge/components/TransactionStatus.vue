@@ -2,9 +2,9 @@
 import { TRANSACTION_STATUS_MAP, CHAIN_BLOCK_EXPLORER_URL_MAP } from '@/lib/constants'
 import { TRANSACTION_STATUS } from '@/entities/bridge'
 import { combineURLs } from '@/lib/utils'
-import { formatHashWithEllipsis } from 'oooo-components/lib/utils'
+import { formatHashWithEllipsis } from '@/lib/utils'
 import { CHAIN } from '@/entities/chain'
-import Icon from 'oooo-components/ui/Icon.vue'
+import Icon from '@/components/Icon.vue'
 
 const props = defineProps<{
   status: TRANSACTION_STATUS

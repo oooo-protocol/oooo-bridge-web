@@ -1,4 +1,4 @@
-import { type ChainConfig } from 'oooo-components/oooo-wallet'
+import { type ChainConfig } from '@/composables/oooo-wallet'
 
 export enum SERVER_ASSET {
   COIN = 'coin',

@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/vue'
 import { AxiosError } from 'axios'
-import { NoAlarmException } from 'oooo-components/lib/exception'
+import { NoAlarmException } from '@/lib/exception'
 import { ResponseError } from '@/request/axios'
 import { type Vue } from '@sentry/vue/types/types'
 

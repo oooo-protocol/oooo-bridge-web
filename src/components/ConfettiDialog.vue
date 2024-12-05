@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import confetti from 'canvas-confetti'
-import { Dialog, DialogContent } from 'oooo-components/ui/dialog'
+import { Dialog, DialogContent } from '@/components/ui/dialog'
 
 defineProps<{
   title: string

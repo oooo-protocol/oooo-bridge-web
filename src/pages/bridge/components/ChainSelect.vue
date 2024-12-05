@@ -4,10 +4,10 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle
-} from 'oooo-components/ui/dialog'
-import { Input } from 'oooo-components/ui/input'
-import Icon from 'oooo-components/ui/Icon.vue'
-import { cn } from 'oooo-components/lib/utils'
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import Icon from '@/components/Icon.vue'
+import { cn } from '@/lib/utils'
 import { CHAIN } from '@/entities/chain'
 import { CHAIN_IMAGE_MAP } from '@/lib/constants'
 import ChainSelectItem from './ChainSelectItem.vue'

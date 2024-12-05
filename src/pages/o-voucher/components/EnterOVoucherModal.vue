@@ -4,15 +4,15 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle
-} from 'oooo-components/ui/dialog'
-import { Input } from 'oooo-components/ui/input'
-import { Button } from 'oooo-components/ui/button'
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
-import { useEVMWallet } from 'oooo-components/oooo-wallet'
+import { useEVMWallet } from '@/composables/oooo-wallet'
 import { redeemVoucherPack } from '@/request/api/voucher'
 import useSignatureStore from '@/store/signature'
 import { type VoucherPack } from '@/entities/voucher'
-import { useToast } from 'oooo-components/ui/toast'
+import { useToast } from '@/components/ui/toast'
 
 const open = defineModel<boolean>()
 const { address } = useEVMWallet()

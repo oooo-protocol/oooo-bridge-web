@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import OVoucherPacks from './OVoucherPacks.vue'
-import { useEVMWallet } from 'oooo-components/oooo-wallet'
+import { useEVMWallet } from '@/composables/oooo-wallet'
 import EVMWalletConnectButton from '@/components/EVMWalletConnectButton.vue'
 import OVoucherPackPlaceholder from './OVoucherPackPlaceholder.vue'
 import { getArrayFirst } from '@preflower/utils'

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Pagination, PaginationList, PaginationPrev, PaginationNext, PaginationListItem, PaginationEllipsis } from 'oooo-components/ui/pagination'
-import { Button } from 'oooo-components/ui/button'
-import Icon from 'oooo-components/ui/Icon.vue'
+import { Pagination, PaginationList, PaginationPrev, PaginationNext, PaginationListItem, PaginationEllipsis } from '@/components/ui/pagination'
+import { Button } from '@/components/ui/button'
+import Icon from '@/components/Icon.vue'
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Icon from 'oooo-components/ui/Icon.vue'
+import Icon from '@/components/Icon.vue'
 
 defineOptions({ name: 'TaskItem' })
 

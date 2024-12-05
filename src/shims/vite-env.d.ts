@@ -9,4 +9,5 @@ interface ImportMetaEnv {
   readonly VITE_DEFAULT_SELECT_TO: string
   readonly VITE_DEFAULT_SELECT_TOKEN: string
   readonly VITE_MEMPOOL_URL: string
+  readonly VITE_WALLET_CONNECT_PROJECT_ID: string
 }

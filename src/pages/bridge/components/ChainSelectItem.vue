@@ -3,7 +3,7 @@ import { useWallet } from '@/composables/hooks/use-wallet'
 import { type Chain } from '@/entities/bridge'
 import { type CHAIN } from '@/entities/chain'
 import { useQuery } from '@tanstack/vue-query'
-import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
+import { WALLET_TYPE } from '@/composables/oooo-wallet'
 import { CHAIN_IMAGE_MAP } from '@/lib/constants'
 import { SERVER_TOKEN_TYPE } from '@/entities/server'
 

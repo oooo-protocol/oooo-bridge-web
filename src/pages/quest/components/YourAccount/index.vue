@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import Icon from 'oooo-components/ui/Icon.vue'
+import Icon from '@/components/Icon.vue'
 import PointsRecord from './PointsRecord.vue'
-import { formatHashWithEllipsis } from 'oooo-components/lib/utils'
+import { formatHashWithEllipsis } from '@/lib/utils'
 import { useQuery } from '@tanstack/vue-query'
 import { retrieveAccountInfo } from '@/request/api/task'
 import useSignatureStore from '@/store/signature'
 import EVMWalletConnectButton from '@/components/EVMWalletConnectButton.vue'
-import { useEVMWallet } from 'oooo-components/oooo-wallet'
+import { useEVMWallet } from '@/composables/oooo-wallet'
 
 defineOptions({ name: 'YourAccount' })
 

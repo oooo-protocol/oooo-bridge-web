@@ -3,8 +3,8 @@ import DailyCheckIn from './DailyCheckIn.vue'
 import Quests from './Quests.vue'
 import Carousel from './Carousel.vue'
 import YourAccount from './YourAccount.vue'
-import Icon from 'oooo-components/ui/Icon.vue'
-import { Button } from 'oooo-components/ui/button'
+import Icon from '@/components/Icon.vue'
+import { Button } from '@/components/ui/button'
 
 const show = ref(window.innerWidth >= 1500)
 

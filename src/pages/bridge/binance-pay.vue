@@ -3,7 +3,7 @@ import { OContainer, OHeader } from '@/components/OContainer'
 import BinancePayDetail from './components/CexDetail/BinancePayDetail.vue'
 import { type CHAIN } from '@/entities/chain'
 import { getArrayFirst } from '@preflower/utils'
-import AppFooter from 'oooo-components/layout/AppFooter.vue'
+import AppFooter from '@/components/layout/AppFooter.vue'
 
 const route = useRoute()
 const router = useRouter()

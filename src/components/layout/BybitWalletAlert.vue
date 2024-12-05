@@ -4,8 +4,8 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle
-} from 'oooo-components/ui/dialog'
-import Button from 'oooo-components/ui/button/Button.vue'
+} from '@/components/ui/dialog'
+import Button from '@/components/ui/button/Button.vue'
 
 defineOptions({
   name: 'BybitWalletAlert'

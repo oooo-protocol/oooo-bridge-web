@@ -7,6 +7,8 @@ declare global {
     unisat?: any
     $onekey?: any
     bybitWallet?: any
+    bitkeep?: any
+    coin98?: any
     DEFINE_APP_VERSION: string
   }
 }

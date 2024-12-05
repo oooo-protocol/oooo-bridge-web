@@ -3,10 +3,10 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger
-} from 'oooo-components/ui/popover'
+} from '@/components/ui/popover'
 import { PopoverArrow } from 'radix-vue'
-import { Button } from 'oooo-components/ui/button'
-import Icon from 'oooo-components/ui/Icon.vue'
+import { Button } from '@/components/ui/button'
+import Icon from '@/components/Icon.vue'
 </script>
 
 <template>

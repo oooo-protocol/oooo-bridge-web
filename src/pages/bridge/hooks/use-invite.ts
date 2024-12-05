@@ -1,7 +1,7 @@
 import { useWallet } from '@/composables/hooks/use-wallet'
 import { getArrayFirst } from '@preflower/utils'
 import { createInvitationRelationship } from '@/request/api/user'
-import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
+import { WALLET_TYPE } from '@/composables/oooo-wallet'
 import useSignatureStore from '@/store/signature'
 
 export const useInvite = () => {

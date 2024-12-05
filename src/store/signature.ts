@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import { useEVMWallet } from 'oooo-components/oooo-wallet'
-import { uuid } from 'oooo-components/lib/utils'
+import { useEVMWallet } from '@/composables/oooo-wallet'
+import { uuid } from '@/lib/utils'
 
 export interface SignInfo {
   walletAddress: string

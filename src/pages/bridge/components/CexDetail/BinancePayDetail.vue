@@ -3,19 +3,19 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger
-} from 'oooo-components/ui/popover'
+} from '@/components/ui/popover'
 import { CHAIN_IMAGE_MAP } from '@/lib/constants'
 import { TRANSACTION_STATUS } from '@/entities/bridge'
 
-import Icon from 'oooo-components/ui/Icon.vue'
+import Icon from '@/components/Icon.vue'
 import { type CHAIN } from '@/entities/chain'
-import { Button } from 'oooo-components/ui/button'
+import { Button } from '@/components/ui/button'
 import { useQuery } from '@tanstack/vue-query'
 import { retrieveTransactionDetail } from '@/request/api/bridge'
 import PageLoading from '@/components/PageLoading.vue'
 import { usePreventUnload } from '../../hooks/use-before-unload'
 import CountDown from './CountDown.vue'
-import { useToast } from 'oooo-components/ui/toast'
+import { useToast } from '@/components/ui/toast'
 import { createFuncall } from 'vue-funcall'
 import AlertPro from '@/components/AlertPro.vue'
 import { useClipboard } from '@/composables/hooks/use-clipboard'

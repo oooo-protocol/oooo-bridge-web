@@ -2,11 +2,11 @@
 import {
   Carousel,
   CarouselContent
-} from 'oooo-components/ui/carousel'
+} from '@/components/ui/carousel'
 import Autoplay from 'embla-carousel-autoplay'
 import AutoHeight from 'embla-carousel-auto-height'
-import Icon from 'oooo-components/ui/Icon.vue'
-import { Button } from 'oooo-components/ui/button'
+import Icon from '@/components/Icon.vue'
+import { Button } from '@/components/ui/button'
 
 defineProps<{
   hideArrow?: boolean

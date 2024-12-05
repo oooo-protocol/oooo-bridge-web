@@ -2,8 +2,8 @@
 import {
   Dialog,
   DialogContent
-} from 'oooo-components/ui/dialog'
-import { Button } from 'oooo-components/ui/button'
+} from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
 
 const open = defineModel<boolean>()
 

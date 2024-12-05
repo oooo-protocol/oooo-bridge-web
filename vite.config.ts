@@ -85,12 +85,17 @@ export default defineConfig(({ mode }) => {
     css: {
       postcss: {
         plugins: [tailwind(), autoprefixer()]
+      },
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler',
+          silenceDeprecations: ['legacy-js-api']
+        }
       }
     },
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, 'src'),
-        'oooo-components': path.resolve(__dirname, 'submodules/oooo-components/src')
+        '@': path.resolve(__dirname, 'src')
       },
       extensions: [
         // add livenet/testnet extension to suitable for multi-env package

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { type WALLET_TYPE } from 'oooo-components/oooo-wallet'
+import { type WALLET_TYPE } from '@/composables/oooo-wallet'
 
 const useWalletStore = defineStore('wallet', () => {
   const walletType = ref<WALLET_TYPE>()

@@ -4,9 +4,9 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle
-} from 'oooo-components/ui/dialog'
+} from '@/components/ui/dialog'
 import OVoucherPackPlaceholder from '@/pages/o-voucher/components/OVoucherPackPlaceholder.vue'
-import { Button, buttonVariants } from 'oooo-components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 
 const open = defineModel<boolean>()
 </script>

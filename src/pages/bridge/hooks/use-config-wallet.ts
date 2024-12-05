@@ -1,6 +1,6 @@
 import { CHAIN, CHAIN_TYPE } from '@/entities/chain'
 import useWalletStore from '@/store/wallet'
-import { WALLET_TYPE } from 'oooo-components/oooo-wallet'
+import { WALLET_TYPE } from '@/composables/oooo-wallet'
 import { CHAIN_TYPE_MAP } from '@/lib/constants'
 
 export const useConfigWallet = (

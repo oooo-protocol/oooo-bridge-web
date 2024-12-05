@@ -3,8 +3,8 @@ import { redeemVoucherPack } from '@/request/api/voucher'
 import useSignatureStore from '@/store/signature'
 import { getArrayFirst } from '@preflower/utils'
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
-import { useEVMWallet } from 'oooo-components/oooo-wallet'
-import { useToast } from 'oooo-components/ui/toast'
+import { useEVMWallet } from '@/composables/oooo-wallet'
+import { useToast } from '@/components/ui/toast'
 
 export const useCodeQuery = () => {
   const route = useRoute()

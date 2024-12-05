@@ -92,8 +92,8 @@ import {
   SWAN_LIVENET,
   SUI_TESTNET,
   SUI_LIVENET
-} from 'oooo-components/lib/chain-config'
-import { type ChainConfig } from 'oooo-components/oooo-wallet'
+} from '@/lib/chain-config'
+import { type ChainConfig } from '@/composables/oooo-wallet'
 
 export const CHAIN_LIST = [
   {

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import EVMWalletConnectButton from '@/components/EVMWalletConnectButton.vue'
-import { useEVMWallet } from 'oooo-components/oooo-wallet'
-import { Button } from 'oooo-components/ui/button'
-import Icon from 'oooo-components/ui/Icon.vue'
+import { useEVMWallet } from '@/composables/oooo-wallet'
+import { Button } from '@/components/ui/button'
+import Icon from '@/components/Icon.vue'
 import { type Quest } from '@/entities/quest'
 import QuestTag from './QuestTag.vue'
 import QuestTime from './QuestTime.vue'

@@ -6,7 +6,7 @@ import { CHAIN_BLOCK_EXPLORER_URL_MAP, CHAIN_CONFIG_MAP, CHAIN_TYPE_MAP } from '
 import axiosOrigin from 'axios'
 import { CHAIN_TYPE, type CHAIN } from '@/entities/chain'
 import { type ServerTokenPair, type ServerConfigs } from '@/entities/server'
-import { getRpcProvider } from 'oooo-components/lib/utils'
+import { getRpcProvider } from '@/lib/utils'
 import { Aptos, AptosConfig, TransactionResponseType } from '@aptos-labs/ts-sdk'
 import { SuiClient } from '@mysten/sui/client'
 

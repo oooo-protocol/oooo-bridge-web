@@ -4,7 +4,7 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger
-} from 'oooo-components/ui/select'
+} from '@/components/ui/select'
 import { type Token } from '@/entities/bridge'
 
 const model = defineModel<string>()

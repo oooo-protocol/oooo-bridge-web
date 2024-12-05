@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import AppHeader from 'oooo-components/layout/AppHeader.vue'
-import AppNav from 'oooo-components/layout/AppNav.vue'
-import AppFooter from 'oooo-components/layout/AppFooter.vue'
-import Icon from 'oooo-components/ui/Icon.vue'
+import AppHeader from './AppHeader.vue'
+import AppNav from './AppNav.vue'
+import AppFooter from './AppFooter.vue'
+import Icon from '@/components/Icon.vue'
 import { AppCarousel } from './AppCarousel'
 import WalletConnectButton from './WalletConnectButton.vue'
 import AppNotification from './AppNotification.vue'

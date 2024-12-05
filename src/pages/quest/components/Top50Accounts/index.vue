@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import DataTable from 'oooo-components/ui/DataTable.vue'
+import DataTable from '@/components/DataTable.vue'
 import PaginationPro from '@/components/PaginationPro.vue'
 
 import { columns } from './columns'

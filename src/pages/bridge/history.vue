@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useInfiniteScroll } from '@vueuse/core'
 import { retrieveTransactionList } from '@/request/api/bridge'
-import Icon from 'oooo-components/ui/Icon.vue'
+import Icon from '@/components/Icon.vue'
 import dayjs from 'dayjs'
 import { OContainer, OHeader } from '@/components/OContainer'
 import type { Transaction } from '@/entities/bridge'

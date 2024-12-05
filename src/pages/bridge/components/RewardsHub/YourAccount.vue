@@ -2,7 +2,7 @@
 import EVMWalletConnectButton from '@/components/EVMWalletConnectButton.vue'
 import { retrieveAccountInfo } from '@/request/api/task'
 import { useQuery } from '@tanstack/vue-query'
-import { useEVMWallet } from 'oooo-components/oooo-wallet'
+import { useEVMWallet } from '@/composables/oooo-wallet'
 import PointTag from '../PointTag.vue'
 
 const { address } = useEVMWallet()

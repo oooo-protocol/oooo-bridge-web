@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { OContainer, OHeader, OContent } from '@/components/OContainer'
-import Icon from 'oooo-components/ui/Icon.vue'
+import Icon from '@/components/Icon.vue'
 import { useQuery } from '@tanstack/vue-query'
 import { retrieveTransactionDetail, retrieveTransactionStatus } from '@/request/api/bridge'
 import { TRANSACTION_STATUS, type Transaction } from '@/entities/bridge'

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useClipboard } from '@/composables/hooks/use-clipboard'
-import { Button } from 'oooo-components/ui/button'
-import Icon from 'oooo-components/ui/Icon.vue'
-import { useToast } from 'oooo-components/ui/toast'
+import { Button } from '@/components/ui/button'
+import Icon from '@/components/Icon.vue'
+import { useToast } from '@/components/ui/toast'
 
 const { toast } = useToast()
 const { copy } = useClipboard()

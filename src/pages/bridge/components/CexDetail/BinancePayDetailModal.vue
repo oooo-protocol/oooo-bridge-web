@@ -4,7 +4,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle
-} from 'oooo-components/ui/dialog'
+} from '@/components/ui/dialog'
 import { type CHAIN } from '@/entities/chain'
 import { usePreventUnload } from '../../hooks/use-before-unload'
 import BinancePayDetail from './BinancePayDetail.vue'

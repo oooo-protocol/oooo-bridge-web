@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Button } from 'oooo-components/ui/button'
+import { Button } from '@/components/ui/button'
 import { createFuncall } from 'vue-funcall'
-import { type NETWORK, WALLET_TYPE, WalletConnectModal } from 'oooo-components/oooo-wallet'
+import { type NETWORK, WALLET_TYPE, WalletConnectModal } from '@/composables/oooo-wallet'
 
 const onClickConnect = () => {
   createFuncall(WalletConnectModal, {
