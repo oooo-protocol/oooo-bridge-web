@@ -255,7 +255,7 @@ const createChainTransaction = async (parameter: {
     value: parameter.amount
   }
   if (assetType === SERVER_ASSET.COIN) {
-    const estimateGas = await calcEstimateGas(transferParameter, parameter.fromChain)
+    const estimateGas = await calcEstimateGas(transferParameter, config.value!)
     /**
      * Estimate transaction fee to avoid balance exceeded
      */
