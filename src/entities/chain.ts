@@ -55,7 +55,8 @@ export enum CHAIN {
   MORPH = 'morph',
   MEZO = 'mezo',
   SWAN = 'swan',
-  SUI = 'sui'
+  SUI = 'sui',
+  BOTANIX = 'botanix'
 }
 
 export enum CHAIN_TYPE {
