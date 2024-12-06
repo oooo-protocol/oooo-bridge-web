@@ -393,7 +393,7 @@ export const CHAIN_LIST = [
     [NETWORK.TESTNET]: SUI_TESTNET,
     [NETWORK.LIVENET]: SUI_LIVENET
   }, {
-    image: 'https://oooo.money/static/images/botainx.png',
+    image: 'https://oooo.money/static/images/botanix.png',
     value: CHAIN.BOTANIX,
     type: CHAIN_TYPE.ETHEREUM,
     [NETWORK.TESTNET]: BOTANIX_TESTNET
