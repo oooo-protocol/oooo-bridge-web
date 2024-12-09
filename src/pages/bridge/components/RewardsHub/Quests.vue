@@ -2,8 +2,11 @@
 import { QuestItem } from '@/components/QuestItem'
 import { retriveRewardsHubConfig } from '@/request/api/config'
 import { useQuery } from '@tanstack/vue-query'
+import { watchOnce } from '@vueuse/core'
 
-const { data } = useQuery({
+const emits = defineEmits<(e: 'inited') => void>()
+
+const { data, isFetched } = useQuery({
   queryKey: ['/config/bridge/quests'],
   queryFn: retriveRewardsHubConfig
 })
@@ -28,6 +31,10 @@ const onClickQuest = (link?: string) => {
     window.open(link, '_blank')
   }
 }
+
+watchOnce(isFetched, () => {
+  emits('inited')
+})
 </script>
 
 <template>

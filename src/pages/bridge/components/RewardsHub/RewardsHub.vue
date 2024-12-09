@@ -14,28 +14,36 @@ if (import.meta.env.VITE_MODE === 'testnet') {
   isHideRewardsHub.value = true
 }
 
-onMounted(() => {
-  setTimeout(() => {
-    if (window.innerWidth < 1500) {
-      show.value = false
-    }
-  }, 1000)
-})
+const initedMap: Record<string, boolean> = {
+  DailyCheckIn: false,
+  Quests: false
+}
+
+const onInited = (name: string) => {
+  initedMap[name] = true
+  const isAllInited = Object.values(initedMap).every(item => item)
+  if (isAllInited && window.innerWidth < 1500) {
+    show.value = false
+  }
+}
 </script>
 
 <template>
   <template v-if="!isHideRewardsHub">
-    <div
-      class="fixed top-[80px] right-[12px] md:right-[20px] p-[4px] md:p-[8px] rounded-[8px] md:rounded-[15px] bg-[#000]/35 cursor-pointer"
-      @click="show = !show"
-    >
-      <div class="p-[3px] md:p-[6px] bg-[#fff] rounded-[6px] md:rounded-[11px]">
-        <img
-          class="w-[16px] h-[16px] md:w-[34px] md:h-[34px]"
-          src="@/assets/images/menu.png"
-        >
+    <Transition name="rewards-hub__widget">
+      <div
+        class="fixed top-[80px] right-[12px] md:right-[20px] p-[4px] md:p-[8px] rounded-[8px] md:rounded-[15px] bg-[#000]/35 cursor-pointer"
+        @click="show = !show"
+        v-show="!show"
+      >
+        <div class="p-[3px] md:p-[6px] bg-[#fff] rounded-[6px] md:rounded-[11px]">
+          <img
+            class="w-[16px] h-[16px] md:w-[34px] md:h-[34px]"
+            src="@/assets/images/menu.png"
+          >
+        </div>
       </div>
-    </div>
+    </Transition>
     <Transition name="rewards-hub">
       <div
         v-show="show"
@@ -54,8 +62,11 @@ onMounted(() => {
           </Button>
         </div>
         <div class="flex-1 p-[16px] overflow-y-auto">
-          <DailyCheckIn />
-          <Quests class="mt-[24px]" />
+          <DailyCheckIn @inited="onInited('DailyCheckIn')" />
+          <Quests
+            class="mt-[24px]"
+            @inited="onInited('Quests')"
+          />
         </div>
         <Carousel />
       </div>
@@ -72,6 +83,17 @@ onMounted(() => {
 
 .rewards-hub-enter-from,
 .rewards-hub-leave-to {
-  scale: 0.1;
+  scale: 0;
+}
+
+.rewards-hub__widget-enter-active,
+.rewards-hub__widget-enter-active {
+  transition: opacity 0.4s ease-in-out;
+  transition-delay: 0.4s;
+}
+
+.rewards-hub__widget-enter-from,
+.rewards-hub__widget-leave-to {
+  opacity: 0;
 }
 </style>
