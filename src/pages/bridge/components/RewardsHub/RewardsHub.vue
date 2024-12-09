@@ -6,13 +6,21 @@ import YourAccount from './YourAccount.vue'
 import Icon from '@/components/Icon.vue'
 import { Button } from '@/components/ui/button'
 
-const show = ref(window.innerWidth >= 1500)
+const show = ref(true)
 
 const isHideRewardsHub = ref(false)
 
 if (import.meta.env.VITE_MODE === 'testnet') {
   isHideRewardsHub.value = true
 }
+
+onMounted(() => {
+  setTimeout(() => {
+    if (window.innerWidth < 1500) {
+      show.value = false
+    }
+  }, 1000)
+})
 </script>
 
 <template>
