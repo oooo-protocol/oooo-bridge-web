@@ -2,7 +2,6 @@
 import { QuestItem } from '@/components/QuestItem'
 import { retriveRewardsHubConfig } from '@/request/api/config'
 import { useQuery } from '@tanstack/vue-query'
-import { watchOnce } from '@vueuse/core'
 
 const emits = defineEmits<(e: 'inited') => void>()
 
@@ -32,8 +31,11 @@ const onClickQuest = (link?: string) => {
   }
 }
 
-watchOnce(isFetched, () => {
+watch(isFetched, (val) => {
+  if (!val) return
   emits('inited')
+}, {
+  immediate: true
 })
 </script>
 
