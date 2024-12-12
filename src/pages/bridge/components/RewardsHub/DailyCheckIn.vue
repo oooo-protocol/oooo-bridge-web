@@ -10,7 +10,6 @@ import { formatDate } from '@/lib/utils'
 import { CHECK_IN_STATUS, type CheckIn } from '@/entities/quest'
 import CheckInChainModal from './CheckInChainModal.vue'
 import { useWallet } from '@/composables/hooks/use-wallet'
-import { watchOnce } from '@vueuse/core'
 
 const emits = defineEmits<(e: 'inited') => void>()
 
@@ -40,8 +39,11 @@ const onCheckIn = (item: CheckIn, index: number) => {
   }
 }
 
-watchOnce(isFetched, () => {
+watch(isFetched, (val) => {
+  if (!val) return
   emits('inited')
+}, {
+  immediate: true
 })
 </script>
 
