@@ -5,6 +5,7 @@ import { UnisatWallet } from './wallets/unisat'
 import { BybitBitcoinWallet } from './wallets/bybit-bitcoin'
 import { OnekeyBitcoinWallet } from './wallets/onekey-bitcoin'
 import { BitgetBitcoinWallet } from './wallets/bitget-bitcoin'
+import { TomoBitcoinWallet } from './wallets/tomo'
 
 const wrapper = new Wrapper<BitcoinWalletImpl>(
   'oooo-btc-wallet',
@@ -13,7 +14,8 @@ const wrapper = new Wrapper<BitcoinWalletImpl>(
     [WALLET.UNISAT]: UnisatWallet,
     [WALLET.ONEKEY_BITCOIN]: OnekeyBitcoinWallet,
     [WALLET.BYBIT_BITCOIN]: BybitBitcoinWallet,
-    [WALLET.BITGET_BITCOIN]: BitgetBitcoinWallet
+    [WALLET.BITGET_BITCOIN]: BitgetBitcoinWallet,
+    [WALLET.TOMO]: TomoBitcoinWallet
   }
 )
 

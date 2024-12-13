@@ -10,5 +10,7 @@ declare global {
     bitkeep?: any
     coin98?: any
     DEFINE_APP_VERSION: string
+    tomo_evm?: any
+    tomo_btc?: any
   }
 }
