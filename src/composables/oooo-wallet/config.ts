@@ -116,8 +116,7 @@ export const WALLETS = [
 export const WALLET_CONFIG_MAP = defineMap(WALLETS, 'value', ['name', 'value', 'image'])
 
 export const BTC_TESTNET_WALLETS = [
-  WALLET.UNISAT,
-  WALLET.TOMO
+  WALLET.UNISAT
 ]
 
 export const BTC_LIVENET_WALLET = [
@@ -125,8 +124,7 @@ export const BTC_LIVENET_WALLET = [
   WALLET.OKX_BITCOIN,
   WALLET.BITGET_BITCOIN,
   WALLET.BYBIT_BITCOIN,
-  WALLET.ONEKEY_BITCOIN,
-  WALLET.TOMO
+  WALLET.ONEKEY_BITCOIN
 ]
 
 export const EVM_WALLETS = [
