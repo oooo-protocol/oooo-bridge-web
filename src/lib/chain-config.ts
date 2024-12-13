@@ -1021,7 +1021,7 @@ export const SUI_TESTNET = {
   nativeCurrency: {
     name: 'SUI',
     symbol: 'SUI',
-    decimals: 18
+    decimals: 9
   },
   blockExplorerUrls: ['https://suiscan.xyz/testnet']
 }
@@ -1033,7 +1033,7 @@ export const SUI_LIVENET = {
   nativeCurrency: {
     name: 'SUI',
     symbol: 'SUI',
-    decimals: 18
+    decimals: 9
   },
   blockExplorerUrls: ['https://suiscan.xyz/mainnet']
 }
