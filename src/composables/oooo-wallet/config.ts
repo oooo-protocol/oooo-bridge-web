@@ -12,6 +12,7 @@ import NIGHTLY_IMAGE from './images/nightly.png'
 import RAZOR_IMAGE from './images/razor.png'
 import MARTIAN_IMAGE from './images/martian.png'
 import SUIET_IMAGE from './images/suiet.png'
+import TOMO_IMAGE from './images/tomo.png'
 import { WALLET } from './types'
 import { defineMap } from '@preflower/utils'
 
@@ -104,6 +105,11 @@ export const WALLETS = [
     name: 'SUIET',
     value: WALLET.SUIET,
     image: SUIET_IMAGE
+  },
+  {
+    name: 'TOMO',
+    value: WALLET.TOMO,
+    image: TOMO_IMAGE
   }
 ]
 
@@ -130,7 +136,8 @@ export const EVM_WALLETS = [
   WALLET.BYBIT,
   WALLET.ONEKEY,
   WALLET.WALLETCONNCET,
-  WALLET.COIN98
+  WALLET.COIN98,
+  WALLET.TOMO
 ]
 
 export const FRACTAL_TESTNET_WALLET = [
