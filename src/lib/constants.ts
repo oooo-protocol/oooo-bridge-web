@@ -91,7 +91,9 @@ import {
   SWAN_TESTNET,
   SWAN_LIVENET,
   SUI_TESTNET,
-  SUI_LIVENET
+  SUI_LIVENET,
+  WORLDCHAIN_LIVENET,
+  WORLDCHAIN_TESTNET
 } from '@/lib/chain-config'
 import { type ChainConfig } from '@/composables/oooo-wallet'
 
@@ -391,6 +393,12 @@ export const CHAIN_LIST = [
     type: CHAIN_TYPE.SUI,
     [NETWORK.TESTNET]: SUI_TESTNET,
     [NETWORK.LIVENET]: SUI_LIVENET
+  }, {
+    image: 'https://oooo.money/static/images/worldchain.png',
+    value: CHAIN.WORLDCHAIN,
+    type: CHAIN_TYPE.ETHEREUM,
+    [NETWORK.TESTNET]: WORLDCHAIN_TESTNET,
+    [NETWORK.LIVENET]: WORLDCHAIN_LIVENET
   }
 ]
 

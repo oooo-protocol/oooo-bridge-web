@@ -1037,3 +1037,27 @@ export const SUI_LIVENET = {
   },
   blockExplorerUrls: ['https://suiscan.xyz/mainnet']
 }
+
+export const WORLDCHAIN_TESTNET = {
+  chainId: '0x12c1',
+  chainName: 'World Chain Sepolia Testnet',
+  rpcUrls: ['https://worldchain-sepolia.g.alchemy.com/public'],
+  nativeCurrency: {
+    name: 'ETH',
+    symbol: 'ETH',
+    decimals: 18
+  },
+  blockExplorerUrls: ['https://sepolia.worldscan.org']
+}
+
+export const WORLDCHAIN_LIVENET = {
+  chainId: '0x1e0',
+  chainName: 'World Chain',
+  rpcUrls: ['https://worldchain-mainnet.g.alchemy.com/public'],
+  nativeCurrency: {
+    name: 'ETH',
+    symbol: 'ETH',
+    decimals: 18
+  },
+  blockExplorerUrls: ['https://worldscan.org']
+}
