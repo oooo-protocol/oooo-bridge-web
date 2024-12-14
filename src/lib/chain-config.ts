@@ -1029,7 +1029,7 @@ export const SUI_TESTNET = {
 export const SUI_LIVENET = {
   chainId: '0x1',
   chainName: 'Sui Mainnet',
-  rpcUrls: ['https://rpc.sui.io/'],
+  rpcUrls: ['https://fullnode.mainnet.sui.io/'],
   nativeCurrency: {
     name: 'SUI',
     symbol: 'SUI',
