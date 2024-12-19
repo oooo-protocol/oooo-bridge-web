@@ -1,3 +1,4 @@
+import type { Badge, Category, UserBadge } from './badge'
 import type { QuestGroup, Quest } from './quest'
 
 export interface Banner {
@@ -18,4 +19,10 @@ export interface QuestConfig {
   questsTaskGroups: QuestGroup[]
   questsTasks: Quest[]
   questsTopBanners: Banner[]
+}
+
+export interface BadgeConfig {
+  categoryList: Category[]
+  badgeList: Badge[]
+  userBadgeList: UserBadge[]
 }
