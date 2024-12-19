@@ -203,3 +203,7 @@ export function getConfigFromChain (chain: string) {
 export function formatDate (date: string | number | Date, format = 'YYYY/MM/DD HH:mm') {
   return dayjs(date).format(format)
 }
+
+export async function sleep (timestamp: number) {
+  return await new Promise((resolve) => setTimeout(resolve, timestamp))
+}

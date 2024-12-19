@@ -2,6 +2,11 @@ import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import Layout from '@/components/layout/Layout.vue'
 import { useWallet } from '@/composables/hooks/use-wallet'
 
+/**
+ * 自定义 meta 元数据
+ * - auth: 是否需要登录才可访问
+ * - fullscreen: 是否全屏样式展示
+ */
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -15,14 +20,20 @@ const routes: RouteRecordRaw[] = [
       }, {
         path: '/bridge/history',
         name: 'bridge-history',
-        component: async () => await import('@/pages/bridge/history.vue')
+        component: async () => await import('@/pages/bridge/history.vue'),
+        meta: {
+          auth: true
+        }
       }, {
         path: '/transaction/:chain/:hash',
         name: 'transaction-detail',
         component: async () => await import('@/pages/bridge/transaction-detail.vue'),
+        meta: {
+          auth: true
+        },
         props: true
       }, {
-        path: 'o-voucher',
+        path: '/o-voucher',
         name: 'o-voucher',
         component: async () => await import('@/pages/o-voucher/index.vue')
       }
@@ -35,12 +46,12 @@ const routes: RouteRecordRaw[] = [
     }
   }, {
     path: '/quest/callback/twitter',
-    name: 'CallbackTwitter',
+    name: 'callback-twitter',
     component: async () => await import('@/pages/quest/callback/twitter.vue')
   }, {
-    path: '/quest/callback/discord',
-    name: 'CallbackDiscord',
-    component: async () => await import('@/pages/quest/callback/discord.vue')
+    path: '/:page/callback/discord',
+    name: 'callback-discord',
+    component: async () => await import('@/pages/callback/discord.vue')
   }, {
     path: '/binance-pay',
     name: 'binance-pay',
@@ -66,9 +77,15 @@ if (import.meta.env.VITE_MODE === 'dev' || import.meta.env.VITE_MODE === 'livene
       fullscreen: true
     }
   })
+  router.addRoute('layout', {
+    path: '/badges',
+    name: 'badges',
+    component: async () => await import('@/pages/badge/index.vue'),
+    meta: {
+      fullscreen: true
+    }
+  })
 }
-
-export const WHITE_LIST = ['bridge', 'binance-pay', 'quest', 'o-voucher']
 
 router.beforeEach((to, from, next) => {
   const { address } = useWallet()
@@ -76,7 +93,7 @@ router.beforeEach((to, from, next) => {
   if (address.value != null) {
     next()
     return
-  } else if (WHITE_LIST.includes(to.name as string)) {
+  } else if (to.meta.auth !== true) {
     next()
     return
   }
