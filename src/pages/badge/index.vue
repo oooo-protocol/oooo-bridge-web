@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Categories from './components/Categories/index.vue'
-import FAQ from './components/FAQ/index.vue'
+import FAQ from './components/FAQ.vue'
 import Quests from './components/Quests.vue'
 import useWalletStore from '@/store/wallet'
 import { WALLET_TYPE } from '@/composables/oooo-wallet'
@@ -15,13 +15,11 @@ onBeforeMount(() => {
 
 <template>
   <div class="badge-header h-[520px] flex flex-col justify-center items-center" />
-  <div class="flex flex-row items-start gap-[80px] xl:px-[240px]">
-    <div class="p-[24px] md:px-[48] md:pt-[80px] xl:p-0 w-full">
-      <MyBadges />
-      <Categories />
-      <FAQ class="mt-[173px]" />
-      <Quests class="mt-[89px]" />
-    </div>
+  <div class="p-[24px] md:px-[48] md:pt-[80px] xl:px-[240px] xl:pt-[80px] w-full">
+    <MyBadges />
+    <Categories />
+    <FAQ class="mt-[173px]" />
+    <Quests class="mt-[89px]" />
   </div>
 </template>
 

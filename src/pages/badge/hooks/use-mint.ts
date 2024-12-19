@@ -104,11 +104,11 @@ export const useMint = () => {
           badgeId: userBadge.badgeId,
           txnHash
         })
-
-        await queryClient.invalidateQueries({
-          queryKey: ['/badge/configuration', sign.walletAddress]
-        })
       }
+
+      await queryClient.invalidateQueries({
+        queryKey: ['/badge/configuration', sign.walletAddress]
+      })
 
       await closeMintModal()
 
