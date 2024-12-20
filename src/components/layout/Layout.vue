@@ -9,13 +9,6 @@ import AppNotification from './AppNotification.vue'
 
 const menus = [
   {
-    name: 'CHEST CHASE',
-    tag: 'a',
-    attributes: {
-      href: 'https://oooo.money/chestchase'
-    }
-  },
-  {
     name: 'BRIDGE',
     children: [
       {
