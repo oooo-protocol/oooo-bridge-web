@@ -61,7 +61,7 @@ const faqs = [
         :value="`${i}`"
       >
         <AccordionTrigger>{{ faq.title }}</AccordionTrigger>
-        <AccordionContent>
+        <AccordionContent class="whitespace-pre-line">
           {{ faq.content }}
         </AccordionContent>
       </AccordionItem>
