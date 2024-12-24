@@ -26,22 +26,23 @@ const menus = [
       }
     ]
   },
-  {
-    name: 'BADGE 🔥',
-    ...(import.meta.env.VITE_MODE === 'testnet'
-      ? {
-        tag: 'a',
-        attributes: {
-          href: 'https://bridge.oooo.money/badges'
-        }
-      }
-      : {
-        tag: 'router-link',
-        attributes: {
-          to: '/badges'
-        }
-      })
-  },
+  // TODO: temporarily hide badge
+  // {
+  //   name: 'BADGE 🔥',
+  //   ...(import.meta.env.VITE_MODE === 'testnet'
+  //     ? {
+  //       tag: 'a',
+  //       attributes: {
+  //         href: 'https://bridge.oooo.money/badges'
+  //       }
+  //     }
+  //     : {
+  //       tag: 'router-link',
+  //       attributes: {
+  //         to: '/badges'
+  //       }
+  //     })
+  // },
   {
     name: 'DOCS',
     tag: 'a',
