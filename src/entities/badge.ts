@@ -31,6 +31,10 @@ export interface BadgeMintLimit {
   description: string
   type: BadgeMintType
   icon: string
+  /**
+   * 前端内部设置状态, 用于前端更新该 MintLimit 的状态
+   */
+  status?: boolean
 }
 
 export interface UserBadge {

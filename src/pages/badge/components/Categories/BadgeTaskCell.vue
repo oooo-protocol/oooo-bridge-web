@@ -3,22 +3,23 @@ import Icon from '@/components/Icon.vue'
 import { Button } from '@/components/ui/button'
 import { useEVMWallet } from '@/composables/oooo-wallet'
 import { BadgeMintType, type Badge, type BadgeMintLimit } from '@/entities/badge'
+import { type BadgeConfig } from '@/entities/config'
 import { invokeAuthorizationLink } from '@/lib/utils'
 import { getBadgeDiscordAuthorizationUrl, verifyBadgeLimit } from '@/request/api/badge'
-import { useMutation } from '@tanstack/vue-query'
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
 
 const props = defineProps<{
   badgeId: Badge['id']
   task: BadgeMintLimit
 }>()
-const emits = defineEmits<(e: 'succeed') => void>()
 
 const { address } = useEVMWallet()
+const queryClient = useQueryClient()
 
 /**
  * status - true: success, false: fail, undefined: wait to check
  */
-const { isPending: loading, data: status, mutate } = useMutation({
+const { isPending: loading, data: _status, mutate } = useMutation({
   mutationKey: ['/badge/mint/check', address.value, props.badgeId, props.task.id],
   mutationFn: async () => {
     const result = await verifyBadgeLimit({ walletAddress: address.value!, badgeId: props.badgeId, mintLimitId: props.task.id })
@@ -32,10 +33,32 @@ const { isPending: loading, data: status, mutate } = useMutation({
   },
   onSuccess: (data) => {
     if (data) {
-      emits('succeed')
+      queryClient.setQueryData(['/badge/configuration', address], (old: BadgeConfig | undefined) => {
+        if (!old) return old
+        return {
+          ...old,
+          badgeList: old.badgeList.map((item) => {
+            if (item.id !== props.badgeId) return item
+            return {
+              ...item,
+              mintLimit: item.mintLimit.map((limit) => {
+                if (limit.id !== props.task.id) return limit
+                return {
+                  ...limit,
+                  status: true
+                }
+              })
+            }
+          })
+        }
+      })
     }
   }
 })
+/**
+ * if query status is undefined, check task status
+ */
+const status = computed(() => _status.value ?? props.task.status)
 </script>
 
 <template>
@@ -57,11 +80,12 @@ const { isPending: loading, data: status, mutate } = useMutation({
         class="text-[22px] text-[#abeec4]"
         v-if="status"
       />
-      <Icon
-        name="close1"
-        class="text-[22px] text-[#787878]"
+      <div
+        class="px-[6px] py-[3px] rounded-[2px] bg-[#787878] text-[14px] font-[500] text-[#000]"
         v-else-if="status === false"
-      />
+      >
+        NOT ELIGIBLE
+      </div>
       <Button
         v-else
         class="w-[90px]"
