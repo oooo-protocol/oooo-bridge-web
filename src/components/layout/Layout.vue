@@ -9,13 +9,6 @@ import AppNotification from './AppNotification.vue'
 
 const menus = [
   {
-    name: 'CHEST CHASE',
-    tag: 'a',
-    attributes: {
-      href: 'https://oooo.money/chestchase'
-    }
-  },
-  {
     name: 'BRIDGE',
     children: [
       {
@@ -33,6 +26,23 @@ const menus = [
       }
     ]
   },
+  // TODO: temporarily hide badge
+  // {
+  //   name: 'BADGE 🔥',
+  //   ...(import.meta.env.VITE_MODE === 'testnet'
+  //     ? {
+  //       tag: 'a',
+  //       attributes: {
+  //         href: 'https://bridge.oooo.money/badges'
+  //       }
+  //     }
+  //     : {
+  //       tag: 'router-link',
+  //       attributes: {
+  //         to: '/badges'
+  //       }
+  //     })
+  // },
   {
     name: 'DOCS',
     tag: 'a',
@@ -97,9 +107,8 @@ const navs = [
 const route = useRoute()
 
 watch(route, (route) => {
-  const name = route.name
   const appEl = document.querySelector('#app') as HTMLElement
-  if (name === 'quest') {
+  if (route.meta.fullscreen === true) {
     appEl.style.background = '#000'
   } else {
     appEl.style.background = ''
@@ -145,7 +154,7 @@ watch(route, (route) => {
   >
     <div
       class="mt-[80px]"
-      v-if="route.name !== 'quest'"
+      v-if="!route.meta.fullscreen"
     >
       <AppCarousel />
       <AppNotification

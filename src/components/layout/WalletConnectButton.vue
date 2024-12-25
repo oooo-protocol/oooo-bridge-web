@@ -7,7 +7,6 @@ import { WALLET, WALLET_CONFIG_MAP, WALLET_TYPE } from '@/composables/oooo-walle
 import { useWallet } from '@/composables/hooks/use-wallet'
 import { createFuncall } from 'vue-funcall'
 import BybitWalletAlert from './BybitWalletAlert.vue'
-import { WHITE_LIST } from '@/router'
 import { useQuery } from '@tanstack/vue-query'
 import { retrieveVoucherPacks } from '@/request/api/voucher'
 import useSignatureStore from '@/store/signature'
@@ -34,7 +33,7 @@ const onClickLogout = () => {
   void onLogout()
   onSignout()
 
-  if (!WHITE_LIST.includes(route.name as string)) {
+  if (route.meta.auth === true) {
     void router.replace({ name: 'bridge' })
   }
 }
