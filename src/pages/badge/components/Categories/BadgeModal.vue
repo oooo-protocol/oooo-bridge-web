@@ -20,21 +20,15 @@ const props = defineProps<{
 const { address } = useEVMWallet()
 const { mint } = useMint()
 
-const limits = ref<boolean[]>((() => {
-  if (props.badge.status !== UserBadgeMintStatus.UNMINT) return []
-  return props.badge.mintLimit.map(_ => false)
-})())
-const mintable = computed(() => limits.value.every((item) => item))
+const mintable = computed(() => {
+  if (props.badge.status !== UserBadgeMintStatus.UNMINT) return false
+  return props.badge.mintLimit.every(item => item.status)
+})
 
 const txnUrl = computed(() => {
   if (props.badge.status === UserBadgeMintStatus.UNMINT) return
   const explorer = CHAIN_BLOCK_EXPLORER_URL_MAP[props.badge.chainName]
   return combineURLs(explorer, `/tx/${props.badge.txnHash}`)
-})
-
-watch(() => props.badge, () => {
-  if (props.badge.status !== UserBadgeMintStatus.UNMINT) return
-  limits.value = props.badge.mintLimit.map(_ => false)
 })
 
 const onMint = async () => {
@@ -94,11 +88,10 @@ const onMint = async () => {
         </p>
         <div class="mt-[7px] md:mt-[20px]">
           <BadgeTaskCell
-            v-for="(task, i) of badge.mintLimit"
+            v-for="(task) of badge.mintLimit"
             :key="task.id"
             :task="task"
             :badge-id="badge.id"
-            @succeed="() => limits[i] = true"
           />
         </div>
       </template>

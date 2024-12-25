@@ -52,7 +52,7 @@ export interface UnmintBadge extends Badge {
           :tag="tag"
         />
       </div>
-      <p class="text-[11px] text-[#787878]">
+      <p class="text-[11px] text-[#787878] text-center">
         {{ badge.description }}
       </p>
     </div>
