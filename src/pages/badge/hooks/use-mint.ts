@@ -114,7 +114,7 @@ export const useMint = () => {
 
       const { close: closeMintSuccessModal } = createFuncall(MintSuccessModal, {
         open: true,
-        icon: 'https://bridge.oooo.money/static/nft/alphax.png'
+        icon: userBadge.badgeIcon
       })
 
       await sleep(400)
