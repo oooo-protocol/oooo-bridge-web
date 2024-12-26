@@ -38,7 +38,7 @@ export interface UnmintBadge extends Badge {
       class="w-[88px] h-[88px] md:h-[130px] md:w-[130px]"
       :src="badge.icon"
     >
-    <div class="flex flex-col md:items-center gap-[8px] md:gap-[16px]">
+    <div class="flex flex-col md:items-center gap-[8px]">
       <p class="text-[18px] text-center">
         {{ badge.name }}
       </p>
