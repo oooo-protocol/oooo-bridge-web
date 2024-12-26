@@ -59,7 +59,7 @@ const onMint = async () => {
           :src="badge.icon"
         >
         <div>
-          <p class="text-[16px] md:text-[24px] font-[500]">
+          <p class="text-[16px] md:text-[24px] font-[500] text-center">
             {{ badge.name }}
           </p>
           <div class="mt-[16px] md:mt-[8px] flex justify-center md:justify-normal gap-[4px]">
