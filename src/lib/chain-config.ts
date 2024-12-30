@@ -1061,3 +1061,15 @@ export const WORLDCHAIN_LIVENET = {
   },
   blockExplorerUrls: ['https://worldscan.org']
 }
+
+export const BOTANIX_TESTNET = {
+  chainId: '0xe34',
+  chainName: 'Botanix Testnet',
+  rpcUrls: ['https://node.botanixlabs.dev/'],
+  nativeCurrency: {
+    name: 'BTC',
+    symbol: 'BTC',
+    decimals: 18
+  },
+  blockExplorerUrls: ['https://testnet.botanixscan.io/']
+}
