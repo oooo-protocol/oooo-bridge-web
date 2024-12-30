@@ -1073,3 +1073,27 @@ export const BOTANIX_TESTNET = {
   },
   blockExplorerUrls: ['https://testnet.botanixscan.io/']
 }
+
+export const INK_TESTNET = {
+  chainId: '0xba5ed',
+  chainName: 'Ink Sepolia',
+  rpcUrls: ['https://rpc-gel-sepolia.inkonchain.com'],
+  nativeCurrency: {
+    name: 'ETH',
+    symbol: 'ETH',
+    decimals: 18
+  },
+  blockExplorerUrls: ['https://explorer-sepolia.inkonchain.com']
+}
+
+export const INK_LIVENET = {
+  chainId: '0xdef1',
+  chainName: 'Ink',
+  rpcUrls: ['https://rpc-gel.inkonchain.com'],
+  nativeCurrency: {
+    name: 'ETH',
+    symbol: 'ETH',
+    decimals: 18
+  },
+  blockExplorerUrls: ['https://explorer.inkonchain.com']
+}

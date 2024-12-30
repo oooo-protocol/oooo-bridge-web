@@ -94,7 +94,9 @@ import {
   SUI_LIVENET,
   WORLDCHAIN_LIVENET,
   WORLDCHAIN_TESTNET,
-  BOTANIX_TESTNET
+  BOTANIX_TESTNET,
+  INK_TESTNET,
+  INK_LIVENET
 } from '@/lib/chain-config'
 import { type ChainConfig } from '@/composables/oooo-wallet'
 
@@ -405,6 +407,12 @@ export const CHAIN_LIST = [
     value: CHAIN.BOTANIX,
     type: CHAIN_TYPE.ETHEREUM,
     [NETWORK.TESTNET]: BOTANIX_TESTNET
+  }, {
+    image: 'https://oooo.money/static/images/ink.png',
+    value: CHAIN.INK,
+    type: CHAIN_TYPE.ETHEREUM,
+    [NETWORK.TESTNET]: INK_TESTNET,
+    [NETWORK.LIVENET]: INK_LIVENET
   }
 ]
 
