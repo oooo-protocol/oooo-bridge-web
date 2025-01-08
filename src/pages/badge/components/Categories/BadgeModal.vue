@@ -69,9 +69,7 @@ const onMint = async () => {
               :key="tag.name"
             />
           </div>
-          <p class="mt-[16px] text-[12px] text-[#787878]">
-            {{ badge.description }}
-          </p>
+          <p class="mt-[16px] text-[12px] text-[#787878]" v-html="badge.description" />
           <template v-if="badge.status === UserBadgeMintStatus.MINTED">
             <p class="mt-[16px] text-[12px] leading-[1.5] text-[#a4a4a4]">
               MINTED ON
