@@ -8,8 +8,11 @@ import { type MintedBadge, type UnmintBadge } from './Badge.vue'
 import { UserBadgeMintStatus } from '@/entities/badge'
 import { CHAIN_BLOCK_EXPLORER_URL_MAP } from '@/lib/constants'
 import { combineURLs, formatDate } from '@/lib/utils'
-import BadgeTask from './BadgeTask.vue'
+import BadgeTaskCell from './BadgeTaskCell.vue'
 import DialogPro from '@/components/DialogPro.vue'
+import { useStorage } from '@vueuse/core'
+import X_IMAGE from '@/assets/images/badge/x.png'
+import { toast } from '@/components/ui/toast'
 
 const open = defineModel<boolean>('open')
 
@@ -20,9 +23,27 @@ const props = defineProps<{
 const { address } = useEVMWallet()
 const { mint } = useMint()
 
+interface BadgeStore {
+  walletAddress?: string
+  isFollowChecked?: boolean
+  isPostChecked?: boolean
+}
+
+const state = useStorage<BadgeStore>(
+  `oooo-badge-${props.badge.id}`,
+  { walletAddress: address.value, isFollowChecked: undefined, isPostChecked: undefined },
+  localStorage,
+  {
+    mergeDefaults: (value, defaults) => {
+      if (value != null && value.walletAddress !== address.value) return defaults
+      return value
+    }
+  }
+)
+
 const mintable = computed(() => {
   if (props.badge.status !== UserBadgeMintStatus.UNMINT) return false
-  return props.badge.mintLimit.every(item => item.status)
+  return state.value.isFollowChecked && state.value.isPostChecked
 })
 
 const txnUrl = computed(() => {
@@ -36,6 +57,42 @@ const onMint = async () => {
   await mint({
     badgeId: props.badge.id
   })
+}
+
+enum ACTION {
+  FOLLOW,
+  POST
+}
+
+const actions: Record<ACTION, boolean> = {
+  [ACTION.FOLLOW]: false,
+  [ACTION.POST]: false
+}
+
+const onClickTask = (action: ACTION) => {
+  switch (action) {
+    case ACTION.FOLLOW:
+      window.open('https://x.com/oooo_money', '_blank', 'popup, width=600, height=800')
+      break
+    case ACTION.POST:
+      window.open('https://x.com/oooo_money', '_blank', 'popup, width=600, height=800')
+      break
+  }
+  actions[action] = true
+}
+
+const onCheck = (action: ACTION) => {
+  const status = actions[action]
+  switch (action) {
+    case ACTION.FOLLOW:
+      if (status) state.value.isFollowChecked = true
+      else toast({ description: 'No X follow found, please click Follow again to check if the follow was successful.' })
+      break
+    case ACTION.POST:
+      if (status) state.value.isPostChecked = true
+      else toast({ description: 'No results found for Retweet, comment, and like Badge\'s X post, please click the X Post button again to check if successful.' })
+      break
+  }
 }
 </script>
 
@@ -81,12 +138,40 @@ const onMint = async () => {
         MINT REQUIREMENTS
       </p>
       <div class="mt-[7px] md:mt-[20px] space-y-[8px]">
-        <BadgeTask
-          v-for="(task) of badge.mintLimit"
-          :key="task.id"
-          :task="task"
-          :badge-id="badge.id"
-        />
+        <BadgeTaskCell
+          :icon="X_IMAGE"
+          title="Follow @oooo on X"
+          :status="state.isFollowChecked"
+        >
+          <div class="flex flex-col md:flex-row gap-[8px]">
+            <Button
+              variant="outline"
+              @click="onClickTask(ACTION.FOLLOW)"
+            >
+              FOLLOW
+            </Button>
+            <Button @click="onCheck(ACTION.FOLLOW)">
+              CHECK
+            </Button>
+          </div>
+        </BadgeTaskCell>
+        <BadgeTaskCell
+          :icon="X_IMAGE"
+          title="Retweet, comment, and like Badge’s X post."
+          :status="state.isPostChecked"
+        >
+          <div class="flex flex-col md:flex-row gap-[8px]">
+            <Button
+              variant="outline"
+              @click="onClickTask(ACTION.POST)"
+            >
+              X POST
+            </Button>
+            <Button @click="onCheck(ACTION.POST)">
+              CHECK
+            </Button>
+          </div>
+        </BadgeTaskCell>
       </div>
     </template>
     <div class="mt-[30px] md:mt-[40px]">

@@ -3,6 +3,7 @@ import { QuestTag } from '@/components/QuestItem'
 import BadgeModal from './BadgeModal.vue'
 import { type UserBadge, UserBadgeMintStatus, type Badge } from '@/entities/badge'
 import { getArrayFirst } from '@preflower/utils'
+import TwitterBadgeModal from './TwitterBadgeModal.vue'
 
 const props = defineProps<{
   badge: MintedBadge | UnmintBadge
@@ -58,7 +59,14 @@ export interface UnmintBadge extends Badge {
       />
     </div>
   </div>
+  <template v-if="badge.id === 9">
+    <TwitterBadgeModal
+      v-model:open="open"
+      :badge="badge"
+    />
+  </template>
   <BadgeModal
+    v-else
     v-model:open="open"
     :badge="badge"
   />
