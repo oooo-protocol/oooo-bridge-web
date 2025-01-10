@@ -59,7 +59,7 @@ export interface UnmintBadge extends Badge {
       />
     </div>
   </div>
-  <template v-if="badge.id === 9">
+  <template v-if="badge.id === 29">
     <TwitterBadgeModal
       v-model:open="open"
       :badge="badge"

@@ -75,7 +75,7 @@ const onClickTask = (action: ACTION) => {
       window.open('https://x.com/oooo_money', '_blank', 'popup, width=600, height=800')
       break
     case ACTION.POST:
-      window.open('https://x.com/oooo_money', '_blank', 'popup, width=600, height=800')
+      window.open('https://x.com/oooo_money/status/1877550117143851429', '_blank', 'popup, width=600, height=800')
       break
   }
   actions[action] = true
