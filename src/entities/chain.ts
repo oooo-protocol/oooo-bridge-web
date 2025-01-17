@@ -58,7 +58,8 @@ export enum CHAIN {
   SUI = 'sui',
   WORLDCHAIN = 'worldchain',
   BOTANIX = 'botanix',
-  INK = 'ink'
+  INK = 'ink',
+  HEMI = 'hemi'
 }
 
 export enum CHAIN_TYPE {
