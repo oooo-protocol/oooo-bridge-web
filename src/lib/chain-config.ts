@@ -1113,7 +1113,7 @@ export const HEMI_TESTNET = {
 export const MONAD_TESTNET = {
   chainId: '0x279f',
   chainName: 'Monad Sepolia',
-  rpcUrls: [' https://rpc.monad-testnet.category.xyz/rpc/SPa4TbSgMJxz5ywmzYvvc9O5nkAVGTgOcsi7yErG'],
+  rpcUrls: ['https://rpc.monad-testnet.category.xyz/rpc/SPa4TbSgMJxz5ywmzYvvc9O5nkAVGTgOcsi7yErG'],
   nativeCurrency: {
     name: 'MON',
     symbol: 'MON',
