@@ -1097,3 +1097,15 @@ export const INK_LIVENET = {
   },
   blockExplorerUrls: ['https://explorer.inkonchain.com']
 }
+
+export const HEMI_TESTNET = {
+  chainId: '0xb56c7',
+  chainName: 'Hemi Sepolia',
+  rpcUrls: ['https://testnet.rpc.hemi.network/rpc'],
+  nativeCurrency: {
+    name: 'ETH',
+    symbol: 'ETH',
+    decimals: 18
+  },
+  blockExplorerUrls: ['https://testnet.explorer.hemi.xyz']
+}
