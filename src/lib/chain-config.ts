@@ -1109,3 +1109,15 @@ export const HEMI_TESTNET = {
   },
   blockExplorerUrls: ['https://testnet.explorer.hemi.xyz']
 }
+
+export const MONAD_TESTNET = {
+  chainId: '0x279f',
+  chainName: 'Monad Sepolia',
+  rpcUrls: [' https://rpc.monad-testnet.category.xyz/rpc/SPa4TbSgMJxz5ywmzYvvc9O5nkAVGTgOcsi7yErG'],
+  nativeCurrency: {
+    name: 'MON',
+    symbol: 'MON',
+    decimals: 18
+  },
+  blockExplorerUrls: ['https://explorer.monad-testnet.category.xyz']
+}

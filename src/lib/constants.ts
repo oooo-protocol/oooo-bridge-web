@@ -97,7 +97,8 @@ import {
   BOTANIX_TESTNET,
   INK_TESTNET,
   INK_LIVENET,
-  HEMI_TESTNET
+  HEMI_TESTNET,
+  MONAD_TESTNET
 } from '@/lib/chain-config'
 import { type ChainConfig } from '@/composables/oooo-wallet'
 
@@ -419,6 +420,11 @@ export const CHAIN_LIST = [
     value: CHAIN.HEMI,
     type: CHAIN_TYPE.ETHEREUM,
     [NETWORK.TESTNET]: HEMI_TESTNET
+  }, {
+    image: 'https://oooo.money/static/images/monad.png',
+    value: CHAIN.MONAD,
+    type: CHAIN_TYPE.ETHEREUM,
+    [NETWORK.TESTNET]: MONAD_TESTNET
   }
 ]
 
