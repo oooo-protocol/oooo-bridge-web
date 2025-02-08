@@ -918,6 +918,18 @@ export const ABSTRACT_TESTNET = {
   blockExplorerUrls: ['https://explorer.testnet.abs.xyz']
 }
 
+export const ABSTRACT_LIVENET = {
+  chainId: '0xab5',
+  chainName: 'Abstract',
+  rpcUrls: ['https://api.mainnet.abs.xyz'],
+  nativeCurrency: {
+    name: 'ETH',
+    symbol: 'ETH',
+    decimals: 18
+  },
+  blockExplorerUrls: ['https://abscan.org/']
+}
+
 export const MOVEMENT_APTOS_TESTNET = {
   chainId: '0xb1',
   chainName: 'custom',

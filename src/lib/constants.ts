@@ -97,7 +97,8 @@ import {
   BOTANIX_TESTNET,
   INK_TESTNET,
   INK_LIVENET,
-  HEMI_TESTNET
+  HEMI_TESTNET,
+  ABSTRACT_LIVENET
 } from '@/lib/chain-config'
 import { type ChainConfig } from '@/composables/oooo-wallet'
 
@@ -362,7 +363,8 @@ export const CHAIN_LIST = [
     image: 'https://oooo.money/static/images/abstract.png',
     value: CHAIN.ABSTRACT,
     type: CHAIN_TYPE.ETHEREUM,
-    [NETWORK.TESTNET]: ABSTRACT_TESTNET
+    [NETWORK.TESTNET]: ABSTRACT_TESTNET,
+    [NETWORK.LIVENET]: ABSTRACT_LIVENET
   }, {
     image: 'https://oooo.money/static/images/movement.png',
     value: CHAIN.MOVEMENT_APTOS,
