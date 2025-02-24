@@ -699,7 +699,19 @@ export const SONEIUM_TESTNET = {
     symbol: 'ETH',
     decimals: 18
   },
-  blockExplorerUrls: [' https://explorer-testnet.soneium.org']
+  blockExplorerUrls: ['https://explorer-testnet.soneium.org']
+}
+
+export const SONEIUM_LIVENET = {
+  chainId: '0x74c',
+  chainName: 'Soneium',
+  rpcUrls: ['https://rpc.sonenium.org/'],
+  nativeCurrency: {
+    name: 'ETH',
+    symbol: 'ETH',
+    decimals: 18
+  },
+  blockExplorerUrls: ['https://soneium.blockscout.com/']
 }
 
 export const STORY_TESTNET = {
