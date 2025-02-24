@@ -5,6 +5,8 @@ defineProps<{
   title?: string
   headerClose?: boolean
 }>()
+
+defineSlots()
 </script>
 
 <template>
@@ -21,9 +23,8 @@ defineProps<{
           <DialogTitle>{{ title }}</DialogTitle>
         </DialogHeader>
       </template>
-      <!-- @vue-expect-error -->
       <template
-        v-for="itemSlot in Object.keys($slots)"
+        v-for="itemSlot in (Object.keys($slots) as {})"
         :key="itemSlot"
         #[itemSlot]="temp"
       >
