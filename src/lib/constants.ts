@@ -99,7 +99,8 @@ import {
   INK_LIVENET,
   HEMI_TESTNET,
   ABSTRACT_LIVENET,
-  SONEIUM_LIVENET
+  SONEIUM_LIVENET,
+  SONIC_TESTNET
 } from '@/lib/chain-config'
 import { type ChainConfig } from '@/composables/oooo-wallet'
 
@@ -423,6 +424,12 @@ export const CHAIN_LIST = [
     value: CHAIN.HEMI,
     type: CHAIN_TYPE.ETHEREUM,
     [NETWORK.TESTNET]: HEMI_TESTNET
+  }, {
+    image: 'https://oooo.money/static/images/sonic.png',
+    value: CHAIN.SONIC,
+    type: CHAIN_TYPE.ETHEREUM,
+    [NETWORK.TESTNET]: SONIC_TESTNET,
+    [NETWORK.LIVENET]: SONEIUM_LIVENET
   }
 ]
 
