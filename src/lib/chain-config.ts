@@ -1133,3 +1133,27 @@ export const HEMI_TESTNET = {
   },
   blockExplorerUrls: ['https://testnet.explorer.hemi.xyz']
 }
+
+export const SONIC_TESTNET = {
+  chainId: '0xdede',
+  chainName: 'Sonic Blaze Testnet',
+  rpcUrls: ['https://rpc.blaze.soniclabs.com'],
+  nativeCurrency: {
+    name: 'S',
+    symbol: 'S',
+    decimals: 18
+  },
+  blockExplorerUrls: ['https://testnet.sonicscan.org']
+}
+
+export const SONIC_LIVENET = {
+  chainId: '0x92',
+  chainName: 'Sonic',
+  rpcUrls: ['https://rpc.soniclabs.com'],
+  nativeCurrency: {
+    name: 'S',
+    symbol: 'S',
+    decimals: 18
+  },
+  blockExplorerUrls: ['https://sonicscan.org']
+}
