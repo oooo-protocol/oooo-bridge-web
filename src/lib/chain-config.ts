@@ -705,7 +705,7 @@ export const SONEIUM_TESTNET = {
 export const SONEIUM_LIVENET = {
   chainId: '0x74c',
   chainName: 'Soneium',
-  rpcUrls: ['https://rpc.sonenium.org/'],
+  rpcUrls: ['https://rpc.soneium.org/'],
   nativeCurrency: {
     name: 'ETH',
     symbol: 'ETH',
