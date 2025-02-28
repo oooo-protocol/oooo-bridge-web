@@ -100,7 +100,8 @@ import {
   HEMI_TESTNET,
   ABSTRACT_LIVENET,
   SONEIUM_LIVENET,
-  SONIC_TESTNET
+  SONIC_TESTNET,
+  SONIC_LIVENET
 } from '@/lib/chain-config'
 import { type ChainConfig } from '@/composables/oooo-wallet'
 
@@ -429,7 +430,7 @@ export const CHAIN_LIST = [
     value: CHAIN.SONIC,
     type: CHAIN_TYPE.ETHEREUM,
     [NETWORK.TESTNET]: SONIC_TESTNET,
-    [NETWORK.LIVENET]: SONEIUM_LIVENET
+    [NETWORK.LIVENET]: SONIC_LIVENET
   }
 ]
 
