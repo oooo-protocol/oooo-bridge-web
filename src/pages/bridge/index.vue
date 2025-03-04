@@ -96,9 +96,9 @@ const checkAddress = (address: string, chain: string) => {
   }
 }
 
-watch([to, address], ([to, address]) => {
+watch([to, address], ([to, address], [, oldAddress]) => {
   if (config.value == null) return
-  if (form.receiveAddress != null) {
+  if (form.receiveAddress != null && form.receiveAddress !== oldAddress) {
     const isValid = checkAddress(form.receiveAddress, to)
     if (isValid) return
   }
