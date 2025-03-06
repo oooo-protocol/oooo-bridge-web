@@ -101,7 +101,8 @@ import {
   ABSTRACT_LIVENET,
   SONEIUM_LIVENET,
   SONIC_TESTNET,
-  SONIC_LIVENET
+  SONIC_LIVENET,
+  UNICHAIN_LIVENET
 } from '@/lib/chain-config'
 import { type ChainConfig } from '@/composables/oooo-wallet'
 
@@ -344,7 +345,8 @@ export const CHAIN_LIST = [
     testnetImage: 'https://oooo.money/static/images/unichain-testnet.png',
     value: CHAIN.UNICHAIN,
     type: CHAIN_TYPE.ETHEREUM,
-    [NETWORK.TESTNET]: UNICHAIN_TESTNET
+    [NETWORK.TESTNET]: UNICHAIN_TESTNET,
+    [NETWORK.LIVENET]: UNICHAIN_LIVENET
   }, {
     image: 'https://oooo.money/static/images/zircuit.png',
     value: CHAIN.ZIRCUIT,

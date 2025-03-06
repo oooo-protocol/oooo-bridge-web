@@ -846,6 +846,18 @@ export const UNICHAIN_TESTNET = {
   blockExplorerUrls: ['https://sepolia.uniscan.xyz/']
 }
 
+export const UNICHAIN_LIVENET = {
+  chainId: '0x82',
+  chainName: 'Unichain Mainnet',
+  rpcUrls: ['https://mainnet.unichain.org'],
+  nativeCurrency: {
+    name: 'ETH',
+    symbol: 'ETH',
+    decimals: 18
+  },
+  blockExplorerUrls: ['https://uniscan.xyz']
+}
+
 export const ZIRCUIT_TESTNET = {
   chainId: '0xbf03',
   chainName: 'Zircuit Testnet',
