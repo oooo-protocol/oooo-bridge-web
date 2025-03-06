@@ -1,12 +1,11 @@
 import axios from '../axios'
 import { type Transaction, type TransactionConfig, type Chain, TRANSACTION_STATUS, type EstimateData } from '@/entities/bridge'
 import type { Pagination } from './type'
-import { combineURLs, getConfigFromChain } from '@/lib/utils'
+import { combineURLs, getConfigFromChain, getRpcProvider } from '@/lib/utils'
 import { CHAIN_BLOCK_EXPLORER_URL_MAP, CHAIN_CONFIG_MAP, CHAIN_TYPE_MAP } from '@/lib/constants'
 import axiosOrigin from 'axios'
 import { CHAIN_TYPE, type CHAIN } from '@/entities/chain'
-import { type ServerTokenPair, type ServerConfigs } from '@/entities/server'
-import { getRpcProvider } from '@/lib/utils'
+import { type ServerTokenPair, type ServerConfigs, type ServerToken } from '@/entities/server'
 import { Aptos, AptosConfig, TransactionResponseType } from '@aptos-labs/ts-sdk'
 import { SuiClient } from '@mysten/sui/client'
 
@@ -16,9 +15,23 @@ export const retrieveBridgeConfigs = async () => {
   })
 }
 
-export const retreieveBridgePairs = async (data: { assetCode: string }) => {
-  return await axios<Pagination<ServerTokenPair>>({
-    url: '/v1/bridge/global/pairs',
+export const retrieveMatchingPair = async (data: { assetCode?: string | null, fromChain?: string | null, toChain?: string | null }) => {
+  return await axios<ServerTokenPair>({
+    url: '/v1/bridge/pairs/match',
+    params: data
+  })
+}
+
+export const retrieveSupportChainsFromToken = async (data: { assetCode: string }) => {
+  return await axios<Array<ServerToken['tokenId']>>({
+    url: '/v1/bridge/chains/from',
+    params: data
+  })
+}
+
+export const retreieveBridgePairs = async (data: { assetCode: string, fromChain: string }) => {
+  return await axios<ServerTokenPair[]>({
+    url: '/v1/bridge/pairs/by-chain',
     params: data
   })
 }

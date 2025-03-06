@@ -50,7 +50,8 @@ const {
   tokenList,
   fromChainList,
   toChainList,
-  config
+  config,
+  isLoadingTo
 } = useConfig()
 const pairId = computed(() => {
   return config.value?.pairId
@@ -445,6 +446,7 @@ const { estimatePoints } = useEstimatePoints(pairId)
           <ChainSelect
             v-model="to"
             :list="toChainList"
+            :loading="isLoadingTo"
           >
             <template #suffix>
               <div class="flex flex-col items-end md:flex-row md:items-center gap-[12px] md:gap-[8px] w-full select-none overflow-hidden">

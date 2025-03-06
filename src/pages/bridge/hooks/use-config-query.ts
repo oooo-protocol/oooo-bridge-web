@@ -1,72 +1,45 @@
-import { defineMap, getArrayFirst } from '@preflower/utils'
+import { getArrayFirst } from '@preflower/utils'
+import { useQuery } from '@tanstack/vue-query'
+import { retrieveMatchingPair } from '@/request/api/bridge'
 import { type Chain } from '@/entities/bridge'
-import { type ServerTokenPair } from '@/entities/server'
 
 export const useConfigQuery = (
   token: Ref<string>,
   from: Ref<string>,
   to: Ref<string>,
-  tokenList: ComputedRef<Chain[] | undefined>,
-  pairList: ComputedRef<ServerTokenPair[]>
+  tokenList: MaybeRefOrGetter<Chain[] | undefined>
 ) => {
   const route = useRoute()
   const router = useRouter()
   const initializing = ref(true)
 
-  const stopWatchToken = watch(tokenList, (tokenList) => {
-    if (tokenList == null) return
+  const { data } = useQuery({
+    queryKey: [''],
+    queryFn: async () => {
+      const queryTokenName = getArrayFirst(route.query.token)
+      const queryFromChain = getArrayFirst(route.query.from)
+      const queryToChain = getArrayFirst(route.query.to)
 
-    const queryTokenName = getArrayFirst(route.query.token)
+      // 如果 Query 不存在则跳过这一步
+      if (queryTokenName == null && queryFromChain == null && queryToChain == null) return true
 
-    const hasQueryToken = queryTokenName != null ? tokenList.some(token => token.tokenName === queryTokenName) : false
-    if (hasQueryToken) {
-      token.value = queryTokenName!
-    } else {
-      token.value = tokenList[0].tokenName
-    }
+      const data = await retrieveMatchingPair({ assetCode: queryTokenName, fromChain: queryFromChain, toChain: queryToChain })
+      const list = toValue(tokenList)!
+      const fromToken = list.find(token => token.tokenId === data.fromTokenId)
+      const toToken = list.find(token => token.tokenId === data.toTokenId)
 
-    void nextTick(() => {
-      stopWatchToken()
-    })
-  }, {
-    immediate: true
-  })
-
-  const stopWatchPair = watch(pairList, (pairList) => {
-    if (tokenList.value == null) return
-    if (pairList == null || pairList.length === 0) return
-
-    const queryFromChain = getArrayFirst(route.query.from)
-    const queryToChain = getArrayFirst(route.query.to)
-
-    const tokenMap = defineMap(tokenList.value, 'tokenId', 'chainName')
-
-    let suitablePair: ServerTokenPair | undefined
-    for (const pair of pairList) {
-      const fromChainName = tokenMap[pair.fromTokenId]
-      const toChainName = tokenMap[pair.toTokenId]
-      if (fromChainName === queryFromChain) {
-        if (suitablePair == null) {
-          suitablePair = pair
-        }
-        if (toChainName === queryToChain) {
-          suitablePair = pair
-        }
+      if (fromToken) {
+        token.value = fromToken.tokenName
+        from.value = fromToken.chainName
       }
-    }
-    if (suitablePair == null) {
-      suitablePair = pairList[0]
-    }
-
-    from.value = tokenMap[suitablePair.fromTokenId]
-    to.value = tokenMap[suitablePair.toTokenId]
-
-    void nextTick(() => {
-      stopWatchPair()
-      initializing.value = false
-    })
-  }, {
-    immediate: true
+      if (toToken) {
+        to.value = toToken.chainName
+      }
+      return true
+    },
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    enabled: computed(() => toValue(tokenList) != null)
   })
 
   watch([token, from, to], ([token, from, to]) => {
@@ -83,4 +56,6 @@ export const useConfigQuery = (
       replace: true
     })
   })
+
+  return { isQueryInited: data }
 }

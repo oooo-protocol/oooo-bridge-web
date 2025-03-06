@@ -13,9 +13,11 @@ import { CHAIN_IMAGE_MAP } from '@/lib/constants'
 import ChainSelectItem from './ChainSelectItem.vue'
 import { type Chain } from '@/entities/bridge'
 import { SERVER_CHAIN_TYPE } from '@/entities/server'
+import LoadingIcon from '@/components/LoadingIcon.vue'
 
 const props = defineProps<{
   list: Chain[]
+  loading?: boolean
 }>()
 const enum TAB {
   ALL = 'tab_all',
@@ -104,23 +106,29 @@ const onChainClick = (chain: Chain) => {
   <div
     :class="cn('flex items-center p-[8px] border border-input bg-background rounded-[2px]', $attrs.class ?? '')"
   >
-    <div
-      class="flex items-center shrink-0 gap-[8px] pr-[15px] cursor-pointer"
-      v-if="selected"
-      @click="open = true"
-    >
-      <img
-        class="w-[32px] h-[32px]"
-        :src="CHAIN_IMAGE_MAP[selected.chainName as CHAIN]"
+    <LoadingIcon
+      class="my-[4px]"
+      v-if="loading"
+    />
+    <template v-else>
+      <div
+        class="flex items-center shrink-0 gap-[8px] pr-[15px] cursor-pointer"
+        v-if="selected"
+        @click="open = true"
       >
-      <p>
-        {{ selected.showName }}
-      </p>
-      <Icon
-        name="a-arrowdown"
-        class="text-[24px]"
-      />
-    </div>
+        <img
+          class="w-[32px] h-[32px]"
+          :src="CHAIN_IMAGE_MAP[selected.chainName as CHAIN]"
+        >
+        <p>
+          {{ selected.showName }}
+        </p>
+        <Icon
+          name="a-arrowdown"
+          class="text-[24px]"
+        />
+      </div>
+    </template>
     <slot name="suffix" />
     <Dialog v-model:open="open">
       <DialogContent
