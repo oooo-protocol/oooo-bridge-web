@@ -14,7 +14,7 @@ export const useConfigQuery = (
   const initializing = ref(true)
 
   const { data } = useQuery({
-    queryKey: [''],
+    queryKey: ['/v1/bridge/pairs/match'],
     queryFn: async () => {
       const queryTokenName = getArrayFirst(route.query.token)
       const queryFromChain = getArrayFirst(route.query.from)
@@ -39,7 +39,8 @@ export const useConfigQuery = (
     },
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    enabled: computed(() => toValue(tokenList) != null)
+    enabled: computed(() => toValue(tokenList) != null),
+    initialData: false
   })
 
   watch([token, from, to], ([token, from, to]) => {
