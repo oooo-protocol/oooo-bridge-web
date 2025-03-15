@@ -1146,6 +1146,18 @@ export const HEMI_TESTNET = {
   blockExplorerUrls: ['https://testnet.explorer.hemi.xyz']
 }
 
+export const HEMI_LIVENET = {
+  chainId: '0xa867',
+  chainName: 'Hemi Mainnet',
+  rpcUrls: ['https://rpc.hemi.network/rpc'],
+  nativeCurrency: {
+    name: 'ETH',
+    symbol: 'ETH',
+    decimals: 18
+  },
+  blockExplorerUrls: ['https://explorer.hemi.xyz']
+}
+
 export const SONIC_TESTNET = {
   chainId: '0xdede',
   chainName: 'Sonic Blaze Testnet',
