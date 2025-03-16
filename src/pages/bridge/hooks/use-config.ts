@@ -138,12 +138,13 @@ export const useConfig = () => {
   })
   const config = computed(() => {
     if (filterRawPairs.value == null) return null
-    const toChain = toChainList.value.find(pair => pair.chainName === to.value)
+    const toChain = toChainList.value.find(chain => chain.chainName === to.value)
+    const fromChain = fromChainList.value.find(chain => chain.chainName === from.value)
     const pair = filterRawPairs.value.find(pair => pair.toTokenId === toChain?.tokenId)
-    if (toChain == null || pair == null) return null
+    if (fromChain == null || pair == null) return null
     const { fromTokenId, toTokenId, ...config } = pair
     return {
-      ...toChain,
+      ...fromChain,
       ...config
     } satisfies PairConfig
   })
