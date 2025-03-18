@@ -501,7 +501,7 @@ export const FANTOM_LIVENET = {
 export const ETHEREUM_TESTNET = {
   chainId: '0xaa36a7',
   chainName: 'Sepolia',
-  rpcUrls: ['https://rpc.sepolia.org', 'https://rpc2.sepolia.org', 'https://sepolia.drpc.org', 'https://ethereum-sepolia-rpc.publicnode.com'],
+  rpcUrls: ['https://ethereum-sepolia-rpc.publicnode.com', 'https://rpc.sepolia.org', 'https://rpc2.sepolia.org', 'https://sepolia.drpc.org'],
   nativeCurrency: {
     name: 'ETH',
     symbol: 'ETH',
