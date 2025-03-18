@@ -966,6 +966,18 @@ export const MOVEMENT_APTOS_TESTNET = {
   blockExplorerUrls: ['https://explorer.movementnetwork.xyz/?network=porto+testnet']
 }
 
+export const MOVEMENT_APTOS_LIVENET = {
+  chainId: '0x7e',
+  chainName: 'custom',
+  rpcUrls: ['https://mainnet.movementnetwork.xyz/v1'],
+  nativeCurrency: {
+    name: 'MOVE',
+    symbol: 'MOVE',
+    decimals: 8
+  },
+  blockExplorerUrls: ['https://explorer.movementnetwork.xyz/']
+}
+
 export const APTOS_TESTNET = {
   chainId: '0x2',
   chainName: 'Testnet',

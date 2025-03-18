@@ -103,7 +103,8 @@ import {
   SONIC_TESTNET,
   SONIC_LIVENET,
   UNICHAIN_LIVENET,
-  HEMI_LIVENET
+  HEMI_LIVENET,
+  MOVEMENT_APTOS_LIVENET
 } from '@/lib/chain-config'
 import { type ChainConfig } from '@/composables/oooo-wallet'
 
@@ -376,7 +377,8 @@ export const CHAIN_LIST = [
     image: 'https://oooo.money/static/images/movement.png',
     value: CHAIN.MOVEMENT_APTOS,
     type: CHAIN_TYPE.MOVEMENT_APTOS,
-    [NETWORK.TESTNET]: MOVEMENT_APTOS_TESTNET
+    [NETWORK.TESTNET]: MOVEMENT_APTOS_TESTNET,
+    [NETWORK.LIVENET]: MOVEMENT_APTOS_LIVENET
   }, {
     image: 'https://oooo.money/static/images/aptos.png',
     value: CHAIN.APTOS,
