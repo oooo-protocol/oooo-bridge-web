@@ -60,7 +60,8 @@ export enum CHAIN {
   BOTANIX = 'botanix',
   INK = 'ink',
   HEMI = 'hemi',
-  SONIC = 'sonic'
+  SONIC = 'sonic',
+  MEGA = 'mega'
 }
 
 export enum CHAIN_TYPE {
