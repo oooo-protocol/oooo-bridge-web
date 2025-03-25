@@ -105,7 +105,7 @@ import {
   UNICHAIN_LIVENET,
   HEMI_LIVENET,
   MOVEMENT_APTOS_LIVENET,
-  MEGA_TESTNET
+  MEGAETH_TESTNET
 } from '@/lib/chain-config'
 import { type ChainConfig } from '@/composables/oooo-wallet'
 
@@ -440,9 +440,9 @@ export const CHAIN_LIST = [
     [NETWORK.LIVENET]: SONIC_LIVENET
   }, {
     image: 'https://oooo.money/static/images/mega.png',
-    value: CHAIN.MEGA,
+    value: CHAIN.MEGAETH,
     type: CHAIN_TYPE.ETHEREUM,
-    [NETWORK.TESTNET]: MEGA_TESTNET
+    [NETWORK.TESTNET]: MEGAETH_TESTNET
   }
 ]
 

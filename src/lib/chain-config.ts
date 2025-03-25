@@ -1194,7 +1194,7 @@ export const SONIC_LIVENET = {
   blockExplorerUrls: ['https://sonicscan.org']
 }
 
-export const MEGA_TESTNET = {
+export const MEGAETH_TESTNET = {
   chainId: '0x18c6',
   chainName: 'MEGA Testnet',
   rpcUrls: ['https://carrot.megaeth.com/rpc'],
