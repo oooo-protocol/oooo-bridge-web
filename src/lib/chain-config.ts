@@ -1197,7 +1197,7 @@ export const SONIC_LIVENET = {
 export const MEGA_TESTNET = {
   chainId: '0x18c6',
   chainName: 'MEGA Testnet',
-  rpcUrls: ['https://cattot.megaeth.com/rpc'],
+  rpcUrls: ['https://carrot.megaeth.com/rpc'],
   nativeCurrency: {
     name: 'ETH',
     symbol: 'ETH',
