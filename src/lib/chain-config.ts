@@ -1193,3 +1193,15 @@ export const SONIC_LIVENET = {
   },
   blockExplorerUrls: ['https://sonicscan.org']
 }
+
+export const MEGAETH_TESTNET = {
+  chainId: '0x18c6',
+  chainName: 'MEGA Testnet',
+  rpcUrls: ['https://carrot.megaeth.com/rpc'],
+  nativeCurrency: {
+    name: 'ETH',
+    symbol: 'ETH',
+    decimals: 18
+  },
+  blockExplorerUrls: ['https://megaexplorer.xyz/']
+}
