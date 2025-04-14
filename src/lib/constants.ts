@@ -105,7 +105,10 @@ import {
   UNICHAIN_LIVENET,
   HEMI_LIVENET,
   MOVEMENT_APTOS_LIVENET,
-  MEGAETH_TESTNET
+  MEGAETH_TESTNET,
+  CELO_TESTNET,
+  CELO_LIVENET,
+  SOMNIA_TESTNET
 } from '@/lib/chain-config'
 import { type ChainConfig } from '@/composables/oooo-wallet'
 
@@ -443,6 +446,17 @@ export const CHAIN_LIST = [
     value: CHAIN.MEGAETH,
     type: CHAIN_TYPE.ETHEREUM,
     [NETWORK.TESTNET]: MEGAETH_TESTNET
+  }, {
+    image: 'https://oooo.money/static/images/celo.png',
+    value: CHAIN.CELO,
+    type: CHAIN_TYPE.ETHEREUM,
+    [NETWORK.TESTNET]: CELO_TESTNET,
+    [NETWORK.LIVENET]: CELO_LIVENET
+  }, {
+    image: 'https://oooo.money/static/images/somnia.png',
+    value: CHAIN.SOMNIA,
+    type: CHAIN_TYPE.ETHEREUM,
+    [NETWORK.TESTNET]: SOMNIA_TESTNET
   }
 ]
 
