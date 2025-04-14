@@ -1205,3 +1205,39 @@ export const MEGAETH_TESTNET = {
   },
   blockExplorerUrls: ['https://megaexplorer.xyz/']
 }
+
+export const CELO_TESTNET = {
+  chainId: '0xaef3',
+  chainName: 'Celo Alfajores',
+  rpcUrls: ['https://alfajores-forno.celo-testnet.org/'],
+  nativeCurrency: {
+    name: 'CELO',
+    symbol: 'CELO',
+    decimals: 18
+  },
+  blockExplorerUrls: ['https://alfajores.celoscan.io/']
+}
+
+export const CELO_LIVENET = {
+  chainId: '0xa4ec',
+  chainName: 'Celo Mainnet',
+  rpcUrls: ['https://forno.celo.org'],
+  nativeCurrency: {
+    name: 'CELO',
+    symbol: 'CELO',
+    decimals: 18
+  },
+  blockExplorerUrls: ['https://celoscan.io']
+}
+
+export const SOMNIA_TESTNET = {
+  chainId: '0xc488',
+  chainName: 'Somnia Testnet',
+  rpcUrls: ['https://dream-rpc.somnia.network/'],
+  nativeCurrency: {
+    name: 'STT',
+    symbol: 'STT',
+    decimals: 18
+  },
+  blockExplorerUrls: ['https://shannon-explorer.somnia.network/']
+}

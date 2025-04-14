@@ -61,7 +61,9 @@ export enum CHAIN {
   INK = 'ink',
   HEMI = 'hemi',
   SONIC = 'sonic',
-  MEGAETH = 'megaeth'
+  MEGAETH = 'megaeth',
+  CELO = 'celo',
+  SOMNIA = 'somnia'
 }
 
 export enum CHAIN_TYPE {
