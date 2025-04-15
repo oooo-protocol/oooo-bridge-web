@@ -1241,3 +1241,15 @@ export const SOMNIA_TESTNET = {
   },
   blockExplorerUrls: ['https://shannon-explorer.somnia.network/']
 }
+
+export const GOAT_TESTNET = {
+  chainId: '0xbeb0',
+  chainName: 'GOAT Testnet3',
+  rpcUrls: ['https://rpc.testnet3.goat.network'],
+  nativeCurrency: {
+    name: 'BTC',
+    symbol: 'BTC',
+    decimals: 18
+  },
+  blockExplorerUrls: ['https://explorer.testnet3.goat.network']
+}
