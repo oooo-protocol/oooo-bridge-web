@@ -1253,3 +1253,15 @@ export const GOAT_TESTNET = {
   },
   blockExplorerUrls: ['https://explorer.testnet3.goat.network']
 }
+
+export const GOAT_LIVENET = {
+  chainId: '0x929',
+  chainName: 'GOAT Network',
+  rpcUrls: ['https://rpc.goat.network'],
+  nativeCurrency: {
+    name: 'BTC',
+    symbol: 'BTC',
+    decimals: 18
+  },
+  blockExplorerUrls: ['https://explorer.goat.network']
+}

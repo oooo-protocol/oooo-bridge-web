@@ -109,7 +109,8 @@ import {
   CELO_TESTNET,
   CELO_LIVENET,
   SOMNIA_TESTNET,
-  GOAT_TESTNET
+  GOAT_TESTNET,
+  GOAT_LIVENET
 } from '@/lib/chain-config'
 import { type ChainConfig } from '@/composables/oooo-wallet'
 
@@ -462,7 +463,8 @@ export const CHAIN_LIST = [
     image: 'https://oooo.money/static/images/goat.png',
     value: CHAIN.GOAT,
     type: CHAIN_TYPE.ETHEREUM,
-    [NETWORK.TESTNET]: GOAT_TESTNET
+    [NETWORK.TESTNET]: GOAT_TESTNET,
+    [NETWORK.LIVENET]: GOAT_LIVENET
   }
 ]
 
