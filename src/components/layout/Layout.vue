@@ -85,6 +85,22 @@ const navs = [
         }
       })
   }, {
+    name: 'AIRDROP',
+    icon: 'AirDrop',
+    ...(import.meta.env.VITE_MODE === 'testnet'
+      ? {
+        tag: 'a',
+        attributes: {
+          href: 'https://bridge.oooo.money/airdrop'
+        }
+      }
+      : {
+        tag: 'router-link',
+        attributes: {
+          to: '/airdrop'
+        }
+      })
+  }, {
     name: 'Goooo',
     icon: 'Goooo',
     ...(import.meta.env.VITE_MODE === 'testnet'

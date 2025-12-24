@@ -36,6 +36,13 @@ const routes: RouteRecordRaw[] = [
         path: '/o-voucher',
         name: 'o-voucher',
         component: async () => await import('@/pages/o-voucher/index.vue')
+      }, {
+        path: '/airdrop',
+        name: 'airdrop',
+        component: async () => await import('@/pages/airdrop/index.vue'),
+        meta: {
+          fullscreen: true
+        }
       }
     ]
   }, {
