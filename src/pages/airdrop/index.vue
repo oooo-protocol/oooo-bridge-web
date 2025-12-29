@@ -7,9 +7,23 @@ import { Button } from '@/components/ui/button'
 
 import { getAirdropEligibility, type AirdropEligibility } from '@/request/api/airdrop'
 
+import useWalletStore from '@/store/wallet'
+import { WALLET_TYPE } from '@/composables/oooo-wallet'
+
+const { updateWalletType } = useWalletStore()
+
+onBeforeMount(() => {
+  updateWalletType(WALLET_TYPE.ETHEREUM)
+})
+
 const { address, onConnect } = useWallet()
 
-const countdownEndTime = Date.now() + 30 * 24 * 60 * 60 * 1000
+const countdownEndTime = 1767081600000
+
+const isCountdownFinished = ref(false)
+const onCountdownFinish = () => {
+  isCountdownFinished.value = true
+}
 
 const walletAddressInput = ref('')
 const showResultModal = ref(false)
@@ -50,11 +64,17 @@ const handleCheck = async () => {
 
     <div class="py-[60px] px-4 max-w-[1000px] mx-auto">
       <!-- Countdown -->
-      <div class="mb-[60px]">
+      <div
+        v-if="!isCountdownFinished"
+        class="mb-[60px]"
+      >
         <p class="text-lg md:text-[32px] mb-6 md:mb-10">
           CLAIMING STARTS IN
         </p>
-        <CountdownTimer :time="countdownEndTime" />
+        <CountdownTimer
+          :time="countdownEndTime"
+          @finish="onCountdownFinish"
+        />
       </div>
 
       <!-- Check Airdrop -->
@@ -92,6 +112,7 @@ const handleCheck = async () => {
           :loading="checkLoading"
           variant="outline"
           class="w-[240px] bg-[rgba(188,228,205,0.2)] text-[#fff]/50"
+          :disabled="!isCountdownFinished"
         >
           CHECK
         </Button>

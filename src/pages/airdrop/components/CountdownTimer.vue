@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import FlipNumber from './FlipNumber.vue'
 
 interface Props {
@@ -50,6 +50,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const emit = defineEmits<(e: 'finish') => void>()
 
 const now = ref(Date.now())
 let timer: ReturnType<typeof setInterval> | null = null
@@ -58,6 +59,12 @@ const remaining = computed(() => {
   const targetTime = typeof props.time === 'number' ? props.time : props.time.getTime()
   const diff = targetTime - now.value
   return diff > 0 ? diff : 0
+})
+
+watch(remaining, (newVal) => {
+  if (newVal === 0) {
+    emit('finish')
+  }
 })
 
 const days = computed(() => {
@@ -77,6 +84,11 @@ const seconds = computed(() => {
 })
 
 onMounted(() => {
+  // Check immediately if already expired
+  if (remaining.value === 0) {
+    emit('finish')
+  }
+
   timer = setInterval(() => {
     now.value = Date.now()
   }, 1000)
